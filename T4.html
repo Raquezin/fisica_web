@@ -134,7 +134,7 @@ $$\varepsilon = \oint \vec f \cdot \mathrm{d}\vec l$$
 <p>Un circuito es un <strong>circuito de agua con rozamiento</strong>. La fem es la bomba: sin bomba, el agua se para. Da igual que la bomba esté en un punto o que haya una "cuesta abajo" repartida por toda la tubería.</p>
 </div>
 
-<p>Orígenes posibles de una fem: <strong>químico</strong> (pilas), <strong>mecánico</strong> (generador de Van der Graaff), <strong>óptico</strong> (células fotovoltaicas)… En general, un generador <strong>transforma otra energía en energía eléctrica</strong>.</p>
+<p>Orígenes posibles de una fem: <strong>químico</strong> (pilas), <strong>mecánico</strong> (generador de Van de Graaff), <strong>óptico</strong> (células fotovoltaicas)… En general, un generador <strong>transforma otra energía en energía eléctrica</strong>.</p>
 <p>En este tema: fem cuyo origen es la <span class="hl">variación del flujo magnético</span> → <strong>fem inducida</strong>. Es la base de las centrales eléctricas, de la corriente alterna (T5) y de las ondas electromagnéticas (T6).</p>
 
 <div class="box trap"><span class="label">Diferencia clave</span>
@@ -263,7 +263,7 @@ $$\Phi = \int_S \vec B \cdot \mathrm{d}\vec S \qquad \xrightarrow{\ \vec B \text
 <text x="258" y="231" fill="var(--accent)">I</text>
 <text x="410" y="114" fill="var(--pos)">q v×B</text>
 <text x="476" y="180" fill="var(--intuition)">v</text>
-<text x="315" y="205" text-anchor="end" fill="var(--trap)">F_mag (frena)</text>
+<text x="315" y="205" text-anchor="end" fill="var(--trap)">F<tspan baseline-shift="sub" font-size="70%">mag</tspan> (frena)</text>
 <text x="412" y="275" fill="var(--fg-dim)">barra de longitud l</text>
 <text x="615" y="30" text-anchor="end" fill="var(--field)">B ⊗ (entra en el papel)</text>
 </g>
@@ -322,11 +322,11 @@ $$P = F_{ext}\,v = I\,l\,B\,v = I\varepsilon = \frac{\varepsilon^2}{R} = I^2R$$
 <line id="sbFm" stroke="var(--trap)" stroke-width="3" marker-end="url(#mk-sb-t)"/>
 <line id="sbFe" stroke="var(--pos)" stroke-width="3" marker-end="url(#mk-sb-p)"/>
 <line id="sbV" stroke="var(--intuition)" stroke-width="3" marker-end="url(#mk-sb-i)"/>
-<text id="sbFmT" font-size="13" fill="var(--trap)" text-anchor="end">F_mag</text>
-<text id="sbFeT" font-size="13" fill="var(--pos)">F_aplicada</text>
+<text id="sbFmT" font-size="13" fill="var(--trap)" text-anchor="end">F<tspan baseline-shift="sub" font-size="70%">mag</tspan></text>
+<text id="sbFeT" font-size="13" fill="var(--pos)">F<tspan baseline-shift="sub" font-size="70%">aplicada</tspan></text>
 <text id="sbVT" font-size="13" fill="var(--intuition)">v</text>
 <text x="28" y="150" font-size="14" fill="var(--fg)">R</text>
-<text x="625" y="275" font-size="13" fill="var(--fg-dim)" text-anchor="end">B ⊗ entrante · corriente en sentido antihorario</text>
+<text x="625" y="275" font-size="13" fill="var(--fg-dim)" text-anchor="end">B ⊗ entrante · corriente en sentido antihorario (si v &gt; 0)</text>
 </svg>
 <div class="controls">
 <label for="bB">B (T)</label><input type="range" id="bB" min="0.1" max="2" step="0.05" value="1"><output id="obB" for="bB">1</output>
@@ -472,9 +472,9 @@ $$\Phi(t) = NBS\cos(\omega t) \quad\Rightarrow\quad \varepsilon(t) = -\frac{\mat
 </g>
 <ellipse cx="420" cy="135" rx="22" ry="80" fill="none" stroke="var(--accent)" stroke-width="3"/>
 <line x1="456" y1="155" x2="380" y2="155" stroke="var(--trap)" stroke-width="3" marker-end="url(#mk-mag-t)"/>
-<text x="458" y="174" font-size="13" fill="var(--trap)">B_ind</text>
-<text x="300" y="44" font-size="13" fill="var(--pos)" text-anchor="middle">esta cara se vuelve N</text>
-<text x="300" y="60" font-size="13" fill="var(--pos)" text-anchor="middle">→ repele al imán</text>
+<text x="458" y="174" font-size="13" fill="var(--trap)">B<tspan baseline-shift="sub" font-size="70%">ind</tspan></text>
+<text x="300" y="42" font-size="13" fill="var(--pos)" text-anchor="middle">esta cara se vuelve N</text>
+<text x="300" y="63" font-size="13" fill="var(--pos)" text-anchor="middle">→ repele al imán</text>
 <text x="535" y="124" font-size="13" fill="var(--field)">Φ crece</text>
 <circle cx="610" cy="200" r="34" fill="none" stroke="var(--fg-dim)" stroke-width="1"/>
 <path d="M644 200 A34 34 0 1 0 610 234" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#mk-mag-a)"/>
@@ -709,7 +709,7 @@ $$\Phi_{tot} = \Phi_{ext} + \Phi_{aut} = M\,I + L\,i \qquad\Rightarrow\qquad \va
 <line x1="42" y1="132" x2="58" y2="132" stroke="var(--fg)" stroke-width="5"/>
 <circle cx="110" cy="50" r="3" fill="var(--fg)"/><circle cx="150" cy="50" r="3" fill="var(--fg)"/>
 <g font-size="14" fill="var(--fg)">
-<text x="12" y="132">ε_B</text>
+<text x="12" y="132">ε<tspan baseline-shift="sub" font-size="70%">B</tspan></text>
 <text x="128" y="28" fill="var(--fg-dim)" font-size="12">t = 0</text>
 <text x="200" y="30">R</text>
 <text x="280" y="125">L</text>
@@ -731,8 +731,8 @@ $$\Phi_{tot} = \Phi_{ext} + \Phi_{aut} = M\,I + L\,i \qquad\Rightarrow\qquad \va
 <text x="396" y="152" fill="var(--neg)">37 %</text>
 <text x="655" y="238" fill="var(--fg-dim)" text-anchor="end">t</text>
 <text x="338" y="44" fill="var(--fg-dim)">i</text>
-<text x="420" y="48" fill="var(--pos)">cierre: i = (ε/R)(1 − e^(−t/τ))</text>
-<text x="440" y="152" fill="var(--neg)">apertura: i = i₀ e^(−t/τ)</text>
+<text x="420" y="48" fill="var(--pos)">cierre: i = (ε/R)(1 − e<tspan baseline-shift="super" font-size="70%">−t/τ</tspan>)</text>
+<text x="440" y="152" fill="var(--neg)">apertura: i = i₀ e<tspan baseline-shift="super" font-size="70%">−t/τ</tspan></text>
 </g>
 </svg>
 <figcaption>Izquierda: circuito RL serie. Derecha: la corriente nunca salta; sube (o baja) exponencialmente con constante de tiempo τ = L/R.</figcaption>
@@ -767,14 +767,14 @@ $$\tau = \frac{L}{R}$$
 <div class="sim"><span class="label">Simulación · circuito RL</span>
 <canvas id="rlCanvas" width="860" height="340"></canvas>
 <div class="controls">
-<label for="rE">ε_B (V)</label><input type="range" id="rE" min="1" max="20" step="0.5" value="10"><output id="orE" for="rE">10</output>
+<label for="rE">ε<sub>B</sub> (V)</label><input type="range" id="rE" min="1" max="20" step="0.5" value="10"><output id="orE" for="rE">10</output>
 <label for="rR">R (Ω)</label><input type="range" id="rR" min="5" max="100" step="1" value="20"><output id="orR" for="rR">20</output>
 <label for="rL">L (mH)</label><input type="range" id="rL" min="10" max="500" step="5" value="150"><output id="orL" for="rL">150</output>
 <label for="rM">Interruptor</label><input type="range" id="rM" min="0" max="1" step="1" value="0"><output id="orM" for="rM">cierre</output>
 </div>
 <div class="readout" id="rlOut"></div>
 </div>
-<p class="dim">Prueba: sube L → la curva se "estira" (más inercia). Sube R → llega antes, pero a una corriente final menor. En modo apertura, V_L se vuelve negativa: la bobina actúa como fuente y empuja la corriente para que no muera de golpe.</p>
+<p class="dim">Prueba: sube L → la curva se "estira" (más inercia). Sube R → llega antes, pero a una corriente final menor. En modo apertura, V<sub>L</sub> se vuelve negativa: la bobina actúa como fuente y empuja la corriente para que no muera de golpe.</p>
 
 <div class="box trap"><span class="label">Trampa de examen</span>
 <ul>
@@ -998,7 +998,7 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
 <text x="240" y="160" text-anchor="middle" fill="var(--fg-dim)">20 cm</text>
 <text x="128" y="110" text-anchor="end" fill="var(--fg-dim)">5 cm</text>
 <text x="320" y="73" text-anchor="middle" fill="var(--pos)">vt</text>
-<text x="545" y="12" text-anchor="end" fill="var(--field)">B ⊙ (hacia el lector)</text>
+<text x="545" y="15" text-anchor="end" fill="var(--field)">B ⊙ (hacia el lector)</text>
 </g>
 </svg>
 <figcaption>Solo la parte sombreada (anchura vt) está en el campo: el área "útil" crece linealmente.</figcaption>
@@ -1065,7 +1065,7 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
 <div class="step">(a) $B_1 = \mu_0\dfrac{N_1}{l_1}I_1$ ⇒ $\Phi_{21} = N_2B_1\pi R_2^2$ ⇒ $M = \dfrac{\mu_0\pi R_2^2N_1N_2}{l_1}$.</div>
 <div class="step">(b) $\varepsilon_2 = -M\dfrac{\mathrm{d}I_1}{\mathrm{d}t} = M\omega I_0\sin(\omega t)$. Aunque esté en abierto (I₂ = 0) hay fem.</div>
 <div class="step">(c) Inclinada θ: $\Phi_{21}$ lleva un $\cos\theta$ ⇒ M y ε se multiplican por $\cos\theta$.</div>
-<div class="step">(26) $\Phi_2 = MI_1 + LI_2 = 10^{-3}\cdot0{,}3 + 20\times10^{-3}\cdot0{,}2 = 0{,}3 + 4 = 4{,}3$ mWb (suponiendo que ambos flujos se suman).</div>
+<div class="step">(26) $\Phi_2 = MI_1 + LI_2 = 10^{-3}\cdot0{,}3 + 20\times10^{-3}\cdot0{,}2 = (0{,}3 + 4)\ \text{mWb} = 4{,}3\ \text{mWb}$ (suponiendo que ambos flujos se suman).</div>
 </div>
 </details>
 </div>
@@ -1128,7 +1128,7 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
 
 <h3>Lenz en 10 segundos</h3>
 <table>
-<tr><th>B a través de la espira</th><th>Φ…</th><th>B_ind</th><th>Corriente (mirando desde donde apunta B)</th></tr>
+<tr><th>B a través de la espira</th><th>Φ…</th><th>B<sub>ind</sub></th><th>Corriente (vista desde delante del papel)</th></tr>
 <tr><td>sale del papel ⊙</td><td>crece</td><td>entra ⊗</td><td>horaria</td></tr>
 <tr><td>sale del papel ⊙</td><td>decrece</td><td>sale ⊙</td><td>antihoraria</td></tr>
 <tr><td>entra en el papel ⊗</td><td>crece</td><td>sale ⊙</td><td>antihoraria</td></tr>
@@ -1280,9 +1280,9 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
       const xm = (xb + 6 - 60) / 200;
       readout.innerHTML =
         `Φ = B·l·x = ${fmt(B * L * xm, 3)} Wb (crece a ritmo B·l·v)<br>` +
-        `ε = vBl = ${fmt(eps)} V &nbsp;·&nbsp; I = ε/R = ${fmt(I)} A (antihoraria)<br>` +
-        `F_mag = IlB = ${fmt(F)} N hacia la izquierda &nbsp;·&nbsp; F_aplicada = ${fmt(F)} N para v constante<br>` +
-        `P_aplicada = F·v = ${fmt(F * v)} W &nbsp;=&nbsp; P_Joule = I²R = ${fmt(I * I * R)} W`;
+        `ε = vBl = ${fmt(eps)} V &nbsp;·&nbsp; I = ε/R = ${fmt(I)} A${I > 0 ? " (antihoraria)" : ""}<br>` +
+        `F<sub>mag</sub> = IlB = ${fmt(F)} N hacia la izquierda &nbsp;·&nbsp; F<sub>aplicada</sub> = ${fmt(F)} N para v constante<br>` +
+        `P<sub>aplicada</sub> = F·v = ${fmt(F * v)} W &nbsp;=&nbsp; P<sub>Joule</sub> = I²R = ${fmt(I * I * R)} W`;
     }
     function frame(ts) {
       const dt = last === null ? 0 : Math.min((ts - last) / 1000, 0.05);
@@ -1420,6 +1420,7 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
         update();
       };
       inp.addEventListener("input", sync);
+      sync();
     });
     function params() {
       const [E, R, Lm, mode] = inputs.map((i) => parseFloat(i.value));
@@ -1430,10 +1431,10 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
       const tau = L / R;
       const iInf = E / R;
       readout.innerHTML =
-        `τ = L/R = ${fmt(tau * 1000, 2)} ms &nbsp;·&nbsp; i_final = ε/R = ${fmt(iInf, 3)} A &nbsp;·&nbsp; 98 % en 3,9τ = ${fmt(3.912 * tau * 1000, 1)} ms<br>` +
+        `τ = L/R = ${fmt(tau * 1000, 2)} ms &nbsp;·&nbsp; i<sub>final</sub> = ε/R = ${fmt(iInf, 3)} A &nbsp;·&nbsp; 98 % en 3,9τ = ${fmt(3.912 * tau * 1000, 1)} ms<br>` +
         (mode === 0
-          ? `cierre: i(τ) = 63 % = ${fmt(0.632 * iInf, 3)} A · V_L(0⁺) = ε = ${fmt(E, 1)} V · energía final ½Li² = ${fmt(0.5 * L * iInf * iInf * 1000, 2)} mJ`
-          : `apertura: i(τ) = 37 % = ${fmt(0.368 * iInf, 3)} A · V_L(0⁺) = −ε = ${fmt(-E, 1)} V · calor total en R = ½Li₀² = ${fmt(0.5 * L * iInf * iInf * 1000, 2)} mJ`);
+          ? `cierre: i(τ) = 63 % = ${fmt(0.632 * iInf, 3)} A · V<sub>L</sub>(0⁺) = ε = ${fmt(E, 1)} V · energía final ½Li² = ${fmt(0.5 * L * iInf * iInf * 1000, 2)} mJ`
+          : `apertura: i(τ) = 37 % = ${fmt(0.368 * iInf, 3)} A · V<sub>L</sub>(0⁺) = −ε = ${fmt(-E, 1)} V · calor total en R = ½Li₀² = ${fmt(0.5 * L * iInf * iInf * 1000, 2)} mJ`);
     }
     function draw(ts) {
       const { E, R, L, mode } = params();
@@ -1486,7 +1487,7 @@ $$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + 
       ctx.fillStyle = mode === 0 ? col.pos : col.neg; ctx.font = "14px sans-serif";
       ctx.fillText("i(t)", X0 + XW - 150, P1.y0 + P1.h - 12);
       ctx.fillStyle = col.acc;
-      ctx.fillText("V_L(t) = L di/dt", X0 + XW - 150, P2.y0 + 20);
+      ctx.fillText("Vₗ(t) = L di/dt", X0 + XW - 150, P2.y0 + 20);
       const td = ((ts / 1000) % 3) / 3 * WIN;
       ctx.fillStyle = col.field;
       ctx.beginPath(); ctx.arc(tx(td), iy(iOf(td)), 5, 0, 2 * Math.PI); ctx.fill();

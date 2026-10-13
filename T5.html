@@ -30,7 +30,7 @@
 <li><a href="#sec-problemas">Problemas resueltos</a></li>
 <li><a href="#sec-estrategia">Estrategia de examen</a></li>
 <li><a href="#sec-formulas">Hoja de fórmulas</a></li>
-<li><a href="#sec-test">Autoevaluación</a></li>
+<li><a href="#sec-test">Autotest</a></li>
 </ol>
 </nav>
 <main>
@@ -66,7 +66,7 @@
 <text x="565" y="72" fill="var(--fg-dim)" font-size="13">A, ω = 2πf, φ</text>
 <rect x="700" y="25" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
 <text x="790" y="51" fill="var(--fg)">Valores eficaces</text>
-<text x="790" y="72" fill="var(--fg-dim)" font-size="13">I_ef = I₀/√2</text>
+<text x="790" y="72" fill="var(--fg-dim)" font-size="13">I<tspan baseline-shift="sub" font-size="70%">ef</tspan> = I₀/√2</text>
 <rect x="470" y="145" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--why)"/>
 <text x="565" y="171" fill="var(--fg)">Fasores</text>
 <text x="565" y="192" fill="var(--fg-dim)" font-size="13">d/dt → multiplicar por jω</text>
@@ -78,13 +78,13 @@
 <text x="110" y="192" fill="var(--fg-dim)" font-size="13">igual que en CC</text>
 <rect x="20" y="265" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--field)"/>
 <text x="110" y="291" fill="var(--fg)">RLC serie</text>
-<text x="110" y="312" fill="var(--fg-dim)" font-size="13">Z = R + j(X_L − X_C)</text>
+<text x="110" y="312" fill="var(--fg-dim)" font-size="13">Z = R + j(X<tspan baseline-shift="sub" font-size="70%">L</tspan> − X<tspan baseline-shift="sub" font-size="70%">C</tspan>)</text>
 <rect x="240" y="265" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--field)"/>
 <text x="335" y="291" fill="var(--fg)">Resonancia</text>
-<text x="335" y="312" fill="var(--fg-dim)" font-size="13">X_L = X_C, ω₀ = 1/√(LC)</text>
+<text x="335" y="312" fill="var(--fg-dim)" font-size="13">X<tspan baseline-shift="sub" font-size="70%">L</tspan> = X<tspan baseline-shift="sub" font-size="70%">C</tspan>, ω₀ = 1/√(LC)</text>
 <rect x="470" y="265" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--tldr)"/>
 <text x="565" y="291" fill="var(--fg)">Potencia media</text>
-<text x="565" y="312" fill="var(--fg-dim)" font-size="13">V_ef I_ef cos φ</text>
+<text x="565" y="312" fill="var(--fg-dim)" font-size="13">V<tspan baseline-shift="sub" font-size="70%">ef</tspan> I<tspan baseline-shift="sub" font-size="70%">ef</tspan> cos φ</text>
 <rect x="700" y="265" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--tldr)"/>
 <text x="790" y="291" fill="var(--fg)">Factor de potencia</text>
 <text x="790" y="312" fill="var(--fg-dim)" font-size="13">cos φ = Re Z / |Z|</text>
@@ -139,7 +139,7 @@ $$I(t) = I_0\cos(\omega t + \varphi)$$
 <tr><td><b>Matemática</b></td><td><b>Teorema de Fourier</b>: cualquier señal periódica = suma de armónicos. Si sabes tratar <i>un</i> armónico, sabes tratar cualquier señal en una red lineal.</td></tr>
 </table>
 <div class="box why"><span class="label">Por qué alta tensión = menos pérdidas</span>
-<p>La potencia transportada es $P = VI$. La pérdida en los cables es $P_{\text{pérd}} = I^2 R_{\text{cable}}$.</p>
+<p>La potencia transportada es $P = V_{ef}I_{ef}$. La pérdida en los cables es $P_{\text{pérd}} = I_{ef}^2 R_{\text{cable}}$.</p>
 <p>Si subes $V$ ×10 para la <b>misma</b> $P$, la $I$ baja ×10 → las pérdidas bajan <b>×100</b>. Y subir/bajar tensión solo es fácil con transformadores, que solo funcionan con corriente <b>variable</b> (Faraday).</p>
 </div>
 <div class="box intuition"><span class="label">Intuición clave: por qué la sinusoide "sobrevive"</span>
@@ -250,7 +250,7 @@ $$\cos\!\left(\omega t+\varphi-\tfrac{\pi}{2}\right) = \operatorname{sen}(\omega
 <ul>
 <li><b>ω vs f</b>: $\omega = 2\pi f$. "50 Hz" → $\omega = 314{,}16$ rad/s. Las reactancias usan <b>ω</b>.</li>
 <li><b>Grados vs radianes</b>: en $\cos(\omega t + \varphi)$, $\omega t$ está en radianes, así que $\varphi$ también. Calculadora en RAD (o convierte con cuidado).</li>
-<li>"Retrasada un sexto del periodo" → $\varphi = 2\pi/6 = 60°$.</li>
+<li>"Retrasada un sexto del periodo" → $\varphi = -2\pi/6 = -60°$ (retraso ⇒ $\varphi$ negativo).</li>
 <li>Si te dan un <b>seno</b>, pásalo a coseno <b>antes</b> de sacar el fasor: $20\operatorname{sen}(\omega t) = 20\cos(\omega t - \pi/2)$.</li>
 </ul>
 </div>
@@ -509,9 +509,9 @@ $$\tilde V = Z\,\tilde I,\qquad Z_R = R,\quad Z_C = -jX_C = \frac{1}{j\omega C},
 <line x1="340" y1="150" x2="340" y2="260" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
 <circle cx="340" cy="150" r="5" fill="var(--fg)"/>
 <text x="330" y="280" fill="var(--fg)" font-size="14">ω₀</text>
-<text x="346" y="212" fill="var(--fg)" font-size="13">X_L = X_C</text>
-<text x="575" y="100" fill="var(--intuition)" font-size="14">X_L = ωL</text>
-<text x="205" y="45" fill="var(--why)" font-size="14">X_C = 1/(ωC)</text>
+<text x="346" y="212" fill="var(--fg)" font-size="13">X<tspan baseline-shift="sub" font-size="70%">L</tspan> = X<tspan baseline-shift="sub" font-size="70%">C</tspan></text>
+<text x="575" y="100" fill="var(--intuition)" font-size="14">X<tspan baseline-shift="sub" font-size="70%">L</tspan> = ωL</text>
+<text x="205" y="45" fill="var(--why)" font-size="14">X<tspan baseline-shift="sub" font-size="70%">C</tspan> = 1/(ωC)</text>
 <text x="520" y="183" fill="var(--field)" font-size="14">R (no depende de ω)</text>
 <text x="70" y="302" fill="var(--fg-dim)" font-size="12">ω→0: L cable, C abierto</text>
 <text x="470" y="302" fill="var(--fg-dim)" font-size="12">ω→∞: L abierto, C cable</text>
@@ -596,10 +596,10 @@ $$I_0 = \frac{\xi_0}{\sqrt{R^2+(X_L-X_C)^2}},\qquad \varphi_I = \theta - \arctan
 <path d="M110,220 A50,50 0 0 0 106.2,200.8" fill="none" stroke="var(--fg)" stroke-width="2"/>
 <text x="117" y="210" fill="var(--fg)" font-size="14">α</text>
 <text x="95" y="245" fill="var(--neg)" font-size="15">Ĩ</text>
-<text x="215" y="245" fill="var(--field)" font-size="14">Ṽ_R = R Ĩ</text>
-<text x="312" y="60" fill="var(--intuition)" font-size="14">Ṽ_L = jX_L Ĩ</text>
-<text x="315" y="290" fill="var(--why)" font-size="14">Ṽ_C = −jX_C Ĩ</text>
-<text x="312" y="160" fill="var(--fg)" font-size="13">Ṽ_L + Ṽ_C</text>
+<text x="215" y="245" fill="var(--field)" font-size="14">Ṽ<tspan baseline-shift="sub" font-size="70%">R</tspan> = R Ĩ</text>
+<text x="312" y="60" fill="var(--intuition)" font-size="14">Ṽ<tspan baseline-shift="sub" font-size="70%">L</tspan> = jX<tspan baseline-shift="sub" font-size="70%">L</tspan> Ĩ</text>
+<text x="315" y="290" fill="var(--why)" font-size="14">Ṽ<tspan baseline-shift="sub" font-size="70%">C</tspan> = −jX<tspan baseline-shift="sub" font-size="70%">C</tspan> Ĩ</text>
+<text x="312" y="160" fill="var(--fg)" font-size="13">Ṽ<tspan baseline-shift="sub" font-size="70%">L</tspan> + Ṽ<tspan baseline-shift="sub" font-size="70%">C</tspan></text>
 <text x="140" y="140" fill="var(--pos)" font-size="15">ξ̃ = Z Ĩ</text>
 <line x1="480" y1="250" x2="720" y2="250" stroke="var(--field)" stroke-width="3"/>
 <line x1="720" y1="250" x2="720" y2="150" stroke="var(--intuition)" stroke-width="3"/>
@@ -607,13 +607,13 @@ $$I_0 = \frac{\xi_0}{\sqrt{R^2+(X_L-X_C)^2}},\qquad \varphi_I = \theta - \arctan
 <path d="M530,250 A50,50 0 0 0 526.2,230.8" fill="none" stroke="var(--fg)" stroke-width="2"/>
 <text x="537" y="240" fill="var(--fg)" font-size="14">α</text>
 <text x="590" y="275" fill="var(--field)" font-size="15">R</text>
-<text x="730" y="205" fill="var(--intuition)" font-size="15">X_L − X_C</text>
+<text x="730" y="205" fill="var(--intuition)" font-size="15">X<tspan baseline-shift="sub" font-size="70%">L</tspan> − X<tspan baseline-shift="sub" font-size="70%">C</tspan></text>
 <text x="560" y="182" fill="var(--accent)" font-size="15">|Z|</text>
 <text x="480" y="60" fill="var(--fg)" font-size="15">Triángulo de impedancias</text>
-<text x="480" y="85" fill="var(--fg-dim)" font-size="13">cos α = R/|Z|,  sen α = (X_L−X_C)/|Z|</text>
-<text x="480" y="105" fill="var(--fg-dim)" font-size="13">si X_C &gt; X_L el triángulo apunta hacia abajo</text>
+<text x="480" y="85" fill="var(--fg-dim)" font-size="13">cos α = R/|Z|,  sen α = (X<tspan baseline-shift="sub" font-size="70%">L</tspan>−X<tspan baseline-shift="sub" font-size="70%">C</tspan>)/|Z|</text>
+<text x="480" y="109" fill="var(--fg-dim)" font-size="13">si X<tspan baseline-shift="sub" font-size="70%">C</tspan> &gt; X<tspan baseline-shift="sub" font-size="70%">L</tspan> el triángulo apunta hacia abajo</text>
 </svg>
-<figcaption>Corriente como referencia (fase 0). <span class="hl">Ṽ_R</span> va con Ĩ, Ṽ_L 90° por delante, Ṽ_C 90° por detrás: L y C se <b>restan</b>. Dividiendo todo el triángulo de tensiones entre $I_0$ sale el triángulo de impedancias.</figcaption>
+<figcaption>Corriente como referencia (fase 0). <span class="hl">Ṽ<sub>R</sub></span> va con Ĩ, Ṽ<sub>L</sub> 90° por delante, Ṽ<sub>C</sub> 90° por detrás: L y C se <b>restan</b>. Dividiendo todo el triángulo de tensiones entre $I_0$ sale el triángulo de impedancias.</figcaption>
 </figure>
 <table>
 <tr><th>Caso</th><th>Signo de α</th><th>Corriente</th><th>Comportamiento</th></tr>
@@ -631,12 +631,12 @@ $$I_0 = \frac{\xi_0}{\sqrt{R^2+(X_L-X_C)^2}},\qquad \varphi_I = \theta - \arctan
 <line id="rlcVL" x1="0" y1="0" x2="0" y2="0" stroke="var(--intuition)" stroke-width="3" marker-end="url(#ah-int)"/>
 <line id="rlcVC" x1="0" y1="0" x2="0" y2="0" stroke="var(--why)" stroke-width="3" marker-end="url(#ah-why)"/>
 <line id="rlcE" x1="0" y1="0" x2="0" y2="0" stroke="var(--pos)" stroke-width="3.5" marker-end="url(#ah-pos)"/>
-<line id="rlcI" x1="0" y1="0" x2="0" y2="0" stroke="var(--neg)" stroke-width="5" marker-end="url(#ah-neg)"/>
 <text x="20" y="20" fill="var(--pos)" font-size="13">ξ̃</text>
 <text x="45" y="20" fill="var(--neg)" font-size="13">Ĩ</text>
-<text x="65" y="20" fill="var(--field)" font-size="13">Ṽ_R</text>
-<text x="100" y="20" fill="var(--intuition)" font-size="13">Ṽ_L</text>
-<text x="135" y="20" fill="var(--why)" font-size="13">Ṽ_C</text>
+<text x="65" y="20" fill="var(--field)" font-size="13">Ṽ<tspan baseline-shift="sub" font-size="70%">R</tspan></text>
+<text x="100" y="20" fill="var(--intuition)" font-size="13">Ṽ<tspan baseline-shift="sub" font-size="70%">L</tspan></text>
+<text x="135" y="20" fill="var(--why)" font-size="13">Ṽ<tspan baseline-shift="sub" font-size="70%">C</tspan></text>
+<line id="rlcI" x1="0" y1="0" x2="0" y2="0" stroke="var(--neg)" stroke-width="5" marker-end="url(#ah-neg)"/>
 <line x1="370" y1="170" x2="885" y2="170" stroke="var(--line)"/>
 <line x1="380" y1="30" x2="380" y2="310" stroke="var(--line)"/>
 <path id="rlcWV" d="" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
@@ -660,7 +660,7 @@ $$I_0 = \frac{\xi_0}{\sqrt{R^2+(X_L-X_C)^2}},\qquad \varphi_I = \theta - \arctan
 <div class="box intuition"><span class="label">Qué probar en la simulación</span>
 <ul>
 <li>Sube $f$ despacio: $\tilde V_L$ crece, $\tilde V_C$ mengua; la corriente pasa de <b>adelantada</b> (capacitivo) a <b>retrasada</b> (inductivo).</li>
-<li>Busca la $f$ en la que Ṽ_L y Ṽ_C se anulan: Ĩ queda alineada con ξ̃ y es máxima.</li>
+<li>Busca la $f$ en la que Ṽ<sub>L</sub> y Ṽ<sub>C</sub> se anulan: Ĩ queda alineada con ξ̃ y es máxima.</li>
 <li>Con R pequeña cerca de resonancia, $V_{L,0}$ y $V_{C,0}$ son <b>mayores que ξ₀</b>. No es un error.</li>
 </ul>
 </div>
@@ -683,7 +683,7 @@ $$I_0 = \frac{\xi_0}{\sqrt{R^2+(X_L-X_C)^2}},\qquad \varphi_I = \theta - \arctan
 $$I_0(\omega) = \frac{\xi_0}{\sqrt{R^2+\left(\omega L - \dfrac{1}{\omega C}\right)^2}} = \frac{\omega\,\xi_0}{\sqrt{\omega^2R^2 + L^2(\omega^2-\omega_0^2)^2}},\qquad \omega_0 = \frac{1}{\sqrt{LC}}$$
 <p class="legend">$\omega_0$: frecuencia (angular) de resonancia (rad/s); $f_0 = \omega_0/2\pi$ (Hz). En $\omega = \omega_0$: $X_L = X_C$, $Z = R$, $I_{0,\max} = \xi_0/R$, $\cos\varphi = 1$.</p>
 </div>
-<div class="box why"><span class="label">Por qué hay un máximo justo cuando X_L = X_C</span>
+<div class="box why"><span class="label">Por qué hay un máximo justo cuando X<sub>L</sub> = X<sub>C</sub></span>
 <p>El numerador es fijo; $I_0$ es máxima cuando el denominador $|Z|$ es mínimo. $R^2$ no depende de ω, y $(X_L - X_C)^2\ge 0$ vale cero solo si $\omega L = 1/(\omega C)$, es decir, $\omega^2 = 1/(LC)$.</p>
 <p>Lejos de ω₀ domina una reactancia: a <b>baja</b> ω el condensador "bloquea" ($X_C$ enorme); a <b>alta</b> ω la bobina "bloquea" ($X_L$ enorme). En medio hay una ventana donde ambas se cancelan.</p>
 </div>
@@ -818,7 +818,7 @@ $$[\tilde\xi_i] = [Z_{ij}]\,[\tilde I_j]$$
 <h3>12.1 · Potencia instantánea y potencia media</h3>
 <p>Rama de impedancia $Z$ con $V(t) = V_0\cos\omega t$ e $I(t) = I_0\cos(\omega t-\varphi)$, donde <span class="hl">φ = desfase de V respecto a I</span> (φ &gt; 0: la corriente va retrasada).</p>
 <p>$P(t) = V(t)I(t) = V_0I_0\cos\omega t\cos(\omega t-\varphi)$ oscila con el tiempo (incluso cambia de signo). Lo que importa para la factura es la <b>media en un periodo</b>: la energía en un tiempo largo es $\Delta E \simeq P_{med}\,\Delta t$.</p>
-<div class="box why"><span class="label">Derivación de P_med</span>
+<div class="box why"><span class="label">Derivación de P<sub>med</sub></span>
 <div class="steps">
 <div class="step">Expandir: $\cos(\omega t-\varphi) = \cos\omega t\cos\varphi + \operatorname{sen}\omega t\operatorname{sen}\varphi$.</div>
 <div class="step">$P_{med} = \dfrac{V_0I_0}{T}\left[\cos\varphi\displaystyle\int_0^T\cos^2\omega t\,dt + \operatorname{sen}\varphi\int_0^T\cos\omega t\operatorname{sen}\omega t\,dt\right]$.</div>
@@ -843,7 +843,7 @@ $$P_{med} = \frac12V_0I_0\cos\varphi = V_{ef}I_{ef}\cos\varphi = \frac12\operato
 <text x="70" y="25" fill="var(--pos)" font-size="13">v(t)</text>
 <text x="110" y="25" fill="var(--neg)" font-size="13">i(t)</text>
 <text x="150" y="25" fill="var(--field)" font-size="13">p(t) = v·i</text>
-<text x="240" y="25" fill="var(--field)" font-size="13">- - - P_med</text>
+<text x="240" y="25" fill="var(--field)" font-size="13">- - - P<tspan baseline-shift="sub" font-size="70%">med</tspan></text>
 <text x="350" y="25" fill="var(--trap)" font-size="13">zona roja: energía devuelta a la fuente</text>
 </svg>
 <div class="controls">
@@ -992,8 +992,8 @@ $$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\lef
 <path d="M90,170 A50,50 0 0 0 80,140" fill="none" stroke="var(--fg)"/>
 <text x="95" y="155" fill="var(--fg)" font-size="13">36,9°</text>
 <text x="60" y="195" fill="var(--neg)" font-size="14">Ĩ (0,1 A)</text>
-<text x="140" y="195" fill="var(--field)" font-size="14">Ṽ_R = 8 V</text>
-<text x="210" y="110" fill="var(--intuition)" font-size="14">Ṽ_L = 6 V</text>
+<text x="140" y="195" fill="var(--field)" font-size="14">Ṽ<tspan baseline-shift="sub" font-size="70%">R</tspan> = 8 V</text>
+<text x="210" y="110" fill="var(--intuition)" font-size="14">Ṽ<tspan baseline-shift="sub" font-size="70%">L</tspan> = 6 V</text>
 <text x="70" y="90" fill="var(--pos)" font-size="14">Ṽ = 10 V</text>
 </svg>
 <figcaption>Triángulo 6–8–10: la tensión total adelanta 36,9° a la corriente.</figcaption>
@@ -1057,7 +1057,7 @@ $$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\lef
 <text x="285" y="225" fill="var(--intuition)" font-size="14">Ĩ₃ = 2 − 2j</text>
 <text x="270" y="110" fill="var(--pos)" font-size="14">ξ̃ = 8</text>
 </svg>
-<figcaption>Ĩ₂ e Ĩ₃ casi se anulan; su resta es la corriente de la fuente.</figcaption>
+<figcaption>Ĩ₂ e Ĩ₃ se cancelan en parte; su suma es la corriente de la fuente, Ĩ₁.</figcaption>
 </figure>
 </details>
 </div>
@@ -1185,13 +1185,13 @@ $$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\lef
 </section>
 
 <section id="sec-test">
-<h2>16 · Autoevaluación</h2>
+<h2>16 · Autotest</h2>
 <div class="box check"><span class="label">Comprueba</span>
 <details><summary>1. Un elemento con $V_{ef}$ fija: si duplicas la frecuencia, ¿qué pasa con $I_{ef}$? (problema 6)</summary><p>R: no cambia. Bobina: $X_L = \omega L$ se duplica → $I$ a la <b>mitad</b>. Condensador: $X_C = 1/\omega C$ se reduce a la mitad → $I$ se <b>duplica</b>. Respuesta f).</p></details>
 <details><summary>2. Circuito solo con bobinas y condensadores: ¿potencia consumida? (problema 13)</summary><p><b>Nula</b>, sea cual sea la frecuencia o la conexión. Sin resistencias no hay efecto Joule; la energía solo va y viene ($\operatorname{Re}Z = 0$ → $\cos\varphi = 0$). Respuesta a).</p></details>
 <details><summary>3. En un diagrama fasorial de dos elementos, Ĩ está adelantada a Ṽ (menos de 90°). ¿Qué son? (problema 14)</summary><p>Una <b>resistencia y un condensador</b>: corriente adelantada = capacitivo, y al ser &lt; 90° hay parte resistiva. Vale tanto en serie como en paralelo (en ambos casos el argumento de Z es negativo). Respuesta a).</p></details>
 <details><summary>4. Resistencia con $V_{ef}$ fija; le añado una L o una C. ¿La potencia? (problema 15)</summary><p>Si va en <b>paralelo</b>, R sigue teniendo la misma tensión → misma potencia. Si va en <b>serie</b>, $|Z|$ crece → baja la corriente → baja $I^2R$. Respuesta d).</p></details>
-<details><summary>5. R en serie con un elemento reactivo X; frecuencia muy alta. ¿$V_X$ frente a $V_R$? (problema 16)</summary><p>Bobina: $X_L\to\infty$ → casi toda la tensión cae en ella: $V_X\gg V_R$. Condensador: $X_C\to0$ → es un cable: $V_X\ll V_R$. Respuesta e) (a y d).</p></details>
+<details><summary>5. R en serie con un elemento reactivo X; frecuencia muy alta. ¿$V_X$ frente a $V_R$? (problema 16)</summary><p>Bobina: $X_L\to\infty$ → casi toda la tensión cae en ella: $V_X\gg V_R$. Condensador: $X_C\to0$ → es un cable: $V_X\ll V_R$. Correcta la opción que afirma ambas cosas a la vez.</p></details>
 <details><summary>6. En resonancia, ¿cómo puede $V_L$ superar a la fem de la fuente sin violar la conservación de la energía?</summary><p>Porque $\tilde V_L$ y $\tilde V_C$ están en oposición exacta y se cancelan; su suma es 0. La energía que ves en L no viene de la fuente en cada ciclo: es energía que oscila entre L y C. La fuente solo repone lo que disipa R.</p></details>
 <details><summary>7. ¿Por qué no puedes usar un único diagrama fasorial si hay dos fuentes de frecuencias distintas?</summary><p>Porque los fasores de distinta ω giran a ritmos diferentes: el ángulo entre ellos cambia con el tiempo y no se pueden "congelar" juntos. Hay que resolver cada frecuencia por separado y superponer en el tiempo.</p></details>
 <details><summary>8. ¿La impedancia es un fasor?</summary><p>No. Es el cociente $\tilde V/\tilde I$: el $e^{j\omega t}$ se cancela y no representa ninguna magnitud que oscile. Es un número complejo que caracteriza al elemento a esa ω.</p></details>
@@ -1258,11 +1258,11 @@ $$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\lef
     rlc = { R, L, C, f, w, XL, XC, X, Z, phi, I0, f0 };
     const kind = Math.abs(phi) < 0.02 ? "≈ resonancia (resistivo)" : phi > 0 ? "inductivo: i retrasada" : "capacitivo: i adelantada";
     el("rlcOut").innerHTML =
-      "ω = " + fx(w, 1) + " rad/s · X_L = " + fx(XL, 1) + " Ω · X_C = " + fx(XC, 1) + " Ω · |Z| = " + fx(Z, 1) + " Ω<br>" +
+      "ω = " + fx(w, 1) + " rad/s · X<sub>L</sub> = " + fx(XL, 1) + " Ω · X<sub>C</sub> = " + fx(XC, 1) + " Ω · |Z| = " + fx(Z, 1) + " Ω<br>" +
       "φ = arg Z = " + fx(phi * 180 / Math.PI, 1) + "° (" + kind + ") · f₀ = " + fx(f0, 1) + " Hz<br>" +
-      "ξ₀ = 10 V · I₀ = " + fx(I0, 3) + " A · I_ef = " + fx(I0 / Math.SQRT2, 3) + " A · cos φ = " + fx(Math.cos(phi), 3) +
-      " · P_med = " + fx(0.5 * E0 * I0 * Math.cos(phi), 3) + " W<br>" +
-      "V_R0 = " + fx(I0 * R, 2) + " V · V_L0 = " + fx(I0 * XL, 2) + " V · V_C0 = " + fx(I0 * XC, 2) + " V";
+      "ξ₀ = 10 V · I₀ = " + fx(I0, 3) + " A · I<sub>ef</sub> = " + fx(I0 / Math.SQRT2, 3) + " A · cos φ = " + fx(Math.cos(phi), 3) +
+      " · P<sub>med</sub> = " + fx(0.5 * E0 * I0 * Math.cos(phi), 3) + " W<br>" +
+      "V<sub>R0</sub> = " + fx(I0 * R, 2) + " V · V<sub>L0</sub> = " + fx(I0 * XL, 2) + " V · V<sub>C0</sub> = " + fx(I0 * XC, 2) + " V";
     const x0 = 380, w0 = 500, yc = 170, amp = 120, ki = R / Z;
     el("rlcWV").setAttribute("d", pathFrom(300, (u) => [x0 + w0 * u, yc - amp * Math.cos(2 * TAU * u)]));
     el("rlcWI").setAttribute("d", pathFrom(300, (u) => [x0 + w0 * u, yc - amp * ki * Math.cos(2 * TAU * u - phi)]));
@@ -1341,7 +1341,7 @@ $$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\lef
     const Xm = wm * L - 1 / (wm * C);
     el("resOut").innerHTML =
       "f₀ = 1/(2π√LC) = " + fx(f0, 1) + " Hz · I₀,máx = ξ₀/R = " + fx(Imax, 3) + " A · ancho Δf = R/(2πL) = " + fx(f2 - f1, 1) + " Hz · Q = ω₀L/R = " + fx(TAU * f0 * L / R, 2) + "<br>" +
-      "en f = " + fm + " Hz: X_L − X_C = " + fx(Xm, 1) + " Ω · |Z| = " + fx(Math.hypot(R, Xm), 1) + " Ω · I₀ = " + fx(im, 3) + " A (" + fx(100 * im / Imax, 1) + " % del máximo) · φ = " + fx(Math.atan2(Xm, R) * 180 / Math.PI, 1) + "°";
+      "en f = " + fm + " Hz: X<sub>L</sub> − X<sub>C</sub> = " + fx(Xm, 1) + " Ω · |Z| = " + fx(Math.hypot(R, Xm), 1) + " Ω · I₀ = " + fx(im, 3) + " A (" + fx(100 * im / Imax, 1) + " % del máximo) · φ = " + fx(Math.atan2(Xm, R) * 180 / Math.PI, 1) + "°";
   }
   resIds.forEach((id) => el(id).addEventListener("input", resUpdate));
   resUpdate();
@@ -1369,7 +1369,7 @@ $$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\lef
     const kind = phiDeg === 0 ? "resistivo puro" : phiDeg > 0 ? "inductivo (i retrasada)" : "capacitivo (i adelantada)";
     el("powOut").innerHTML =
       "Comportamiento " + kind + " · cos φ = " + fx(Math.cos(phi), 3) + "<br>" +
-      "Con V₀ = 10 V, I₀ = 2 A: V_ef I_ef = 10 W → P_med = 10·cos φ = " + fx(10 * Math.cos(phi), 2) + " W<br>" +
+      "Con V₀ = 10 V, I₀ = 2 A: V<sub>ef</sub> I<sub>ef</sub> = 10 W → P<sub>med</sub> = 10·cos φ = " + fx(10 * Math.cos(phi), 2) + " W<br>" +
       "Energía devuelta a la fuente / energía entregada en cada ciclo = " + fx(pos > 0 ? 100 * neg / pos : 0, 1) + " %";
   }
   el("powPhi").addEventListener("input", powUpdate);

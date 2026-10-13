@@ -14,14 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const links = [...document.querySelectorAll(".toc a[href^='#']")];
   const targets = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
   if (!targets.length) return;
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
-      });
-    },
-    { rootMargin: "0px 0px -70% 0px" }
-  );
-  targets.forEach((t) => observer.observe(t));
+  const onScroll = () => {
+    let active = null;
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) {
+      active = targets[targets.length - 1];
+    } else {
+      for (const t of targets) if (t.getBoundingClientRect().top <= innerHeight * 0.3) active = t;
+    }
+    links.forEach((a) => a.classList.toggle("active", active !== null && a.getAttribute("href") === "#" + active.id));
+  };
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 });

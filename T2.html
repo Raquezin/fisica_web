@@ -22,7 +22,7 @@
 <li><a href="#sec-rc">Circuito RC</a></li>
 <li><a href="#sec-estrategia">Estrategia de examen</a></li>
 <li><a href="#sec-formulario">Formulario</a></li>
-<li><a href="#sec-test">Autoevaluación</a></li>
+<li><a href="#sec-test">Autotest</a></li>
 </ol></nav>
 <main>
 
@@ -41,7 +41,7 @@
 <rect x="245" y="310" width="190" height="72" rx="10" fill="var(--bg-3)" stroke="var(--example)" stroke-width="1.8"/><text x="340" y="341.8" font-size="14" text-anchor="middle" fill="var(--fg)" font-weight="700">Fuerza electromotriz</text><text x="340" y="360" font-size="12" text-anchor="middle" fill="var(--fg-dim)">ξ = ∮f·dl,  P = ξI</text>
 <rect x="470" y="310" width="190" height="72" rx="10" fill="var(--bg-3)" stroke="var(--intuition)" stroke-width="1.8"/><text x="565" y="341.8" font-size="14" text-anchor="middle" fill="var(--fg)" font-weight="700">Regla de mallas</text><text x="565" y="360" font-size="12" text-anchor="middle" fill="var(--fg-dim)">ΣIR = Σξ en cada malla</text>
 <rect x="700" y="140" width="180" height="92" rx="10" fill="var(--bg-3)" stroke="var(--check)" stroke-width="1.8"/><text x="790" y="172.7" font-size="14" text-anchor="middle" fill="var(--fg)" font-weight="700">Resolver circuitos</text><text x="790" y="190.9" font-size="12" text-anchor="middle" fill="var(--fg-dim)">mallas · superposición</text><text x="790" y="209.1" font-size="12" text-anchor="middle" fill="var(--fg-dim)">Thévenin · balance</text>
-<rect x="700" y="310" width="180" height="72" rx="10" fill="var(--bg-3)" stroke="var(--trap)" stroke-width="1.8"/><text x="790" y="341.8" font-size="14" text-anchor="middle" fill="var(--fg)" font-weight="700">Circuito RC</text><text x="790" y="360" font-size="12" text-anchor="middle" fill="var(--fg-dim)">τ = RC,  e<tspan dy="-6" font-size="9">−t/τ</tspan><tspan dy="6">​</tspan></text>
+<rect x="700" y="310" width="180" height="72" rx="10" fill="var(--bg-3)" stroke="var(--trap)" stroke-width="1.8"/><text x="790" y="341.8" font-size="14" text-anchor="middle" fill="var(--fg)" font-weight="700">Circuito RC</text><text x="790" y="363" font-size="12" text-anchor="middle" fill="var(--fg-dim)">τ = RC,  e<tspan dy="-6" font-size="9">−t/τ</tspan><tspan dy="6">​</tspan></text>
 <line x1="210" y1="66" x2="237" y2="66" stroke="var(--fg-dim)" stroke-width="1.8"/><polygon points="243,66 233,71 233,61" fill="var(--fg-dim)"/>
 <line x1="435" y1="66" x2="462" y2="66" stroke="var(--fg-dim)" stroke-width="1.8"/><polygon points="468,66 458,71 458,61" fill="var(--fg-dim)"/>
 <line x1="115" y1="102" x2="115" y2="162" stroke="var(--fg-dim)" stroke-width="1.8"/><polygon points="115,168 110,158 120,158" fill="var(--fg-dim)"/>
@@ -211,7 +211,7 @@ $$\oint_S\vec J\cdot d\vec S=0\qquad\text{(régimen estacionario)}$$
 <text x="668" y="52" font-size="13" text-anchor="end" fill="var(--field)">v<tspan dy="4" font-size="9">a</tspan><tspan dy="-4">​</tspan> = qE/λ</text>
 <path d="M400 200 L401.7 195.4 L403.3 191 L405 186.8 L406.6 182.6 L408.3 178.6 L409.9 174.8 L411.6 171 L413.3 167.4 L414.9 163.9 L416.6 160.5 L418.2 157.2 L419.9 154.1 L421.5 151 L423.2 148 L424.8 145.2 L426.5 142.4 L428.2 139.7 L429.8 137.1 L431.5 134.6 L433.1 132.2 L434.8 129.8 L436.4 127.6 L438.1 125.4 L439.8 123.2 L441.4 121.2 L443.1 119.2 L444.7 117.2 L446.4 115.4 L448 113.6 L449.7 111.8 L451.3 110.1 L453 108.5 L454.7 106.9 L456.3 105.4 L458 103.9 L459.6 102.5 L461.3 101.1 L462.9 99.8 L464.6 98.5 L466.3 97.2 L467.9 96 L469.6 94.8 L471.2 93.7 L472.9 92.6 L474.5 91.5 L476.2 90.5 L477.8 89.5 L479.5 88.5 L481.2 87.6 L482.8 86.7 L484.5 85.8 L486.1 85 L487.8 84.2 L489.4 83.4 L491.1 82.6 L492.8 81.9 L494.4 81.2 L496.1 80.5 L497.7 79.8 L499.4 79.2 L501 78.6 L502.7 78 L504.3 77.4 L506 76.8 L507.7 76.3 L509.3 75.7 L511 75.2 L512.6 74.7 L514.3 74.2 L515.9 73.8 L517.6 73.3 L519.3 72.9 L520.9 72.5 L522.6 72.1 L524.2 71.7 L525.9 71.3 L527.5 70.9 L529.2 70.6 L530.8 70.2 L532.5 69.9 L534.2 69.6 L535.8 69.3 L537.5 69 L539.1 68.7 L540.8 68.4 L542.4 68.1 L544.1 67.8 L545.8 67.6 L547.4 67.3 L549.1 67.1 L550.7 66.9 L552.4 66.6 L554 66.4 L555.7 66.2 L557.3 66 L559 65.8 L560.7 65.6 L562.3 65.4 L564 65.3 L565.6 65.1 L567.3 64.9 L568.9 64.8 L570.6 64.6 L572.3 64.5 L573.9 64.3 L575.6 64.2 L577.2 64 L578.9 63.9 L580.5 63.8 L582.2 63.7 L583.8 63.5 L585.5 63.4 L587.2 63.3 L588.8 63.2 L590.5 63.1 L592.1 63 L593.8 62.9 L595.4 62.8 L597.1 62.7 L598.8 62.6 L600.4 62.5 L602.1 62.5 L603.7 62.4 L605.4 62.3 L607 62.2 L608.7 62.2 L610.3 62.1 L612 62 L613.7 62 L615.3 61.9 L617 61.8 L618.6 61.8 L620.3 61.7 L621.9 61.7 L623.6 61.6 L625.3 61.5 L626.9 61.5 L628.6 61.4 L630.2 61.4 L631.9 61.4 L633.5 61.3 L635.2 61.3 L636.8 61.2 L638.5 61.2 L640.2 61.1 L641.8 61.1 L643.5 61.1 L645.1 61 L646.8 61 L648.4 61 L650.1 60.9 L651.8 60.9 L653.4 60.9 L655.1 60.9 L656.7 60.8 L658.4 60.8 L660 60.8 L661.7 60.7 L663.3 60.7 L665 60.7" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
 <text x="670" y="218" font-size="14" text-anchor="end" fill="var(--fg-dim)">t</text><text x="392" y="48" font-size="14" text-anchor="end" fill="var(--fg-dim)">v</text>
-<text x="535" y="140" font-size="12" text-anchor="middle" fill="var(--fg-dim)">acelera… y el rozamiento</text><text x="535" y="155" font-size="12" text-anchor="middle" fill="var(--fg-dim)">λv crece hasta igualar qE</text>
+<text x="535" y="138" font-size="12" text-anchor="middle" fill="var(--fg-dim)">acelera… y el rozamiento</text><text x="535" y="158" font-size="12" text-anchor="middle" fill="var(--fg-dim)">λv crece hasta igualar qE</text>
 </svg><figcaption>Izquierda: el electrón acelera, choca, pierde energía, vuelve a acelerar… En promedio deriva a velocidad constante (contra $\vec E$ por ser negativo). Derecha: solución de $m\,dv/dt=qE-\lambda v$.</figcaption></figure>
 <div class="box why"><span class="label">Por qué</span>
 <p class="hl">¿Por qué $\vec v_a\propto\vec E$?</p>
@@ -222,7 +222,7 @@ $$\vec v_a=\frac{q}{\lambda}\vec E=\mu\vec E$$
 <p>$\mu=q/\lambda$ es la <b>movilidad</b> (m²/(V·s)). Es lineal porque el rozamiento es lineal en $v$.</p>
 </div>
 <div class="box intuition"><span class="label">Intuición</span>
-<p><b>Gota de lluvia</b>: la gravedad la acelera, el aire la frena, y cae a velocidad <b>constante</b> (terminal). El electrón es una gota cayendo “cuesta abajo” de potencial a través de un bosque de iones.</p>
+<p><b>Gota de lluvia</b>: la gravedad la acelera, el aire la frena, y cae a velocidad <b>constante</b> (terminal). El electrón es una gota cayendo “cuesta abajo” en energía potencial (hacia mayor $V$, porque su carga es negativa) a través de un bosque de iones.</p>
 </div>
 <div class="box why"><span class="label">Por qué</span>
 <p class="hl">De $\vec v_a$ a la ley de Ohm local</p>
@@ -398,7 +398,7 @@ $$\xi=\oint_{\text{circuito}}\vec f\cdot d\vec l\qquad\qquad \xi=\oint\vec E_T\c
 <line x1="60" y1="100" x2="60" y2="164" stroke="var(--field)" stroke-width="2"/><polygon points="60,170 55,160 65,160" fill="var(--field)"/>
 <line x1="130" y1="230" x2="214" y2="230" stroke="var(--field)" stroke-width="2"/><polygon points="220,230 210,235 210,225" fill="var(--field)"/>
 <text x="316" y="74" font-size="14" text-anchor="start" fill="var(--fg)" font-weight="700">2</text><text x="316" y="210" font-size="14" text-anchor="start" fill="var(--fg)" font-weight="700">1</text>
-<text x="180" y="130" font-size="12" text-anchor="middle" fill="var(--fg-dim)">fuera: solo E<tspan dy="4" font-size="9">s</tspan><tspan dy="-4">​</tspan></text><text x="180" y="146" font-size="12" text-anchor="middle" fill="var(--fg-dim)">(empuja de + a −)</text>
+<text x="180" y="126" font-size="12" text-anchor="middle" fill="var(--fg-dim)">fuera: solo E<tspan dy="4" font-size="9">s</tspan><tspan dy="-4">​</tspan></text><text x="180" y="148" font-size="12" text-anchor="middle" fill="var(--fg-dim)">(empuja de + a −)</text>
 <text x="390" y="28" font-size="14" text-anchor="start" fill="var(--fg)" font-weight="700">(b)</text>
 <polyline points="620,90 620,50 420,50 420,90" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="420,90 420,112 414,115 426,121 414,127 426,133 414,139 426,145 420,148 420,170" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="420,170 420,210 620,210 620,170" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/>
 <line x1="620" y1="170" x2="620" y2="134" stroke="var(--fg)" stroke-width="2"/><line x1="620" y1="126" x2="620" y2="90" stroke="var(--fg)" stroke-width="2"/><line x1="606" y1="126" x2="634" y2="126" stroke="var(--fg)" stroke-width="2"/><line x1="613" y1="134" x2="627" y2="134" stroke="var(--fg)" stroke-width="5"/>
@@ -463,7 +463,7 @@ $$\int_1^2\vec E_T\cdot d\vec l=\int_1^2\vec E_s\cdot d\vec l+\int_1^2\vec E_m\c
 <div class="step"><b>Segundo término</b>: por definición, la fem $\xi$.</div>
 <div class="step">$IR=V_{12}+\xi$ ⇒ $\boxed{V_{12}=IR-\xi}$.</div>
 </div>
-<p>Casos límite: si $R=0$ (solo la fuente) o si $I=0$ (no circula corriente), $V_{21}=\xi$: la d.d.p. entre bornes iguala la fem.</p>
+<p>Casos límite: si $R=0$ (solo la fuente) o si $I=0$ (no circula corriente), $V_{21}=\xi$ (el borne 2 es el +): la d.d.p. entre bornes iguala la fem.</p>
 </div>
 <div class="box formula"><span class="label">Fórmula · Regla de Kirchhoff de las tensiones</span>
 $$V_{12}=V_1-V_2=\sum_j I_jR_j-\sum_i\xi_i$$
@@ -592,7 +592,7 @@ $$V_{ab}=\xi-Ir\qquad I=\frac{\xi}{R+r}\qquad P_R=\frac{\xi^2R}{(R+r)^2}$$
 <div class="step">$1.3=\xi-0.4r$ y $1.4=\xi-0.2r$.</div>
 <div class="step">Restando: $0.1=0.2r$ ⇒ $r=\mathbf{0.5\ \Omega}$.</div>
 <div class="step">$\xi=1.4+0.2\cdot0.5=\mathbf{1.5\ V}$.</div>
-<div class="step">Sentido físico: más corriente ⇒ más caída interna ⇒ menos tensión en bornes ✓. Mismo razonamiento en el nº 5: $r=(12-7.2)/300=16$ mΩ.</div>
+<div class="step">Sentido físico: más corriente ⇒ más caída interna ⇒ menos tensión en bornes ✓. Mismo razonamiento en el nº 5: $r=(12-7.2)\ \text{V}/300\ \text{A}=16$ mΩ.</div>
 </div></details>
 </div>
 <div class="box tldr"><span class="label">Resumen</span>
@@ -664,7 +664,7 @@ $$\begin{aligned}I_aR_a+I_bR_b&amp;=\xi_a-\xi_b\\ I_cR_c+I_bR_b&amp;=\xi_c-\xi_b
 <circle cx="390" cy="110" r="3.5" fill="var(--fg)"/><text x="378" y="115" font-size="14" text-anchor="end" fill="var(--fg)">A</text><circle cx="650" cy="110" r="3.5" fill="var(--fg)"/><text x="662" y="115" font-size="14" text-anchor="start" fill="var(--fg)">B</text>
 <polyline points="390,110 420,110" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="420,50 420,170" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="620,50 620,170" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="620,110 650,110" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/>
 <polyline points="420,50 502,50 505,56 511,44 517,56 523,44 529,56 535,44 538,50 620,50" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="420,110 502,110 505,116 511,104 517,116 523,104 529,116 535,104 538,110 620,110" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="420,170 502,170 505,176 511,164 517,176 523,164 529,176 535,164 538,170 620,170" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/>
-<text x="520" y="40" font-size="14" text-anchor="middle" fill="var(--fg)">R<tspan dy="4" font-size="10">1</tspan><tspan dy="-4">​</tspan></text><text x="520" y="100" font-size="14" text-anchor="middle" fill="var(--fg)">R<tspan dy="4" font-size="10">2</tspan><tspan dy="-4">​</tspan></text><text x="520" y="160" font-size="14" text-anchor="middle" fill="var(--fg)">R<tspan dy="4" font-size="10">3</tspan><tspan dy="-4">​</tspan></text>
+<text x="520" y="44" font-size="14" text-anchor="middle" fill="var(--fg)">R<tspan dy="4" font-size="10">1</tspan><tspan dy="-4">​</tspan></text><text x="520" y="100" font-size="14" text-anchor="middle" fill="var(--fg)">R<tspan dy="4" font-size="10">2</tspan><tspan dy="-4">​</tspan></text><text x="520" y="160" font-size="14" text-anchor="middle" fill="var(--fg)">R<tspan dy="4" font-size="10">3</tspan><tspan dy="-4">​</tspan></text>
 <text x="520" y="195" font-size="13" text-anchor="middle" fill="var(--field)" font-weight="700">I = I<tspan dy="4" font-size="9">1</tspan><tspan dy="-4">​</tspan> + I<tspan dy="4" font-size="9">2</tspan><tspan dy="-4">​</tspan> + I<tspan dy="4" font-size="9">3</tspan><tspan dy="-4">​</tspan>  ⇒  1/R<tspan dy="4" font-size="9">eq</tspan><tspan dy="-4">​</tspan> = Σ 1/R<tspan dy="4" font-size="9">i</tspan><tspan dy="-4">​</tspan></text>
 </svg><figcaption>Serie: un solo camino, sin nodos intermedios. Paralelo: todos los extremos unidos a los mismos dos nodos.</figcaption></figure>
 <div class="box why"><span class="label">Por qué se combinan así</span>
@@ -735,6 +735,7 @@ $$[I]=[R]^{-1}[\xi]_1+[R]^{-1}[\xi]_2=[I]_1+[I]_2$$
 <p>Es pura <b>linealidad</b> (porque $V=RI$ es lineal). Por eso <b>no</b> vale para potencias: $P=I^2R$ y $(I_1+I_2)^2\neq I_1^2+I_2^2$.</p>
 </div>
 <p><b>Ejemplo 2.4</b> (figura 2.3 sin $\xi_b$): $I_b=I_{b,1}+I_{b,2}$, donde</p>
+<p class="dim">En cada subcircuito las corrientes se toman en su sentido físico: con solo $\xi_a$, la corriente por $R_c$ baja; con solo $\xi_c$, la de $R_a$ baja (al revés que las flechas de la figura 2.3).</p>
 <p>Solo $\xi_a$ (con $\xi_c$ cortocircuitada):</p>
 $$\xi_a=I_aR_a+I_{b,1}R_b,\qquad I_{b,1}R_b=I_cR_c,\qquad I_a=I_{b,1}+I_c$$
 <p>Solo $\xi_c$ (con $\xi_a$ cortocircuitada):</p>
@@ -750,7 +751,7 @@ $$\xi_c=I_cR_c+I_{b,2}R_b,\qquad I_{b,2}R_b=I_aR_a,\qquad I_c=I_{b,2}+I_a$$
 </ul>
 </div>
 <figure class="diagram"><svg viewBox="0 0 700 210" role="img" aria-label="Ejemplo 2.5: circuito original y equivalente Thévenin">
-<line x1="50" y1="160" x2="50" y2="124" stroke="var(--fg)" stroke-width="2"/><line x1="50" y1="116" x2="50" y2="80" stroke="var(--fg)" stroke-width="2"/><line x1="36" y1="116" x2="64" y2="116" stroke="var(--fg)" stroke-width="2"/><line x1="43" y1="124" x2="57" y2="124" stroke="var(--fg)" stroke-width="5"/><text x="34" y="111" font-size="13" text-anchor="middle" fill="var(--pos)">+</text><text x="30" y="125" font-size="13" text-anchor="end" fill="var(--fg)">200 V</text>
+<line x1="50" y1="160" x2="50" y2="124" stroke="var(--fg)" stroke-width="2"/><line x1="50" y1="116" x2="50" y2="80" stroke="var(--fg)" stroke-width="2"/><line x1="36" y1="116" x2="64" y2="116" stroke="var(--fg)" stroke-width="2"/><line x1="43" y1="124" x2="57" y2="124" stroke="var(--fg)" stroke-width="5"/><text x="34" y="111" font-size="13" text-anchor="middle" fill="var(--pos)">+</text><text x="34" y="131" font-size="13" text-anchor="end" fill="var(--fg)">200 V</text>
 <polyline points="50,80 50,50 80,50" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><polyline points="80,50 112,50 115,56 121,44 127,56 133,44 139,56 145,44 148,50 180,50" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><text x="130" y="32" font-size="14" text-anchor="middle" fill="var(--fg)">60 Ω</text><polyline points="180,50 210,50" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><circle cx="210" cy="50" r="3.5" fill="var(--fg)"/>
 <polyline points="210,50 210,97 204,100 216,106 204,112 216,118 204,124 216,130 210,133 210,180" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><text x="226" y="120" font-size="14" text-anchor="start" fill="var(--fg)">40 Ω</text>
 <polyline points="210,50 237,50 240,56 246,44 252,56 258,44 264,56 270,44 273,50 300,50" fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"/><text x="255" y="32" font-size="14" text-anchor="middle" fill="var(--fg)">26 Ω</text><line x1="300" y1="50" x2="330" y2="50" stroke="var(--fg)" stroke-width="2"/><circle cx="330" cy="50" r="3.5" fill="var(--fg)"/><text x="342" y="55" font-size="14" text-anchor="start" fill="var(--fg)" font-weight="700">A</text>
@@ -1059,7 +1060,7 @@ $$Q(t)=C\xi\left(1-e^{-t/\tau}\right)\qquad I(t)=\frac{dQ}{dt}=\frac{\xi}{R}e^{-
 </section>
 
 <section id="sec-test">
-<h2>11 · Autoevaluación</h2>
+<h2>11 · Autotest</h2>
 <div class="box check"><span class="label">Comprueba</span>
 <details><summary>1. Dos cables del mismo material y longitud; el diámetro de A es el doble que el de B, que tiene resistencia R. ¿$R_A$?</summary><p>$R=\rho l/S$ y $S\propto d^2$ ⇒ $S_A=4S_B$ ⇒ $R_A=R/4$.</p></details>
 <details><summary>2. Dos resistencias iguales en paralelo consumen P con una batería ideal. ¿Y en serie con la misma batería?</summary><p>Paralelo: $R/2$ ⇒ $P=2\xi^2/R$. Serie: $2R$ ⇒ $P'=\xi^2/(2R)=P/4$. La tensión es la misma (ideal) y $P=V^2/R_{eq}$: $R_{eq}$ se multiplica por 4.</p></details>

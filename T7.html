@@ -31,7 +31,7 @@
 <li><a href="#sec-mates">Herramientas matemáticas</a></li>
 <li><a href="#sec-estrategia">Estrategia de examen</a></li>
 <li><a href="#sec-formulario">Formulario</a></li>
-<li><a href="#sec-test">Autoevaluación</a></li>
+<li><a href="#sec-test">Autotest</a></li>
 </ol>
 </nav>
 <main>
@@ -61,7 +61,7 @@
 <rect x="20" y="200" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--pos)"/>
 <text x="150" y="224">Masa efectiva → huecos h⁺</text><text x="150" y="244" fill="var(--fg-dim)">BV casi llena = pocos h⁺</text>
 <rect x="320" y="200" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
-<text x="450" y="224">Intrínseco: n = p = nᵢ</text><text x="450" y="244" fill="var(--fg-dim)">nᵢ ∝ T^3/2 · e^(−Eg/2kT)</text>
+<text x="450" y="224">Intrínseco: n = p = nᵢ</text><text x="450" y="244" fill="var(--fg-dim)">nᵢ ∝ T<tspan baseline-shift="super" font-size="70%">3/2</tspan> e<tspan baseline-shift="super" font-size="70%">−Eg/2kT</tspan></text>
 <rect x="620" y="200" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
 <text x="750" y="224">Extrínseco: dopaje V / III</text><text x="750" y="244" fill="var(--fg-dim)">np = nᵢ² · neutralidad</text>
 <rect x="20" y="290" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
@@ -71,7 +71,7 @@
 <rect x="620" y="290" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--intuition)"/>
 <text x="750" y="314">Unión p-n en equilibrio</text><text x="750" y="334" fill="var(--fg-dim)">carga espacial, campo, V₀</text>
 <rect x="320" y="370" width="260" height="50" rx="10" fill="var(--bg-3)" stroke="var(--intuition)"/>
-<text x="450" y="392">Polarización → diodo</text><text x="450" y="411" fill="var(--fg-dim)">I = I₀(e^(qV/kT) − 1)</text>
+<text x="450" y="392">Polarización → diodo</text><text x="450" y="415" fill="var(--fg-dim)">I = I₀(e<tspan baseline-shift="super" font-size="70%">qV/kT</tspan> − 1)</text>
 </g>
 <g stroke="var(--fg-dim)" stroke-width="1.6" fill="none" marker-end="url(#arr)">
 <line x1="280" y1="48" x2="318" y2="48"/>
@@ -131,7 +131,7 @@ $$\sigma = \sigma_0\, e^{-\alpha/T}$$
 <text x="40" y="35">σ</text><text x="325" y="220">T</text>
 <text x="400" y="35">σ</text><text x="685" y="220">T</text>
 <text x="150" y="80" fill="var(--neg)">Metal: σ = σ₀/[1+α(T−T₀)]</text>
-<text x="445" y="80" fill="var(--pos)">Semiconductor: σ = σ₀e^(−α/T)</text>
+<text x="445" y="80" fill="var(--pos)">Semiconductor: σ = σ₀e<tspan baseline-shift="super" font-size="70%">−α/T</tspan></text>
 <text x="120" y="232" fill="var(--fg-dim)">n fijo, choques ↑ ⇒ σ ↓</text>
 <text x="470" y="232" fill="var(--fg-dim)">n crece exponencialmente ⇒ σ ↑</text>
 </g>
@@ -231,14 +231,14 @@ $$\vec T = n_1\vec a + n_2\vec b \quad (n_1, n_2 \in \mathbb{Z})$$
 <line x1="100" y1="200" x2="157" y2="200" stroke="var(--pos)" stroke-width="2.5" marker-end="url(#arr)"/>
 <line x1="100" y1="200" x2="119" y2="153" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#arr)"/>
 <text x="125" y="222" font-size="14" fill="var(--pos)">a</text><text x="88" y="175" font-size="14" fill="var(--intuition)">b</text>
-<text x="40" y="235" font-size="13" fill="var(--fg-dim)">celdilla elemental repetida con T = n₁a + n₂b</text>
+<text x="40" y="243" font-size="13" fill="var(--fg-dim)">celdilla elemental repetida con T = n₁a + n₂b</text>
 <g stroke="var(--fg-dim)" stroke-width="2">
 <line x1="540" y1="125" x2="540" y2="45"/><line x1="540" y1="125" x2="470" y2="165"/><line x1="540" y1="125" x2="610" y2="165"/><line x1="540" y1="125" x2="560" y2="190"/>
 </g>
 <g stroke="var(--fg-dim)" stroke-dasharray="4 4" fill="none"><polygon points="540,45 470,165 560,190 610,165"/><line x1="540" y1="45" x2="560" y2="190"/></g>
 <g fill="var(--bg-3)" stroke="var(--accent)" stroke-width="2"><circle cx="540" cy="125" r="16"/><circle cx="540" cy="45" r="12"/><circle cx="470" cy="165" r="12"/><circle cx="610" cy="165" r="12"/><circle cx="560" cy="190" r="12"/></g>
 <text x="540" y="130" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text>
-<text x="540" y="230" text-anchor="middle" font-size="13" fill="var(--fg-dim)">diamante: cada átomo en el centro de un tetraedro, 4 vecinos</text>
+<text x="528" y="230" text-anchor="middle" font-size="13" fill="var(--fg-dim)">diamante: cada átomo en el centro de un tetraedro, 4 vecinos</text>
 </svg>
 <figcaption>Izquierda: red cristalina 2D generada por traslación. Derecha: disposición tetraédrica de la estructura tipo diamante (Si, Ge, C).</figcaption>
 </figure>
@@ -377,7 +377,7 @@ $$\vec J_{\text{banda llena}} = 0$$
 </g>
 <g font-size="12" fill="var(--fg)">
 <text x="195" y="260">1s</text><text x="195" y="225">2s</text><text x="195" y="183">2p</text><text x="195" y="124">3s (½)</text>
-<text x="440" y="260">1s</text><text x="440" y="225">2s</text><text x="440" y="183">2p</text><text x="440" y="96">3s3p</text><text x="440" y="111">8N</text>
+<text x="440" y="260">1s</text><text x="440" y="225">2s</text><text x="440" y="183">2p</text><text x="440" y="96">3s3p</text><text x="440" y="115">8N</text>
 <text x="600" y="246">1s</text><text x="540" y="186">2s2p inf. 4N</text><text x="540" y="92">2s2p sup. 4N</text>
 </g>
 <line x1="690" y1="108" x2="690" y2="162" stroke="var(--field)" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
@@ -528,7 +528,7 @@ $$n = p \equiv n_i \qquad\qquad R_i = G_i$$
 <h3>¿Cuánto vale nᵢ? (fórmula del problema 7.9)</h3>
 <div class="box formula"><span class="label">Fórmula</span>
 $$n_i = C\,T^{3/2}\exp\!\left(-\frac{E_g}{2kT}\right)$$
-<p class="legend">$C$: constante del material [m⁻³K⁻³ᐟ²] (Ge: $1{,}91\times10^{21}$); $T$ en K; $E_g$ en eV si $k = 8{,}62\times10^{-5}$ eV/K. Valores a 300 K usados en los apuntes: $n_i(\text{Si}) = 1{,}45\times10^{16}$ m⁻³, $n_i(\text{Ge}) = 2{,}36\times10^{19}$ m⁻³. $kT$(300 K) ≈ 0,0259 eV.</p>
+<p class="legend">$C$: constante del material [m⁻³K⁻³/²] (Ge: $1{,}91\times10^{21}$); $T$ en K; $E_g$ en eV si $k = 8{,}62\times10^{-5}$ eV/K. Valores a 300 K usados en los apuntes: $n_i(\text{Si}) = 1{,}45\times10^{16}$ m⁻³, $n_i(\text{Ge}) = 2{,}36\times10^{19}$ m⁻³. $kT$(300 K) ≈ 0,0259 eV.</p>
 </div>
 <div class="box why"><span class="label">Por qué la exponencial y por qué Eg/2</span>
 <ul>
@@ -553,7 +553,7 @@ $$n_i = C\,T^{3/2}\exp\!\left(-\frac{E_g}{2kT}\right)$$
 <p>Por ≈ 26. Un 17 % más de temperatura multiplica los portadores por 26: eso es la exponencial. Un metal, en cambio, apenas cambiaría su $n$.</p>
 </details>
 <details><summary>Pon Eg = 3 eV. ¿Qué tipo de material es a 300 K?</summary>
-<p>$n_i$ cae por debajo de 1 portador por m³ (fuera de la gráfica): <b>aislante</b>. Mismo mecanismo que el Si; solo cambia $E_g$.</p>
+<p>$n_i\sim1$ portador por m³ a 300 K (pegado al fondo de la gráfica, frente a $\sim10^{16}$ del Si): <b>aislante</b>. Mismo mecanismo que el Si; solo cambia $E_g$.</p>
 </details>
 </div>
 
@@ -655,7 +655,7 @@ $$n\,p = \text{cte}(T) = n_i^2$$
 <h3>8.4 Neutralidad de carga y cálculo exacto de n y p</h3>
 <p>Dos tipos de carga: <b>móviles</b> ($n$ electrones, $p$ huecos) y <b>fijas</b> (iones $N_D^+$ y $N_A^-$). El material era neutro y ni generar pares ni dopar crea carga neta:</p>
 <div class="box formula"><span class="label">Neutralidad (7.17)–(7.18)</span>
-$$n + N_A^- = p + N_D^+ \quad\xrightarrow{\text{ionización total (≈300 K)}}\quad n + N_A = p + N_D$$
+$$n + N_A^- = p + N_D^+ \quad\xrightarrow{\text{ionización total }(\approx 300\ \text{K})}\quad n + N_A = p + N_D$$
 <p class="legend">Negativas a la izquierda (electrones + aceptores ionizados), positivas a la derecha (huecos + donadores ionizados). Todo en m⁻³.</p>
 </div>
 <div class="box why"><span class="label">Deducción de n y p (dos ecuaciones, dos incógnitas)</span>
@@ -687,13 +687,13 @@ $$n = \frac{N_D-N_A}{2} + \sqrt{\left(\frac{N_D-N_A}{2}\right)^2 + n_i^2},\qquad
 <div class="steps">
 <div class="step">$N_A = 10^{19}$ m⁻³ $\gg n_i$ ✔ → $p \approx N_A = 10^{19}$ m⁻³.</div>
 <div class="step">Con el dato que usan los apuntes en este ejemplo, $n_i = 1{,}42\times10^{15}$ m⁻³: $\ n \approx \dfrac{n_i^2}{N_A} = \dfrac{(1{,}42\times10^{15})^2}{10^{19}} \approx 2\times10^{11}$ m⁻³.</div>
-<div class="step"><b>Ojo</b>: con $n_i = 1{,}45\times10^{16}$ m⁻³ (el valor del problema 7.7, que es el habitual del Si a 300 K) sale $n \approx 2{,}1\times10^{13}$ m⁻³. En ambos casos la conclusión es idéntica: $p/n \sim 10^{6}$, los electrones son minoritarios despreciables. En el examen usa el $n_i$ que te den.</div>
+<div class="step"><b>Ojo</b>: con $n_i = 1{,}45\times10^{16}$ m⁻³ (el valor del problema 7.7, que es el habitual del Si a 300 K) sale $n \approx 2{,}1\times10^{13}$ m⁻³. En ambos casos la conclusión es la misma: $p/n\approx5\times10^{7}$ y $\approx5\times10^{5}$ respectivamente, los electrones son minoritarios despreciables. En el examen usa el $n_i$ que te den.</div>
 </div>
 </details>
 </div>
 
 <div class="box example"><span class="label">Problema resuelto · Problema 7.9 de los apuntes</span>
-<p>Ge tipo n con $N_D = 10^{15}$ cm⁻³. Calcula $n$ y $p$ a 500 K sabiendo que $n_i = C\,T^{3/2}e^{-E_g/2kT}$, con $C = 1{,}91\times10^{21}$ m⁻³K⁻³ᐟ², $E_g = 0{,}67$ eV.</p>
+<p>Ge tipo n con $N_D = 10^{15}$ cm⁻³. Calcula $n$ y $p$ a 500 K sabiendo que $n_i = C\,T^{3/2}e^{-E_g/2kT}$, con $C = 1{,}91\times10^{21}$ m⁻³K⁻³/², $E_g = 0{,}67$ eV.</p>
 <details><summary>Plan</summary>
 <p>Primero $n_i(500\text{ K})$. Luego <b>comprobar</b> si $N_D \gg n_i$. Si no se cumple, no vale la aproximación: hay que usar la fórmula exacta (7.19).</p>
 </details>
@@ -846,8 +846,8 @@ $$V_{21} = V_2 - V_1 = -\frac{kT}{q}\ln\frac{p_2}{p_1} \qquad\Longleftrightarrow
 <rect x="320" y="25" width="100" height="70" fill="var(--bg)" stroke="var(--field)" stroke-dasharray="5 3"/>
 <g fill="none" stroke="var(--pos)" stroke-width="2"><circle cx="95" cy="45" r="6"/><circle cx="140" cy="72" r="6"/><circle cx="185" cy="45" r="6"/><circle cx="230" cy="75" r="6"/><circle cx="270" cy="48" r="6"/><circle cx="300" cy="78" r="6"/><circle cx="110" cy="80" r="6"/></g>
 <g fill="var(--neg)"><circle cx="445" cy="45" r="6"/><circle cx="490" cy="72" r="6"/><circle cx="535" cy="45" r="6"/><circle cx="580" cy="75" r="6"/><circle cx="625" cy="48" r="6"/><circle cx="470" cy="85" r="6"/><circle cx="640" cy="82" r="6"/></g>
-<g font-size="16" font-weight="700" fill="var(--neg)" text-anchor="middle"><text x="340" y="45">−</text><text x="340" y="65">−</text><text x="340" y="85">−</text></g>
-<g font-size="16" font-weight="700" fill="var(--pos)" text-anchor="middle"><text x="375" y="45">+</text><text x="375" y="65">+</text><text x="375" y="85">+</text><text x="402" y="45">+</text><text x="402" y="65">+</text><text x="402" y="85">+</text></g>
+<g font-size="16" font-weight="700" fill="var(--neg)" text-anchor="middle"><text x="340" y="40">−</text><text x="340" y="65">−</text><text x="340" y="90">−</text></g>
+<g font-size="16" font-weight="700" fill="var(--pos)" text-anchor="middle"><text x="375" y="40">+</text><text x="375" y="65">+</text><text x="375" y="90">+</text><text x="402" y="40">+</text><text x="402" y="65">+</text><text x="402" y="90">+</text></g>
 <g font-size="14" fill="var(--fg)" text-anchor="middle"><text x="190" y="18">p (N<tspan baseline-shift="sub" font-size="70%">A</tspan>): huecos mayoritarios</text><text x="540" y="18">n (N<tspan baseline-shift="sub" font-size="70%">D</tspan>): electrones mayoritarios</text></g>
 <line x1="415" y1="108" x2="328" y2="108" stroke="var(--field)" stroke-width="2.5" marker-end="url(#arr)"/>
 <text x="430" y="113" font-size="13" fill="var(--field)">E (de n hacia p)</text>
@@ -1085,7 +1085,7 @@ $$I = I_0\left(e^{qV/kT} - 1\right)$$
 </section>
 
 <section id="sec-problemas">
-<h2>13 · Problemas de los apuntes (7.14)</h2>
+<h2>13 · Problemas de los apuntes (§7.14)</h2>
 <p>Los apuntes cierran con una lista de problemas propuestos. Aquí tienes resueltos los que se pueden hacer con lo visto en este tema (los ejemplos 7.1–7.3 y los problemas 7.9, 7.12 y 7.17 ya están en sus secciones).</p>
 
 <div class="box example"><span class="label">Problema resuelto · 7.1 y 7.2 (generación óptica)</span>
@@ -1254,7 +1254,7 @@ $$I = I_0\left(e^{qV/kT} - 1\right)$$
 </section>
 
 <section id="sec-test">
-<h2>17 · Autoevaluación</h2>
+<h2>17 · Autotest</h2>
 <div class="box check"><span class="label">Comprueba</span>
 <details><summary>1. Un metal y un semiconductor se calientan 50 K. ¿Qué le pasa a σ en cada uno y por qué?</summary>
 <p>Metal: baja algo (más vibraciones de la red → $\tau$ menor; $n$ no cambia). Semiconductor: sube mucho, porque $n_i\propto e^{-E_g/2kT}$ crece en órdenes de magnitud y eso domina sobre la pequeña bajada de la movilidad.</p>
@@ -1348,6 +1348,7 @@ $$I = I_0\left(e^{qV/kT} - 1\right)$$
     const x0 = 70, x1 = 610, y0 = 20, y1 = 280, Tmin = 150, Tmax = 700, Lmax = 29;
     const X = (T) => x0 + (T - Tmin) / (Tmax - Tmin) * (x1 - x0);
     const Y = (L) => y1 - L / Lmax * (y1 - y0);
+    let labelYs = [];
     function curve(f, color, label) {
       const pts = [];
       for (let T = Tmin; T <= Tmax; T += 5) {
@@ -1357,7 +1358,10 @@ $$I = I_0\left(e^{qV/kT} - 1\right)$$
       if (pts.length > 1) {
         el("polyline", { points: pts.join(" "), fill: "none", stroke: color, "stroke-width": 2.5 }, svg);
         const last = pts[pts.length - 1].split(",");
-        el("text", { x: Number(last[0]) + 4, y: Number(last[1]) + 4, "font-size": 12, fill: color }, svg, label);
+        let ly = Number(last[1]) + 4;
+        while (labelYs.some((u) => Math.abs(u - ly) < 12)) ly += 13;
+        labelYs.push(ly);
+        el("text", { x: Number(last[0]) + 4, y: ly, "font-size": 12, fill: color }, svg, label);
       }
     }
     function draw() {
@@ -1379,6 +1383,7 @@ $$I = I_0\left(e^{qV/kT} - 1\right)$$
       el("text", { x: x0 + 6, y: y0 + 10, "font-size": 12, fill: "var(--fg)" }, svg, "portadores (m⁻³)");
       el("line", { x1: x0, y1: Y(28), x2: x1, y2: Y(28), stroke: "var(--pos)", "stroke-dasharray": "6 4" }, svg);
       el("text", { x: x1 - 4, y: Y(28) - 5, "font-size": 11, "text-anchor": "end", fill: "var(--pos)" }, svg, "metal: n ∼ 10²⁸, casi constante");
+      labelYs = [];
       curve(niGe, "var(--intuition)", "Ge");
       curve(niSi, "var(--accent)", "Si");
       curve((t) => niC(C_SI, Eg, t), "var(--why)", "X");
