@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T4 · Inducción electromagnética</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+<nav class="toc">
+<a class="home" href="index.html">← Índice</a>
+<h2>T4 · Inducción</h2>
+<ol>
+<li><a href="#sec-mapa">Mapa del tema</a></li>
+<li><a href="#sec-fem">4.1 La fem</a></li>
+<li><a href="#sec-flujo">Flujo magnético</a></li>
+<li><a href="#sec-movimiento">4.2.1 fem de movimiento</a></li>
+<li><a href="#sec-faraday">4.2.2 Ley de Faraday</a></li>
+<li><a href="#sec-lenz">Ley de Lenz</a></li>
+<li><a href="#sec-mutua">4.3.1 Inductancia mutua</a></li>
+<li><a href="#sec-auto">4.3.2–3 Autoinducción</a></li>
+<li><a href="#sec-rl">4.4 Transitorios RL</a></li>
+<li><a href="#sec-energia">4.5 Energía magnética</a></li>
+<li><a href="#sec-maxwell">4.6–4.7 Maxwell (*)</a></li>
+<li><a href="#sec-problemas">Problemas resueltos</a></li>
+<li><a href="#sec-estrategia">Estrategia de examen</a></li>
+<li><a href="#sec-formulas">Hoja de fórmulas</a></li>
+<li><a href="#sec-test">Autotest</a></li>
+</ol>
+</nav>
+
+<main>
+<header class="theme">
+<h1>T4 · Inducción electromagnética</h1>
+<p class="subtitle">Si las corrientes crean campo magnético (T3)… ¿puede el campo magnético crear corrientes? Sí, pero <strong>solo si el flujo cambia</strong>.</p>
+</header>
+
+<section id="sec-mapa">
+<h2>Mapa del tema</h2>
+<div class="map">
+<svg viewBox="0 0 900 460" role="img" aria-label="Mapa conceptual del tema 4">
+<defs>
+<marker id="mk-map" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg-dim)"/></marker>
+</defs>
+<g stroke="var(--fg-dim)" stroke-width="1.6" fill="none" marker-end="url(#mk-map)">
+<line x1="225" y1="52" x2="343" y2="52"/>
+<line x1="675" y1="52" x2="557" y2="52"/>
+<line x1="450" y1="84" x2="450" y2="143"/>
+<line x1="225" y1="177" x2="343" y2="177"/>
+<line x1="675" y1="177" x2="557" y2="177"/>
+<line x1="380" y1="209" x2="162" y2="268"/>
+<line x1="450" y1="209" x2="450" y2="268"/>
+<line x1="520" y1="209" x2="738" y2="268"/>
+<line x1="225" y1="302" x2="343" y2="302"/>
+<line x1="410" y1="334" x2="302" y2="383"/>
+<line x1="490" y1="334" x2="598" y2="383"/>
+<line x1="390" y1="417" x2="508" y2="417"/>
+</g>
+<g font-size="12" fill="var(--fg-dim)" text-anchor="middle">
+<text x="284" y="168">mismo resultado</text>
+<text x="616" y="168">da el sentido</text>
+<text x="235" y="232">flujo de otro circuito</text>
+<text x="500" y="245">flujo propio</text>
+<text x="700" y="226">Maxwell lo generaliza</text>
+<text x="284" y="294">Φ = MI + Li</text>
+<text x="450" y="409">× i</text>
+</g>
+<g fill="var(--bg-3)" stroke-width="2">
+<rect x="15" y="20" width="210" height="64" rx="10" stroke="var(--fg-dim)"/>
+<rect x="345" y="20" width="210" height="64" rx="10" stroke="var(--field)"/>
+<rect x="675" y="20" width="210" height="64" rx="10" stroke="var(--field)"/>
+<rect x="15" y="145" width="210" height="64" rx="10" stroke="var(--intuition)"/>
+<rect x="345" y="145" width="210" height="64" rx="10" stroke="var(--accent)" stroke-width="3"/>
+<rect x="675" y="145" width="210" height="64" rx="10" stroke="var(--trap)"/>
+<rect x="15" y="270" width="210" height="64" rx="10" stroke="var(--why)"/>
+<rect x="345" y="270" width="210" height="64" rx="10" stroke="var(--why)"/>
+<rect x="675" y="270" width="210" height="64" rx="10" stroke="var(--check)"/>
+<rect x="180" y="385" width="210" height="64" rx="10" stroke="var(--example)"/>
+<rect x="510" y="385" width="210" height="64" rx="10" stroke="var(--tldr)"/>
+</g>
+<g font-size="15" fill="var(--fg)" text-anchor="middle">
+<text x="120" y="47">T3: las corrientes</text><text x="120" y="68">crean campo B</text>
+<text x="450" y="47">Flujo magnético</text><text x="450" y="68">Φ = ∫ B·dS</text>
+<text x="780" y="47">3 palancas para</text><text x="780" y="68">cambiar Φ: B, S, θ</text>
+<text x="120" y="172">fem de movimiento</text><text x="120" y="193">ε = vBl (Lorentz)</text>
+<text x="450" y="172" font-weight="700">LEY DE FARADAY</text><text x="450" y="193">ε = −dΦ/dt</text>
+<text x="780" y="172">Lenz: el signo −</text><text x="780" y="193">= conservar energía</text>
+<text x="120" y="297">Inductancia mutua</text><text x="120" y="318">Φ₂₁ = M·I₁</text>
+<text x="450" y="297">Autoinducción</text><text x="450" y="318">Φ = L·i</text>
+<text x="780" y="297">Ampère-Maxwell y</text><text x="780" y="318">Maxwell ⇒ ondas</text>
+<text x="285" y="412">Transitorio RL</text><text x="285" y="433">i(t), τ = L/R</text>
+<text x="615" y="412">Energía magnética</text><text x="615" y="433">½Li²,  B²/2μ₀</text>
+</g>
+</svg>
+</div>
+
+<p><strong>La historia del tema en una cadena:</strong></p>
+<div class="chain">
+<span>T3: corriente → B</span>
+<span>¿B → corriente?</span>
+<span>B quieto + circuito quieto: nada</span>
+<span>Φ cambia → ε inducida (Faraday)</span>
+<span>la corriente inducida se opone (Lenz)</span>
+<span>circuitos que se inducen: M y L</span>
+<span>energía guardada en B</span>
+<span>E variable → B (Maxwell) ⇒ ondas</span>
+</div>
+
+<div class="box tldr"><span class="label">La idea en una frase</span>
+<p>Lo que produce corriente <strong>no es el campo B</strong>, sino que <strong>cambie el número de líneas de B que atraviesan el circuito</strong> (el flujo Φ). Y la corriente que aparece siempre <strong>lucha contra ese cambio</strong>.</p>
+</div>
+</section>
+
+<section id="sec-fem">
+<h2>4.1 La fem: el empujón que mantiene la corriente</h2>
+
+<p>Recuerda de T2: en todo cable real hay <strong>efecto Joule</strong>. Los portadores chocan con los átomos y pierden energía en cada choque.</p>
+<p>Conclusión: una corriente <strong>no se mantiene sola</strong>. Hace falta algo que empuje a las cargas continuamente. Ese "algo" es la <strong>fuerza electromotriz (fem)</strong>.</p>
+
+<div class="box why"><span class="label">Por qué se define así</span>
+<p>El empuje puede estar <strong>concentrado</strong> en un sitio (una pila) o <strong>repartido</strong> por todo el cable. Lo único que importa es el trabajo total que recibe cada unidad de carga <strong>al dar una vuelta completa</strong>. Por eso se integra a lo largo de todo el circuito la fuerza tangencial por unidad de carga $\vec f$:</p>
+</div>
+
+<div class="box formula"><span class="label">Fórmula · definición de fem</span>
+$$\varepsilon = \oint \vec f \cdot \mathrm{d}\vec l$$
+<p class="legend">$\vec f$: fuerza por unidad de carga sobre los portadores (N/C). $\mathrm{d}\vec l$: elemento de cable (m). Unidades: (N/C)·m = J/C = <strong>voltio (V)</strong>. Es "energía entregada por culombio y por vuelta".</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Un circuito es un <strong>circuito de agua con rozamiento</strong>. La fem es la bomba: sin bomba, el agua se para. Da igual que la bomba esté en un punto o que haya una "cuesta abajo" repartida por toda la tubería.</p>
+</div>
+
+<p>Orígenes posibles de una fem: <strong>químico</strong> (pilas), <strong>mecánico</strong> (generador de Van der Graaff), <strong>óptico</strong> (células fotovoltaicas)… En general, un generador <strong>transforma otra energía en energía eléctrica</strong>.</p>
+<p>En este tema: fem cuyo origen es la <span class="hl">variación del flujo magnético</span> → <strong>fem inducida</strong>. Es la base de las centrales eléctricas, de la corriente alterna (T5) y de las ondas electromagnéticas (T6).</p>
+
+<div class="box trap"><span class="label">Diferencia clave</span>
+<p>En una pila la fem está <strong>localizada</strong> dentro de la pila. La fem inducida está <strong>distribuida por todo el circuito</strong>. Por eso no tiene sentido preguntar "¿en qué punto está la fem inducida?".</p>
+</div>
+
+<div class="box check"><span class="label">Comprueba (Actividad 4.1)</span>
+<details><summary>¿Por qué hace falta un agente externo para mantener una corriente?</summary><p>Porque la resistencia disipa energía ($P = I^2R$) continuamente. Sin aporte de energía, los choques frenan a los portadores y la corriente se extingue.</p></details>
+<details><summary>¿Puede haber resistencia R en un hilo conductor perfecto?</summary><p>No. Conductor perfecto significa $\sigma \to \infty$, y $R = \dfrac{l}{\sigma S} \to 0$.</p></details>
+<details><summary>¿Por qué se llama fem "inducida"?</summary><p>Porque no la produce ninguna pila conectada: aparece "inducida" por el cambio de flujo magnético, sin contacto eléctrico con nada.</p></details>
+</div>
+</section>
+
+<section id="sec-flujo">
+<h2>Flujo magnético: contar líneas que atraviesan</h2>
+<p>Antes de las leyes necesitamos la herramienta central. El <strong>flujo magnético</strong> mide <strong>cuántas líneas de campo B atraviesan</strong> la superficie limitada por el circuito.</p>
+
+<div class="box formula"><span class="label">Fórmula · flujo magnético</span>
+$$\Phi = \int_S \vec B \cdot \mathrm{d}\vec S \qquad \xrightarrow{\ \vec B \text{ uniforme, espira plana}\ } \qquad \Phi = B\,S\cos\theta$$
+<p class="legend">$\mathrm{d}\vec S = \mathrm{d}S\,\hat n$, con $\hat n$ la <strong>normal</strong> a la superficie. $\theta$: ángulo entre $\vec B$ y la <strong>normal</strong> $\hat n$. Unidades: T·m² = <strong>weber (Wb)</strong>. Con $N$ espiras iguales: $\Phi = N B S\cos\theta$.</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 660 270" role="img" aria-label="Flujo a través de una espira con distintas orientaciones">
+<defs>
+<marker id="mk-fl-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--field)"/></marker>
+<marker id="mk-fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+</defs>
+<g stroke="var(--field)" stroke-width="1.4" opacity="0.6" marker-end="url(#mk-fl-f)">
+<line x1="15" y1="55" x2="205" y2="55"/><line x1="15" y1="80" x2="205" y2="80"/><line x1="15" y1="105" x2="205" y2="105"/><line x1="15" y1="130" x2="205" y2="130"/><line x1="15" y1="155" x2="205" y2="155"/><line x1="15" y1="180" x2="205" y2="180"/><line x1="15" y1="205" x2="205" y2="205"/>
+<line x1="235" y1="55" x2="425" y2="55"/><line x1="235" y1="80" x2="425" y2="80"/><line x1="235" y1="105" x2="425" y2="105"/><line x1="235" y1="130" x2="425" y2="130"/><line x1="235" y1="155" x2="425" y2="155"/><line x1="235" y1="180" x2="425" y2="180"/><line x1="235" y1="205" x2="425" y2="205"/>
+<line x1="455" y1="55" x2="645" y2="55"/><line x1="455" y1="80" x2="645" y2="80"/><line x1="455" y1="105" x2="645" y2="105"/><line x1="455" y1="130" x2="645" y2="130"/><line x1="455" y1="155" x2="645" y2="155"/><line x1="455" y1="180" x2="645" y2="180"/><line x1="455" y1="205" x2="645" y2="205"/>
+</g>
+<g stroke="var(--pos)" stroke-width="3" fill="var(--pos)" fill-opacity="0.12">
+<ellipse cx="0" cy="0" rx="14" ry="60" transform="translate(110,130)"/>
+<ellipse cx="0" cy="0" rx="14" ry="60" transform="translate(330,130) rotate(-50)"/>
+<ellipse cx="0" cy="0" rx="14" ry="60" transform="translate(550,130) rotate(-90)"/>
+</g>
+<g stroke="var(--accent)" stroke-width="2.5" marker-end="url(#mk-fl-a)">
+<line x1="110" y1="130" x2="178" y2="130"/>
+<line x1="0" y1="0" x2="68" y2="0" transform="translate(330,130) rotate(-50)"/>
+<line x1="550" y1="130" x2="550" y2="68"/>
+</g>
+<path d="M360 130 A30 30 0 0 0 349.3 107" stroke="var(--fg)" fill="none" stroke-width="1.5"/>
+<line x1="262" y1="91.4" x2="262" y2="168.6" stroke="var(--intuition)" stroke-width="2" stroke-dasharray="5 4"/>
+<g font-size="14" fill="var(--fg)">
+<text x="183" y="122" fill="var(--accent)">n̂</text>
+<text x="378" y="74" fill="var(--accent)">n̂</text>
+<text x="558" y="72" fill="var(--accent)">n̂</text>
+<text x="366" y="115">θ</text>
+<text x="244" y="186" fill="var(--intuition)" font-size="12">S cos θ</text>
+<text x="20" y="40" fill="var(--field)">B</text>
+</g>
+<g font-size="14" fill="var(--fg)" text-anchor="middle">
+<text x="110" y="236">θ = 0°</text><text x="110" y="256" fill="var(--fg-dim)">Φ = BS (máximo)</text>
+<text x="330" y="236">θ cualquiera</text><text x="330" y="256" fill="var(--fg-dim)">Φ = BS cos θ</text>
+<text x="550" y="236">θ = 90°</text><text x="550" y="256" fill="var(--fg-dim)">Φ = 0 (B resbala)</text>
+</g>
+</svg>
+<figcaption>La espira (en rojo, vista en perspectiva) y su normal n̂. Lo que "ve" el campo es la sombra de la espira perpendicular a B: S cos θ.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué el producto escalar (y el coseno)</span>
+<p>Descompón $\vec B$ en dos partes: una <strong>perpendicular</strong> a la espira (a lo largo de $\hat n$) y otra <strong>paralela</strong> al plano.</p>
+<ul>
+<li>La parte paralela <strong>resbala</strong> por la superficie: no la atraviesa, no aporta flujo.</li>
+<li>Solo cuenta la parte normal: $B\cos\theta$. Eso es justo lo que extrae $\vec B\cdot\hat n$.</li>
+</ul>
+<p>Si $\vec B$ no es uniforme, se trocea la superficie en trozos $\mathrm{d}S$ donde sí lo es y se suma (integral). Ejemplo típico: el hilo infinito, $B = \mu_0 I / 2\pi x$, se integra por franjas paralelas al hilo.</p>
+</div>
+
+<h3>Las tres palancas para cambiar el flujo</h3>
+<p>Como $\Phi = B\,S\cos\theta$, solo hay tres formas de cambiarlo (o combinaciones):</p>
+<table>
+<tr><th>Palanca</th><th>Ejemplo</th><th>Lo que sale</th></tr>
+<tr><td><span class="hl">B</span> cambia</td><td>Campo $B(t)$, imán que se acerca, corriente variable en un circuito vecino, espira que se mueve en un campo no uniforme</td><td>fem "de transformador"</td></tr>
+<tr><td><span class="hl">S</span> cambia</td><td>Barra que desliza sobre raíles, espira que entra en una zona con campo</td><td>fem de movimiento $\varepsilon = vBl$</td></tr>
+<tr><td><span class="hl">θ</span> cambia</td><td>Espira que gira (alternador)</td><td>fem sinusoidal $NBS\omega\sin\omega t$</td></tr>
+</table>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li><strong>θ se mide con la normal, no con el plano.</strong> "B forma 30° con el plano de la espira" ⇒ $\theta = 60^\circ$ con la normal ⇒ $\Phi = BS\cos 60^\circ = BS\sin 30^\circ$.</li>
+<li><strong>N espiras multiplican el flujo</strong> (cada espira intercepta el mismo flujo y sus fem se suman en serie).</li>
+<li><strong>Si te dan $\vec B$ vectorial</strong>, solo cuenta la componente a lo largo de la normal: espira en el plano $xy$ ⇒ solo $B_z$.</li>
+<li>El signo de Φ depende de la normal que elijas. Elegir $\hat n$ fija también el sentido positivo de circulación (regla de la mano derecha).</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-movimiento">
+<h2>4.2.1 fem de movimiento: Lorentz hace de pila</h2>
+<p>Primera forma de crear una fem: <strong>mover un conductor dentro de un campo B</strong>. No hace falta ninguna ley nueva: basta la fuerza de Lorentz de T3.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 640 300" role="img" aria-label="Barra deslizante sobre raíles en un campo magnético entrante">
+<defs>
+<g id="xin"><circle r="7" fill="none" stroke="var(--field)" stroke-width="1.4"/><path d="M-4.5 -4.5 L4.5 4.5 M4.5 -4.5 L-4.5 4.5" stroke="var(--field)" stroke-width="1.4"/></g>
+<marker id="mk-bar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+<marker id="mk-bar-p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--pos)"/></marker>
+<marker id="mk-bar-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--trap)"/></marker>
+<marker id="mk-bar-i" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--intuition)"/></marker>
+</defs>
+<use href="#xin" x="110" y="85"/><use href="#xin" x="170" y="85"/><use href="#xin" x="230" y="85"/><use href="#xin" x="290" y="85"/><use href="#xin" x="470" y="85"/><use href="#xin" x="530" y="85"/><use href="#xin" x="590" y="85"/>
+<use href="#xin" x="110" y="150"/><use href="#xin" x="170" y="150"/><use href="#xin" x="230" y="150"/><use href="#xin" x="530" y="150"/><use href="#xin" x="590" y="150"/>
+<use href="#xin" x="110" y="215"/><use href="#xin" x="170" y="215"/><use href="#xin" x="470" y="215"/><use href="#xin" x="530" y="215"/><use href="#xin" x="590" y="215"/>
+<g stroke="var(--fg-dim)" stroke-width="4" fill="none">
+<line x1="60" y1="50" x2="615" y2="50"/><line x1="60" y1="250" x2="615" y2="250"/>
+<path d="M60 50 L60 110 L45 120 L75 135 L45 150 L75 165 L45 180 L60 190 L60 250" stroke-width="3"/>
+</g>
+<rect x="394" y="40" width="12" height="220" rx="3" fill="var(--accent)" fill-opacity="0.5" stroke="var(--accent)"/>
+<circle cx="400" cy="150" r="8" fill="var(--pos)"/>
+<text x="400" y="155" text-anchor="middle" font-size="13" fill="var(--bg)" font-weight="700">+</text>
+<line x1="400" y1="138" x2="400" y2="100" stroke="var(--pos)" stroke-width="2.5" marker-end="url(#mk-bar-p)"/>
+<line x1="412" y1="175" x2="468" y2="175" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#mk-bar-i)"/>
+<line x1="392" y1="200" x2="322" y2="200" stroke="var(--trap)" stroke-width="2.5" marker-end="url(#mk-bar-t)"/>
+<g stroke="var(--accent)" stroke-width="2" marker-end="url(#mk-bar-a)">
+<line x1="300" y1="64" x2="220" y2="64"/>
+<line x1="84" y1="115" x2="84" y2="185"/>
+<line x1="220" y1="237" x2="300" y2="237"/>
+</g>
+<g font-size="14" fill="var(--fg)">
+<text x="28" y="155">R</text>
+<text x="258" y="80" fill="var(--accent)">I</text>
+<text x="92" y="157" fill="var(--accent)">I</text>
+<text x="258" y="231" fill="var(--accent)">I</text>
+<text x="410" y="114" fill="var(--pos)">q v×B</text>
+<text x="476" y="180" fill="var(--intuition)">v</text>
+<text x="315" y="205" text-anchor="end" fill="var(--trap)">F_mag (frena)</text>
+<text x="412" y="275" fill="var(--fg-dim)">barra de longitud l</text>
+<text x="615" y="30" text-anchor="end" fill="var(--field)">B ⊗ (entra en el papel)</text>
+</g>
+</svg>
+<figcaption>La barra se mueve a la derecha. Sus cargas positivas notan $q\,\vec v\times\vec B$ hacia arriba: la corriente sube por la barra y el circuito se recorre en sentido antihorario. La fuerza sobre la corriente, $I\vec l\times\vec B$, apunta hacia la izquierda: frena la barra.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué ε = vBl (derivación)</span>
+<div class="chain"><span>la barra se mueve con $\vec v$</span><span>sus cargas también</span><span>Lorentz: $\vec f = \vec v\times\vec B$</span><span>$\vec f$ va a lo largo de la barra</span><span>empuja cargas: fem</span></div>
+<p>Con $\vec v = v\,\hat x$ y $\vec B = -B\,\hat z$ (entrante): $\vec v\times\vec B = vB\,\hat y$, <strong>a lo largo de la barra</strong>.</p>
+<p>Integramos $\vec f$ en el circuito. Solo contribuye la barra: en los raíles fijos no hay movimiento (o $\vec f \perp \mathrm{d}\vec l$):</p>
+$$\varepsilon = \oint (\vec v\times\vec B)\cdot\mathrm{d}\vec l = \int_a^b vB\,\mathrm{d}l = vBl \qquad\Rightarrow\qquad I = \frac{\varepsilon}{R} = \frac{vBl}{R}$$
+</div>
+
+<div class="box why"><span class="label">El mismo resultado contando flujo</span>
+<p>El área encerrada es $S = l\,x$ (x = posición de la barra). Entonces $\Phi = B\,l\,x$ y</p>
+$$\frac{\mathrm{d}\Phi}{\mathrm{d}t} = B\,l\,\frac{\mathrm{d}x}{\mathrm{d}t} = B\,l\,v \quad\Rightarrow\quad |\varepsilon| = \left|\frac{\mathrm{d}\Phi}{\mathrm{d}t}\right| = vBl$$
+<p><strong>Dos caminos, mismo número.</strong> En las diapositivas el circuito está saliendo de la zona de campo (la parte dentro, de anchura $s$, disminuye: $v = -\mathrm{d}s/\mathrm{d}t$) y sale igual: $\mathrm{d}\Phi/\mathrm{d}t = -Blv$. Esta coincidencia es la pista que lleva a la ley de Faraday.</p>
+</div>
+
+<div class="box formula"><span class="label">Fórmula · fem de movimiento</span>
+$$\varepsilon = \oint(\vec v\times\vec B)\cdot \mathrm{d}\vec l \;\xrightarrow{\ \vec v\perp\vec B\perp\vec l\ }\; \varepsilon = vBl$$
+<p class="legend">$v$: velocidad de la barra (m/s). $B$: campo (T). $l$: longitud de la barra que corta líneas (m). $\varepsilon$ en V (T·m·m/s = V).</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>La barra en movimiento <strong>es una pila</strong> cuyo voltaje es proporcional a su velocidad. Si la barra se para, la "pila" se apaga.</p>
+</div>
+
+<h3>(*) Balance de potencia: ¿quién paga la energía?</h3>
+<p>Cuando ya circula corriente, cada portador de la barra tiene <strong>dos velocidades</strong>: la de la barra ($v\,\hat x$) y la de deriva a lo largo de ella ($u\,\hat y$).</p>
+$$\vec w = v\,\hat x + u\,\hat y \quad\Rightarrow\quad \vec f = \vec w\times\vec B = \underbrace{vB\,\hat y}_{\text{crea la fem}} \;\underbrace{-\,uB\,\hat x}_{\text{frena la barra}}$$
+<p>Multiplicando la parte en $x$ por toda la carga móvil de la barra ($nqAl$) y usando $I = nqAu$:</p>
+$$\vec F_x = -nqAl\,uB\,\hat x = -I\,l\,B\,\hat x \qquad(\text{coincide con } \vec F = I\vec l\times\vec B \text{ de T3})$$
+<p>Para que la barra siga a velocidad constante, un agente externo debe empujar con $F_{ext} = IlB$. Su potencia:</p>
+$$P = F_{ext}\,v = I\,l\,B\,v = I\varepsilon = \frac{\varepsilon^2}{R} = I^2R$$
+
+<div class="box why"><span class="label">Por qué esto importa</span>
+<p>Toda la potencia que tú pones empujando <strong>acaba como calor Joule</strong> en la resistencia. El campo magnético no aporta energía (la fuerza magnética total sobre una carga no hace trabajo): solo <strong>redirige</strong> tu trabajo mecánico hacia trabajo eléctrico. <strong>Mecánica → eléctrica → calor.</strong> Así funciona un generador.</p>
+</div>
+
+<div class="sim"><span class="label">Simulación · barra sobre raíles</span>
+<svg id="barSim" viewBox="0 0 640 290" role="img" aria-label="Simulación de la barra deslizante">
+<defs>
+<marker id="mk-sb-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--trap)"/></marker>
+<marker id="mk-sb-p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--pos)"/></marker>
+<marker id="mk-sb-i" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--intuition)"/></marker>
+</defs>
+<g id="sbField"></g>
+<g stroke="var(--fg-dim)" stroke-width="4" fill="none">
+<line x1="60" y1="50" x2="625" y2="50"/><line x1="60" y1="240" x2="625" y2="240"/>
+<path d="M60 50 L60 105 L45 115 L75 130 L45 145 L75 160 L45 175 L60 185 L60 240" stroke-width="3"/>
+</g>
+<path id="sbCur" fill="none" stroke="var(--accent)" stroke-width="3" stroke-dasharray="10 14"/>
+<rect id="sbBar" x="300" y="40" width="12" height="210" rx="3" fill="var(--accent)" fill-opacity="0.55" stroke="var(--accent)"/>
+<line id="sbFm" stroke="var(--trap)" stroke-width="3" marker-end="url(#mk-sb-t)"/>
+<line id="sbFe" stroke="var(--pos)" stroke-width="3" marker-end="url(#mk-sb-p)"/>
+<line id="sbV" stroke="var(--intuition)" stroke-width="3" marker-end="url(#mk-sb-i)"/>
+<text id="sbFmT" font-size="13" fill="var(--trap)" text-anchor="end">F_mag</text>
+<text id="sbFeT" font-size="13" fill="var(--pos)">F_aplicada</text>
+<text id="sbVT" font-size="13" fill="var(--intuition)">v</text>
+<text x="28" y="150" font-size="14" fill="var(--fg)">R</text>
+<text x="625" y="275" font-size="13" fill="var(--fg-dim)" text-anchor="end">B ⊗ entrante · corriente en sentido antihorario</text>
+</svg>
+<div class="controls">
+<label for="bB">B (T)</label><input type="range" id="bB" min="0.1" max="2" step="0.05" value="1"><output id="obB" for="bB">1</output>
+<label for="bL">l (m)</label><input type="range" id="bL" min="0.1" max="1" step="0.05" value="0.5"><output id="obL" for="bL">0.5</output>
+<label for="bV">v (m/s)</label><input type="range" id="bV" min="0" max="10" step="0.1" value="4"><output id="obV" for="bV">4</output>
+<label for="bR">R (Ω)</label><input type="range" id="bR" min="0.5" max="20" step="0.5" value="2"><output id="obR" for="bR">2</output>
+</div>
+<div class="readout" id="barOut"></div>
+</div>
+<p class="dim">Prueba: duplica v → ε e I se duplican, pero la potencia necesaria se <strong>cuadruplica</strong> ($P = B^2l^2v^2/R$). Sube R → cuesta menos empujar (menos corriente, menos freno).</p>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li><strong>Circuito abierto:</strong> sigue habiendo fem (las cargas se acumulan en los extremos de la barra y aparece una diferencia de potencial $vBl$), pero <strong>no hay corriente</strong> ni fuerza de frenado.</li>
+<li>Solo cuenta el trozo de conductor que <strong>se mueve y corta líneas</strong>. Si $\vec v$, $\vec B$ y $\vec l$ no son perpendiculares, usa $(\vec v\times\vec B)\cdot\vec l$.</li>
+<li>La fuerza magnética sobre la barra <strong>siempre frena</strong>. Si te sale empujando, has puesto mal el sentido de I.</li>
+</ul>
+</div>
+
+<div class="box check"><span class="label">Comprueba (Actividad 4.2)</span>
+<details><summary>¿Qué transformación de energía ocurre en la barra deslizante?</summary><p>Energía mecánica (trabajo del agente que empuja) → energía eléctrica → calor Joule en R.</p></details>
+<details><summary>Si R fuese una bombilla, ¿brillaría distinto que con una batería de la misma fem?</summary><p>No. A la bombilla le da igual el origen de la fem: con la misma ε y la misma R, misma corriente y misma potencia.</p></details>
+</div>
+</section>
+
+<section id="sec-faraday">
+<h2>4.2.2 Ley de Faraday: lo único que importa es que Φ cambie</h2>
+
+<h3>El experimento mental que obliga a una ley nueva</h3>
+<div class="chain"><span>circuito quieto, imán que se mueve</span><span>relatividad: solo importa el movimiento relativo</span><span>se mide la misma fem</span><span>pero las cargas están quietas: $\vec v = 0$, sin Lorentz</span><span>⇒ hay un campo $\vec E$ nuevo</span></div>
+<p>Ese $\vec E$ <strong>no puede ser electrostático</strong>: un campo electrostático tiene circulación nula ($\oint \vec E_{est}\cdot\mathrm{d}\vec l = 0$, T1–T2) y no podría mover cargas en un circuito cerrado. Es un campo eléctrico <strong>creado por el B variable</strong>.</p>
+<p>Faraday (≈1830) encontró experimentalmente el punto común: en ambos casos <strong>cambia el flujo</strong>.</p>
+
+<div class="box formula"><span class="label">Fórmula · ley de Faraday</span>
+$$\varepsilon = -\frac{\mathrm{d}\Phi}{\mathrm{d}t} \qquad\qquad \oint_\Gamma \vec E\cdot\mathrm{d}\vec l = -\frac{\mathrm{d}}{\mathrm{d}t}\int_{S(\Gamma)} \vec B\cdot\mathrm{d}\vec S$$
+<p class="legend">$\Phi$ en Wb, $t$ en s, $\varepsilon$ en V (Wb/s = V). $\Gamma$: el recorrido del circuito; $S(\Gamma)$: superficie apoyada en él. El sentido de recorrido de $\Gamma$ y el de $\mathrm{d}\vec S$ se relacionan por la <strong>regla de la mano derecha</strong>: eso fija el signo. Con $N$ espiras: $\varepsilon = -N\,\mathrm{d}\Phi_1/\mathrm{d}t$. Valor medio: $\varepsilon_{med} = -\Delta\Phi/\Delta t$.</p>
+</div>
+
+<div class="box why"><span class="label">Por qué derivada y no valor</span>
+<p>Un campo constante a través de un circuito quieto <strong>no mueve cargas</strong>: no hay Lorentz (cargas quietas) ni E inducido (B no cambia). Por eso campos magnetostáticos nunca producen corriente en circuitos fijos. Lo que crea el empuje es el <strong>ritmo de cambio</strong> del flujo.</p>
+<p>Consecuencia: $\Phi_1 = 4t$ y $\Phi_2 = 4t + 10$ inducen <strong>la misma fem</strong> (4 V). La constante no importa.</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>El circuito es un "contador de líneas" que <strong>protesta cuando el número cambia</strong>. Le da igual cuántas líneas haya; lo que le molesta es que entren o salgan. Cuanto más rápido cambian, más fuerte protesta (más fem).</p>
+</div>
+
+<div class="box example"><span class="label">Mini-ejemplo (problema 4.1 de las diapositivas)</span>
+<p>Solenoide de 600 vueltas; el flujo por espira cae de $8{,}0\times10^{-5}$ a $3{,}0\times10^{-5}$ Wb en 15 ms. ¿fem media?</p>
+<p>$|\varepsilon_{med}| = N\dfrac{|\Delta\Phi|}{\Delta t} = 600\cdot\dfrac{5{,}0\times10^{-5}}{0{,}015} = 2\ \text{V}$. El signo (las diapositivas dan $-2$ V) depende de la orientación elegida; lo físico es: el flujo baja, así que la corriente inducida intentará <strong>reforzarlo</strong>.</p>
+</div>
+
+<h3>Causas de una fem inducida</h3>
+<ul>
+<li><strong>Mover o deformar el circuito</strong> en un B constante (palanca S o θ).</li>
+<li><strong>Mover el agente que crea B</strong> (un imán que se acerca o se aleja de un circuito fijo).</li>
+<li><strong>Variar la corriente de un circuito primario</strong>: cambia el flujo que intercepta un secundario cercano.</li>
+<li><strong>Combinaciones</strong> de las anteriores.</li>
+</ul>
+<div class="box why"><span class="label">El campo es algo real</span>
+<p>En el caso primario–secundario, el secundario recibe energía <strong>sin contacto eléctrico</strong>. La energía la paga la fuente del primario. La única forma de que llegue es que el <strong>campo electromagnético la transporte por el espacio</strong>. Así funcionan los cargadores inalámbricos del móvil y los transformadores.</p>
+</div>
+
+<h3>Aplicación: la espira que gira (alternador)</h3>
+<p>La tercera palanca, el ángulo. Una bobina de $N$ espiras y área $S$ gira con velocidad angular $\omega$ en un $B$ uniforme: $\theta = \omega t$.</p>
+$$\Phi(t) = NBS\cos(\omega t) \quad\Rightarrow\quad \varepsilon(t) = -\frac{\mathrm{d}\Phi}{\mathrm{d}t} = NBS\,\omega\,\sin(\omega t)$$
+<div class="box why"><span class="label">Por qué están desfasadas 90°</span>
+<p>La fem depende de la <strong>pendiente</strong> de Φ, no de su valor. Cuando la espira está de cara a B, Φ es máximo pero está "en la cima": pendiente cero ⇒ ε = 0. Cuando la espira está de canto, Φ = 0 pero cambia lo más rápido posible ⇒ ε máxima. Y girar más rápido da <strong>más amplitud y más frecuencia</strong> (el factor ω). Esto es la corriente alterna de T5.</p>
+</div>
+
+<div class="sim"><span class="label">Simulación · generador (espira giratoria)</span>
+<canvas id="genCanvas" width="860" height="360"></canvas>
+<div class="controls">
+<label for="gB">B (T)</label><input type="range" id="gB" min="0.05" max="1" step="0.05" value="0.5"><output id="ogB" for="gB">0.5</output>
+<label for="gS">S (cm²)</label><input type="range" id="gS" min="10" max="500" step="10" value="200"><output id="ogS" for="gS">200</output>
+<label for="gN">N (espiras)</label><input type="range" id="gN" min="1" max="500" step="1" value="100"><output id="ogN" for="gN">100</output>
+<label for="gW">ω (rad/s)</label><input type="range" id="gW" min="0.5" max="15" step="0.1" value="3"><output id="ogW" for="gW">3</output>
+</div>
+<div class="readout" id="genOut"></div>
+</div>
+<p class="dim">Vista desde arriba: el eje de giro sale de la pantalla. Fíjate en que ε (azul) cruza por cero justo cuando Φ (amarillo) es máximo.</p>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>"Hay un campo B muy grande, luego hay fem": <strong>falso</strong> si Φ no cambia.</li>
+<li>Una espira que se mueve <strong>totalmente dentro</strong> de un campo uniforme: Φ constante ⇒ ε = 0 (aunque se mueva).</li>
+<li>En el alternador, ε máxima ↔ Φ = 0. No al revés.</li>
+</ul>
+</div>
+
+<div class="box check"><span class="label">Comprueba (Actividad 4.3)</span>
+<details><summary>¿Puede deducirse la ley de Faraday a partir de la fuerza de Lorentz?</summary><p>Solo la parte de movimiento (circuito que se mueve en B estático). Si el circuito está quieto y lo que cambia es B, las cargas no se mueven y Lorentz magnética no actúa: hace falta el campo $\vec E$ inducido, que es física nueva.</p></details>
+<details><summary>"Un campo magnetostático no puede generar corriente inducida". ¿Verdadero o falso?</summary><p>Verdadero <strong>para un circuito fijo</strong>. Falso en general: un circuito que se mueve o se deforma dentro de un B estático sí ve cambiar su flujo (barra deslizante).</p></details>
+<details><summary>¿Por qué el E inducido no puede ser electrostático?</summary><p>Porque su circulación en un camino cerrado es $-\mathrm{d}\Phi/\mathrm{d}t \neq 0$. Un campo electrostático es conservativo: circulación cero. Por tanto el E inducido no deriva de un potencial.</p></details>
+</div>
+</section>
+
+<section id="sec-lenz">
+<h2>Ley de Lenz: el signo menos es conservación de la energía</h2>
+
+<div class="box formula"><span class="label">Enunciado</span>
+<p>La fem y la corriente inducidas tienen un sentido tal que <strong>tienden a oponerse a la variación que las produce</strong>.</p>
+<p class="legend">Lenz no te dice la causa del cambio; solo que la reacción del circuito va siempre <strong>en contra</strong> del cambio. Es el significado físico del signo − de Faraday.</p>
+</div>
+
+<div class="box why"><span class="label">¿Y si el signo fuera +?</span>
+<p>Barra deslizante: imagina que la corriente fuera al revés. Entonces la fuerza $I\vec l\times\vec B$ <strong>empujaría</strong> la barra hacia delante.</p>
+<div class="chain"><span>la barra acelera</span><span>más v</span><span>más fem y más I</span><span>más fuerza a favor</span><span>más v…</span><span>energía cinética infinita gratis</span></div>
+<p>Imposible: violaría la conservación de la energía. Por eso la naturaleza elige el signo que <strong>frena</strong>: tienes que gastar trabajo para obtener corriente.</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>El circuito es <strong>conservador</strong> (en el sentido político): quiere que el flujo se quede como estaba. Si entran líneas, crea líneas en contra; si se van, crea líneas para reponerlas. Un imán que cae por un tubo de cobre baja lentísimo por esto.</p>
+</div>
+
+<h3>Procedimiento para el sentido de la corriente inducida</h3>
+<div class="steps">
+<div class="step"><strong>¿Hacia dónde apunta B</strong> a través del circuito? (dentro/fuera del papel, +z…)</div>
+<div class="step"><strong>¿El flujo crece o decrece?</strong> (B aumenta, el área aumenta, el ángulo se acerca a 0°…)</div>
+<div class="step"><strong>B inducido:</strong> si Φ crece → $\vec B_{ind}$ <span class="neg">opuesto</span> a $\vec B$. Si Φ decrece → $\vec B_{ind}$ <span class="pos">en el mismo sentido</span> que $\vec B$.</div>
+<div class="step"><strong>Mano derecha:</strong> pulgar en el sentido de $\vec B_{ind}$ dentro de la espira → los dedos dan el sentido de I.</div>
+<div class="step"><strong>Comprobación:</strong> si hay partes móviles, la fuerza $I\vec l\times\vec B$ debe frenarlas.</div>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 680 280" role="img" aria-label="Imán que se acerca a una espira y ley de Lenz">
+<defs>
+<marker id="mk-mag-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--field)"/></marker>
+<marker id="mk-mag-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--trap)"/></marker>
+<marker id="mk-mag-i" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--intuition)"/></marker>
+<marker id="mk-mag-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+</defs>
+<rect x="40" y="115" width="80" height="40" fill="var(--neg)" rx="3"/>
+<rect x="120" y="115" width="80" height="40" fill="var(--pos)" rx="3"/>
+<text x="80" y="141" text-anchor="middle" font-size="16" fill="var(--bg)" font-weight="700">S</text>
+<text x="160" y="141" text-anchor="middle" font-size="16" fill="var(--bg)" font-weight="700">N</text>
+<line x1="80" y1="95" x2="170" y2="95" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#mk-mag-i)"/>
+<text x="80" y="85" font-size="13" fill="var(--intuition)">v (lo acercamos)</text>
+<g stroke="var(--field)" stroke-width="1.6" fill="none" marker-end="url(#mk-mag-f)">
+<path d="M200 124 C 290 105, 400 92, 520 82"/>
+<path d="M200 135 L 520 135"/>
+<path d="M200 146 C 290 165, 400 178, 520 188"/>
+</g>
+<ellipse cx="420" cy="135" rx="22" ry="80" fill="none" stroke="var(--accent)" stroke-width="3"/>
+<line x1="456" y1="155" x2="380" y2="155" stroke="var(--trap)" stroke-width="3" marker-end="url(#mk-mag-t)"/>
+<text x="458" y="174" font-size="13" fill="var(--trap)">B_ind</text>
+<text x="300" y="44" font-size="13" fill="var(--pos)" text-anchor="middle">esta cara se vuelve N</text>
+<text x="300" y="60" font-size="13" fill="var(--pos)" text-anchor="middle">→ repele al imán</text>
+<text x="535" y="124" font-size="13" fill="var(--field)">Φ crece</text>
+<circle cx="610" cy="200" r="34" fill="none" stroke="var(--fg-dim)" stroke-width="1"/>
+<path d="M644 200 A34 34 0 1 0 610 234" fill="none" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#mk-mag-a)"/>
+<circle cx="610" cy="200" r="6" fill="none" stroke="var(--trap)" stroke-width="1.5"/>
+<circle cx="610" cy="200" r="2" fill="var(--trap)"/>
+<text x="610" y="252" font-size="12" fill="var(--fg-dim)" text-anchor="middle">visto desde el imán:</text>
+<text x="610" y="268" font-size="12" fill="var(--accent)" text-anchor="middle">antihorario</text>
+</svg>
+<figcaption>Acercar el polo N: el flujo hacia la derecha crece → $\vec B_{ind}$ hacia la izquierda (hacia el imán) → la espira se comporta como un imán con su N mirando al N del imán → lo repele. Al alejarlo, todo se invierte (horario, atrae).</figcaption>
+</figure>
+
+<div class="box example"><span class="label">Ejemplo 4.1 de las diapositivas · hilo infinito + barra móvil</span>
+<p>Un hilo recto infinito lleva $i = 200$ mA. A su lado, en el mismo plano, un circuito con raíles perfectos ($\sigma\to\infty$) y una barra móvil de longitud $b = 10$ cm, radio $r = 2$ mm y $\sigma = 10^8\ (\Omega\,\text{m})^{-1}$, que se aleja del hilo con $v = 5$ m/s. El lado fijo está a $a = 20$ cm del hilo; la barra está en $x(t) = a + vt$. Sentido y valor de I.</p>
+<figure class="diagram">
+<svg viewBox="0 0 600 300" role="img" aria-label="Hilo infinito y circuito con barra móvil">
+<defs>
+<marker id="mk-41" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+<marker id="mk-41f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg)"/></marker>
+<marker id="mk-41i" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--intuition)"/></marker>
+</defs>
+<line x1="40" y1="15" x2="40" y2="285" stroke="var(--fg)" stroke-width="3"/>
+<line x1="28" y1="60" x2="28" y2="120" stroke="var(--fg)" stroke-width="2" marker-end="url(#mk-41f)"/>
+<text x="14" y="95" font-size="14" fill="var(--fg)">i</text>
+<g stroke="var(--fg-dim)" stroke-width="3">
+<line x1="140" y1="80" x2="560" y2="80"/><line x1="140" y1="220" x2="560" y2="220"/><line x1="140" y1="80" x2="140" y2="220"/>
+</g>
+<rect x="374" y="70" width="12" height="160" rx="3" fill="var(--accent)" fill-opacity="0.5" stroke="var(--accent)"/>
+<line x1="394" y1="150" x2="450" y2="150" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#mk-41i)"/>
+<text x="456" y="155" font-size="14" fill="var(--intuition)">v</text>
+<g fill="none" stroke="var(--field)" stroke-width="1.4">
+<circle cx="190" cy="120" r="9"/><circle cx="260" cy="120" r="7.5"/><circle cx="330" cy="120" r="6.5"/>
+<circle cx="190" cy="180" r="9"/><circle cx="260" cy="180" r="7.5"/><circle cx="330" cy="180" r="6.5"/>
+<circle cx="450" cy="110" r="5.5"/><circle cx="520" cy="110" r="5"/><circle cx="450" cy="190" r="5.5"/><circle cx="520" cy="190" r="5"/>
+</g>
+<g fill="var(--field)">
+<circle cx="190" cy="120" r="2"/><circle cx="260" cy="120" r="2"/><circle cx="330" cy="120" r="2"/>
+<circle cx="190" cy="180" r="2"/><circle cx="260" cy="180" r="2"/><circle cx="330" cy="180" r="2"/>
+<circle cx="450" cy="110" r="1.6"/><circle cx="520" cy="110" r="1.6"/><circle cx="450" cy="190" r="1.6"/><circle cx="520" cy="190" r="1.6"/>
+</g>
+<g stroke="var(--accent)" stroke-width="2" marker-end="url(#mk-41)">
+<line x1="220" y1="68" x2="300" y2="68"/>
+<line x1="364" y1="125" x2="364" y2="185"/>
+<line x1="300" y1="234" x2="220" y2="234"/>
+</g>
+<g font-size="13" fill="var(--fg)">
+<text x="258" y="60" fill="var(--accent)">I (horario)</text>
+<text x="120" y="155">b</text>
+<text x="380" y="62" fill="var(--fg-dim)">barra (σ finita)</text>
+<text x="470" y="242" fill="var(--fg-dim)">raíles σ→∞</text>
+<text x="490" y="162" fill="var(--field)">B ⊙ ∝ 1/x</text>
+</g>
+<g stroke="var(--fg-dim)" stroke-width="1">
+<line x1="40" y1="255" x2="140" y2="255"/><line x1="40" y1="278" x2="380" y2="278"/>
+</g>
+<text x="90" y="250" font-size="13" fill="var(--fg-dim)" text-anchor="middle">a</text>
+<text x="210" y="273" font-size="13" fill="var(--fg-dim)" text-anchor="middle">x(t) = a + vt</text>
+</svg>
+<figcaption>Corriente del hilo hacia abajo ⇒ a su derecha B sale del papel (⊙), más débil cuanto más lejos.</figcaption>
+</figure>
+<details><summary>Plan</summary>
+<p>Sentido por Lenz (el área crece ⇒ Φ saliente crece). Módulo por dos caminos: Lorentz en la barra ($vB(x)b$) y Faraday integrando el flujo por franjas. Resistencia: solo la barra, $R = b/(\sigma S)$.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step"><strong>Sentido.</strong> Φ (saliente) crece ⇒ $\vec B_{ind}$ entrante ⇒ corriente <strong>horaria</strong>. Comprobación: $q\vec v\times\vec B$ con $\vec v = v\hat x$, $\vec B = B\hat z$: $\hat x\times\hat z = -\hat y$ ⇒ las cargas bajan por la barra ⇒ horario. ✔</div>
+<div class="step"><strong>Lorentz.</strong> $\varepsilon = \int (\vec v\times\vec B)\cdot\mathrm{d}\vec l = v\,B(x)\,b = \dfrac{\mu_0 i\, v\, b}{2\pi (a+vt)}$.</div>
+<div class="step"><strong>Faraday.</strong> Franja vertical a distancia $x'$, de anchura $\mathrm{d}x'$ y altura $b$: $\mathrm{d}\Phi = \dfrac{\mu_0 i}{2\pi x'}\,b\,\mathrm{d}x'$. Integrando de $a$ a $x$: $\Phi = \dfrac{\mu_0 i b}{2\pi}\ln\dfrac{x}{a}$. Derivando: $\dfrac{\mathrm{d}\Phi}{\mathrm{d}t} = \dfrac{\mu_0 i b}{2\pi}\dfrac{v}{x}$. <strong>Mismo resultado.</strong></div>
+<div class="step"><strong>Resistencia de la barra:</strong> $R = \dfrac{b}{\sigma\pi r^2} = \dfrac{0{,}1}{10^8\cdot\pi\cdot 4\times10^{-6}} = 7{,}96\times10^{-5}\ \Omega$.</div>
+<div class="step"><strong>En t = 60 s:</strong> $x = 0{,}2 + 300 = 300{,}2$ m. $\varepsilon = \dfrac{2\times10^{-7}\cdot 0{,}2\cdot 5\cdot 0{,}1}{300{,}2} = 6{,}66\times10^{-11}$ V. $I = \varepsilon/R = 8{,}4\times10^{-7}$ A $\approx 0{,}84\ \mu$A.</div>
+<div class="step"><span class="dim">Nota: las diapositivas dan ≈ 2,6 µA porque en su sustitución numérica escriben la sección como $4\pi^2\times10^{-6}$ en vez de $\pi(2\times10^{-3})^2 = 4\pi\times10^{-6}$ (un π de más). El método es el mismo; rehaciendo la cuenta sale 0,84 µA.</span></div>
+</div>
+</details>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>Lenz se opone al <strong>cambio</strong> del flujo, no al campo. Si el flujo <strong>disminuye</strong>, $\vec B_{ind}$ va en el <strong>mismo sentido</strong> que $\vec B$.</li>
+<li>Especifica siempre <strong>desde dónde miras</strong> al decir "horario/antihorario" (desde el imán, desde +z…).</li>
+</ul>
+</div>
+
+<div class="box check"><span class="label">Comprueba (boletín 3 y 5)</span>
+<details><summary>Espira en el papel con corriente inducida horaria por un B uniforme. ¿Qué situaciones son posibles?</summary><p>Horaria ⇒ $\vec B_{ind}$ entra en el papel. Eso pasa si (a) B sale del papel y crece (se opone), o (d) B entra en el papel y decrece (lo repone). Respuesta: <strong>a y d</strong>.</p></details>
+<details><summary>Dos espiras enfrentadas con corrientes I₁ e I₂ estacionarias. Aumentamos I₁. ¿Qué le pasa a I₂?</summary><p>El flujo de 1 a través de 2 crece ⇒ en 2 se induce una corriente <strong>contraria</strong> a I₁. Si I₂ iba en el mismo sentido que I₁, disminuye; si iba en sentido contrario, aumenta. Correctas: <strong>d y e</strong>.</p></details>
+</div>
+</section>
+
+<section id="sec-mutua">
+<h2>4.3.1 Inductancia mutua: dos circuitos que se "hablan"</h2>
+
+<div class="box why"><span class="label">Por qué el flujo es proporcional a la corriente</span>
+<p>Biot–Savart: $\vec B_1(P) = \dfrac{\mu_0}{4\pi}\oint \dfrac{I_1\,\mathrm{d}\vec l\times\vec r}{r^3}$. La corriente $I_1$ <strong>sale fuera de la integral</strong>:</p>
+$$\vec B_1(P) = I_1\,\vec\beta_1(P) \quad\Rightarrow\quad \Phi_{21} = \int_{S_2}\vec B_1\cdot\mathrm{d}\vec S = I_1\underbrace{\int_{S_2}\vec\beta_1\cdot\mathrm{d}\vec S}_{M}$$
+<p>$\vec\beta_1$ solo depende de la <strong>geometría</strong> del circuito 1 y de la posición. Duplicas $I_1$ ⇒ duplicas $\vec B_1$ en todas partes ⇒ duplicas el flujo en 2.</p>
+</div>
+
+<div class="box formula"><span class="label">Fórmula · inductancia mutua</span>
+$$\Phi_{21} = M\,I_1 \qquad \Phi_{12} = M\,I_2 \qquad \varepsilon_2 = -M\frac{\mathrm{d}I_1}{\mathrm{d}t}$$
+<p class="legend">$\Phi_{21}$: flujo en el circuito 2 debido a la corriente del 1. $M$: inductancia mutua, <strong>la misma en los dos sentidos</strong> ($M_{12} = M_{21}$). Unidad: <strong>henrio</strong>, $1\ \text{H} = 1\ \text{T}\cdot\text{m}^2/\text{A} = 1\ \text{Wb/A}$. Depende solo de formas, tamaños, distancia y orientación. De $B = \mu_0 n i$: $\mu_0$ se mide en H/m.</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>M es un "coeficiente de acoplamiento": cuántos weber le llegan al circuito 2 por cada amperio que circula por el 1. Si cambias $I_1$, el circuito 2 lo nota <strong>sin cables entre ellos</strong>: transformadores, cargadores inalámbricos, tarjetas NFC.</p>
+</div>
+
+<div class="box example"><span class="label">Ejemplo 4.2 · hilo infinito y espira rectangular</span>
+<p>Espira rectangular coplanaria con un hilo infinito con corriente I. Lado más cercano a distancia $a$; anchura $c$ (perpendicular al hilo) y altura $b$ (paralela al hilo). Calcula Φ y M.</p>
+<figure class="diagram">
+<svg viewBox="0 0 520 300" role="img" aria-label="Hilo infinito y espira rectangular con franja dx">
+<defs><marker id="mk-hilo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg)"/></marker></defs>
+<line x1="50" y1="15" x2="50" y2="285" stroke="var(--fg)" stroke-width="3"/>
+<line x1="38" y1="180" x2="38" y2="110" stroke="var(--fg)" stroke-width="2" marker-end="url(#mk-hilo)"/>
+<text x="22" y="150" font-size="15" fill="var(--fg)">I</text>
+<rect x="170" y="60" width="200" height="180" fill="none" stroke="var(--accent)" stroke-width="3"/>
+<rect x="250" y="60" width="14" height="180" fill="var(--field)" fill-opacity="0.35" stroke="var(--field)"/>
+<g fill="none" stroke="var(--fg-dim)" stroke-width="1.3">
+<circle cx="200" cy="100" r="8"/><circle cx="200" cy="205" r="8"/><circle cx="330" cy="100" r="5.5"/><circle cx="330" cy="205" r="5.5"/>
+<path d="M194 94 L206 106 M206 94 L194 106 M194 199 L206 211 M206 199 L194 211 M326 96 L334 104 M334 96 L326 104 M326 201 L334 209 M334 201 L326 209"/>
+</g>
+<g stroke="var(--fg-dim)" stroke-width="1">
+<line x1="50" y1="268" x2="170" y2="268"/><line x1="170" y1="268" x2="370" y2="268"/><line x1="395" y1="60" x2="395" y2="240"/>
+<line x1="50" y1="40" x2="250" y2="40" stroke-dasharray="4 3"/>
+</g>
+<g font-size="14" fill="var(--fg)">
+<text x="110" y="262" text-anchor="middle">a</text>
+<text x="270" y="262" text-anchor="middle">c</text>
+<text x="405" y="155">b</text>
+<text x="150" y="34" text-anchor="middle" fill="var(--field)">x</text>
+<text x="272" y="155" fill="var(--field)">dS = b·dx</text>
+<text x="420" y="40" fill="var(--fg-dim)">B ⊗ = μ₀I / 2πx</text>
+</g>
+</svg>
+<figcaption>B no es uniforme (depende de x), pero sí lo es a lo largo de cada franja vertical: se suma franja a franja.</figcaption>
+</figure>
+<details><summary>Plan</summary><p>B varía con x ⇒ no vale $\Phi = BS$. Elegir franjas paralelas al hilo (B constante en cada una), $\mathrm{d}\Phi = B(x)\,b\,\mathrm{d}x$, integrar de $a$ a $a+c$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">Campo del hilo (T3): $B(x) = \dfrac{\mu_0 I}{2\pi x}$, perpendicular al plano de la espira (paralelo a $\mathrm{d}\vec S$).</div>
+<div class="step">Franja: $\mathrm{d}\Phi = \dfrac{\mu_0 I}{2\pi x}\,b\,\mathrm{d}x$.</div>
+<div class="step">$\Phi = \dfrac{\mu_0 I b}{2\pi}\displaystyle\int_a^{a+c}\frac{\mathrm{d}x}{x} = \dfrac{\mu_0 I b}{2\pi}\ln\dfrac{a+c}{a}$.</div>
+<div class="step">$M = \dfrac{\Phi}{I} = \dfrac{\mu_0 b}{2\pi}\ln\dfrac{a+c}{a}$. Solo geometría, como debía ser.</div>
+</div>
+</details>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li><strong>M no depende de la corriente</strong> (ni existe "solo cuando hay corriente"): es geometría.</li>
+<li>Si el secundario tiene $N_2$ espiras, multiplica por $N_2$; si el primario es un solenoide de $N_1$ espiras, $N_1$ ya va dentro de su B.</li>
+<li>Como $M_{12} = M_{21}$, <strong>calcula siempre con el circuito cuyo B sabes escribir</strong> (solenoide, hilo).</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-auto">
+<h2>4.3.2–4.3.3 Autoinducción: el circuito que se induce a sí mismo</h2>
+<p>Un circuito con corriente $i$ crea su propio B, y ese B atraviesa <strong>su propia</strong> superficie: el <strong>autoflujo</strong>. Por el mismo argumento de Biot–Savart, es proporcional a $i$.</p>
+
+<div class="box formula"><span class="label">Fórmula · autoinducción</span>
+$$\Phi = L\,i \qquad\qquad \varepsilon_{ind} = -L\frac{\mathrm{d}i}{\mathrm{d}t} \qquad\qquad V_L = L\frac{\mathrm{d}i}{\mathrm{d}t}$$
+<p class="legend">$L$: coeficiente de autoinducción (H), solo geometría. $\varepsilon_{ind}$: fem autoinducida. $V_L$: caída de tensión en el inductor en teoría de circuitos (la misma física, escrita como caída).</p>
+</div>
+
+<div class="box why"><span class="label">Por qué la bobina se opone a los cambios de corriente</span>
+<div class="chain"><span>i aumenta</span><span>su B aumenta</span><span>su autoflujo aumenta</span><span>Lenz: fem en contra</span><span>frena el aumento de i</span></div>
+<p>Y si i disminuye, la fem va a favor e intenta mantenerla. La bobina no se opone a la corriente, se opone a que <strong>cambie</strong>. Es una fuerza <strong>contraelectromotriz</strong>.</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición: L es la "masa" de la corriente</span>
+<p>Una masa no se opone a la velocidad, sino a la aceleración ($F = m\,\mathrm{d}v/\mathrm{d}t$). Igual: $V_L = L\,\mathrm{d}i/\mathrm{d}t$. Corriente constante ⇒ la bobina es un simple cable. Y la energía, $\tfrac12 Li^2$, se parece a $\tfrac12 mv^2$.</p>
+</div>
+
+<h3>Ejemplo 4.3 · solenoide esbelto</h3>
+<figure class="diagram">
+<svg viewBox="0 0 560 190" role="img" aria-label="Solenoide esbelto con campo en su interior">
+<defs><marker id="mk-sol" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--field)"/></marker></defs>
+<line x1="70" y1="95" x2="460" y2="95" stroke="var(--field)" stroke-width="2.5" marker-end="url(#mk-sol)"/>
+<g fill="none" stroke="var(--accent)" stroke-width="2">
+<ellipse cx="110" cy="95" rx="9" ry="50"/><ellipse cx="135" cy="95" rx="9" ry="50"/><ellipse cx="160" cy="95" rx="9" ry="50"/><ellipse cx="185" cy="95" rx="9" ry="50"/><ellipse cx="210" cy="95" rx="9" ry="50"/><ellipse cx="235" cy="95" rx="9" ry="50"/><ellipse cx="260" cy="95" rx="9" ry="50"/><ellipse cx="285" cy="95" rx="9" ry="50"/><ellipse cx="310" cy="95" rx="9" ry="50"/><ellipse cx="335" cy="95" rx="9" ry="50"/><ellipse cx="360" cy="95" rx="9" ry="50"/><ellipse cx="385" cy="95" rx="9" ry="50"/><ellipse cx="410" cy="95" rx="9" ry="50"/><ellipse cx="435" cy="95" rx="9" ry="50"/>
+</g>
+<line x1="110" y1="170" x2="435" y2="170" stroke="var(--fg-dim)"/>
+<g font-size="14" fill="var(--fg)">
+<text x="272" y="186" text-anchor="middle" fill="var(--fg-dim)">l</text>
+<text x="468" y="100" fill="var(--field)">B = μ₀ n i</text>
+<text x="272" y="30" text-anchor="middle">N espiras de sección S, n = N/l</text>
+<text x="60" y="60" fill="var(--accent)">i</text>
+</g>
+</svg>
+<figcaption>Dentro del solenoide esbelto B es uniforme y axial; fuera es prácticamente nulo.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué L ∝ N²</span>
+<p>$B = \mu_0 \dfrac{N}{l}\,i$ (una N: más espiras, más campo). El flujo se cuenta en las N espiras: $\Phi = N\,B\,S$ (otra N: más espiras atravesadas). Total:</p>
+$$\Phi = \mu_0\frac{N^2}{l}S\,i \quad\Rightarrow\quad L = \mu_0\frac{N^2 S}{l} = \mu_0 n^2\,l\,S$$
+<p>Datos: $N = 100$, $l = 1$ cm, $r = 1$ mm: $L = 4\pi\times10^{-7}\cdot\dfrac{10^4}{10^{-2}}\cdot\pi\times10^{-6} = 4\pi^2\times10^{-7} \approx 3{,}95\ \mu\text{H}$.</p>
+</div>
+
+<h3>4.3.3 Caso general: flujo externo + autoflujo</h3>
+<p>Si por el circuito 1 circula $I$ y por el 2 circula $i$, el flujo total en el 2 es:</p>
+<div class="box formula"><span class="label">Fórmula · caso general</span>
+$$\Phi_{tot} = \Phi_{ext} + \Phi_{aut} = M\,I + L\,i \qquad\Rightarrow\qquad \varepsilon = -M\frac{\mathrm{d}I}{\mathrm{d}t} - L\frac{\mathrm{d}i}{\mathrm{d}t}$$
+<p class="legend">La segunda forma vale si la geometría no cambia (M y L constantes). Aproximaciones: si el autoflujo varía poco, $\varepsilon \approx -\mathrm{d}\Phi_{ext}/\mathrm{d}t$ (el "desprecie el autoflujo" de los enunciados). Si no hay flujo externo, $\varepsilon = -\mathrm{d}\Phi_{aut}/\mathrm{d}t = -L\,\mathrm{d}i/\mathrm{d}t$.</p>
+</div>
+<div class="box why"><span class="label">Por qué separar los dos flujos</span>
+<p>Calcular ε exactamente es un círculo vicioso: ε depende de $\mathrm{d}i/\mathrm{d}t$, pero i depende de ε. Separar el flujo externo (conocido) del autoflujo (que depende de la respuesta) permite aproximar o, en circuitos, modelar el autoflujo como un elemento más: <strong>el inductor</strong>.</p>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen (boletín 22)</span>
+<p>Bobina de 10 H con corriente 25 mA creciendo a 50 mA/s, 0 mA creciendo a 50 mA/s, o 125 mA decreciendo a 50 mA/s: en los tres casos $|V_L| = 10\cdot 0{,}05 = 0{,}5$ V. <strong>El valor de i no importa, solo $\mathrm{d}i/\mathrm{d}t$.</strong> Cambia la polaridad en el caso decreciente. Si i = 125 mA constante: $V_L = 0$.</p>
+</div>
+
+<div class="box check"><span class="label">Comprueba (Actividad 4.4–4.6)</span>
+<details><summary>¿Depende la inductancia de una espira de la corriente que la recorre? ¿Tiene L si no hay corriente?</summary><p>No depende: es geometría ($\Phi/i$ es constante). Y sí "tiene" L sin corriente, igual que un objeto tiene masa aunque esté quieto.</p></details>
+<details><summary>Si metes un solenoide en un circuito, ¿por qué se dice que la L del circuito es la del solenoide?</summary><p>Porque dentro del solenoide el campo es enorme y concentrado: el autoflujo del resto del cable es despreciable frente al suyo.</p></details>
+<details><summary>¿Vale $\varepsilon = -L\,\mathrm{d}i/\mathrm{d}t$ si el solenoide tiene partes móviles?</summary><p>No: si la geometría cambia, L cambia y hay que usar $\varepsilon = -\mathrm{d}(Li)/\mathrm{d}t$.</p></details>
+</div>
+</section>
+
+<section id="sec-rl">
+<h2>4.4 Transitorios en circuitos RL</h2>
+<p>Batería $\varepsilon_B$, resistencia R (una bombilla, por ejemplo) e inductor L. Cerramos el interruptor en t = 0. El único flujo que cambia es el autoflujo.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 680 260" role="img" aria-label="Circuito RL y curvas de carga y descarga">
+<g stroke="var(--fg-dim)" stroke-width="2.5" fill="none">
+<path d="M50 120 L50 50 L110 50"/>
+<line x1="110" y1="50" x2="148" y2="36"/>
+<path d="M150 50 L170 50 L177 40 L189 60 L201 40 L213 60 L225 40 L232 50 L260 50 L260 80"/>
+<path d="M260 80 a10 10 0 0 1 0 20 a10 10 0 0 1 0 20 a10 10 0 0 1 0 20 a10 10 0 0 1 0 20"/>
+<path d="M260 160 L260 210 L50 210 L50 134"/>
+</g>
+<line x1="34" y1="120" x2="66" y2="120" stroke="var(--fg)" stroke-width="3"/>
+<line x1="42" y1="132" x2="58" y2="132" stroke="var(--fg)" stroke-width="5"/>
+<circle cx="110" cy="50" r="3" fill="var(--fg)"/><circle cx="150" cy="50" r="3" fill="var(--fg)"/>
+<g font-size="14" fill="var(--fg)">
+<text x="12" y="132">ε_B</text>
+<text x="128" y="28" fill="var(--fg-dim)" font-size="12">t = 0</text>
+<text x="200" y="30">R</text>
+<text x="280" y="125">L</text>
+<text x="140" y="228" fill="var(--accent)">i(t)</text>
+</g>
+<g stroke="var(--fg-dim)" stroke-width="1.5">
+<line x1="330" y1="220" x2="665" y2="220"/><line x1="330" y1="220" x2="330" y2="35"/>
+</g>
+<line x1="330" y1="60" x2="660" y2="60" stroke="var(--fg-dim)" stroke-dasharray="5 4"/>
+<line x1="390" y1="60" x2="390" y2="220" stroke="var(--fg-dim)" stroke-dasharray="3 4"/>
+<polyline fill="none" stroke="var(--pos)" stroke-width="3" points="330,220 345,184.6 360,157 375,135.6 390,118.9 420,95.7 450,81.6 480,73.1 510,68 570,62.9 630,61.1"/>
+<polyline fill="none" stroke="var(--neg)" stroke-width="3" stroke-dasharray="7 5" points="330,60 345,95.4 360,123 375,144.4 390,161.1 420,184.3 450,198.4 480,206.9 510,212 570,217.1 630,218.9"/>
+<circle cx="390" cy="118.9" r="4" fill="var(--pos)"/>
+<circle cx="390" cy="161.1" r="4" fill="var(--neg)"/>
+<g font-size="13" fill="var(--fg)">
+<text x="300" y="64" fill="var(--fg-dim)">ε/R</text>
+<text x="386" y="238" fill="var(--fg-dim)">τ</text>
+<text x="396" y="132" fill="var(--pos)">63 %</text>
+<text x="396" y="152" fill="var(--neg)">37 %</text>
+<text x="655" y="238" fill="var(--fg-dim)" text-anchor="end">t</text>
+<text x="338" y="44" fill="var(--fg-dim)">i</text>
+<text x="420" y="48" fill="var(--pos)">cierre: i = (ε/R)(1 − e^(−t/τ))</text>
+<text x="440" y="152" fill="var(--neg)">apertura: i = i₀ e^(−t/τ)</text>
+</g>
+</svg>
+<figcaption>Izquierda: circuito RL serie. Derecha: la corriente nunca salta; sube (o baja) exponencialmente con constante de tiempo τ = L/R.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué la ecuación (Kirchhoff con la fem inducida)</span>
+<p>Suma de fem = caída en R: $\varepsilon_B + \varepsilon_{ind} = R\,i$ con $\varepsilon_{ind} = -L\,\mathrm{d}i/\mathrm{d}t$:</p>
+$$\varepsilon_B - L\frac{\mathrm{d}i}{\mathrm{d}t} = R\,i \quad\Longleftrightarrow\quad \varepsilon_B = \underbrace{R\,i}_{V_R} + \underbrace{L\frac{\mathrm{d}i}{\mathrm{d}t}}_{V_L} \quad\Longleftrightarrow\quad \frac{\mathrm{d}i}{\mathrm{d}t} + \frac{R}{L}\,i = \frac{\varepsilon_B}{L}$$
+<p>La primera forma es la física (fem contraelectromotriz que lucha contra la batería). La segunda es la de teoría de circuitos: el efecto distribuido se concentra en un elemento, el inductor, con caída $V_L = L\,\mathrm{d}i/\mathrm{d}t$.</p>
+</div>
+
+<div class="box why"><span class="label">Por qué sale una exponencial</span>
+<p>Reescribe: $\dfrac{\mathrm{d}i}{\mathrm{d}t} = \dfrac{\varepsilon_B - R\,i}{L} = \dfrac{R}{L}\left(\dfrac{\varepsilon_B}{R} - i\right)$.</p>
+<p>La velocidad de subida es <strong>proporcional a lo que falta</strong> para llegar al valor final. Al principio falta mucho → sube rápido. Cerca del final falta poco → sube lento. Eso es exactamente una exponencial que se acerca a una asíntota.</p>
+<p>Solución general $i(t) = I_0 e^{-Rt/L} + \varepsilon_B/R$; con $i(0) = 0$ ⇒ $I_0 = -\varepsilon_B/R$.</p>
+</div>
+
+<div class="box formula"><span class="label">Fórmulas · transitorios RL</span>
+$$\text{cierre: } i(t) = \frac{\varepsilon_B}{R}\left(1 - e^{-t/\tau}\right),\quad V_L = \varepsilon_B\,e^{-t/\tau} \qquad\qquad \text{apertura: } i(t) = i(0)\,e^{-t/\tau}$$
+$$\tau = \frac{L}{R}$$
+<p class="legend">τ: constante de tiempo (H/Ω = s). En $t = \tau$ la corriente llega al 63 % del final (o cae al 37 %). El régimen final se alcanza en $t_s \approx 4\tau$ (98 % en $t = \tau\ln 50 = 3{,}9\,\tau$). Mayor L ⇒ más "inercia" ⇒ más lento.</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición: los dos instantes que preguntan siempre</span>
+<table>
+<tr><th>Instante</th><th>La bobina se comporta como…</th><th>Por qué</th></tr>
+<tr><td>$t = 0^+$ (justo al cerrar)</td><td><strong>circuito abierto</strong> ($i = 0$, $V_L = \varepsilon_B$)</td><td>i no puede saltar: venía de 0</td></tr>
+<tr><td>$t \to \infty$</td><td><strong>cortocircuito</strong> (cable, $V_L = 0$)</td><td>i constante ⇒ $\mathrm{d}i/\mathrm{d}t = 0$</td></tr>
+</table>
+</div>
+
+<div class="sim"><span class="label">Simulación · circuito RL</span>
+<canvas id="rlCanvas" width="860" height="340"></canvas>
+<div class="controls">
+<label for="rE">ε_B (V)</label><input type="range" id="rE" min="1" max="20" step="0.5" value="10"><output id="orE" for="rE">10</output>
+<label for="rR">R (Ω)</label><input type="range" id="rR" min="5" max="100" step="1" value="20"><output id="orR" for="rR">20</output>
+<label for="rL">L (mH)</label><input type="range" id="rL" min="10" max="500" step="5" value="150"><output id="orL" for="rL">150</output>
+<label for="rM">Interruptor</label><input type="range" id="rM" min="0" max="1" step="1" value="0"><output id="orM" for="rM">cierre</output>
+</div>
+<div class="readout" id="rlOut"></div>
+</div>
+<p class="dim">Prueba: sube L → la curva se "estira" (más inercia). Sube R → llega antes, pero a una corriente final menor. En modo apertura, V_L se vuelve negativa: la bobina actúa como fuente y empuja la corriente para que no muera de golpe.</p>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li><strong>La corriente en una bobina nunca salta</strong>; la tensión sí puede saltar. Abrir de golpe un circuito con bobina ⇒ $\mathrm{d}i/\mathrm{d}t$ enorme ⇒ chispa.</li>
+<li>En circuitos con varias resistencias, la τ usa la resistencia que "ve" la bobina (la equivalente entre sus bornes con la fuente anulada), no cualquier R.</li>
+<li>No confundas τ con el tiempo de llegar al final: en τ solo vas por el 63 %.</li>
+</ul>
+</div>
+
+<div class="box check"><span class="label">Comprueba (Actividad 4.7)</span>
+<details><summary>¿Qué veríamos con la bombilla si despreciásemos la inducción?</summary><p>Encendido y apagado instantáneos ($i$ saltaría de 0 a $\varepsilon_B/R$). Con inducción, el brillo sube y baja con un retraso del orden de τ.</p></details>
+<details><summary>Halla i(t) al cerrar si la bobina ya llevaba la mitad de la corriente final.</summary><p>$i(0) = \varepsilon_B/2R$ ⇒ $I_0 = i(0) - \varepsilon_B/R = -\varepsilon_B/2R$ ⇒ $i(t) = \dfrac{\varepsilon_B}{R}\left(1 - \tfrac12 e^{-t/\tau}\right)$.</p></details>
+<details><summary>¿Y con dos bobinas L₁ y L₂ en serie / en paralelo (sin acoplamiento mutuo)?</summary><p>Igual que resistencias: serie $L = L_1 + L_2$; paralelo $L = \dfrac{L_1L_2}{L_1+L_2}$. Luego $\tau = L/R$.</p></details>
+</div>
+</section>
+
+<section id="sec-energia">
+<h2>4.5 Energía magnética</h2>
+
+<div class="box why"><span class="label">Por qué U = ½ L i² (multiplicar por i)</span>
+<p>Toma la ecuación del RL y multiplica por $i$ para pasar de voltajes a potencias:</p>
+$$\underbrace{\varepsilon\,i}_{\text{entra}} = \underbrace{R\,i^2}_{\text{calor Joule}} + \underbrace{L\,i\frac{\mathrm{d}i}{\mathrm{d}t}}_{\text{?}}$$
+<p>El último término no es calor: es energía que se <strong>guarda</strong> en el campo magnético de la bobina. Como $L\,i\,\dfrac{\mathrm{d}i}{\mathrm{d}t} = \dfrac{\mathrm{d}}{\mathrm{d}t}\left(\tfrac12 L i^2\right)$:</p>
+</div>
+
+<div class="box formula"><span class="label">Fórmulas · energía magnética</span>
+$$U_B = \frac12\,L\,i^2 \qquad\qquad u_B = \frac{B^2}{2\mu_0}$$
+<p class="legend">$U_B$: energía almacenada en el inductor (J). $u_B$: densidad volumétrica de energía magnética (J/m³), válida en general. $\mu_0 = 4\pi\times10^{-7}$ H/m. Análogo eléctrico (T1): $\tfrac12 CV^2$ y $u_E = \tfrac12\varepsilon_0E^2$.</p>
+</div>
+
+<div class="box why"><span class="label">Por qué la energía vive en el campo (solenoide)</span>
+<p>$U_B = \tfrac12\mu_0 n^2 lS\,i^2 = \dfrac{(\mu_0 n i)^2}{2\mu_0}\,Sl = \dfrac{B^2}{2\mu_0}\,V$, con $V = Sl$ el volumen donde hay campo. La energía es proporcional al volumen con campo ⇒ está <strong>repartida por el espacio</strong>, con densidad $B^2/2\mu_0$.</p>
+</div>
+
+<div class="box example"><span class="label">Ejemplo 4.4 · calor disipado al descargar la bobina</span>
+<p>El conmutador ha estado mucho tiempo en la posición 1 (circuito ε, R₁, R₂, L). En t = 0 pasa a 2: la bobina queda sola con R₂. ¿Calor total disipado en R₂?</p>
+<figure class="diagram">
+<svg viewBox="0 0 520 250" role="img" aria-label="Circuito con conmutador de dos posiciones, R1, R2 y L">
+<g stroke="var(--fg-dim)" stroke-width="2.5" fill="none">
+<path d="M50 110 L50 50 L110 50 L117 40 L129 60 L141 40 L153 60 L165 40 L172 50 L270 50 L277 40 L289 60 L301 40 L313 60 L325 40 L332 50 L400 50 L400 80"/>
+<path d="M400 80 a10 10 0 0 1 0 20 a10 10 0 0 1 0 20 a10 10 0 0 1 0 20 a10 10 0 0 1 0 20"/>
+<path d="M400 160 L400 210 L300 210"/>
+<path d="M200 210 L50 210 L50 124"/>
+<path d="M240 50 L240 172"/>
+</g>
+<line x1="300" y1="210" x2="244" y2="176" stroke="var(--intuition)" stroke-width="3"/>
+<line x1="300" y1="210" x2="204" y2="210" stroke="var(--fg-dim)" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="34" y1="110" x2="66" y2="110" stroke="var(--fg)" stroke-width="3"/>
+<line x1="42" y1="122" x2="58" y2="122" stroke="var(--fg)" stroke-width="5"/>
+<circle cx="200" cy="210" r="4" fill="var(--fg)"/><circle cx="240" cy="174" r="4" fill="var(--fg)"/><circle cx="300" cy="210" r="4" fill="var(--fg)"/><circle cx="240" cy="50" r="3" fill="var(--fg)"/>
+<g font-size="14" fill="var(--fg)">
+<text x="22" y="122">ε</text>
+<text x="132" y="32">R₁</text>
+<text x="292" y="32">R₂</text>
+<text x="420" y="125">L</text>
+<text x="196" y="232">1</text>
+<text x="226" y="192">2</text>
+<text x="420" y="200" fill="var(--accent)">i(t)</text>
+</g>
+</svg>
+<figcaption>En posición 2 (verde) la malla es solo R₂ + L: la batería y R₁ quedan desconectadas.</figcaption>
+</figure>
+<details><summary>Plan</summary><p>Corriente inicial = régimen estacionario de la posición 1. Luego descarga exponencial con τ = L/R₂. Integrar la potencia Joule de 0 a ∞ y compararla con ½LI₀².</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">Mucho tiempo en 1 ⇒ bobina = cable ⇒ $I_0 = \dfrac{\varepsilon}{R_1+R_2}$.</div>
+<div class="step">Para t &gt; 0: $i(t) = I_0\,e^{-R_2t/L}$.</div>
+<div class="step">$W = \displaystyle\int_0^\infty i^2R_2\,\mathrm{d}t = I_0^2R_2\int_0^\infty e^{-2R_2t/L}\,\mathrm{d}t = I_0^2R_2\cdot\frac{L}{2R_2} = \frac12 L I_0^2$.</div>
+<div class="step"><strong>Conclusión:</strong> el calor disipado es exactamente la energía que estaba guardada en la bobina. Confirma que $\tfrac12 Li^2$ es energía real almacenada.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Ejemplo 4.5 (*) · autoinducción por unidad de longitud de un coaxial</span>
+<p>Coaxial con radio interior $a = 1$ mm y exterior $b = 3$ mm, corriente I que va por dentro y vuelve por fuera.</p>
+<details><summary>Plan</summary><p>B por Ampère → densidad $u_B$ → integrar en cáscaras cilíndricas → igualar a $\tfrac12 LI^2$ y despejar L. Truco útil: <strong>calcular L a través de la energía</strong>.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">Ampère: $B = \dfrac{\mu_0 I}{2\pi\rho}$ entre conductores ($a \le \rho \le b$); fuera ($\rho &gt; b$) la corriente neta es 0 ⇒ $B = 0$.</div>
+<div class="step">$u_B = \dfrac{B^2}{2\mu_0} = \dfrac{\mu_0 I^2}{8\pi^2\rho^2}$.</div>
+<div class="step">Cáscara: $\mathrm{d}V = 2\pi\rho\,\mathrm{d}\rho\,l$ ⇒ $U_B = \displaystyle\int_a^b \frac{\mu_0 I^2}{8\pi^2\rho^2}\,2\pi\rho\,l\,\mathrm{d}\rho = \frac{\mu_0 I^2 l}{4\pi}\ln\frac{b}{a}$.</div>
+<div class="step">$\tfrac12 L I^2 = U_B$ ⇒ $\dfrac{L}{l} = \dfrac{\mu_0}{2\pi}\ln\dfrac{b}{a} = 2\times10^{-7}\ln 3 \approx 0{,}22\ \mu$H/m.</div>
+</div>
+</details>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>Duplicar la corriente ⇒ <strong>cuadruplica</strong> la energía (es cuadrática).</li>
+<li>Bobina de 1 mH con 200 mA: $U = \tfrac12\cdot10^{-3}\cdot0{,}04 = 20\ \mu$J (boletín 28).</li>
+<li>Una bobina ideal guarda energía <strong>magnética</strong>; un condensador ideal, <strong>eléctrica</strong>.</li>
+</ul>
+</div>
+
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>¿Por qué $L\,i\,\mathrm{d}i/\mathrm{d}t$ es el ritmo de almacenamiento de energía y no calor?</summary><p>Porque es reversible: cuando i baja, ese término se vuelve negativo y la bobina <strong>devuelve</strong> energía al circuito (lo que vimos en el Ejemplo 4.4). El calor Joule $Ri^2$ siempre es positivo.</p></details>
+<details><summary>Si $i(t) = I_0(1 - e^{-t/\tau})$ en una bobina, ¿cuándo recibe potencia máxima? (problema 4.11 de las diapositivas)</summary><p>$P = L\,i\,\mathrm{d}i/\mathrm{d}t = \dfrac{LI_0^2}{\tau}(1-x)\,x$ con $x = e^{-t/\tau}$. Máximo de $x(1-x)$ en $x = \tfrac12$ ⇒ $t = \tau\ln 2$. Energía final: $\tfrac12 LI_0^2$.</p></details>
+</div>
+</section>
+
+<section id="sec-maxwell">
+<h2>4.6–4.7 Ampère-Maxwell y ecuaciones de Maxwell (*)</h2>
+
+<h3>El fallo de la ley de Ampère</h3>
+<p>Ampère (T3): $\oint\vec B\cdot\mathrm{d}\vec l = \mu_0\int\vec J\cdot\mathrm{d}\vec S$. Funciona con corrientes continuas. ¿Y si las corrientes cambian? Mira un condensador cargándose:</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 620 240" role="img" aria-label="Condensador cargándose: dos superficies apoyadas en la misma curva">
+<defs>
+<marker id="mk-cap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg)"/></marker>
+<marker id="mk-cap-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--field)"/></marker>
+</defs>
+<line x1="20" y1="120" x2="300" y2="120" stroke="var(--fg-dim)" stroke-width="3"/>
+<line x1="340" y1="120" x2="600" y2="120" stroke="var(--fg-dim)" stroke-width="3"/>
+<line x1="300" y1="50" x2="300" y2="190" stroke="var(--pos)" stroke-width="5"/>
+<line x1="340" y1="50" x2="340" y2="190" stroke="var(--neg)" stroke-width="5"/>
+<line x1="50" y1="108" x2="110" y2="108" stroke="var(--fg)" stroke-width="2" marker-end="url(#mk-cap)"/>
+<text x="72" y="98" font-size="14" fill="var(--fg)">I(t)</text>
+<g stroke="var(--field)" stroke-width="1.6" marker-end="url(#mk-cap-f)">
+<line x1="305" y1="70" x2="335" y2="70"/><line x1="305" y1="95" x2="335" y2="95"/><line x1="305" y1="145" x2="335" y2="145"/><line x1="305" y1="170" x2="335" y2="170"/>
+</g>
+<ellipse cx="180" cy="120" rx="12" ry="45" fill="var(--accent)" fill-opacity="0.18" stroke="var(--accent)" stroke-width="2.5"/>
+<path d="M180 75 C 250 60, 322 68, 322 120 C 322 172, 250 180, 180 165" fill="none" stroke="var(--check)" stroke-width="2" stroke-dasharray="6 4"/>
+<g font-size="13" fill="var(--fg)">
+<text x="174" y="66" fill="var(--accent)">Γ</text>
+<text x="40" y="200" fill="var(--accent)">S₁ (disco): la atraviesa el cable → μ₀I</text>
+<text x="40" y="222" fill="var(--check)">S₂ (bolsa entre placas): no la cruza ninguna carga → ¡0!</text>
+<text x="350" y="40" fill="var(--field)">E crece entre placas</text>
+</g>
+</svg>
+<figcaption>Misma curva Γ, mismo $\oint\vec B\cdot\mathrm{d}\vec l$, pero dos superficies dan respuestas distintas con la ley de Ampère original. Algo falta.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué hace falta la corriente de desplazamiento</span>
+<div class="steps">
+<div class="step">Encoge Γ hasta un punto: la superficie se cierra y $\oint\vec B\cdot\mathrm{d}\vec l \to 0$. Ampère diría $\oint_S\vec J\cdot\mathrm{d}\vec S = 0$.</div>
+<div class="step">Pero la <strong>ecuación de continuidad</strong> (conservación de la carga, T2) dice $\oint_S\vec J\cdot\mathrm{d}\vec S = -\dfrac{\mathrm{d}Q_S}{\mathrm{d}t} \neq 0$ (la placa se está cargando). <strong>Contradicción.</strong></div>
+<div class="step">Usamos Gauss (que sí vale con campos variables): $Q_S = \varepsilon_0\oint\vec E\cdot\mathrm{d}\vec S$ ⇒ $\oint_S\left(\vec J + \varepsilon_0\dfrac{\partial\vec E}{\partial t}\right)\cdot\mathrm{d}\vec S = 0$.</div>
+<div class="step">Maxwell (≈1860): basta añadir $\varepsilon_0\,\partial\vec E/\partial t$ a la derecha de Ampère para que todo cuadre.</div>
+</div>
+</div>
+
+<div class="box formula"><span class="label">Fórmula · ley de Ampère-Maxwell</span>
+$$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\int_{S(\Gamma)}\left(\vec J + \varepsilon_0\frac{\partial\vec E}{\partial t}\right)\cdot\mathrm{d}\vec S$$
+<p class="legend">$\vec J$: densidad de corriente de <strong>conducción</strong> (cargas que se mueven). $\vec J_D = \varepsilon_0\,\partial\vec E/\partial t$: densidad de corriente de <strong>desplazamiento</strong> (no hay cargas moviéndose; solo un E que cambia). $\varepsilon_0 = 8{,}85\times10^{-12}$ F/m. Sin conducción: <strong>un E variable crea B</strong>.</p>
+</div>
+
+<div class="box example"><span class="label">Ejemplo 4.6 (*) · B dentro de un condensador de placas circulares</span>
+<p>Placas de radio R alimentadas por I(t). Entre placas: $E = \dfrac{Q(t)}{\varepsilon_0\pi R^2}$ ⇒ $J_D = \varepsilon_0\dfrac{\partial E}{\partial t} = \dfrac{I(t)}{\pi R^2}$ (uniforme). Es idéntico a un cable cilíndrico con corriente repartida, así que (T3): $B(\rho) = \dfrac{\mu_0 I(t)}{2\pi R^2}\,\rho$ para $\rho \le R$.</p>
+</div>
+
+<h3>Las cuatro ecuaciones de Maxwell (forma integral)</h3>
+<table>
+<tr><th>Ley</th><th>Ecuación</th><th>Qué dice</th></tr>
+<tr><td>Gauss (E)</td><td>$\oint_S\vec E\cdot\mathrm{d}\vec S = \dfrac{Q_S(t)}{\varepsilon_0}$</td><td>Las cargas son fuentes de E (vale también con E variable)</td></tr>
+<tr><td>Gauss (B)</td><td>$\oint_S\vec B\cdot\mathrm{d}\vec S = 0$</td><td>No hay "cargas magnéticas": las líneas de B se cierran</td></tr>
+<tr><td>Faraday-Maxwell</td><td>$\oint_\Gamma\vec E\cdot\mathrm{d}\vec l = -\displaystyle\int_{S(\Gamma)}\frac{\partial\vec B}{\partial t}\cdot\mathrm{d}\vec S$</td><td>Un B variable crea E en <strong>cualquier punto</strong> del espacio, haya o no conductor</td></tr>
+<tr><td>Ampère-Maxwell</td><td>$\oint_\Gamma\vec B\cdot\mathrm{d}\vec l = \mu_0\displaystyle\int_{S(\Gamma)}\left(\vec J+\varepsilon_0\frac{\partial\vec E}{\partial t}\right)\cdot\mathrm{d}\vec S$</td><td>Corrientes y E variables crean B</td></tr>
+</table>
+
+<div class="box why"><span class="label">Por qué esto predice las ondas</span>
+<p>La novedad de Faraday-Maxwell: Γ <strong>no tiene por qué ser un cable</strong>. En el vacío (sin cargas ni corrientes):</p>
+<div class="chain"><span>B cambia</span><span>crea E (Faraday)</span><span>ese E cambia</span><span>crea B (Ampère-Maxwell)</span><span>ese B cambia…</span><span>perturbación que se autosostiene</span></div>
+<p>Los campos son causa y efecto de sí mismos: son las <strong>ondas electromagnéticas</strong> (T6).</p>
+</div>
+</section>
+
+<section id="sec-problemas">
+<h2>Problemas resueltos (boletín T4)</h2>
+<p>Seleccionados para cubrir todos los tipos: N espiras y ángulo, B vectorial, espira que entra en un campo, barra con fuerza, B(t) + movimiento, campo no uniforme del hilo, inductancia mutua, autoflujo + flujo externo y circuitos RL.</p>
+
+<div class="box example"><span class="label">Problemas 7 y 8 · bobina, N espiras y ángulo</span>
+<p><strong>7.</strong> Bobina circular de radio $r = 20$ cm y $N = 500$ vueltas en un B uniforme de 250 mT paralelo a su eje. B aumenta a 50 mT/s. (a) $B(t)$; (b) flujo y |ε|.</p>
+<p><strong>8.</strong> Ahora el eje de la bobina forma 60° con B. ¿A qué ritmo debe crecer B para que |ε| = 1 V?</p>
+<details><summary>Plan</summary><p>$\Phi = NBS\cos\theta$, con θ entre B y el <strong>eje</strong> (que es la normal de las espiras). Derivar. En el 8 despejar $\mathrm{d}B/\mathrm{d}t$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(a) $B(t) = 0{,}25 + 0{,}05\,t$ T.</div>
+<div class="step">(b) Eje ∥ B ⇒ θ = 0. $S = \pi r^2 = 0{,}04\pi$ m². $\Phi = 500\cdot0{,}04\pi\,(0{,}25 + 0{,}05t) = 20\pi(0{,}25+0{,}05t) = (15{,}71 + 3{,}14\,t)$ Wb.</div>
+<div class="step">$\varepsilon = -\mathrm{d}\Phi/\mathrm{d}t = -\pi$ V ⇒ $|\varepsilon| = 3{,}14$ V (constante: B crece linealmente).</div>
+<div class="step">(8) $|\varepsilon| = N\pi r^2\cos60^\circ\,\dfrac{\mathrm{d}B}{\mathrm{d}t} = 1$ ⇒ $\dfrac{\mathrm{d}B}{\mathrm{d}t} = \dfrac{1}{500\cdot0{,}04\pi\cdot0{,}5} = \dfrac{1}{10\pi} = 31{,}8$ mT/s.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problemas 9 y 11 · ángulo con el plano y B vectorial</span>
+<p><strong>9.</strong> Espira de 0,04 m² en el plano xy. B uniforme forma <strong>30° con el plano xy</strong>, $B(t) = 0{,}05\,t$ T. |ε|?</p>
+<p><strong>11.</strong> Bobina plana circular de 200 vueltas y 15 cm de radio en el plano xy, con $\vec B(t) = 3t^2\,\hat\imath - 4e^{-2t}\,\hat\jmath + 5t\,\hat k$ (mT). |ε|?</p>
+<details><summary>Plan</summary><p>La normal es $\hat k$. En el 9, convertir "30° con el plano" en "60° con la normal". En el 11, solo cuenta $B_z$: las componentes x e y resbalan por el plano.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(9) θ = 90° − 30° = 60°. $\Phi = B S\cos60^\circ = 0{,}05t\cdot0{,}04\cdot0{,}5 = 10^{-3}\,t$ Wb ⇒ $|\varepsilon| = 1$ mV.</div>
+<div class="step">Si hubieras usado cos 30° te saldría 1,73 mV: <span class="neg">error típico</span>.</div>
+<div class="step">(11) $\vec B\cdot\hat k = 5t$ mT ⇒ $\Phi = N B_z \pi r^2 = 200\cdot5\times10^{-3}t\cdot\pi\cdot0{,}15^2$.</div>
+<div class="step">$|\varepsilon| = 200\cdot5\times10^{-3}\cdot0{,}0707 = 0{,}0707$ V = <strong>70,7 mV</strong>. Los términos $3t^2$ y $e^{-2t}$ son puro ruido para despistar.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 13 · espira que entra en una zona con campo</span>
+<p>Espira rectangular de 20 cm (en la dirección del movimiento) por 5 cm, R = 1,5 Ω, entra a 2 cm/s en una región con B = 1,5 T dirigido <strong>hacia el lector</strong>. t = 0 cuando el lado delantero entra. (a) Φ(t) mientras entra; (b) ε e I con sentido; (c) ¿y cuando ya está dentro del todo?</p>
+<figure class="diagram">
+<svg viewBox="0 0 560 190" role="img" aria-label="Espira rectangular entrando en una región de campo saliente">
+<defs><marker id="mk-p13" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+<marker id="mk-p13i" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--intuition)"/></marker></defs>
+<rect x="300" y="15" width="245" height="160" fill="var(--field)" fill-opacity="0.07" stroke="var(--field)" stroke-dasharray="4 4"/>
+<g fill="var(--field)">
+<circle cx="330" cy="40" r="2.5"/><circle cx="380" cy="40" r="2.5"/><circle cx="430" cy="40" r="2.5"/><circle cx="480" cy="40" r="2.5"/><circle cx="530" cy="40" r="2.5"/>
+<circle cx="380" cy="105" r="2.5"/><circle cx="430" cy="105" r="2.5"/><circle cx="480" cy="105" r="2.5"/><circle cx="530" cy="105" r="2.5"/>
+<circle cx="330" cy="155" r="2.5"/><circle cx="380" cy="155" r="2.5"/><circle cx="430" cy="155" r="2.5"/><circle cx="480" cy="155" r="2.5"/><circle cx="530" cy="155" r="2.5"/>
+</g>
+<rect x="140" y="80" width="200" height="50" fill="none" stroke="var(--pos)" stroke-width="3"/>
+<rect x="300" y="80" width="40" height="50" fill="var(--pos)" fill-opacity="0.25"/>
+<line x1="350" y1="105" x2="372" y2="105" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#mk-p13i)"/>
+<g stroke="var(--accent)" stroke-width="2" marker-end="url(#mk-p13)">
+<line x1="200" y1="70" x2="260" y2="70"/><line x1="260" y1="140" x2="200" y2="140"/>
+</g>
+<g font-size="13" fill="var(--fg)">
+<text x="378" y="100" fill="var(--intuition)">v</text>
+<text x="215" y="62" fill="var(--accent)">I horaria</text>
+<text x="240" y="160" text-anchor="middle" fill="var(--fg-dim)">20 cm</text>
+<text x="128" y="110" text-anchor="end" fill="var(--fg-dim)">5 cm</text>
+<text x="320" y="73" text-anchor="middle" fill="var(--pos)">vt</text>
+<text x="545" y="12" text-anchor="end" fill="var(--field)">B ⊙ (hacia el lector)</text>
+</g>
+</svg>
+<figcaption>Solo la parte sombreada (anchura vt) está en el campo: el área "útil" crece linealmente.</figcaption>
+</figure>
+<details><summary>Plan</summary><p>Palanca S: área dentro = (5 cm)·(vt). Φ lineal en t ⇒ ε constante mientras entra. Sentido por Lenz. Cuando está dentro del todo, Φ constante.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(a) $\Phi = B\,h\,vt = 1{,}5\cdot0{,}05\cdot0{,}02\,t = 1{,}5\times10^{-3}\,t$ Wb (= 1,5t mWb), para $0 \le t \le 0{,}20/0{,}02 = 10$ s.</div>
+<div class="step">(b) $|\varepsilon| = 1{,}5$ mV ⇒ $I = 1{,}5\times10^{-3}/1{,}5 = 1$ mA.</div>
+<div class="step">Sentido: Φ saliente crece ⇒ $\vec B_{ind}$ entrante ⇒ <strong>horario</strong>. Comprobación con Lorentz en el lado delantero: $\hat x\times\hat z = -\hat y$ ⇒ las cargas bajan por el lado derecho ⇒ horario ✔.</div>
+<div class="step">(c) Dentro del todo: Φ = BS constante ⇒ ε = 0 aunque se siga moviendo.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 16 · barra con fuerza constante: velocidad límite</span>
+<p>Barra sin rozamiento sobre raíles separados $l = 1$ m, unidos por R = 10 Ω. B = 1 T hacia el lector. Se aplica $F_a = 0{,}5\,\hat\imath$ N y la barra acaba moviéndose a velocidad constante v. (a) $F_m$ e I (sentido); (b) ε y v.</p>
+<details><summary>Plan</summary><p>Velocidad constante ⇒ fuerza neta nula ⇒ $F_m = -F_a$. De $F_m = IlB$ sale I; de ε = IR sale ε; de ε = vBl sale v. Comprobar el balance de potencia.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">Equilibrio: $\vec F_m = -0{,}5\,\hat\imath$ N.</div>
+<div class="step">$IlB = 0{,}5$ ⇒ $I = 0{,}5/(1\cdot1) = 0{,}5$ A.</div>
+<div class="step">Sentido: área crece, Φ saliente crece ⇒ $\vec B_{ind}$ entrante ⇒ <strong>horario</strong>.</div>
+<div class="step">$\varepsilon = IR = 5$ V ⇒ $v = \dfrac{\varepsilon}{Bl} = 5$ m/s. (Directo: $v = \dfrac{F_aR}{B^2l^2}$.)</div>
+<div class="step">¿Por qué hay velocidad límite? El freno $F_m = B^2l^2v/R$ crece con v hasta igualar $F_a$. Potencia: $F_av = 2{,}5$ W = $I^2R = 0{,}25\cdot10 = 2{,}5$ W ✔.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 18 · B(t) que decrece + barra que acelera</span>
+<p>Raíles en U con R = 20 Ω y barra AC de $l = 1$ m. $\vec B(t) = 0{,}5\,e^{-t/0{,}1}\,\hat k$ T. La barra parte del reposo en y = 0 con aceleración 6 m/s². Calcula I(t) y el instante en que cambia de sentido.</p>
+<details><summary>Plan</summary><p>Dos palancas a la vez (B baja, S sube). No sumar fem "a ojo": escribir Φ(t) completo y derivar con la regla del producto. El signo de ε dice el sentido.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$y(t) = \tfrac12\cdot6\,t^2 = 3t^2$. Con normal $+\hat k$: $\Phi = B\,l\,y = 0{,}5e^{-10t}\cdot3t^2 = 1{,}5\,t^2e^{-10t}$ Wb.</div>
+<div class="step">$\dfrac{\mathrm{d}\Phi}{\mathrm{d}t} = 1{,}5\,(2t - 10t^2)\,e^{-10t} = (3t - 15t^2)\,e^{-10t}$. El primer término es de movimiento ($Bl\,\dot y$); el segundo, de B variable ($ly\,\dot B$).</div>
+<div class="step">$\varepsilon = (15t^2 - 3t)\,e^{-10t}$ V ⇒ $I = \varepsilon/R = 0{,}15\,(5t^2 - t)\,e^{-10t}$ A.</div>
+<div class="step">Se anula en $5t^2 = t$ ⇒ <strong>t = 0,2 s</strong>.</div>
+<div class="step">Sentido: con normal $+\hat k$, ε &gt; 0 es antihorario visto desde +z. Para t &lt; 0,2 s, I &lt; 0 ⇒ <strong>horario</strong> (domina el área que crece). Después, I &gt; 0 ⇒ <strong>antihorario</strong> (domina el B que se apaga). Ej.: $I(0{,}1) = 0{,}15(0{,}05-0{,}1)e^{-1} = -2{,}8$ mA.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problemas 19 y 20 · hilo con corriente alterna y bobina rectangular</span>
+<p><strong>19.</strong> Flujo del campo de un hilo infinito (I) en una espira coplanaria: lado cercano a distancia $a$, anchura $b$, altura $c$ (paralela al hilo).</p>
+<p><strong>20.</strong> $I(t) = 2\cos(10^6t)$ A; bobina de 50 vueltas, 10 cm de anchura y 20 cm de altura, a 1 cm del hilo. fem eficaz en un voltímetro.</p>
+<details><summary>Plan</summary><p>Igual que el Ejemplo 4.2 (ojo, aquí las letras b y c están cambiadas). Φ = M·I con N vueltas. ε = −M dI/dt. Valor eficaz = amplitud/√2.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(19) Franja de altura c y anchura dr a distancia r: $\mathrm{d}\Phi = \dfrac{\mu_0I}{2\pi r}c\,\mathrm{d}r$ ⇒ $\Phi = \dfrac{\mu_0cI}{2\pi}\ln\dfrac{a+b}{a}$.</div>
+<div class="step">(20) $M = N\dfrac{\mu_0c}{2\pi}\ln\dfrac{a+b}{a} = 50\cdot2\times10^{-7}\cdot0{,}2\cdot\ln11 = 50\cdot4\times10^{-8}\cdot2{,}398 = 4{,}80\ \mu$H.</div>
+<div class="step">$\varepsilon = -M\dfrac{\mathrm{d}I}{\mathrm{d}t} = M\cdot2\times10^6\sin(10^6t)$ ⇒ amplitud $= 4{,}80\times10^{-6}\cdot2\times10^6 = 9{,}59$ V.</div>
+<div class="step">$\varepsilon_{ef} = 9{,}59/\sqrt2 \approx 6{,}78$ V. Fíjate: con solo μH sale un voltaje grande porque ω = 10⁶ rad/s es enorme.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problemas 24 y 26 · inductancia mutua y flujo total</span>
+<p><strong>24.</strong> Solenoide esbelto de longitud $l_1$ y $N_1$ espiras; dentro, coaxial, una bobina corta de radio $R_2$ y $N_2$ espiras. (a) M; (b) fem en la bobina pequeña (en abierto) si $I_1 = I_0\cos\omega t$; (c) ¿y si su eje forma un ángulo θ con el del solenoide?</p>
+<p><strong>26.</strong> Dos bobinas iguales, L = 20 mH, M = 1 mH. $I_1 = 300$ mA, $I_2 = 200$ mA. Flujo total en la bobina 2.</p>
+<details><summary>Plan</summary><p>Calcular M con el circuito cuyo B conocemos: el solenoide (B uniforme dentro). Flujo en la bobina pequeña con su área $\pi R_2^2$ (no la del solenoide). En el 26: $\Phi_2 = MI_1 + LI_2$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(a) $B_1 = \mu_0\dfrac{N_1}{l_1}I_1$ ⇒ $\Phi_{21} = N_2B_1\pi R_2^2$ ⇒ $M = \dfrac{\mu_0\pi R_2^2N_1N_2}{l_1}$.</div>
+<div class="step">(b) $\varepsilon_2 = -M\dfrac{\mathrm{d}I_1}{\mathrm{d}t} = M\omega I_0\sin(\omega t)$. Aunque esté en abierto (I₂ = 0) hay fem.</div>
+<div class="step">(c) Inclinada θ: $\Phi_{21}$ lleva un $\cos\theta$ ⇒ M y ε se multiplican por $\cos\theta$.</div>
+<div class="step">(26) $\Phi_2 = MI_1 + LI_2 = 10^{-3}\cdot0{,}3 + 20\times10^{-3}\cdot0{,}2 = 0{,}3 + 4 = 4{,}3$ mWb (suponiendo que ambos flujos se suman).</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problemas 29 y 31 · RL: instantes clave</span>
+<p><strong>29.</strong> $I(t) = I_f(1 - e^{-t/\tau})$. (a) $V_L(t)$; (b) ¿cuándo llega al 98 %?; (c) comportamiento en t = 0 y en estacionario.</p>
+<p><strong>31.</strong> Serie: 10 V, 12 Ω, 8 Ω, L = 5 mH. $V_L$ justo al cerrar y en estacionario.</p>
+<details><summary>Plan</summary><p>$V_L = L\,\mathrm{d}i/\mathrm{d}t$. Para los instantes: en $t=0^+$ la bobina es circuito abierto, en $t\to\infty$ es un cable.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(29a) $V_L = L\dfrac{\mathrm{d}I}{\mathrm{d}t} = \dfrac{LI_f}{\tau}e^{-t/\tau}$.</div>
+<div class="step">(29b) $1 - e^{-t/\tau} = 0{,}98$ ⇒ $t = \tau\ln50 = 3{,}91\,\tau \approx 4\tau$.</div>
+<div class="step">(29c) t = 0: I = 0 y $V_L$ máxima ⇒ circuito abierto. Estacionario: $V_L = 0$ ⇒ cortocircuito.</div>
+<div class="step">(31) $t=0^+$: i = 0 ⇒ ninguna caída en las resistencias ⇒ $V_L(0) = 10$ V. $t\to\infty$: $V_L = 0$, $i = 10/20 = 0{,}5$ A. Además $\tau = 5\times10^{-3}/20 = 0{,}25$ ms y $U = \tfrac12\cdot5\times10^{-3}\cdot0{,}25 = 0{,}625$ mJ.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 32 · RL con resistencias en paralelo</span>
+<p>Batería de 15 V con interruptor, en serie con 40 Ω. Después, dos ramas en paralelo: una con 60 Ω y otra con 30 Ω en serie con una bobina de 9 mH. (a) Corriente por la batería en t = 0; (b) corriente por la batería en estacionario y energía en la bobina.</p>
+<details><summary>Plan</summary><p>Sustituir la bobina por un circuito abierto (t = 0) y por un cable (estacionario), resolver como en T2, y usar $\tfrac12 Li_L^2$ con la corriente de <strong>su rama</strong>.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(a) Rama de la bobina abierta: solo 40 + 60 = 100 Ω ⇒ $I = 15/100 = 0{,}15$ A.</div>
+<div class="step">(b) Bobina = cable: 60 ∥ 30 = 20 Ω; total 60 Ω ⇒ $I = 15/60 = 0{,}25$ A.</div>
+<div class="step">Tensión en el paralelo: $0{,}25\cdot20 = 5$ V ⇒ corriente por la bobina $i_L = 5/30 = 1/6$ A.</div>
+<div class="step">$U = \tfrac12\cdot9\times10^{-3}\cdot(1/6)^2 = 1{,}25\times10^{-4}$ J = <strong>125 µJ</strong>.</div>
+<div class="step"><span class="dim">Extra: la τ usa la R que ve la bobina con la batería anulada: 30 + (40 ∥ 60) = 54 Ω ⇒ τ = 9 mH/54 Ω ≈ 0,17 ms.</span></div>
+</div>
+</details>
+</div>
+</section>
+
+<section id="sec-estrategia">
+<h2>Estrategia de examen</h2>
+
+<h3>¿Qué me dan? → ¿Qué uso?</h3>
+<table>
+<tr><th>Situación</th><th>Herramienta</th><th>Cuidado con…</th></tr>
+<tr><td>B(t) uniforme, espira fija</td><td>$\Phi = NBS\cos\theta$, derivar</td><td>θ con la normal; solo $B_\perp$</td></tr>
+<tr><td>Barra que desliza en B uniforme</td><td>$\varepsilon = vBl$, $I = \varepsilon/R$, $F = IlB$</td><td>sentido por Lenz; $P = Fv = I^2R$</td></tr>
+<tr><td>Espira que entra/sale de una zona</td><td>Φ a trozos (área dentro)</td><td>dentro del todo: ε = 0</td></tr>
+<tr><td>B no uniforme (hilo)</td><td>franjas: $\mathrm{d}\Phi = B(x)\,c\,\mathrm{d}x$</td><td>sale un logaritmo</td></tr>
+<tr><td>B(t) y movimiento a la vez</td><td>Φ(t) completo y derivar (regla del producto)</td><td>el sentido puede cambiar</td></tr>
+<tr><td>Espira que gira</td><td>$\Phi = NBS\cos\omega t$</td><td>$\varepsilon_{max} = NBS\omega$ cuando Φ = 0</td></tr>
+<tr><td>Dos circuitos</td><td>$M = \Phi_{21}/I_1$ con el B fácil</td><td>$M_{12} = M_{21}$; × N₂; × cos θ</td></tr>
+<tr><td>Un circuito cuya i cambia</td><td>$V_L = L\,\mathrm{d}i/\mathrm{d}t$, $L = \Phi/i$</td><td>solo importa di/dt</td></tr>
+<tr><td>RL con interruptor</td><td>$t=0^+$: abierto; $t\to\infty$: cable; $\tau = L/R$</td><td>i en la bobina no salta</td></tr>
+<tr><td>Energía</td><td>$\tfrac12Li^2$, $u = B^2/2\mu_0$</td><td>cuadrática en i</td></tr>
+</table>
+
+<h3>Receta universal de un problema de Faraday</h3>
+<div class="steps">
+<div class="step"><strong>Elige la normal</strong> $\hat n$ (fija el sentido positivo de circulación por la mano derecha).</div>
+<div class="step"><strong>Escribe Φ(t)</strong>: $\int\vec B\cdot\mathrm{d}\vec S$ con N, cos θ y el área que realmente está en el campo.</div>
+<div class="step"><strong>Deriva</strong>: $\varepsilon = -\mathrm{d}\Phi/\mathrm{d}t$.</div>
+<div class="step"><strong>Corriente</strong>: $I = \varepsilon/R$ (si piden fuerzas: $\vec F = I\vec l\times\vec B$).</div>
+<div class="step"><strong>Sentido</strong>: signo de ε respecto a la normal elegida, y <strong>confírmalo con Lenz</strong>.</div>
+</div>
+
+<h3>Lenz en 10 segundos</h3>
+<table>
+<tr><th>B a través de la espira</th><th>Φ…</th><th>B_ind</th><th>Corriente (mirando desde donde apunta B)</th></tr>
+<tr><td>sale del papel ⊙</td><td>crece</td><td>entra ⊗</td><td>horaria</td></tr>
+<tr><td>sale del papel ⊙</td><td>decrece</td><td>sale ⊙</td><td>antihoraria</td></tr>
+<tr><td>entra en el papel ⊗</td><td>crece</td><td>sale ⊙</td><td>antihoraria</td></tr>
+<tr><td>entra en el papel ⊗</td><td>decrece</td><td>entra ⊗</td><td>horaria</td></tr>
+</table>
+<p class="dim">"Horario/antihorario" mirando el papel desde delante. Regla corta: <strong>crece → se opone; decrece → lo imita</strong>.</p>
+
+<div class="box trap"><span class="label">Las 6 trampas más repetidas</span>
+<ol>
+<li>Coseno con el <strong>plano</strong> en vez de con la normal.</li>
+<li>Olvidar las <strong>N</strong> espiras.</li>
+<li>Pensar que un B grande y constante induce algo.</li>
+<li>Lenz "contra el campo" en vez de "contra el cambio".</li>
+<li>Calcular M con el área del solenoide cuando la bobina interior es más pequeña (o al revés).</li>
+<li>Bobina en t = 0: es circuito abierto, no cable.</li>
+</ol>
+</div>
+</section>
+
+<section id="sec-formulas">
+<h2>Hoja de fórmulas</h2>
+<table>
+<tr><th>Concepto</th><th>Fórmula</th><th>Unidades / notas</th></tr>
+<tr><td>fem</td><td>$\varepsilon = \oint\vec f\cdot\mathrm{d}\vec l$</td><td>V = J/C</td></tr>
+<tr><td>Flujo magnético</td><td>$\Phi = \int\vec B\cdot\mathrm{d}\vec S = NBS\cos\theta$</td><td>Wb = T·m²; θ con la normal</td></tr>
+<tr><td>fem de movimiento</td><td>$\varepsilon = \oint(\vec v\times\vec B)\cdot\mathrm{d}\vec l = vBl$</td><td>$I = vBl/R$</td></tr>
+<tr><td>Fuerza sobre la barra</td><td>$F = IlB = B^2l^2v/R$</td><td>frena siempre</td></tr>
+<tr><td>Balance de potencia</td><td>$Fv = \varepsilon I = \varepsilon^2/R = I^2R$</td><td>W</td></tr>
+<tr><td>Ley de Faraday</td><td>$\varepsilon = -\dfrac{\mathrm{d}\Phi}{\mathrm{d}t}$, $\oint\vec E\cdot\mathrm{d}\vec l = -\dfrac{\mathrm{d}}{\mathrm{d}t}\int\vec B\cdot\mathrm{d}\vec S$</td><td>signo: Lenz</td></tr>
+<tr><td>Generador</td><td>$\varepsilon = NBS\omega\sin\omega t$</td><td>desfase 90° con Φ</td></tr>
+<tr><td>Hilo infinito (T3)</td><td>$B = \dfrac{\mu_0I}{2\pi x}$; $\Phi = \dfrac{\mu_0Ic}{2\pi}\ln\dfrac{a+b}{a}$</td><td>c ∥ hilo</td></tr>
+<tr><td>Inductancia mutua</td><td>$\Phi_{21} = MI_1$, $\varepsilon_2 = -M\,\mathrm{d}I_1/\mathrm{d}t$</td><td>H = Wb/A; $M_{12}=M_{21}$</td></tr>
+<tr><td>Solenoide–bobina interior</td><td>$M = \mu_0N_1N_2\pi R_2^2/l_1$</td><td>× cos θ si se inclina</td></tr>
+<tr><td>Autoinducción</td><td>$\Phi = Li$, $V_L = L\,\mathrm{d}i/\mathrm{d}t$</td><td>H</td></tr>
+<tr><td>Solenoide esbelto</td><td>$L = \mu_0N^2S/l = \mu_0n^2lS$</td><td>$\mu_0 = 4\pi\times10^{-7}$ H/m</td></tr>
+<tr><td>Caso general</td><td>$\Phi = MI + Li$, $\varepsilon = -M\dot I - L\dot i$</td><td>geometría fija</td></tr>
+<tr><td>RL cierre</td><td>$i = \dfrac{\varepsilon}{R}(1-e^{-t/\tau})$, $V_L = \varepsilon e^{-t/\tau}$</td><td>$\tau = L/R$ (s)</td></tr>
+<tr><td>RL apertura</td><td>$i = i_0e^{-t/\tau}$</td><td>98 % en 3,9τ</td></tr>
+<tr><td>Energía en bobina</td><td>$U_B = \tfrac12Li^2$</td><td>J</td></tr>
+<tr><td>Densidad de energía</td><td>$u_B = B^2/2\mu_0$</td><td>J/m³</td></tr>
+<tr><td>Coaxial</td><td>$L/l = \dfrac{\mu_0}{2\pi}\ln\dfrac{b}{a}$</td><td>H/m</td></tr>
+<tr><td>Corriente de desplazamiento</td><td>$\vec J_D = \varepsilon_0\,\partial\vec E/\partial t$</td><td>A/m²</td></tr>
+<tr><td>Ampère-Maxwell</td><td>$\oint\vec B\cdot\mathrm{d}\vec l = \mu_0\int(\vec J + \varepsilon_0\partial_t\vec E)\cdot\mathrm{d}\vec S$</td><td>(*)</td></tr>
+<tr><td>Gauss para B</td><td>$\oint\vec B\cdot\mathrm{d}\vec S = 0$</td><td>sin monopolos</td></tr>
+</table>
+</section>
+
+<section id="sec-test">
+<h2>Autotest conceptual</h2>
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>1. B de módulo variable atraviesa una espira. ¿Cuándo es nula la fem? ¿De qué depende?</summary><p>Es nula si B es <strong>paralelo al plano</strong> de la espira (no atraviesa: Φ = 0 siempre). Si no, $\varepsilon = -S\cos\theta\,\mathrm{d}B/\mathrm{d}t$: proporcional al área. (Boletín 1: b y c.)</p></details>
+<details><summary>2. Imán con el N apuntando a una espira. Visto desde el imán, ¿sentido de la corriente al acercarlo y al alejarlo?</summary><p>Acercar: Φ hacia la espira crece → $\vec B_{ind}$ hacia el imán (hacia el observador) → <strong>antihorario</strong>. Alejar: <strong>horario</strong>. (Boletín 4: d.)</p></details>
+<details><summary>3. Espira cuadrada en el plano xy, B = 50t mT según +y. ¿fem?</summary><p><strong>Cero</strong>: B es paralelo al plano de la espira, no la atraviesa. Da igual lo rápido que crezca.</p></details>
+<details><summary>4. Un alternador da 10 V de pico. Si giras el doble de rápido, ¿qué pasa?</summary><p>$\varepsilon_{max} = NBS\omega$: <strong>20 V de pico</strong> y además el doble de frecuencia. Y cuesta más girarlo (más corriente, más par de frenado).</p></details>
+<details><summary>5. ¿Por qué un imán cae lentamente por un tubo de cobre (no magnético)?</summary><p>Al caer, cambia el flujo en cada "anillo" del tubo → corrientes inducidas (de Foucault) → por Lenz crean campos que frenan el imán. La energía potencial acaba como calor en el cobre.</p></details>
+<details><summary>6. Bobina rectangular que rodea un solenoide largo. Si la inclinas, ¿cambia la fem? ¿Y si es una bobina pequeña dentro del solenoide?</summary><p>Rodeándolo: <strong>no cambia</strong>. Fuera del solenoide B ≈ 0, así que todo el flujo del solenoide atraviesa la bobina sea cual sea su inclinación (boletín 25c). Dentro: <strong>sí</strong>, se multiplica por cos θ, porque la bobina pequeña está inmersa en un B uniforme (boletín 24c).</p></details>
+<details><summary>7. ¿Por qué salta una chispa al desconectar bruscamente un motor o una bobina?</summary><p>Abrir el circuito fuerza a i a caer a 0 en un tiempo minúsculo ⇒ $|V_L| = L|\mathrm{d}i/\mathrm{d}t|$ enorme. La bobina "intenta" mantener la corriente y la tensión ioniza el aire. Es la energía $\tfrac12Li^2$ liberándose.</p></details>
+<details><summary>8. ¿Depende M de la corriente que circula? ¿Y L?</summary><p>No. Ambas son <strong>geometría pura</strong> (formas, tamaños, número de vueltas, posiciones). La corriente solo escala el flujo.</p></details>
+<details><summary>9. Duplicas la corriente de una bobina. ¿Qué pasa con su energía?</summary><p>Se <strong>cuadruplica</strong>: $U = \tfrac12Li^2$. (Boletín 27: d.)</p></details>
+<details><summary>10. Una espira se mueve con v constante dentro de un campo uniforme, sin salir de él. Pero sus lados sí notan $q\vec v\times\vec B$. ¿Hay corriente?</summary><p><strong>No</strong>. Las fuerzas en los lados opuestos empujan en el mismo sentido absoluto y se cancelan al recorrer la espira: $\oint(\vec v\times\vec B)\cdot\mathrm{d}\vec l = 0$. Coherente con Faraday: Φ constante.</p></details>
+</div>
+
+<div class="box tldr"><span class="label">Resumen final</span>
+<ul>
+<li><strong>Φ = ∫B·dS</strong>: líneas que atraviesan. Se cambia con B, S o θ.</li>
+<li><strong>Faraday</strong>: $\varepsilon = -\mathrm{d}\Phi/\mathrm{d}t$. Movimiento → Lorentz ($vBl$); B variable → campo E inducido (no conservativo).</li>
+<li><strong>Lenz</strong>: la respuesta se opone al cambio (si no, energía gratis).</li>
+<li><strong>M y L</strong>: flujo ∝ corriente, solo geometría. $V_L = L\,\mathrm{d}i/\mathrm{d}t$: la bobina es la "masa" de la corriente.</li>
+<li><strong>RL</strong>: exponenciales con τ = L/R; t = 0 abierto, ∞ cable.</li>
+<li><strong>Energía</strong>: $\tfrac12Li^2$, guardada en el campo con densidad $B^2/2\mu_0$.</li>
+<li><strong>Maxwell</strong>: E variable crea B, B variable crea E ⇒ ondas.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(() => {
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const fmt = (x, d = 2) => {
+    const v = Math.abs(x) < 1e-12 ? 0 : x;
+    return v.toFixed(d).replace(".", ",");
+  };
+  const el = (id) => document.getElementById(id);
+  const SVGNS = "http://www.w3.org/2000/svg";
+
+  (() => {
+    const ids = ["bB", "bL", "bV", "bR"];
+    const inputs = ids.map(el);
+    const outs = ids.map((id) => el("o" + id));
+    const bar = el("sbBar");
+    const cur = el("sbCur");
+    const fm = el("sbFm");
+    const fe = el("sbFe");
+    const vv = el("sbV");
+    const fmT = el("sbFmT");
+    const feT = el("sbFeT");
+    const vT = el("sbVT");
+    const readout = el("barOut");
+    const field = el("sbField");
+    for (let x = 100; x <= 600; x += 60) {
+      for (let y = 118; y <= 178; y += 60) {
+        const g = document.createElementNS(SVGNS, "g");
+        g.setAttribute("transform", `translate(${x},${y})`);
+        g.setAttribute("stroke", "var(--field)");
+        g.setAttribute("stroke-width", "1.2");
+        g.setAttribute("fill", "none");
+        g.setAttribute("opacity", "0.55");
+        const c = document.createElementNS(SVGNS, "circle");
+        c.setAttribute("r", "6");
+        const p = document.createElementNS(SVGNS, "path");
+        p.setAttribute("d", "M-4 -4 L4 4 M4 -4 L-4 4");
+        g.append(c, p);
+        field.append(g);
+      }
+    }
+    let xb = 200;
+    let offset = 0;
+    let last = null;
+    const values = () => inputs.map((i) => parseFloat(i.value));
+    const arrowLen = (F) => 12 + 90 * F / (F + 4);
+    function render(dt) {
+      const [B, L, v, R] = values();
+      const eps = B * L * v;
+      const I = eps / R;
+      const F = I * L * B;
+      xb += v * 22 * dt;
+      if (xb > 585) xb = 110;
+      offset -= Math.min(I, 6) * 30 * dt;
+      bar.setAttribute("x", xb.toFixed(1));
+      const xr = xb + 6;
+      cur.setAttribute("d", `M${xr} 240 L${xr} 50 L60 50 L60 240 Z`);
+      cur.setAttribute("stroke-dashoffset", offset.toFixed(1));
+      cur.setAttribute("opacity", I > 1e-9 ? "1" : "0");
+      const len = F > 1e-9 ? arrowLen(F) : 0;
+      fm.setAttribute("x1", xb - 2); fm.setAttribute("y1", 100);
+      fm.setAttribute("x2", xb - 2 - len); fm.setAttribute("y2", 100);
+      fm.setAttribute("opacity", len ? "1" : "0");
+      fmT.setAttribute("x", xb - 6 - len); fmT.setAttribute("y", 92);
+      fe.setAttribute("x1", xb + 14); fe.setAttribute("y1", 200);
+      fe.setAttribute("x2", xb + 14 + len); fe.setAttribute("y2", 200);
+      fe.setAttribute("opacity", len ? "1" : "0");
+      feT.setAttribute("x", xb + 16); feT.setAttribute("y", 222);
+      const vl = v > 0 ? 14 + v * 6 : 0;
+      vv.setAttribute("x1", xb + 14); vv.setAttribute("y1", 150);
+      vv.setAttribute("x2", xb + 14 + vl); vv.setAttribute("y2", 150);
+      vv.setAttribute("opacity", vl ? "1" : "0");
+      vT.setAttribute("x", xb + 20 + vl); vT.setAttribute("y", 155);
+      const xm = (xb + 6 - 60) / 200;
+      readout.innerHTML =
+        `Φ = B·l·x = ${fmt(B * L * xm, 3)} Wb (crece a ritmo B·l·v)<br>` +
+        `ε = vBl = ${fmt(eps)} V &nbsp;·&nbsp; I = ε/R = ${fmt(I)} A (antihoraria)<br>` +
+        `F_mag = IlB = ${fmt(F)} N hacia la izquierda &nbsp;·&nbsp; F_aplicada = ${fmt(F)} N para v constante<br>` +
+        `P_aplicada = F·v = ${fmt(F * v)} W &nbsp;=&nbsp; P_Joule = I²R = ${fmt(I * I * R)} W`;
+    }
+    function frame(ts) {
+      const dt = last === null ? 0 : Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+      render(dt);
+      requestAnimationFrame(frame);
+    }
+    inputs.forEach((inp, k) => {
+      const sync = () => { outs[k].textContent = inp.value; };
+      inp.addEventListener("input", sync);
+      sync();
+    });
+    requestAnimationFrame(frame);
+  })();
+
+  (() => {
+    const cv = el("genCanvas");
+    const ctx = cv.getContext("2d");
+    const ids = ["gB", "gS", "gN", "gW"];
+    const inputs = ids.map(el);
+    const outs = ids.map((id) => el("o" + id));
+    const readout = el("genOut");
+    const WIN = 4;
+    let phase = 0;
+    let tsim = 0;
+    let last = null;
+    const hist = [];
+    inputs.forEach((inp, k) => {
+      const sync = () => { outs[k].textContent = inp.value; };
+      inp.addEventListener("input", sync);
+      sync();
+    });
+    function arrow(x1, y1, x2, y2, color, w) {
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = w;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+      const a = Math.atan2(y2 - y1, x2 - x1);
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x2 - 10 * Math.cos(a - 0.4), y2 - 10 * Math.sin(a - 0.4));
+      ctx.lineTo(x2 - 10 * Math.cos(a + 0.4), y2 - 10 * Math.sin(a + 0.4));
+      ctx.closePath(); ctx.fill();
+    }
+    function draw() {
+      const col = { fg: css("--fg"), dim: css("--fg-dim"), field: css("--field"), acc: css("--accent"), pos: css("--pos"), neg: css("--neg"), line: css("--line"), int: css("--intuition") };
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.font = "14px sans-serif";
+      ctx.globalAlpha = 0.45;
+      for (let y = 50; y <= 310; y += 32) arrow(15, y, 315, y, col.field, 1.2);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = col.field; ctx.fillText("B", 18, 36);
+      const cx = 165, cy = 180, r = 110;
+      const th = phase;
+      const nx = Math.cos(th), ny = -Math.sin(th);
+      const dx = Math.sin(th), dy = Math.cos(th);
+      const proj = Math.abs(Math.cos(th)) * r;
+      ctx.fillStyle = col.int; ctx.globalAlpha = 0.35;
+      ctx.fillRect(322, cy - proj, 8, 2 * proj);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = col.int; ctx.font = "12px sans-serif";
+      ctx.fillText("S·|cos θ|", 268, 348);
+      ctx.strokeStyle = col.pos; ctx.lineWidth = 6; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(cx - r * dx, cy - r * dy); ctx.lineTo(cx + r * dx, cy + r * dy); ctx.stroke();
+      ctx.lineCap = "butt";
+      arrow(cx, cy, cx + 70 * nx, cy + 70 * ny, col.acc, 3);
+      ctx.fillStyle = col.acc; ctx.font = "15px sans-serif";
+      ctx.fillText("n̂", cx + 80 * nx - 5, cy + 80 * ny + 5);
+      ctx.fillStyle = col.fg; ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fill();
+      const deg = ((th * 180 / Math.PI) % 360 + 360) % 360;
+      ctx.fillStyle = col.fg; ctx.font = "13px sans-serif";
+      ctx.fillText(`θ = ${deg.toFixed(0)}°`, 18, 348);
+      const X0 = 370, XW = 470;
+      const panels = [
+        { key: "Phi", y0: 20, h: 140, color: col.field, name: "Φ(t)" },
+        { key: "eps", y0: 195, h: 140, color: col.acc, name: "ε(t)" },
+      ];
+      panels.forEach((p) => {
+        let m = 1e-9;
+        hist.forEach((s) => { m = Math.max(m, Math.abs(s[p.key])); });
+        const mid = p.y0 + p.h / 2;
+        ctx.strokeStyle = col.line; ctx.lineWidth = 1;
+        ctx.strokeRect(X0, p.y0, XW, p.h);
+        ctx.beginPath(); ctx.moveTo(X0, mid); ctx.lineTo(X0 + XW, mid); ctx.stroke();
+        ctx.strokeStyle = p.color; ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        hist.forEach((s, i) => {
+          const x = X0 + (s.t - (tsim - WIN)) / WIN * XW;
+          const y = mid - (s[p.key] / m) * (p.h / 2 - 8);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        const lastS = hist[hist.length - 1];
+        if (lastS) {
+          ctx.fillStyle = p.color;
+          ctx.beginPath(); ctx.arc(X0 + XW, mid - (lastS[p.key] / m) * (p.h / 2 - 8), 5, 0, 2 * Math.PI); ctx.fill();
+        }
+        ctx.fillStyle = p.color; ctx.font = "14px sans-serif";
+        ctx.fillText(p.name, X0 + 8, p.y0 + 18);
+      });
+      ctx.fillStyle = col.dim; ctx.font = "12px sans-serif";
+      ctx.fillText("ahora →", X0 + XW - 52, 190);
+      ctx.fillText(`ventana: últimos ${WIN} s`, X0 + 8, 190);
+    }
+    function frame(ts) {
+      const dt = last === null ? 0 : Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+      const [B, Scm, N, w] = inputs.map((i) => parseFloat(i.value));
+      const S = Scm / 1e4;
+      phase += w * dt;
+      tsim += dt;
+      const Phi = N * B * S * Math.cos(phase);
+      const eps = N * B * S * w * Math.sin(phase);
+      hist.push({ t: tsim, Phi, eps });
+      while (hist.length && hist[0].t < tsim - WIN) hist.shift();
+      draw();
+      readout.innerHTML =
+        `Φ_max = NBS = ${fmt(N * B * S, 3)} Wb &nbsp;·&nbsp; ε_max = NBSω = ${fmt(N * B * S * w, 2)} V<br>` +
+        `f = ω/2π = ${fmt(w / (2 * Math.PI), 2)} Hz &nbsp;·&nbsp; T = ${fmt(2 * Math.PI / w, 2)} s<br>` +
+        `ahora: Φ = ${fmt(Phi, 3)} Wb &nbsp;·&nbsp; ε = ${fmt(eps, 2)} V`;
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
+  (() => {
+    const cv = el("rlCanvas");
+    const ctx = cv.getContext("2d");
+    const ids = ["rE", "rR", "rL", "rM"];
+    const inputs = ids.map(el);
+    const outs = ids.map((id) => el("o" + id));
+    const readout = el("rlOut");
+    const WIN = 0.1;
+    inputs.forEach((inp, k) => {
+      const sync = () => {
+        outs[k].textContent = inp.id === "rM" ? (inp.value === "0" ? "cierre" : "apertura") : inp.value;
+        update();
+      };
+      inp.addEventListener("input", sync);
+    });
+    function params() {
+      const [E, R, Lm, mode] = inputs.map((i) => parseFloat(i.value));
+      return { E, R, L: Lm / 1000, mode };
+    }
+    function update() {
+      const { E, R, L, mode } = params();
+      const tau = L / R;
+      const iInf = E / R;
+      readout.innerHTML =
+        `τ = L/R = ${fmt(tau * 1000, 2)} ms &nbsp;·&nbsp; i_final = ε/R = ${fmt(iInf, 3)} A &nbsp;·&nbsp; 98 % en 3,9τ = ${fmt(3.912 * tau * 1000, 1)} ms<br>` +
+        (mode === 0
+          ? `cierre: i(τ) = 63 % = ${fmt(0.632 * iInf, 3)} A · V_L(0⁺) = ε = ${fmt(E, 1)} V · energía final ½Li² = ${fmt(0.5 * L * iInf * iInf * 1000, 2)} mJ`
+          : `apertura: i(τ) = 37 % = ${fmt(0.368 * iInf, 3)} A · V_L(0⁺) = −ε = ${fmt(-E, 1)} V · calor total en R = ½Li₀² = ${fmt(0.5 * L * iInf * iInf * 1000, 2)} mJ`);
+    }
+    function draw(ts) {
+      const { E, R, L, mode } = params();
+      const tau = L / R;
+      const iInf = E / R;
+      const col = { fg: css("--fg"), dim: css("--fg-dim"), pos: css("--pos"), neg: css("--neg"), acc: css("--accent"), field: css("--field"), line: css("--line") };
+      const iOf = (t) => mode === 0 ? iInf * (1 - Math.exp(-t / tau)) : iInf * Math.exp(-t / tau);
+      const vOf = (t) => mode === 0 ? E * Math.exp(-t / tau) : -E * Math.exp(-t / tau);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      const X0 = 70, XW = 760;
+      const P1 = { y0: 20, h: 130 }, P2 = { y0: 185, h: 130 };
+      const tx = (t) => X0 + t / WIN * XW;
+      ctx.font = "13px sans-serif";
+      [P1, P2].forEach((p) => { ctx.strokeStyle = col.line; ctx.lineWidth = 1; ctx.strokeRect(X0, p.y0, XW, p.h); });
+      ctx.fillStyle = col.dim;
+      for (let k = 0; k <= 10; k++) {
+        const x = tx(k * WIN / 10);
+        ctx.strokeStyle = col.line; ctx.beginPath(); ctx.moveTo(x, P2.y0 + P2.h); ctx.lineTo(x, P2.y0 + P2.h + 5); ctx.stroke();
+        ctx.fillText(`${k * 10}`, x - 6, P2.y0 + P2.h + 18);
+      }
+      ctx.fillText("t (ms)", X0 + XW - 45, P2.y0 + P2.h - 8);
+      const iy = (i) => P1.y0 + P1.h - 8 - (i / iInf) * (P1.h - 26);
+      const vMid = P2.y0 + P2.h / 2;
+      const vy = (v) => vMid - (v / E) * (P2.h / 2 - 8);
+      ctx.strokeStyle = col.dim; ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(X0, iy(iInf)); ctx.lineTo(X0 + XW, iy(iInf)); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(X0, vMid); ctx.lineTo(X0 + XW, vMid); ctx.stroke();
+      if (tau <= WIN) {
+        ctx.beginPath(); ctx.moveTo(tx(tau), P1.y0); ctx.lineTo(tx(tau), P2.y0 + P2.h); ctx.stroke();
+      }
+      ctx.setLineDash([]);
+      ctx.fillStyle = col.dim;
+      ctx.fillText("ε/R", X0 - 34, iy(iInf) + 4);
+      ctx.fillText("0", X0 - 16, iy(0) + 4);
+      ctx.fillText("+ε", X0 - 24, vy(E) + 4);
+      ctx.fillText("0", X0 - 16, vMid + 4);
+      ctx.fillText("−ε", X0 - 24, vy(-E) + 4);
+      if (tau <= WIN) { ctx.fillStyle = col.fg; ctx.fillText("τ", tx(tau) + 4, P1.y0 + P1.h - 6); }
+      const plot = (f, y, color) => {
+        ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.beginPath();
+        for (let k = 0; k <= 400; k++) {
+          const t = k / 400 * WIN;
+          const X = tx(t), Y = y(f(t));
+          if (k === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+        }
+        ctx.stroke();
+      };
+      plot(iOf, iy, mode === 0 ? col.pos : col.neg);
+      plot(vOf, vy, col.acc);
+      ctx.fillStyle = mode === 0 ? col.pos : col.neg; ctx.font = "14px sans-serif";
+      ctx.fillText("i(t)", X0 + XW - 150, P1.y0 + P1.h - 12);
+      ctx.fillStyle = col.acc;
+      ctx.fillText("V_L(t) = L di/dt", X0 + XW - 150, P2.y0 + 20);
+      const td = ((ts / 1000) % 3) / 3 * WIN;
+      ctx.fillStyle = col.field;
+      ctx.beginPath(); ctx.arc(tx(td), iy(iOf(td)), 5, 0, 2 * Math.PI); ctx.fill();
+      ctx.beginPath(); ctx.arc(tx(td), vy(vOf(td)), 5, 0, 2 * Math.PI); ctx.fill();
+      requestAnimationFrame(draw);
+    }
+    update();
+    requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>

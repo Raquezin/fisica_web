@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T6 · Ondas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+<nav class="toc">
+<a class="home" href="index.html">← Índice</a>
+<h2>T6 · Ondas</h2>
+<ol>
+<li><a href="#mapa">Mapa del tema</a></li>
+<li><a href="#intro">6.1 Introducción: por qué existen las OEM</a></li>
+<li><a href="#nociones">6.2 Qué es una onda</a></li>
+<li><a href="#ec-ondas">6.2.1 Ecuación de ondas y f(x ∓ vt)</a></li>
+<li><a href="#armonicas">6.2.2 Ondas armónicas</a></li>
+<li><a href="#oem">6.3 Ecuación de ondas EM y c</a></li>
+<li><a href="#oem-armonicas">6.4 OEM planas armónicas</a></li>
+<li><a href="#intensidad">6.5 Energía, Poynting e intensidad</a></li>
+<li><a href="#interferencia">6.6 Interferencia y Young</a></li>
+<li><a href="#difraccion">6.7 Difracción</a></li>
+<li><a href="#estacionarias">6.8 Ondas estacionarias</a></li>
+<li><a href="#espectro">6.9 Espectro electromagnético</a></li>
+<li><a href="#fuentes">6.10 Fuentes: cargas aceleradas</a></li>
+<li><a href="#problemas">Problemas resueltos</a></li>
+<li><a href="#estrategia">Estrategia de examen</a></li>
+<li><a href="#formulario">Formulario</a></li>
+<li><a href="#autotest">Comprueba (autotest)</a></li>
+</ol>
+</nav>
+<main>
+<header class="theme">
+<h1>T6 · Ondas armónicas y ondas electromagnéticas</h1>
+<p class="subtitle">De “una forma que se desplaza” a la luz: por qué $f(x-vt)$ viaja, qué significan $k$ y $\omega$, por qué $c=1/\sqrt{\mu_0\varepsilon_0}$, cómo viaja la energía y qué pasa cuando las ondas se suman.</p>
+</header>
+
+<section id="mapa">
+<h2>Mapa del tema</h2>
+<div class="map">
+<svg viewBox="0 0 900 390" role="img" aria-label="Mapa conceptual del tema 6">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--fg-dim)"/></marker>
+<marker id="ahE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--pos)"/></marker>
+<marker id="ahB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--neg)"/></marker>
+<marker id="ahF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--field)"/></marker>
+<marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="var(--accent)"/></marker>
+</defs>
+<g stroke="var(--line)" stroke-width="1.5" fill="var(--bg-3)">
+<rect x="20" y="20" width="250" height="64" rx="10"/>
+<rect x="325" y="20" width="250" height="64" rx="10"/>
+<rect x="630" y="20" width="250" height="64" rx="10"/>
+<rect x="20" y="160" width="250" height="64" rx="10"/>
+<rect x="325" y="160" width="250" height="64" rx="10" stroke="var(--accent)"/>
+<rect x="630" y="160" width="250" height="64" rx="10"/>
+<rect x="20" y="300" width="250" height="64" rx="10"/>
+<rect x="325" y="300" width="250" height="64" rx="10"/>
+<rect x="630" y="300" width="250" height="64" rx="10"/>
+</g>
+<g font-size="15" font-weight="700" fill="var(--fg)" text-anchor="middle">
+<text x="145" y="45">Onda</text>
+<text x="450" y="45">Ecuación de ondas</text>
+<text x="755" y="45">Onda armónica</text>
+<text x="145" y="185">E y B se generan</text>
+<text x="450" y="185">OEM plana en el vacío</text>
+<text x="755" y="185">Energía que viaja</text>
+<text x="145" y="325">Superposición</text>
+<text x="450" y="325">Difracción · Estacionarias</text>
+<text x="755" y="325">Espectro · Fuentes</text>
+</g>
+<g font-size="12.5" fill="var(--fg-dim)" text-anchor="middle">
+<text x="145" y="68">perturbación que viaja sin llevar materia</text>
+<text x="450" y="68">u = f(x ∓ vt) · lineal</text>
+<text x="755" y="68">k, ω, λ, T · v = ω/k = λf</text>
+<text x="145" y="208">∂B/∂t → E (T4) · ∂E/∂t → B</text>
+<text x="450" y="208">c = 1/√(μ₀ε₀) · E ⊥ B ⊥ c · E = cB</text>
+<text x="755" y="208">u, S = E×B/μ₀, I = cε₀E₀²/2</text>
+<text x="145" y="348">interferencia · Young</text>
+<text x="450" y="348">Huygens · nodos · λₙ = 2L/n</text>
+<text x="755" y="348">λ = c/f · cargas aceleradas</text>
+</g>
+<g stroke="var(--fg-dim)" stroke-width="1.6" fill="none" marker-end="url(#ah)">
+<line x1="270" y1="52" x2="323" y2="52"/>
+<line x1="575" y1="52" x2="628" y2="52"/>
+<line x1="450" y1="84" x2="450" y2="158"/>
+<line x1="270" y1="192" x2="323" y2="192"/>
+<line x1="575" y1="192" x2="628" y2="192"/>
+<line x1="755" y1="84" x2="755" y2="158"/>
+<line x1="380" y1="224" x2="200" y2="298"/>
+<line x1="270" y1="332" x2="323" y2="332"/>
+<line x1="520" y1="224" x2="700" y2="298"/>
+</g>
+<g font-size="11.5" fill="var(--field)">
+<text x="458" y="125">la cumplen E y B</text>
+<text x="763" y="125">promedios</text>
+<text x="215" y="255">ec. lineal ⇒ se suman</text>
+<text x="625" y="255">misma física, distinta f</text>
+</g>
+</svg>
+</div>
+<p><b>La gran historia</b> en una línea (une T3 y T4 con este tema):</p>
+<div class="chain">
+<span>Carga <b>acelerada</b></span>
+<span>$\vec B$ variable</span>
+<span>$\vec E$ variable (Faraday, T4)</span>
+<span>$\vec B$ variable (Maxwell)</span>
+<span>se autosostiene</span>
+<span>OEM a $c=1/\sqrt{\mu_0\varepsilon_0}$</span>
+</div>
+<div class="box tldr"><span class="label">Resumen del tema en 5 ideas</span>
+<ol>
+<li>Una <b>onda</b> transporta <b>energía y momento</b>, no materia.</li>
+<li>Toda forma que viaja sin deformarse es $f(x\mp vt)$; las armónicas son la pieza básica: $A\cos(\omega t-kx-\varphi)$.</li>
+<li>$\vec E$ y $\vec B$ variables se generan mutuamente ⇒ <b>OEM</b> transversal a $c$, con $E=cB$ y $\vec E\perp\vec B\perp\vec c$.</li>
+<li>La energía viaja con el <b>vector de Poynting</b>; lo medible es la <b>intensidad media</b> $I=\tfrac12 c\varepsilon_0E_0^2\propto$ amplitud².</li>
+<li>Como la ecuación es <b>lineal</b>, las ondas se suman: interferencia, difracción, ondas estacionarias.</li>
+</ol>
+</div>
+</section>
+
+<section id="intro">
+<h2>6.1 Introducción: por qué existen las ondas electromagnéticas</h2>
+<p>Casi todas las ondas que conoces necesitan un <b>medio</b>: olas (agua), sonido (aire), pulso en una cuerda. Las <b>ondas electromagnéticas (OEM)</b> son especiales: son <b>campos $\vec E$ y $\vec B$</b> que viajan, y <b>no necesitan medio</b> (viajan en el vacío, aunque también por materiales) con velocidad $v\le c$.</p>
+<div class="box why"><span class="label">Por qué</span>
+<p>Ya conoces las dos piezas:</p>
+<ul>
+<li><b>T4 (Faraday):</b> un $\vec B$ que <b>cambia</b> en el tiempo crea un $\vec E$.</li>
+<li><b>Maxwell (~1860):</b> simétricamente, un $\vec E$ que <b>cambia</b> crea un $\vec B$.</li>
+</ul>
+<p>Encadénalas: $\vec B_1(x,t)\Rightarrow\vec E_1(x,t)\Rightarrow\vec B_2(x,t)\Rightarrow\vec E_2(x,t)\Rightarrow\cdots$ Cada campo nuevo aparece <b>un poco más allá</b> del anterior: la perturbación <b>avanza sola</b>. No hace falta medio porque los campos se “sostienen” entre sí. (Da igual empezar por $\vec E$ o por $\vec B$.)</p>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Como una fila de fichas de dominó donde cada ficha <b>levanta</b> a la siguiente en vez de solo tirarla: $\vec B$ empuja a $\vec E$, $\vec E$ empuja a $\vec B$… y la fila nunca se acaba.</p>
+</div>
+<p><b>Historia en 3 datos:</b> Maxwell lo predice (~1860) → la velocidad calculada, $c=1/\sqrt{\mu_0\varepsilon_0}\approx3\times10^8$ m/s, <b>coincide con la de la luz</b> ⇒ primera pista de que <b>la luz es una OEM</b> → Hertz las produce y detecta en <b>1888</b>.</p>
+<h3>Por qué las OEM dominan las comunicaciones</h3>
+<table>
+<tr><th>Ventaja</th><th>Ejemplo</th></tr>
+<tr><td>Se propagan en el <b>vacío</b></td><td>satélites, radio, móviles, wifi</td></tr>
+<tr><td><b>Antenas</b> emisoras/receptoras con muy poca energía</td><td>radio, TV</td></tr>
+<tr><td>Se pueden <b>guiar</b></td><td>línea bifilar, coaxial, guías metálicas, <b>fibra óptica</b></td></tr>
+<tr><td>Portadoras de <b>muy alta frecuencia</b> ⇒ gran <b>ancho de banda</b></td><td>más datos por segundo</td></tr>
+<tr><td>Fácil <b>modulación</b> en amplitud, fase o frecuencia</td><td>información analógica y digital</td></tr>
+<tr><td>Fácil integración con la <b>electrónica</b></td><td>circuitos emisores/receptores</td></tr>
+</table>
+</section>
+
+<section id="nociones">
+<h2>6.2 Qué es una onda (nociones generales)</h2>
+<div class="box formula"><span class="label">Definición</span>
+<p><b>Onda</b> = propagación de una <b>perturbación física</b> sin transporte neto de <b>materia</b>.</p>
+<p class="legend">Sí transporta <b>energía</b> y <b>momento</b> (lineal y/o angular). Una partícula también transporta energía, pero <b>llevándose la materia consigo</b>: esa es la diferencia.</p>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>La “ola” en un estadio: la ola da la vuelta al campo, pero cada persona solo se levanta y se sienta en su asiento. <b>“Sin desplazamiento neto” ≠ “sin movimiento”</b>: cada trozo del medio oscila alrededor de un punto fijo.</p>
+</div>
+<h3>Dos clasificaciones</h3>
+<table>
+<tr><th>Según…</th><th>Tipo</th><th>Ejemplo</th></tr>
+<tr><td rowspan="2">naturaleza de la perturbación</td><td><b>Mecánica</b> (desplazamiento, presión, torsión…)</td><td>sonido, cuerda, olas</td></tr>
+<tr><td><b>Electromagnética</b> (campo EM)</td><td>luz, radio, rayos X</td></tr>
+<tr><td rowspan="2">dirección perturbación vs propagación</td><td><b>Longitudinal</b>: perturbación ∥ propagación</td><td>sonido</td></tr>
+<tr><td><b>Transversal</b>: perturbación ⊥ propagación</td><td>cuerda, <b>OEM planas en el vacío</b></td></tr>
+</table>
+<figure class="diagram">
+<svg viewBox="0 0 800 250" role="img" aria-label="Onda transversal y longitudinal">
+<text x="20" y="28" font-size="15" font-weight="700" fill="var(--fg)">Transversal (cuerda, OEM)</text>
+<path d="M60,85 q40,-80 80,0 t80,0 t80,0 t80,0 t80,0 t80,0" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<g stroke="var(--pos)" stroke-width="2" marker-end="url(#ahE)" marker-start="url(#ahE)">
+<line x1="100" y1="72" x2="100" y2="30"/>
+<line x1="260" y1="72" x2="260" y2="30"/>
+</g>
+<line x1="560" y1="40" x2="680" y2="40" stroke="var(--field)" stroke-width="2.5" marker-end="url(#ahF)"/>
+<text x="570" y="30" font-size="13" fill="var(--field)">propagación</text>
+<text x="110" y="45" font-size="13" fill="var(--pos)">perturbación ⊥</text>
+<text x="20" y="150" font-size="15" font-weight="700" fill="var(--fg)">Longitudinal (sonido)</text>
+<g stroke="var(--accent)" stroke-width="2">
+<line x1="60" y1="170" x2="60" y2="220"/><line x1="76" y1="170" x2="76" y2="220"/><line x1="88" y1="170" x2="88" y2="220"/><line x1="97" y1="170" x2="97" y2="220"/><line x1="105" y1="170" x2="105" y2="220"/><line x1="114" y1="170" x2="114" y2="220"/><line x1="128" y1="170" x2="128" y2="220"/><line x1="148" y1="170" x2="148" y2="220"/><line x1="172" y1="170" x2="172" y2="220"/><line x1="194" y1="170" x2="194" y2="220"/><line x1="210" y1="170" x2="210" y2="220"/><line x1="221" y1="170" x2="221" y2="220"/><line x1="230" y1="170" x2="230" y2="220"/><line x1="238" y1="170" x2="238" y2="220"/><line x1="248" y1="170" x2="248" y2="220"/><line x1="263" y1="170" x2="263" y2="220"/><line x1="284" y1="170" x2="284" y2="220"/><line x1="308" y1="170" x2="308" y2="220"/><line x1="328" y1="170" x2="328" y2="220"/><line x1="342" y1="170" x2="342" y2="220"/><line x1="352" y1="170" x2="352" y2="220"/><line x1="360" y1="170" x2="360" y2="220"/><line x1="369" y1="170" x2="369" y2="220"/><line x1="383" y1="170" x2="383" y2="220"/><line x1="404" y1="170" x2="404" y2="220"/><line x1="428" y1="170" x2="428" y2="220"/><line x1="448" y1="170" x2="448" y2="220"/><line x1="462" y1="170" x2="462" y2="220"/><line x1="471" y1="170" x2="471" y2="220"/><line x1="479" y1="170" x2="479" y2="220"/><line x1="489" y1="170" x2="489" y2="220"/><line x1="505" y1="170" x2="505" y2="220"/>
+</g>
+<line x1="210" y1="236" x2="250" y2="236" stroke="var(--pos)" stroke-width="2" marker-end="url(#ahE)" marker-start="url(#ahE)"/>
+<text x="260" y="241" font-size="13" fill="var(--pos)">perturbación ∥</text>
+<line x1="560" y1="195" x2="680" y2="195" stroke="var(--field)" stroke-width="2.5" marker-end="url(#ahF)"/>
+<text x="570" y="185" font-size="13" fill="var(--field)">propagación</text>
+<text x="80" y="165" font-size="11" fill="var(--fg-dim)">compresión</text>
+<text x="150" y="165" font-size="11" fill="var(--fg-dim)">enrarecimiento</text>
+</svg>
+<figcaption>Transversal: el medio oscila perpendicular al avance. Longitudinal: oscila en la misma dirección (compresiones y enrarecimientos).</figcaption>
+</figure>
+<h3>Vocabulario que cae en test</h3>
+<ul>
+<li><b>Foco:</b> donde se produce la perturbación inicial (la boca que habla).</li>
+<li><b>Frente (superficie) de onda:</b> puntos alcanzados <b>a la vez</b> por la perturbación (esferas alrededor de la boca; planos en una onda plana).</li>
+<li><b>Velocidad de fase:</b> velocidad a la que avanzan los frentes de onda (sonido ≈ 340 m/s).</li>
+</ul>
+</section>
+
+<section id="ec-ondas">
+<h2>6.2.1 La ecuación de ondas y por qué $f(x-vt)$ viaja</h2>
+<p>Igual que $F=dp/dt$ gobierna a las partículas, hay <b>una ecuación</b> que cumplen todas las ondas que viajan a velocidad $v$ <b>sin deformarse</b> (no dispersivas) a lo largo de $x$:</p>
+<div class="box formula"><span class="label">Fórmula · ecuación de ondas 1D</span>
+$$\frac{\partial^2 u}{\partial x^2}-\frac{1}{v^2}\frac{\partial^2 u}{\partial t^2}=0$$
+<p class="legend">$u(x,t)$: la perturbación (desplazamiento de la cuerda, presión, campo $E$…). $v$: velocidad de propagación (m/s). Su solución general es $u=f(x\mp vt)$.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 760 200" role="img" aria-label="Pulso desplazado una distancia vt">
+<line x1="20" y1="150" x2="740" y2="150" stroke="var(--fg-dim)" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="728" y="172" font-size="14" fill="var(--fg-dim)">x</text>
+<path d="M30,150L35,150L40,150L45,150L50,150L55,150L60,150L65,149.9L70,149.8L75,149.7L80,149.4L85,149L90,148.4L95,147.3L100,145.8L105,143.6L110,140.5L115,136.4L120,131.1L125,124.6L130,116.9L135,108.1L140,98.7L145,89.1L150,79.9L155,71.8L160,65.5L165,61.4L170,60L175,61.4L180,65.5L185,71.8L190,79.9L195,89.1L200,98.7L205,108.1L210,116.9L215,124.6L220,131.1L225,136.4L230,140.5L235,143.6L240,145.8L245,147.3L250,148.4L255,149L260,149.4L265,149.7L270,149.8L275,149.9L280,150L285,150L290,150L295,150L300,150L305,150L310,150L315,150L320,150L325,150L330,150" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<path d="M330,150L335,150L340,150L345,150L350,150L355,150L360,150L365,150L370,150L375,150L380,150L385,150L390,150L395,150L400,150L405,150L410,150L415,149.9L420,149.8L425,149.7L430,149.4L435,149L440,148.4L445,147.3L450,145.8L455,143.6L460,140.5L465,136.4L470,131.1L475,124.6L480,116.9L485,108.1L490,98.7L495,89.1L500,79.9L505,71.8L510,65.5L515,61.4L520,60L525,61.4L530,65.5L535,71.8L540,79.9L545,89.1L550,98.7L555,108.1L560,116.9L565,124.6L570,131.1L575,136.4L580,140.5L585,143.6L590,145.8L595,147.3L600,148.4L605,149L610,149.4L615,149.7L620,149.8L625,149.9L630,150L635,150L640,150L645,150L650,150L655,150L660,150L665,150L670,150L675,150L680,150L685,150L690,150L695,150L700,150" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<line x1="170" y1="150" x2="170" y2="60" stroke="var(--accent)" stroke-dasharray="4 4"/>
+<line x1="520" y1="150" x2="520" y2="60" stroke="var(--pos)" stroke-dasharray="4 4"/>
+<line x1="172" y1="40" x2="518" y2="40" stroke="var(--field)" stroke-width="2" marker-end="url(#ahF)"/>
+<text x="300" y="32" font-size="15" fill="var(--field)">a = v·t</text>
+<text x="95" y="185" font-size="14" fill="var(--accent)">t = 0 : u = f(x)</text>
+<text x="430" y="185" font-size="14" fill="var(--pos)">t : u = f(x − vt)</text>
+</svg>
+<figcaption>La misma forma, desplazada $a=vt$ hacia la derecha. El pico estaba en $x=x_0$ y ahora está en $x=x_0+vt$.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $f(x-vt)$ viaja hacia +x?</b></p>
+<div class="chain"><span>forma fija $f$</span><span>valor $f(\chi_0)$ cuando $x-vt=\chi_0$</span><span>eso ocurre en $x=\chi_0+vt$</span><span>se mueve a $+x$ con velocidad $v$</span></div>
+<p>Cada valor de la forma (el pico, por ejemplo) está donde el <b>argumento</b> vale lo mismo. Si el argumento es $x-vt$, para mantenerlo constante cuando $t$ crece, $x$ <b>tiene que crecer</b>: hacia $+x$.</p>
+<p>Con $f(x+vt)$: para que $x+vt$ sea constante, $x$ debe <b>disminuir</b> ⇒ viaja hacia $-x$.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $f(x\mp vt)$ cumple la ecuación?</b></p>
+<p>Llama $\chi=x-vt$. Regla de la cadena: $\dfrac{\partial u}{\partial x}=f'$, $\dfrac{\partial^2u}{\partial x^2}=f''$; $\dfrac{\partial u}{\partial t}=-vf'$, $\dfrac{\partial^2u}{\partial t^2}=v^2f''$.</p>
+<p>Sustituye: $f''-\dfrac{1}{v^2}v^2f''=0$ ✔. Funciona para <b>cualquier</b> forma $f$: la ecuación solo exige “la misma forma, desplazándose a $v$”.</p>
+</div>
+<h3>Principio de superposición</h3>
+<p>La ecuación es <b>lineal</b>: si $u_1$ y $u_2$ son soluciones, también lo es $\alpha u_1+\beta u_2$. Físicamente:</p>
+<div class="box formula"><span class="label">Principio de superposición</span>
+<p>La perturbación resultante es la <b>suma</b> de las perturbaciones que coinciden.</p>
+<p class="legend">Es la base de todo lo que viene en 6.6–6.8 (interferencia, difracción, estacionarias).</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>“$x-vt$” va a <b>+x</b> aunque lleve un signo menos. El signo menos significa “la forma está <b>retrasada</b> $vt$”, es decir, desplazada a la derecha.</p>
+</div>
+</section>
+
+<section id="armonicas">
+<h2>6.2.2 Ondas armónicas</h2>
+<p>La forma más importante de $f$: un <b>seno/coseno</b>. Se genera cuando el foco oscila armónicamente, y (Fourier) cualquier onda es suma de armónicas.</p>
+<h3>Construcción paso a paso</h3>
+<div class="steps">
+<div class="step">Foto en $t=0$: $u(x,0)=A\cos\!\left(\frac{2\pi}{\lambda}x\right)$. <b>$A$</b> = amplitud (valor máximo). <b>$\lambda$</b> = longitud de onda: se repite cada $\lambda$ metros.</div>
+<div class="step">Que viaje a $+x$: cambia $x\to x-vt$ ⇒ $u=A\cos\!\left[\frac{2\pi}{\lambda}(x-vt)\right]$.</div>
+<div class="step">El <b>periodo</b> $T$ es lo que tarda la onda en avanzar una $\lambda$ ⇒ $v=\lambda/T$, y es también lo que tarda un punto fijo en dar una oscilación completa.</div>
+<div class="step">Como $v/\lambda=1/T$: $u=A\cos\!\left[2\pi\left(\frac{x}{\lambda}-\frac{t}{T}\right)\right]$ ⇒ <b>doble periodicidad</b>: $u(x+n\lambda,t+mT)=u(x,t)$.</div>
+</div>
+<div class="box intuition"><span class="label">Intuición · el pastelero</span>
+<p>Un pastelero suelta un pastel cada $T$ segundos sobre una cinta que avanza a $v$. En la cinta los pasteles quedan separados $\lambda=vT$. La <b>periodicidad temporal en el foco</b> se convierte en <b>periodicidad espacial</b>.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 800 210" role="img" aria-label="Instantánea frente a historia temporal">
+<text x="20" y="22" font-size="14" font-weight="700" fill="var(--fg)">Foto (t fijo): u(x, t₀)</text>
+<text x="420" y="22" font-size="14" font-weight="700" fill="var(--fg)">Historia (x fijo): u(x₀, t)</text>
+<line x1="20" y1="100" x2="385" y2="100" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<line x1="420" y1="100" x2="785" y2="100" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<text x="375" y="120" font-size="13" fill="var(--fg-dim)">x</text>
+<text x="775" y="120" font-size="13" fill="var(--fg-dim)">t</text>
+<path d="M20,100L25,89.9L30,80.1L35,71L40,62.9L45,56.1L50,50.8L55,47.1L60,45.2L65,45.2L70,47.1L75,50.8L80,56.1L85,62.9L90,71L95,80.1L100,89.9L105,100L110,110.1L115,119.9L120,129L125,137.1L130,143.9L135,149.2L140,152.9L145,154.8L150,154.8L155,152.9L160,149.2L165,143.9L170,137.1L175,129L180,119.9L185,110.1L190,100L195,89.9L200,80.1L205,71L210,62.9L215,56.1L220,50.8L225,47.1L230,45.2L235,45.2L240,47.1L245,50.8L250,56.1L255,62.9L260,71L265,80.1L270,89.9L275,100L280,110.1L285,119.9L290,129L295,137.1L300,143.9L305,149.2L310,152.9L315,154.8L320,154.8L325,152.9L330,149.2L335,143.9L340,137.1L345,129L350,119.9L355,110.1L360,100L365,89.9L370,80.1" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<path d="M420,48.7L425,45.9L430,45L435,45.9L440,48.7L445,53.2L450,59.3L455,66.8L460,75.4L465,84.9L470,94.9L475,105L480,115L485,124.5L490,133.1L495,140.6L500,146.7L505,151.3L510,154.1L515,155L520,154.1L525,151.3L530,146.8L535,140.7L540,133.2L545,124.6L550,115.1L555,105.1L560,95L565,85L570,75.5L575,66.9L580,59.4L585,53.3L590,48.7L595,45.9L600,45L605,45.9L610,48.7L615,53.2L620,59.3L625,66.8L630,75.4L635,84.9L640,94.9L645,105L650,115L655,124.5L660,133.1L665,140.6L670,146.7L675,151.3L680,154.1L685,155L690,154.1L695,151.3L700,146.8L705,140.7L710,133.2L715,124.6L720,115.1L725,105.1L730,95L735,85L740,75.5L745,66.9L750,59.4L755,53.3L760,48.7L765,45.9L770,45" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<line x1="62" y1="185" x2="232" y2="185" stroke="var(--field)" stroke-width="2" marker-end="url(#ahF)" marker-start="url(#ahF)"/>
+<text x="130" y="203" font-size="14" fill="var(--field)">λ</text>
+<line x1="430" y1="185" x2="600" y2="185" stroke="var(--field)" stroke-width="2" marker-end="url(#ahF)" marker-start="url(#ahF)"/>
+<text x="508" y="203" font-size="14" fill="var(--field)">T</text>
+<line x1="62" y1="45" x2="62" y2="100" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<text x="30" y="72" font-size="13" fill="var(--fg-dim)">A</text>
+</svg>
+<figcaption>Misma forma, distinto eje. En la foto la distancia entre crestas es $\lambda$ (metros); en la historia de un punto, el tiempo entre máximos es $T$ (segundos).</figcaption>
+</figure>
+<h3>Número de onda $k$ y frecuencia angular $\omega$</h3>
+<div class="box formula"><span class="label">Fórmula</span>
+$$k=\frac{2\pi}{\lambda}\qquad \omega=\frac{2\pi}{T}=2\pi f\qquad f=\frac1T\qquad v=\frac{\lambda}{T}=\lambda f=\frac{\omega}{k}$$
+<p class="legend">$k$: número de ondas / frecuencia espacial (rad/m). $\omega$: frecuencia angular (rad/s). $f$: frecuencia (Hz = s⁻¹, oscilaciones por segundo). $\lambda$: longitud de onda (m). $T$: periodo (s).</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $v=\omega/k$?</b></p>
+<p>$k$ = “cuántos radianes de fase avanzo por metro”; $\omega$ = “cuántos radianes de fase avanzo por segundo”.</p>
+<p>Sigue una cresta: su fase es constante, $kx-\omega t=\text{cte}$. Deriva respecto a $t$: $k\,\dfrac{dx}{dt}-\omega=0\Rightarrow \dfrac{dx}{dt}=\dfrac{\omega}{k}$. Esa es la <b>velocidad de fase</b>. Y $\omega/k=(2\pi/T)/(2\pi/\lambda)=\lambda/T$ ✔.</p>
+</div>
+<h3>Fase, fase inicial y el convenio de signos</h3>
+<div class="box formula"><span class="label">Fórmula · onda armónica</span>
+$$u(x,t)=A\cos(\omega t-kx-\varphi)\quad(\text{hacia }+x)$$
+$$u(x,t)=A\cos(\omega t+kx-\varphi)\quad(\text{hacia }-x)$$
+<p class="legend">Todo el argumento ($\omega t\mp kx-\varphi$) es la <b>fase</b> (rad). $\varphi$ es la <b>fase inicial</b>: permite que en $x=0,\ t=0$ la perturbación valga lo que sea, $u(0,0)=A\cos\varphi$.</p>
+</div>
+<div class="box why"><span class="label">Por qué el signo decide la dirección</span>
+<p><b>Signos distintos</b> delante de $\omega t$ y $kx$ ⇒ $+x$. <b>Signos iguales</b> ⇒ $-x$.</p>
+<p>Razón: $\omega t-kx=-k\left(x-\frac{\omega}{k}t\right)$ es función de $x-vt$; en cambio $\omega t+kx=k\left(x+vt\right)$ es función de $x+vt$. Como el coseno es par, $\cos(kx-\omega t)=\cos(\omega t-kx)$: <b>ambas</b> van a $+x$.</p>
+</div>
+<div class="box formula"><span class="label">Notación compleja (fasores, T5)</span>
+$$u(x,t)=A\cos(\omega t-kx-\varphi)=\mathrm{Re}\left[A\,e^{-j(kx+\varphi)}\,e^{j\omega t}\right]$$
+<p class="legend">Se escribe $u=Ae^{-j(kx+\varphi)}e^{j\omega t}$ sobreentendiendo la parte real. Ventaja: sumar ondas de igual $\omega$ = sumar números complejos (lo usaremos en interferencia y difracción).</p>
+</div>
+<div class="sim"><span class="label">Simulación · onda armónica viajera</span>
+<svg id="sw-svg" viewBox="0 0 800 260" role="img" aria-label="Onda armónica animada">
+<line x1="40" y1="130" x2="770" y2="130" stroke="var(--fg-dim)" stroke-width="1" marker-end="url(#ah)"/>
+<text x="760" y="150" font-size="13" fill="var(--fg-dim)">x (m)</text>
+<line id="sw-guide" x1="256" y1="30" x2="256" y2="230" stroke="var(--pos)" stroke-dasharray="4 4" stroke-width="1"/>
+<path id="sw-crests" fill="var(--field)" stroke="none" d=""/>
+<path id="sw-path" fill="none" stroke="var(--accent)" stroke-width="3" d=""/>
+<circle id="sw-dot" cx="256" cy="130" r="8" fill="var(--pos)"/>
+<text x="266" y="250" font-size="12" fill="var(--pos)">punto x = 3 m: solo sube y baja</text>
+<text x="44" y="22" font-size="12" fill="var(--field)">▼ crestas: avanzan a v</text>
+</svg>
+<div class="controls">
+<label for="sw-A">Amplitud A</label><input type="range" id="sw-A" min="0.2" max="2" step="0.1" value="1"><output>1.0 m</output>
+<label for="sw-lam">Longitud de onda λ</label><input type="range" id="sw-lam" min="1" max="8" step="0.5" value="4"><output>4.0 m</output>
+<label for="sw-f">Frecuencia f</label><input type="range" id="sw-f" min="0.05" max="1" step="0.05" value="0.25"><output>0.25 Hz</output>
+<label for="sw-dir">Sentido</label><input type="range" id="sw-dir" min="-1" max="1" step="2" value="1"><output>+x</output>
+<label for="sw-phi">Fase inicial φ</label><input type="range" id="sw-phi" min="0" max="2" step="0.25" value="0"><output>0π</output>
+<label for="sw-rate">Ritmo (0 = pausa)</label><input type="range" id="sw-rate" min="0" max="1" step="0.05" value="1"><output>×1.00</output>
+</div>
+<div class="readout" id="sw-out"></div>
+</div>
+<p><b>Experimenta:</b> sube $f$ con $\lambda$ fija ⇒ $v$ crece. Cambia el sentido ⇒ cambia el signo de $\omega t$ en la expresión. El punto rojo <b>nunca avanza</b>: la onda es la forma, no la materia.</p>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li><b>Leer $k$ y $\omega$:</b> en $0.03\sin(3x-6t)$, $k=3$ rad/m y $\omega=6$ rad/s. <b>No</b> son $\lambda$ ni $f$: $\lambda=2\pi/k$, $f=\omega/2\pi$.</li>
+<li>Si te dan $\cos[2\pi(x/\lambda-t/T)]$, ya tienes $\lambda$ y $T$ directamente.</li>
+<li><b>Velocidad de la onda ≠ velocidad de las partículas.</b> $v=\omega/k$ es constante; la del medio es $\partial u/\partial t$, oscila y su máximo es $A\omega$.</li>
+<li>Diferencia de fase entre dos puntos a distancia $\Delta x$ (mismo $t$): $\Delta\phi=k\,\Delta x$. Si $\Delta\phi=2\pi$ ⇒ $\Delta x=\lambda$.</li>
+</ul>
+</div>
+<div class="box tldr"><span class="label">Resumen</span>
+<p>$u=A\cos(\omega t-kx-\varphi)$ · $k=2\pi/\lambda$ · $\omega=2\pi f=2\pi/T$ · $v=\lambda f=\omega/k$ · signos distintos ⇒ $+x$.</p>
+</div>
+</section>
+
+<section id="oem">
+<h2>6.3 Ecuación de ondas electromagnéticas y la velocidad $c$</h2>
+<p>La idea cualitativa “$\vec E$ variable ⇄ $\vec B$ variable” hay que comprobarla: <b>¿cumplen $\vec E$ y $\vec B$ la ecuación de ondas?</b></p>
+<p>Simplificación: campos que solo dependen de $x$ y $t$: $\vec E(x,t)$, $\vec B(x,t)$. Entonces toman el mismo valor en cada plano $x=\text{cte}$ ⇒ los frentes de onda son <b>planos ⊥ a $x$</b>: es una <b>onda plana</b>.</p>
+<div class="box formula"><span class="label">Fórmula · ecuaciones de onda para E y B (de Maxwell)</span>
+$$\frac{\partial^2\vec E}{\partial x^2}-\frac{1}{c^2}\frac{\partial^2\vec E}{\partial t^2}=0\qquad\frac{\partial^2\vec B}{\partial x^2}-\frac{1}{c^2}\frac{\partial^2\vec B}{\partial t^2}=0$$
+<p class="legend">Válidas para $\vec E=(0,E_y,E_z)$ y $\vec B=(0,B_y,B_z)$: <b>sin componente $x$</b>. La deducción desde Maxwell está fuera del temario; lo que importa son sus consecuencias.</p>
+</div>
+<div class="box formula"><span class="label">Consecuencias</span>
+$$c=\frac{1}{\sqrt{\mu_0\varepsilon_0}}=2.99792\times10^{8}\ \text{m/s}$$
+<p class="legend">$\mu_0=4\pi\times10^{-7}$ H/m (permeabilidad del vacío, T3/T4). $\varepsilon_0=8.854\times10^{-12}$ F/m (permitividad del vacío, T1). Las OEM planas en el vacío son <b>transversales</b>: $\vec E$ y $\vec B$ no tienen componente en la dirección de propagación.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $c=1/\sqrt{\mu_0\varepsilon_0}$? <span class="dim">(ampliación para entenderlo)</span></b></p>
+<p>Toma $E_y=E_0f(x-vt)$ y $B_z=B_0f(x-vt)$. Maxwell da dos “acoplos” (el primero es Faraday y aparece en los problemas del tema):</p>
+<ul>
+<li><b>Faraday:</b> $\dfrac{\partial E_y}{\partial x}=-\dfrac{\partial B_z}{\partial t}$ ⇒ $E_0f'=vB_0f'$ ⇒ $\boxed{E_0=vB_0}$</li>
+<li><b>Ampère–Maxwell</b> ($\vec E$ variable crea $\vec B$): $\dfrac{\partial B_z}{\partial x}=-\mu_0\varepsilon_0\dfrac{\partial E_y}{\partial t}$ ⇒ $B_0=\mu_0\varepsilon_0\,vE_0$</li>
+</ul>
+<p>Multiplica las dos: $E_0B_0=\mu_0\varepsilon_0v^2E_0B_0$ ⇒ $v^2=\dfrac{1}{\mu_0\varepsilon_0}$. La velocidad sale <b>solo de constantes del vacío</b>: ¡no depende de la fuente ni de la frecuencia!</p>
+<p>Comprobación numérica: $\mu_0\varepsilon_0=4\pi\times10^{-7}\cdot8.854\times10^{-12}=1.113\times10^{-17}$ s²/m² ⇒ $c=2.998\times10^8$ m/s.</p>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>$\varepsilon_0$ mide lo “perezoso” que es el vacío para crear $\vec E$; $\mu_0$, lo perezoso para crear $\vec B$. Cuanto más “inercia” tienen los dos acoplos, más lenta la onda: $v\propto1/\sqrt{\text{inercia}}$, como en una cuerda $v=\sqrt{T/\mu}$.</p>
+</div>
+<p><b>Por qué fue histórico:</b> entonces se discutía si la luz era una vibración de un medio invisible (el <b>éter</b>). Que $c$ calculada coincidiera con la velocidad medida de la luz (y Hertz confirmara las OEM) descartó el éter: <b>la luz es una OEM</b>.</p>
+<h3>En un medio material</h3>
+<div class="box formula"><span class="label">Fórmula</span>
+$$v=\frac{1}{\sqrt{\mu_0\varepsilon_0\varepsilon_r}}=\frac{c}{n}\qquad n=\sqrt{\varepsilon_r}$$
+<p class="legend">$\varepsilon_r$: constante dieléctrica relativa (adimensional). $n$: índice de refracción (adimensional, $n\ge1$ ⇒ $v\le c$).</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>Al entrar en un medio <b>cambia $v$</b> pero la <b>frecuencia la impone la fuente</b> y no cambia; por tanto $\lambda=v/f$ <b>se acorta</b> en un factor $n$. Usa $c$ solo en el vacío.</p>
+</div>
+</section>
+
+<section id="oem-armonicas">
+<h2>6.4 Ondas electromagnéticas planas armónicas</h2>
+<div class="box formula"><span class="label">Fórmula · OEM plana armónica que viaja hacia +x</span>
+$$\vec E(x,t)=E_0\cos(\omega t-kx-\varphi)\,\hat y\qquad \vec B(x,t)=B_0\cos(\omega t-kx-\varphi)\,\hat z\qquad B_0=\frac{E_0}{c}$$
+<p class="legend">$E_0$: amplitud del campo eléctrico (V/m). $B_0$: amplitud del campo magnético (T). Misma $\omega$, mismo $k$, misma fase.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 800 270" role="img" aria-label="Campos E y B perpendiculares en una OEM">
+<line x1="110" y1="150" x2="760" y2="150" stroke="var(--fg-dim)" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="110" y1="150" x2="110" y2="40" stroke="var(--fg-dim)" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="110" y1="150" x2="40" y2="207" stroke="var(--fg-dim)" stroke-width="1.5" marker-end="url(#ah)"/>
+<text x="740" y="172" font-size="14" fill="var(--fg-dim)">x</text>
+<text x="118" y="44" font-size="14" fill="var(--fg-dim)">y</text>
+<text x="28" y="222" font-size="14" fill="var(--fg-dim)">z</text>
+<g stroke="var(--pos)" stroke-width="1.2" opacity="0.7"><line x1="127.5" y1="150" x2="127.5" y2="119.4"/><line x1="145" y1="150" x2="145" y2="93.4"/><line x1="162.5" y1="150" x2="162.5" y2="76.1"/><line x1="180" y1="150" x2="180" y2="70"/><line x1="197.5" y1="150" x2="197.5" y2="76.1"/><line x1="215" y1="150" x2="215" y2="93.4"/><line x1="232.5" y1="150" x2="232.5" y2="119.4"/><line x1="267.5" y1="150" x2="267.5" y2="180.6"/><line x1="285" y1="150" x2="285" y2="206.6"/><line x1="302.5" y1="150" x2="302.5" y2="223.9"/><line x1="320" y1="150" x2="320" y2="230"/><line x1="337.5" y1="150" x2="337.5" y2="223.9"/><line x1="355" y1="150" x2="355" y2="206.6"/><line x1="372.5" y1="150" x2="372.5" y2="180.6"/><line x1="407.5" y1="150" x2="407.5" y2="119.4"/><line x1="425" y1="150" x2="425" y2="93.4"/><line x1="442.5" y1="150" x2="442.5" y2="76.1"/><line x1="460" y1="150" x2="460" y2="70"/><line x1="477.5" y1="150" x2="477.5" y2="76.1"/><line x1="495" y1="150" x2="495" y2="93.4"/><line x1="512.5" y1="150" x2="512.5" y2="119.4"/><line x1="547.5" y1="150" x2="547.5" y2="180.6"/><line x1="565" y1="150" x2="565" y2="206.6"/><line x1="582.5" y1="150" x2="582.5" y2="223.9"/><line x1="600" y1="150" x2="600" y2="230"/><line x1="617.5" y1="150" x2="617.5" y2="223.9"/><line x1="635" y1="150" x2="635" y2="206.6"/><line x1="652.5" y1="150" x2="652.5" y2="180.6"/></g>
+<g stroke="var(--neg)" stroke-width="1.2" opacity="0.7"><line x1="127.5" y1="150" x2="110.7" y2="163.8"/><line x1="145" y1="150" x2="113.9" y2="175.5"/><line x1="162.5" y1="150" x2="121.8" y2="183.3"/><line x1="180" y1="150" x2="136" y2="186"/><line x1="197.5" y1="150" x2="156.8" y2="183.3"/><line x1="215" y1="150" x2="183.9" y2="175.5"/><line x1="232.5" y1="150" x2="215.7" y2="163.8"/><line x1="267.5" y1="150" x2="284.3" y2="136.2"/><line x1="285" y1="150" x2="316.1" y2="124.5"/><line x1="302.5" y1="150" x2="343.2" y2="116.7"/><line x1="320" y1="150" x2="364" y2="114"/><line x1="337.5" y1="150" x2="378.2" y2="116.7"/><line x1="355" y1="150" x2="386.1" y2="124.5"/><line x1="372.5" y1="150" x2="389.3" y2="136.2"/><line x1="407.5" y1="150" x2="390.7" y2="163.8"/><line x1="425" y1="150" x2="393.9" y2="175.5"/><line x1="442.5" y1="150" x2="401.8" y2="183.3"/><line x1="460" y1="150" x2="416" y2="186"/><line x1="477.5" y1="150" x2="436.8" y2="183.3"/><line x1="495" y1="150" x2="463.9" y2="175.5"/><line x1="512.5" y1="150" x2="495.7" y2="163.8"/><line x1="547.5" y1="150" x2="564.3" y2="136.2"/><line x1="565" y1="150" x2="596.1" y2="124.5"/><line x1="582.5" y1="150" x2="623.2" y2="116.7"/><line x1="600" y1="150" x2="644" y2="114"/><line x1="617.5" y1="150" x2="658.2" y2="116.7"/><line x1="635" y1="150" x2="666.1" y2="124.5"/><line x1="652.5" y1="150" x2="669.3" y2="136.2"/></g>
+<path d="M110,150L115,141L120,132.2L125,123.6L130,115.3L135,107.4L140,100.1L145,93.4L150,87.5L155,82.3L160,77.9L165,74.5L170,72L175,70.5L180,70L185,70.5L190,72L195,74.5L200,77.9L205,82.3L210,87.5L215,93.4L220,100.1L225,107.4L230,115.3L235,123.6L240,132.2L245,141L250,150L255,159L260,167.8L265,176.4L270,184.7L275,192.6L280,199.9L285,206.6L290,212.5L295,217.7L300,222.1L305,225.5L310,228L315,229.5L320,230L325,229.5L330,228L335,225.5L340,222.1L345,217.7L350,212.5L355,206.6L360,199.9L365,192.6L370,184.7L375,176.4L380,167.8L385,159L390,150L395,141L400,132.2L405,123.6L410,115.3L415,107.4L420,100.1L425,93.4L430,87.5L435,82.3L440,77.9L445,74.5L450,72L455,70.5L460,70L465,70.5L470,72L475,74.5L480,77.9L485,82.3L490,87.5L495,93.4L500,100.1L505,107.4L510,115.3L515,123.6L520,132.2L525,141L530,150L535,159L540,167.8L545,176.4L550,184.7L555,192.6L560,199.9L565,206.6L570,212.5L575,217.7L580,222.1L585,225.5L590,228L595,229.5L600,230L605,229.5L610,228L615,225.5L620,222.1L625,217.7L630,212.5L635,206.6L640,199.9L645,192.6L650,184.7L655,176.4L660,167.8L665,159L670,150" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<path d="M110,150L110.1,154L110.2,158L110.5,161.9L110.9,165.6L111.6,169.2L112.6,172.4L113.9,175.5L115.6,178.1L117.7,180.5L120.4,182.4L123.5,184L127.1,185.1L131.3,185.8L136,186L141.3,185.8L147.1,185.1L153.5,184L160.4,182.4L167.7,180.5L175.6,178.1L183.9,175.5L192.6,172.4L201.6,169.2L210.9,165.6L220.5,161.9L230.2,158L240.1,154L250,150L259.9,146L269.8,142L279.5,138.1L289.1,134.4L298.4,130.8L307.4,127.6L316.1,124.5L324.4,121.9L332.3,119.5L339.6,117.6L346.5,116L352.9,114.9L358.7,114.2L364,114L368.7,114.2L372.9,114.9L376.5,116L379.6,117.6L382.3,119.5L384.4,121.9L386.1,124.5L387.4,127.6L388.4,130.8L389.1,134.4L389.5,138.1L389.8,142L389.9,146L390,150L390.1,154L390.2,158L390.5,161.9L390.9,165.6L391.6,169.2L392.6,172.4L393.9,175.5L395.6,178.1L397.7,180.5L400.4,182.4L403.5,184L407.1,185.1L411.3,185.8L416,186L421.3,185.8L427.1,185.1L433.5,184L440.4,182.4L447.7,180.5L455.6,178.1L463.9,175.5L472.6,172.4L481.6,169.2L490.9,165.6L500.5,161.9L510.2,158L520.1,154L530,150L539.9,146L549.8,142L559.5,138.1L569.1,134.4L578.4,130.8L587.4,127.6L596.1,124.5L604.4,121.9L612.3,119.5L619.6,117.6L626.5,116L632.9,114.9L638.7,114.2L644,114L648.7,114.2L652.9,114.9L656.5,116L659.6,117.6L662.3,119.5L664.4,121.9L666.1,124.5L667.4,127.6L668.4,130.8L669.1,134.4L669.5,138.1L669.8,142L669.9,146L670,150" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<text x="185" y="62" font-size="16" font-weight="700" fill="var(--pos)">E (eje y)</text>
+<text x="150" y="208" font-size="16" font-weight="700" fill="var(--neg)">B (eje z)</text>
+<line x1="640" y1="60" x2="740" y2="60" stroke="var(--field)" stroke-width="3" marker-end="url(#ahF)"/>
+<text x="640" y="48" font-size="14" fill="var(--field)">c (propagación)</text>
+<text x="520" y="262" font-size="13" fill="var(--fg-dim)">E × B apunta hacia +x</text>
+</svg>
+<figcaption>$\vec E$ (rojo) oscila en el plano $xy$, $\vec B$ (azul) en el plano $xz$. Se anulan y son máximos <b>a la vez</b> (en fase). Los tres vectores forman un triedro rectángulo.</figcaption>
+</figure>
+<div class="box formula"><span class="label">Fórmula · relación vectorial</span>
+$$\vec E=\vec B\times\vec c\qquad\Longleftrightarrow\qquad \vec E\times\vec B\ \text{apunta en el sentido de }\vec c$$
+<p class="legend">Resume tres hechos: <b>(1)</b> $\vec E\perp\vec B\perp\vec c$; <b>(2)</b> $|\vec E|=c|\vec B|$; <b>(3)</b> están en fase. Comprueba: $\hat z\times\hat x=\hat y$ ✔.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $E=cB$?</b></p>
+<p>Faraday dice: <b>pendiente espacial de $E_y$</b> = −<b>ritmo temporal de $B_z$</b>. Pero en una forma que viaja a $c$, el ritmo temporal en un punto es $c$ × la pendiente espacial (la forma “pasa” por delante de ti a velocidad $c$). Por eso la amplitud de $E$ tiene que ser $c$ veces la de $B$: $E_0=cB_0$.</p>
+<p>Consecuencia práctica: <b>$B$ es diminuto</b> en unidades SI. $E_0=0.3$ V/m ⇒ $B_0=10^{-9}$ T = 1 nT.</p>
+</div>
+<div class="box intuition"><span class="label">Regla de la mano derecha</span>
+<p>Dedos de $\vec E$ a $\vec B$ (el giro más corto): el pulgar marca hacia dónde viaja la onda. Orden cíclico útil: $\hat x\to\hat y\to\hat z\to\hat x$: $\hat x\times\hat y=\hat z$, $\hat y\times\hat z=\hat x$, $\hat z\times\hat x=\hat y$.</p>
+</div>
+<div class="sim"><span class="label">Simulación · OEM con E y B perpendiculares</span>
+<svg id="em-svg" viewBox="0 0 800 300" role="img" aria-label="Onda electromagnética animada">
+<line x1="110" y1="150" x2="770" y2="150" stroke="var(--fg-dim)" stroke-width="1.2" marker-end="url(#ah)"/>
+<line x1="110" y1="150" x2="110" y2="30" stroke="var(--fg-dim)" stroke-width="1.2" marker-end="url(#ah)"/>
+<line x1="110" y1="150" x2="30" y2="215" stroke="var(--fg-dim)" stroke-width="1.2" marker-end="url(#ah)"/>
+<text x="760" y="172" font-size="13" fill="var(--fg-dim)">x</text>
+<text x="118" y="36" font-size="13" fill="var(--pos)">y: E</text>
+<text x="16" y="232" font-size="13" fill="var(--neg)">z: B</text>
+<g id="em-Ev" stroke="var(--pos)" stroke-width="1.2" opacity="0.65"></g>
+<g id="em-Bv" stroke="var(--neg)" stroke-width="1.2" opacity="0.65"></g>
+<path id="em-Ec" fill="none" stroke="var(--pos)" stroke-width="2.5" d=""/>
+<path id="em-Bc" fill="none" stroke="var(--neg)" stroke-width="2.5" d=""/>
+<line id="em-arrow" x1="640" y1="40" x2="740" y2="40" stroke="var(--field)" stroke-width="3" marker-end="url(#ahF)"/>
+<text x="650" y="28" font-size="13" fill="var(--field)">propagación</text>
+<text x="400" y="290" font-size="12" fill="var(--fg-dim)">B dibujado a escala c·B (si no, sería invisible)</text>
+</svg>
+<div class="controls">
+<label for="em-E0">Amplitud E₀</label><input type="range" id="em-E0" min="5" max="100" step="5" value="60"><output>60 V/m</output>
+<label for="em-lam">Longitud de onda λ</label><input type="range" id="em-lam" min="1" max="6" step="0.5" value="3"><output>3.0 m</output>
+<label for="em-dir">Sentido</label><input type="range" id="em-dir" min="-1" max="1" step="2" value="1"><output>+x</output>
+</div>
+<div class="readout" id="em-out"></div>
+</div>
+<p><b>Mira:</b> al invertir el sentido con $\vec E$ fijo en $\hat y$, <b>$\vec B$ cambia de signo</b> (pasa a $-\hat z$), porque $\vec E\times\vec B$ debe apuntar hacia donde va la onda.</p>
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 6.1</span>
+<p>OEM plana armónica de $f=3$ GHz en el vacío, viaja según $x$; $E_{\max}=300$ mV/m dirigido según $y$. Halla $\lambda$ y las expresiones de $\vec E$ y $\vec B$.</p>
+<details><summary>Plan</summary><p>$f\to\lambda=c/f$, $\omega=2\pi f$, $k=\omega/c$. Amplitud $E_0=E_{\max}$; $B_0=E_0/c$. Dirección de $\vec B$: $\hat y\times\hat B=\hat x$ ⇒ $\hat B=\hat z$. Fase inicial libre ⇒ $\varphi=0$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\lambda=\dfrac{c}{f}=\dfrac{3\times10^8}{3\times10^9}=0.1$ m = 10 cm.</div>
+<div class="step">$\omega=2\pi f=6\pi\times10^9$ rad/s; $k=\dfrac{\omega}{c}=\dfrac{6\pi\times10^9}{3\times10^8}=20\pi$ rad/m (o $2\pi/\lambda$ ✔).</div>
+<div class="step">$B_0=\dfrac{E_0}{c}=\dfrac{0.3}{3\times10^8}=10^{-9}$ T.</div>
+<div class="step">$\vec E=0.3\cos(20\pi x-6\pi\times10^9t)\,\hat y$ V/m; $\vec B=10^{-9}\cos(20\pi x-6\pi\times10^9t)\,\hat z$ T.</div>
+</div></details>
+</div>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>$\vec B$ <b>no</b> va siempre según $\hat z$: depende de dónde esté $\vec E$ y hacia dónde viaje la onda. Usa siempre $\vec E\times\vec B\parallel\vec c$.</li>
+<li>Si la onda viaja a $-x$ con $\vec E\parallel\hat y$ ⇒ $\vec B\parallel-\hat z$ (o $B_0$ negativo).</li>
+<li>$\vec E$ y $\vec B$ van <b>en fase</b>: misma fase, mismo $\varphi$. No metas un desfase de $\pi/2$.</li>
+</ul>
+</div>
+</section>
+
+<section id="intensidad">
+<h2>6.5 Energía, vector de Poynting e intensidad</h2>
+<p>La luz de una estrella viaja millones de km y aún tiene energía para excitar tu retina: las OEM <b>transportan energía</b>. La magnitud que lo mide es la <b>intensidad</b> $I$ (¡no es la intensidad de corriente!).</p>
+<div class="box formula"><span class="label">Fórmula · intensidad</span>
+$$I=u\,c$$
+<p class="legend">$I$: energía por unidad de tiempo que atraviesa una superficie unidad ⊥ a la propagación (W/m²). $u$: densidad de energía (J/m³). $c$: velocidad de la onda (m/s). Unidades: (J/m³)(m/s) = W/m².</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $I=uc$?</b></p>
+<p>Pon una ventana de área $A$ ⊥ a la onda. En un tiempo $dt$ la cruza toda la energía contenida en un cilindro de base $A$ y longitud $c\,dt$: $dU=u\,A\,c\,dt$. Potencia por área: $\dfrac{dU}{A\,dt}=uc$.</p>
+</div>
+<h3>¿Cuánta energía hay en la onda?</h3>
+<div class="box formula"><span class="label">Fórmula · densidades de energía (T1 y T4)</span>
+$$u_E=\tfrac12\varepsilon_0|\vec E|^2\qquad u_B=\frac{|\vec B|^2}{2\mu_0}\qquad I_{\text{inst}}=(u_E+u_B)\,c$$
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $u_E=u_B$ en una OEM?</b></p>
+<p>Con $B=E/c$ y $c^2=1/(\mu_0\varepsilon_0)$: $u_B=\dfrac{E^2}{2\mu_0c^2}=\dfrac{\mu_0\varepsilon_0E^2}{2\mu_0}=\tfrac12\varepsilon_0E^2=u_E$.</p>
+<p>La energía se reparte <b>a partes iguales</b> entre $\vec E$ y $\vec B$, aunque $B$ parezca “pequeño” en teslas. Por tanto:</p>
+$$u_{EB}=\varepsilon_0E^2=\frac{B^2}{\mu_0}=\frac{EB}{\mu_0c}\qquad I_{\text{inst}}=c\varepsilon_0E^2=\frac{cB^2}{\mu_0}=\frac{EB}{\mu_0}$$
+</div>
+<h3>Vector de Poynting</h3>
+<div class="box formula"><span class="label">Fórmula · vector de Poynting</span>
+$$\vec S=\frac{\vec E\times\vec B}{\mu_0}$$
+<p class="legend">Dirección: hacia donde fluye la energía (= propagación). Módulo: intensidad instantánea (W/m²). Deducido para la onda plana, pero <b>válido para cualquier OEM</b>.</p>
+</div>
+<p>Para la onda plana armónica: $\vec S(x,t)=c\varepsilon_0E_0^2\cos^2(\omega t-kx-\varphi)\,\hat x$ ⇒ $I_{\text{inst}}=c\varepsilon_0E_0^2\cos^2(\omega t-kx-\varphi)$.</p>
+<figure class="diagram">
+<svg viewBox="0 0 800 240" role="img" aria-label="Intensidad instantánea y media">
+<line x1="60" y1="200" x2="760" y2="200" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<line x1="60" y1="200" x2="60" y2="30" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<text x="748" y="222" font-size="13" fill="var(--fg-dim)">t</text>
+<text x="68" y="34" font-size="13" fill="var(--fg-dim)">S(t)</text>
+<path d="M60,50L65,51.6L70,56.5L75,64.3L80,74.8L85,87.5L90,101.8L95,117.2L100,132.8L105,148.2L110,162.5L115,175.2L120,185.7L125,193.5L130,198.4L135,200L140,198.4L145,193.5L150,185.7L155,175.2L160,162.5L165,148.2L170,132.8L175,117.2L180,101.8L185,87.5L190,74.8L195,64.3L200,56.5L205,51.6L210,50L215,51.6L220,56.5L225,64.3L230,74.8L235,87.5L240,101.8L245,117.2L250,132.8L255,148.2L260,162.5L265,175.2L270,185.7L275,193.5L280,198.4L285,200L290,198.4L295,193.5L300,185.7L305,175.2L310,162.5L315,148.2L320,132.8L325,117.2L330,101.8L335,87.5L340,74.8L345,64.3L350,56.5L355,51.6L360,50L365,51.6L370,56.5L375,64.3L380,74.8L385,87.5L390,101.8L395,117.2L400,132.8L405,148.2L410,162.5L415,175.2L420,185.7L425,193.5L430,198.4L435,200L440,198.4L445,193.5L450,185.7L455,175.2L460,162.5L465,148.2L470,132.8L475,117.2L480,101.8L485,87.5L490,74.8L495,64.3L500,56.5L505,51.6L510,50L515,51.6L520,56.5L525,64.3L530,74.8L535,87.5L540,101.8L545,117.2L550,132.8L555,148.2L560,162.5L565,175.2L570,185.7L575,193.5L580,198.4L585,200L590,198.4L595,193.5L600,185.7L605,175.2L610,162.5L615,148.2L620,132.8L625,117.2L630,101.8L635,87.5L640,74.8L645,64.3L650,56.5L655,51.6L660,50L665,51.6L670,56.5L675,64.3L680,74.8L685,87.5L690,101.8L695,117.2L700,132.8L705,148.2L710,162.5L715,175.2L720,185.7" fill="none" stroke="var(--field)" stroke-width="2.5"/>
+<line x1="60" y1="50" x2="740" y2="50" stroke="var(--pos)" stroke-dasharray="5 5"/>
+<line x1="60" y1="125" x2="740" y2="125" stroke="var(--intuition)" stroke-width="2" stroke-dasharray="8 4"/>
+<text x="600" y="44" font-size="13" fill="var(--pos)">pico S₀ = cε₀E₀²</text>
+<text x="560" y="118" font-size="13" fill="var(--intuition)">media I = S₀/2</text>
+</svg>
+<figcaption>$\cos^2$ oscila entre 0 y 1 con media exacta $1/2$. Para la luz, $S$ oscila ~10¹⁵ veces por segundo: ningún detector ve el pico, ve la <b>media</b>.</figcaption>
+</figure>
+<div class="box formula"><span class="label">Fórmula · intensidad media (la que se mide)</span>
+$$I=I_{\text{med}}=\langle S\rangle=\frac{c\varepsilon_0E_0^2}{2}=\frac{E_0B_0}{2\mu_0}=\frac{E_0^2}{2\mu_0c}$$
+<p class="legend">$E_0$, $B_0$: <b>amplitudes</b> (picos), no valores eficaces. $\langle\cos^2\rangle=\frac1T\int_0^T\cos^2(\ldots)dt=\frac12$. Útil: $\mu_0c\approx377\ \Omega$ ⇒ $I\approx E_0^2/754$.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $I\propto$ amplitud²?</b></p>
+<p>La energía de un campo va con el <b>cuadrado</b> del campo ($u\propto E^2$), igual que la energía de un muelle va con $x^2$. Duplicar $E_0$ ⇒ <b>cuadruplicar</b> $I$.</p>
+</div>
+<h3>Potencia sobre una superficie y fuente puntual</h3>
+<div class="box formula"><span class="label">Fórmula</span>
+$$P=I\,A\quad(\text{haz o superficie}\perp)$$
+$$I(r)=\frac{P}{4\pi r^2}\quad(\text{fuente puntual isótropa})$$
+<p class="legend">$P$: potencia media (W). $A$: área ⊥ al haz (m²). $r$: distancia a la fuente (m). Como $I\propto E_0^2$ ⇒ $E_0\propto1/r$.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $1/r^2$? Conservación de la energía.</b></p>
+<p>La fuente emite $P$ julios por segundo. En régimen estacionario, <b>toda</b> esa potencia atraviesa cualquier esfera centrada en ella (no se crea ni se pierde energía en el vacío). La esfera de radio $r$ tiene área $4\pi r^2$ ⇒ $I=P/(4\pi r^2)$. Al doble de distancia, la misma potencia se reparte en <b>4 veces</b> más área.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 800 260" role="img" aria-label="Expansión esférica de la energía">
+<circle cx="130" cy="130" r="8" fill="var(--field)"/>
+<text x="100" y="160" font-size="13" fill="var(--field)">fuente P</text>
+<g fill="none" stroke="var(--line)" stroke-width="1.5">
+<circle cx="130" cy="130" r="80"/><circle cx="130" cy="130" r="160"/><circle cx="130" cy="130" r="240"/>
+</g>
+<g stroke="var(--fg-dim)" stroke-dasharray="4 4">
+<line x1="130" y1="130" x2="420" y2="70"/><line x1="130" y1="130" x2="420" y2="190"/>
+</g>
+<g fill="var(--accent)" fill-opacity="0.35" stroke="var(--accent)">
+<rect x="208" y="114" width="6" height="33"/>
+<rect x="288" y="97" width="6" height="66"/>
+<rect x="368" y="81" width="6" height="99"/>
+</g>
+<g font-size="14" fill="var(--fg)">
+<text x="190" y="105">r</text><text x="275" y="88">2r</text><text x="360" y="72">3r</text>
+</g>
+<g font-size="15">
+<text x="480" y="70" fill="var(--fg)">Misma potencia en cada “cono”:</text>
+<text x="480" y="105" fill="var(--accent)">área ∝ r²  ⇒  I ∝ 1/r²</text>
+<text x="480" y="140" fill="var(--fg-dim)">r → I</text>
+<text x="480" y="165" fill="var(--fg-dim)">2r → I/4</text>
+<text x="480" y="190" fill="var(--fg-dim)">3r → I/9</text>
+<text x="480" y="225" fill="var(--pos)">E₀ ∝ 1/r (no 1/r²)</text>
+</g>
+</svg>
+<figcaption>La energía que pasa por el parche pequeño a distancia $r$ pasa luego por un parche de área 4 veces mayor a $2r$.</figcaption>
+</figure>
+<div class="sim"><span class="label">Simulación · intensidad de una fuente puntual</span>
+<svg id="ps-svg" viewBox="0 0 800 300" role="img" aria-label="Intensidad frente a distancia">
+<circle cx="180" cy="150" r="6" fill="var(--field)"/>
+<g fill="none" stroke="var(--line)"><circle cx="180" cy="150" r="30"/><circle cx="180" cy="150" r="60"/><circle cx="180" cy="150" r="90"/><circle cx="180" cy="150" r="120"/></g>
+<circle id="ps-sphere" cx="180" cy="150" r="24" fill="var(--field)" fill-opacity="0.3" stroke="var(--field)" stroke-width="2"/>
+<text x="120" y="290" font-size="12" fill="var(--fg-dim)">esfera de radio r</text>
+<line x1="420" y1="250" x2="780" y2="250" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<line x1="420" y1="250" x2="420" y2="30" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<text x="690" y="272" font-size="12" fill="var(--fg-dim)">r (m)</text>
+<text x="428" y="36" font-size="12" fill="var(--fg-dim)">I (W/m²) · eje escalado a I(1 m)</text>
+<text id="ps-ymax" x="428" y="54" font-size="11" fill="var(--accent)"></text>
+<text x="414" y="268" font-size="11" fill="var(--fg-dim)">1</text>
+<text x="760" y="268" font-size="11" fill="var(--fg-dim)">20</text>
+<path id="ps-curve" fill="none" stroke="var(--accent)" stroke-width="2.5" d=""/>
+<line id="ps-vline" x1="0" y1="250" x2="0" y2="250" stroke="var(--pos)" stroke-dasharray="4 4"/>
+<circle id="ps-dot" cx="0" cy="0" r="6" fill="var(--pos)"/>
+</svg>
+<div class="controls">
+<label for="ps-P">Potencia P</label><input type="range" id="ps-P" min="10" max="2000" step="10" value="1000"><output>1000 W</output>
+<label for="ps-r">Distancia r</label><input type="range" id="ps-r" min="1" max="20" step="0.01" value="3.74"><output>3.74 m</output>
+</div>
+<div class="readout" id="ps-out"></div>
+</div>
+<p>Con $P=1000$ W y $r=3.74$ m obtienes $I\approx5.7$ W/m² = 0.57 mW/cm²: es el <b>problema 8</b>.</p>
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 6.2</span>
+<p>La radiación solar en el suelo tiene $E_0\approx850$ V/m. ¿Qué potencia incide en una azotea de 100 m²?</p>
+<details><summary>Plan</summary><p>$E_0\to I=\frac12c\varepsilon_0E_0^2\to P=IA$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$I=\tfrac12\cdot3\times10^8\cdot8.85\times10^{-12}\cdot850^2=\tfrac12\cdot2.655\times10^{-3}\cdot7.225\times10^5\approx959$ W/m².</div>
+<div class="step">$P=IA=959\cdot100\approx9.6\times10^4$ W.</div>
+<div class="step">Realidad: placas típicas convierten ~10 %, y solo en horas de sol.</div>
+</div></details>
+</div>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li><b>Pico vs media:</b> la amplitud de $S(x,t)=S_0\cos^2(\ldots)$ es el <b>pico</b> $S_0=c\varepsilon_0E_0^2$; la intensidad que piden es $I=S_0/2$.</li>
+<li>$I=\frac12c\varepsilon_0E_0^2$ usa la <b>amplitud</b>. Si te dan un valor <b>eficaz</b> $E_{\text{ef}}=E_0/\sqrt2$, entonces $I=c\varepsilon_0E_{\text{ef}}^2$ (sin el ½).</li>
+<li>Unidades: 1 mW/cm² = 10 W/m² (porque 1 m² = 10⁴ cm²). 1 µW/m² = 10⁻⁶ W/m².</li>
+<li>Diámetro vs radio del haz: $A=\pi r^2=\pi d^2/4$.</li>
+<li>$I\propto1/r^2$ pero $E_0\propto1/r$.</li>
+</ul>
+</div>
+</section>
+
+<section id="interferencia">
+<h2>6.6 Interferencia de ondas</h2>
+<p>Cuando dos o más ondas coinciden en un punto, por superposición: $u(P,t)=\sum_i u_i(P,t)$. A ese fenómeno se le llama <b>interferencia</b>.</p>
+<h3>Suma de dos OEM armónicas de igual frecuencia</h3>
+<p>En un punto $P$ a distancias $r_1$, $r_2$ de los focos $F_1$, $F_2$: $E_i=E_{0,i}\cos(\omega t-kr_i-\varphi_i)\,\hat y$. Con fasores, $E_y(P,t)=\left[E_{0,1}e^{-j\varepsilon_1}+E_{0,2}e^{-j\varepsilon_2}\right]e^{j\omega t}$, con $\varepsilon_i=kr_i+\varphi_i$.</p>
+<div class="box formula"><span class="label">Fórmula · amplitud e intensidad resultantes</span>
+$$E_0^2(P)=E_{0,1}^2+E_{0,2}^2+2E_{0,1}E_{0,2}\cos\delta\qquad I(P)=I_1+I_2+2\sqrt{I_1I_2}\cos\delta$$
+$$\delta(P)=k(r_1-r_2)+(\varphi_1-\varphi_2)=k\,\Delta r+\Delta\varphi$$
+<p class="legend">$\delta$: diferencia de fase (rad). $\Delta r$: diferencia de camino (m). $\Delta\varphi$: diferencia de fase inicial. $2E_{0,1}E_{0,2}\cos\delta$ es el <b>término de interferencia</b>. Como $-1\le\cos\delta\le1$: $E_{0,1}-E_{0,2}\le E_0(P)\le E_{0,1}+E_{0,2}$.</p>
+</div>
+<div class="box why"><span class="label">Por qué (fasores como flechas)</span>
+<p>Cada onda en $P$ es una flecha de longitud $E_{0,i}$ girando a $\omega$. Ambas giran igual, así que el ángulo entre ellas, $\delta$, es <b>fijo</b>. La resultante es la suma de flechas: por el <b>teorema del coseno</b>, $E_0^2=E_{0,1}^2+E_{0,2}^2+2E_{0,1}E_{0,2}\cos\delta$. Y como $I\propto E_0^2$, sale la fórmula de $I$.</p>
+<p>¿Por qué $\delta=k\Delta r$? Recorrer una distancia extra $\Delta r$ añade $k\Delta r=2\pi\Delta r/\lambda$ radianes de fase: una $\lambda$ extra = una vuelta completa = nada cambia.</p>
+</div>
+<h3>Focos incoherentes vs coherentes</h3>
+<table>
+<tr><th></th><th>Incoherentes</th><th>Coherentes</th></tr>
+<tr><td>Fases</td><td>$\Delta\varphi(t)$ fluctúa al azar (en &lt;10⁻¹⁰ s) o la frecuencia fluctúa: $k(t)=\langle k\rangle+\Delta k(t)$</td><td>frecuencia constante y $\Delta\varphi$ <b>constante</b></td></tr>
+<tr><td>Término de interferencia</td><td>$\langle\cos\delta(t)\rangle=0$ ⇒ desaparece</td><td>sobrevive</td></tr>
+<tr><td>Resultado</td><td>$I_{\text{med}}=I_1+I_2$, igual en todas partes: “no hay interferencia” visible</td><td>franjas brillantes y oscuras</td></tr>
+<tr><td>Ejemplo</td><td>dos bombillas; un foco extenso (sus partes no son coherentes)</td><td>dos rendijas iluminadas por la <b>misma</b> fuente; láser</td></tr>
+</table>
+<div class="box formula"><span class="label">Fórmula</span>
+<p><b>Focos coherentes con $\Delta\varphi=0$</b></p>
+$$\delta=k\Delta r=\frac{2\pi\Delta r}{\lambda}$$
+$$\delta=2n\pi\iff\Delta r=n\lambda\ \Rightarrow\ E_0=E_{0,1}+E_{0,2}\ \ (\text{constructiva})$$
+$$\delta=(2n+1)\pi\iff\Delta r=(2n+1)\tfrac{\lambda}{2}\ \Rightarrow\ E_0=|E_{0,1}-E_{0,2}|\ \ (\text{destructiva})$$
+<p class="legend">$n$ entero. Camino extra = múltiplo <b>entero</b> de $\lambda$ ⇒ crestas con crestas. Múltiplo <b>semientero</b> ⇒ cresta con valle.</p>
+</div>
+<h3>Experimento de la doble rendija de Young</h3>
+<p>Una fuente $S$ ilumina dos rendijas $S_1$, $S_2$ separadas $d$ ⇒ son dos <b>focos coherentes</b> (salen de la misma fuente). En una pantalla a distancia $D\gg d$ aparecen franjas.</p>
+<figure class="diagram">
+<svg viewBox="0 0 800 280" role="img" aria-label="Geometría del experimento de Young">
+<line x1="200" y1="20" x2="200" y2="105" stroke="var(--fg)" stroke-width="4"/>
+<line x1="200" y1="115" x2="200" y2="165" stroke="var(--fg)" stroke-width="4"/>
+<line x1="200" y1="175" x2="200" y2="260" stroke="var(--fg)" stroke-width="4"/>
+<line x1="700" y1="20" x2="700" y2="260" stroke="var(--fg-dim)" stroke-width="4"/>
+<circle cx="60" cy="140" r="6" fill="var(--field)"/>
+<text x="50" y="125" font-size="14" fill="var(--field)">S</text>
+<text x="170" y="105" font-size="14" fill="var(--fg)">S₁</text>
+<text x="170" y="190" font-size="14" fill="var(--fg)">S₂</text>
+<line x1="200" y1="140" x2="700" y2="140" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<line x1="200" y1="110" x2="700" y2="60" stroke="var(--accent)" stroke-width="2"/>
+<line x1="200" y1="170" x2="700" y2="60" stroke="var(--pos)" stroke-width="2"/>
+<line x1="200" y1="140" x2="700" y2="60" stroke="var(--fg-dim)" stroke-dasharray="2 4"/>
+<circle cx="700" cy="60" r="5" fill="var(--field)"/>
+<text x="710" y="58" font-size="14" fill="var(--field)">P</text>
+<line x1="200" y1="110" x2="206" y2="169" stroke="var(--field)" stroke-width="1.5"/>
+<text x="212" y="182" font-size="12" fill="var(--field)">Δr = d sen θ</text>
+<line x1="185" y1="110" x2="185" y2="170" stroke="var(--fg-dim)" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="150" y="145" font-size="14" fill="var(--fg-dim)">d</text>
+<line x1="200" y1="240" x2="700" y2="240" stroke="var(--fg-dim)" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="440" y="232" font-size="14" fill="var(--fg-dim)">D</text>
+<line x1="730" y1="140" x2="730" y2="60" stroke="var(--fg-dim)" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text x="738" y="105" font-size="14" fill="var(--fg-dim)">y</text>
+<path d="M290,140 A90,90 0 0,0 287,125" fill="none" stroke="var(--fg-dim)"/>
+<text x="296" y="132" font-size="13" fill="var(--fg-dim)">θ</text>
+<text x="710" y="275" font-size="12" fill="var(--fg-dim)">pantalla</text>
+</svg>
+<figcaption>El rayo de $S_2$ recorre $\Delta r=d\sin\theta$ más que el de $S_1$. Con $\theta$ pequeño: $\sin\theta\approx\tan\theta=y/D$.</figcaption>
+</figure>
+<div class="box formula"><span class="label">Fórmula · Young</span>
+$$\Delta r\approx d\,\frac{y}{D}\qquad \Delta y=\frac{\lambda D}{2d}$$
+$$y_M=n\,\frac{\lambda D}{d}\ \ (\text{máximos})\qquad y_m=\frac{2n+1}{2}\,\frac{\lambda D}{d}\ \ (\text{mínimos})$$
+<p class="legend">$d$: separación entre rendijas. $D$: distancia rendijas–pantalla. $y$: posición en la pantalla. $\Delta y$: distancia entre un máximo y el mínimo consecutivo. Con amplitudes iguales: $I_{\text{max}}=4I_1$, $I_{\text{min}}=0$.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $4I_1$ y no $2I_1$? (Y no viola la energía.)</b></p>
+<p>En un máximo las <b>amplitudes</b> se suman: $2E_{0,1}$ ⇒ $I\propto(2E_{0,1})^2=4E_{0,1}^2$. Pero en los mínimos $I=0$. La energía no se crea: se <b>redistribuye</b>. En promedio sobre la pantalla ($\langle\cos\delta\rangle=0$) sale $2I_1$, justo la suma.</p>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>$\lambda D/d$: franjas más separadas si la luz es más “larga” ($\lambda$↑), la pantalla está más lejos ($D$↑) o las rendijas más juntas ($d$↓). Medir $\Delta y$ es una forma sencilla de <b>medir $\lambda$</b>.</p>
+</div>
+<div class="sim"><span class="label">Simulación · patrón de Young</span>
+<svg id="yg-svg" viewBox="0 0 800 230" role="img" aria-label="Patrón de interferencia de Young">
+<g id="yg-band"></g>
+<line x1="40" y1="200" x2="760" y2="200" stroke="var(--fg-dim)"/>
+<line x1="400" y1="100" x2="400" y2="205" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<path id="yg-curve" fill="none" stroke="var(--field)" stroke-width="2" d=""/>
+<text x="44" y="220" font-size="12" fill="var(--fg-dim)">y = −25 mm</text>
+<text x="392" y="220" font-size="12" fill="var(--fg-dim)">0</text>
+<text x="690" y="220" font-size="12" fill="var(--fg-dim)">+25 mm</text>
+</svg>
+<div class="controls">
+<label for="yg-lam">Longitud de onda λ</label><input type="range" id="yg-lam" min="400" max="700" step="10" value="600"><output>600 nm</output>
+<label for="yg-d">Separación d</label><input type="range" id="yg-d" min="0.05" max="1" step="0.01" value="0.18"><output>0.18 mm</output>
+<label for="yg-D">Distancia D</label><input type="range" id="yg-D" min="0.5" max="5" step="0.1" value="3"><output>3.0 m</output>
+</div>
+<div class="readout" id="yg-out"></div>
+</div>
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 6.3</span>
+<p>Luz amarilla ($\lambda=600$ nm) sobre dos rendijas separadas $d$; pantalla a $D=3$ m. ¿Qué $d$ hace que la distancia máximo–mínimo consecutivos sea mayor que 5 mm?</p>
+<details><summary>Plan</summary><p>Máximo→mínimo consecutivo es $\Delta y=\lambda D/(2d)$. Imponer $\Delta y>5$ mm y despejar $d$ (ojo: $d$ en el denominador invierte la desigualdad).</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\dfrac{\lambda D}{2d}>\Delta y\ \Rightarrow\ d&lt;\dfrac{\lambda D}{2\Delta y}$.</div>
+<div class="step">$d&lt;\dfrac{6\times10^{-7}\cdot3}{2\cdot5\times10^{-3}}=1.8\times10^{-4}$ m = <b>180 µm</b>.</div>
+<div class="step">Rendijas muy juntas ⇒ experimento difícil en la práctica. (Compruébalo en la simulación: con $d=0.18$ mm sale $\Delta y=5$ mm.)</div>
+</div></details>
+</div>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>$\lambda D/d$ es la distancia <b>máximo–máximo</b> (interfranja); máximo–mínimo es la <b>mitad</b>.</li>
+<li>La aproximación $\Delta r\approx dy/D$ exige $D\gg d$ y $\theta$ pequeño.</li>
+<li>Dos fuentes <b>independientes</b> (incoherentes) no dan franjas: se suman intensidades, no amplitudes.</li>
+<li>Si $\Delta\varphi\neq0$, la condición es sobre $\delta=k\Delta r+\Delta\varphi$, no solo sobre $\Delta r$.</li>
+</ul>
+</div>
+</section>
+
+<section id="difraccion">
+<h2>6.7 Difracción</h2>
+<p><b>Difracción</b> = la onda se distorsiona al encontrar un obstáculo o abertura, y llega a sitios donde un rayo recto no llegaría. Físicamente <b>es interferencia</b>, pero de <b>muchísimos</b> focos coherentes.</p>
+<figure class="diagram">
+<svg viewBox="0 0 800 200" role="img" aria-label="Sombra de un borde con y sin difracción">
+<text x="20" y="22" font-size="14" font-weight="700" fill="var(--fg)">a) sin difracción (incoherente)</text>
+<text x="420" y="22" font-size="14" font-weight="700" fill="var(--fg)">b) con difracción (coherente)</text>
+<line x1="30" y1="170" x2="380" y2="170" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<line x1="430" y1="170" x2="780" y2="170" stroke="var(--fg-dim)" marker-end="url(#ah)"/>
+<path d="M30,170 L180,170 L180,70 L370,70" fill="none" stroke="var(--field)" stroke-width="2.5"/>
+<path d="M430,170 L520,168 Q560,160 580,110 Q590,55 605,52 Q620,55 630,82 Q640,95 655,64 Q668,58 680,74 Q692,84 705,68 Q715,64 728,72 L770,70" fill="none" stroke="var(--field)" stroke-width="2.5"/>
+<line x1="180" y1="40" x2="180" y2="175" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<line x1="580" y1="40" x2="580" y2="175" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<text x="60" y="160" font-size="12" fill="var(--fg-dim)">sombra geométrica</text>
+<text x="170" y="192" font-size="12" fill="var(--fg-dim)">borde</text>
+<text x="570" y="192" font-size="12" fill="var(--fg-dim)">borde</text>
+<text x="330" y="192" font-size="12" fill="var(--fg-dim)">distancia</text>
+<text x="40" y="60" font-size="12" fill="var(--fg-dim)">intensidad</text>
+</svg>
+<figcaption>Con luz coherente aparece luz dentro de la sombra geométrica y franjas junto al borde.</figcaption>
+</figure>
+<div class="box formula"><span class="label">Principio de Huygens</span>
+<p>Cada punto de un frente de onda actúa como <b>foco de ondas esféricas secundarias</b> con la misma velocidad y frecuencia. El nuevo frente es la <b>envolvente</b> de esas ondas.</p>
+</div>
+<h3>Difracción de Fraunhofer por una rendija de anchura $b$</h3>
+<p>Fraunhofer: onda incidente <b>plana</b> y pantalla <b>lejana</b> ⇒ los rayos que llegan a un punto se consideran <b>paralelos</b>. Modelo: $N$ focos puntuales equiespaciados en la rendija, igual amplitud y fase; entre focos vecinos hay una diferencia de camino $\Delta r$ hacia el punto $P$ (ángulo $\theta$).</p>
+<div class="box why"><span class="label">Por qué (suma geométrica)</span>
+<div class="steps">
+<div class="step">$E_y(P,t)=E_0\left[1+e^{-j\phi}+e^{-2j\phi}+\cdots+e^{-(N-1)j\phi}\right]e^{-j(kr-\omega t)}$, con $\phi=k\Delta r$.</div>
+<div class="step">Serie geométrica de razón $q=e^{-j\phi}$: $\dfrac{1-q^N}{1-q}$, cuyo módulo es $\dfrac{\sin(N\phi/2)}{\sin(\phi/2)}$.</div>
+<div class="step">Amplitud en $P$: $E_P=E_0\dfrac{\sin(kN\Delta r/2)}{\sin(k\Delta r/2)}$, y $I(\theta)\propto\dfrac{\sin^2(Nk\Delta r/2)}{\sin^2(k\Delta r/2)}$ (máximo en $\theta=0$). La fase resultante es la de una onda que sale del <b>centro</b> de la rendija: $R=r+\frac{N-1}{2}\Delta r$.</div>
+<div class="step">Mínimo cuando el numerador se anula: $kN\Delta r/2=m\pi$. Con $N\Delta r\approx b\sin\theta$: $\dfrac{2\pi}{\lambda}\dfrac{b\sin\theta}{2}=m\pi$.</div>
+</div>
+</div>
+<div class="box formula"><span class="label">Fórmula · mínimos de difracción de una rendija</span>
+$$b\sin\theta_m=m\lambda\quad(m=1,2,\ldots)\qquad\sin\theta_1=\frac{\lambda}{b}$$
+$$\text{anchura de la franja central: }\ 2a\approx\frac{2D\lambda}{b}$$
+<p class="legend">$b$: anchura de la rendija (m). $\theta_m$: ángulo del mínimo $m$. $D$: distancia a la pantalla. Válido si $\lambda&lt;b$ (si no, $\sin\theta>1$: no hay mínimos).</p>
+</div>
+<div class="box intuition"><span class="label">Intuición · el truco de las parejas</span>
+<p>Parte la rendija en dos mitades. Empareja cada foco de la mitad de arriba con el que está $b/2$ más abajo. Si su diferencia de camino es $\lambda/2$, se <b>anulan por parejas</b> ⇒ oscuridad total: $\frac b2\sin\theta=\frac\lambda2\Rightarrow b\sin\theta=\lambda$. ¡El primer mínimo sin hacer ninguna serie!</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 800 260" role="img" aria-label="Patrón de difracción de una rendija">
+<line x1="70" y1="230" x2="790" y2="230" stroke="var(--fg-dim)"/>
+<path d="M78,229.4L81.5,229.6L85,229.7L88.6,229.8L92.1,229.9L95.6,230L99.1,230L102.6,230L106.2,229.9L109.7,229.8L113.2,229.7L116.7,229.6L120.2,229.4L123.8,229.1L127.3,228.9L130.8,228.6L134.3,228.4L137.8,228.1L141.4,227.9L144.9,227.6L148.4,227.5L151.9,227.3L155.4,227.2L159,227.2L162.5,227.2L166,227.3L169.5,227.4L173,227.6L176.6,227.8L180.1,228.1L183.6,228.4L187.1,228.7L190.6,229L194.2,229.3L197.7,229.5L201.2,229.8L204.7,229.9L208.2,230L211.8,230L215.3,229.9L218.8,229.7L222.3,229.4L225.8,229L229.4,228.6L232.9,228L236.4,227.4L239.9,226.7L243.4,226L247,225.3L250.5,224.6L254,223.9L257.5,223.3L261,222.8L264.6,222.4L268.1,222.1L271.6,222L275.1,222L278.6,222.2L282.2,222.6L285.7,223.1L289.2,223.8L292.7,224.5L296.2,225.4L299.8,226.3L303.3,227.3L306.8,228.1L310.3,228.9L313.8,229.5L317.4,229.9L320.9,230L324.4,229.7L327.9,229L331.4,227.8L335,226L338.5,223.7L342,220.7L345.5,217L349,212.7L352.6,207.7L356.1,202L359.6,195.6L363.1,188.6L366.6,181L370.2,172.9L373.7,164.4L377.2,155.5L380.7,146.4L384.2,137.2L387.8,128L391.3,118.9L394.8,110.1L398.3,101.6L401.8,93.6L405.4,86.3L408.9,79.6L412.4,73.8L415.9,69L419.4,65.1L423,62.3L426.5,60.6L430,60L433.5,60.6L437,62.3L440.6,65.1L444.1,69L447.6,73.8L451.1,79.6L454.6,86.3L458.2,93.6L461.7,101.6L465.2,110.1L468.7,118.9L472.2,128L475.8,137.2L479.3,146.4L482.8,155.5L486.3,164.4L489.8,172.9L493.4,181L496.9,188.6L500.4,195.6L503.9,202L507.4,207.7L511,212.7L514.5,217L518,220.7L521.5,223.7L525,226L528.6,227.8L532.1,229L535.6,229.7L539.1,230L542.6,229.9L546.2,229.5L549.7,228.9L553.2,228.1L556.7,227.3L560.2,226.3L563.8,225.4L567.3,224.5L570.8,223.8L574.3,223.1L577.8,222.6L581.4,222.2L584.9,222L588.4,222L591.9,222.1L595.4,222.4L599,222.8L602.5,223.3L606,223.9L609.5,224.6L613,225.3L616.6,226L620.1,226.7L623.6,227.4L627.1,228L630.6,228.6L634.2,229L637.7,229.4L641.2,229.7L644.7,229.9L648.2,230L651.8,230L655.3,229.9L658.8,229.8L662.3,229.5L665.8,229.3L669.4,229L672.9,228.7L676.4,228.4L679.9,228.1L683.4,227.8L687,227.6L690.5,227.4L694,227.3L697.5,227.2L701,227.2L704.6,227.2L708.1,227.3L711.6,227.5L715.1,227.6L718.6,227.9L722.2,228.1L725.7,228.4L729.2,228.6L732.7,228.9L736.2,229.1L739.8,229.4L743.3,229.6L746.8,229.7L750.3,229.8L753.8,229.9L757.4,230L760.9,230L764.4,230L767.9,229.9L771.4,229.8L775,229.7L778.5,229.6L782,229.4" fill="none" stroke="var(--field)" stroke-width="2.5"/>
+<g stroke="var(--pos)" stroke-dasharray="4 4"><line x1="320" y1="40" x2="320" y2="235"/><line x1="540" y1="40" x2="540" y2="235"/></g>
+<text x="270" y="252" font-size="13" fill="var(--pos)">sen θ = −λ/b</text>
+<text x="500" y="252" font-size="13" fill="var(--pos)">sen θ = +λ/b</text>
+<text x="400" y="252" font-size="13" fill="var(--fg-dim)">θ = 0</text>
+<line x1="322" y1="35" x2="538" y2="35" stroke="var(--field)" marker-start="url(#ahF)" marker-end="url(#ahF)"/>
+<text x="380" y="28" font-size="13" fill="var(--field)">franja central</text>
+<text x="600" y="170" font-size="12" fill="var(--fg-dim)">máximos secundarios débiles</text>
+</svg>
+<figcaption>Franja central el doble de ancha que las demás. Si $\lambda\ll b$ ⇒ $\theta_1\approx0$: sombra nítida (la luz se comporta como rayo). Difracción notable cuando $b\sim\lambda$.</figcaption>
+</figure>
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 6.4</span>
+<p>Láser de 600 nm por una rendija de 0.3 mm; pantalla a 5 m. Anchura de la franja central.</p>
+<details><summary>Plan</summary><p>La franja central va de $-\theta_1$ a $+\theta_1$. $\sin\theta_1=\lambda/b$; ángulo pequeño ⇒ $\tan\theta_1\approx\sin\theta_1$; anchura $2D\tan\theta_1$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\sin\theta_1=\dfrac{6\times10^{-7}}{3\times10^{-4}}=2\times10^{-3}\ll1$.</div>
+<div class="step">$2a=2D\tan\theta_1\approx2\cdot5\cdot2\times10^{-3}=0.02$ m = <b>20 mm</b>.</div>
+</div></details>
+</div>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>Rendija <b>única</b>: $b\sin\theta=m\lambda$ da <b>mínimos</b>. En Young, $d\sin\theta=n\lambda$ da <b>máximos</b>. Misma forma, significado opuesto.</li>
+<li>$m=0$ <b>no</b> es mínimo (es el máximo central).</li>
+<li>Rendija más estrecha ⇒ franja central <b>más ancha</b> ($\propto1/b$).</li>
+</ul>
+</div>
+</section>
+
+<section id="estacionarias">
+<h2>6.8 Ondas estacionarias</h2>
+<p>Una onda que llega a un “espejo” (para OEM, un conductor ideal) se refleja; la incidente y la reflejada se superponen.</p>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $E=E_0\sin kx\,\sin\omega t$?</b></p>
+<div class="steps">
+<div class="step">Incidente hacia $-x$: $E_1=E_{0,1}\cos(\omega t+kx)$. Reflejada hacia $+x$: $E_2=E_{0,2}\cos(\omega t-kx)$.</div>
+<div class="step">Espejo ideal en $x=0$: el campo es nulo <b>siempre</b>: $(E_{0,1}+E_{0,2})\cos\omega t=0$. Por tanto $E_{0,1}=-E_{0,2}$: la reflexión invierte el signo.</div>
+<div class="step">Suma: $E_{0,2}\left[\cos(\omega t-kx)-\cos(\omega t+kx)\right]=2E_{0,2}\sin kx\,\sin\omega t$.</div>
+<div class="step">Con $E_0=2E_{0,2}$: $\boxed{E_y=E_0\sin kx\,\sin\omega t}$. Ya <b>no</b> hay $f(\omega t\pm kx)$: no es una onda viajera.</div>
+</div>
+</div>
+<div class="box formula"><span class="label">Fórmula · onda estacionaria</span>
+$$E_y(x,t)=\underbrace{E_0\sin kx}_{E_0(x)}\,\sin\omega t\qquad\text{nodos: }kx=n\pi\Rightarrow x_{\text{nodo}}=n\frac{\lambda}{2}$$
+<p class="legend">Cada punto oscila armónicamente con una amplitud que depende de la posición, $E_0(x)$. <b>Nodos</b>: campo nulo siempre, separados $\lambda/2$. Vientres a mitad de camino ($\lambda/4$ de un nodo). La energía <b>no viaja</b>.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 760 250" role="img" aria-label="Onda estacionaria con nodos">
+<rect x="66" y="40" width="14" height="180" fill="var(--fg-dim)"/>
+<rect x="680" y="40" width="14" height="180" fill="var(--fg-dim)"/>
+<line x1="80" y1="130" x2="680" y2="130" stroke="var(--line)"/>
+<path d="M80,130L85,123.7L90,117.5L95,111.3L100,105.3L105,99.4L110,93.7L115,88.2L120,83L125,78L130,73.4L135,69.2L140,65.3L145,61.8L150,58.7L155,56.1L160,53.9L165,52.2L170,51L175,50.2L180,50L185,50.2L190,51L195,52.2L200,53.9L205,56.1L210,58.7L215,61.8L220,65.3L225,69.2L230,73.4L235,78L240,83L245,88.2L250,93.7L255,99.4L260,105.3L265,111.3L270,117.5L275,123.7L280,130L285,136.3L290,142.5L295,148.7L300,154.7L305,160.6L310,166.3L315,171.8L320,177L325,182L330,186.6L335,190.8L340,194.7L345,198.2L350,201.3L355,203.9L360,206.1L365,207.8L370,209L375,209.8L380,210L385,209.8L390,209L395,207.8L400,206.1L405,203.9L410,201.3L415,198.2L420,194.7L425,190.8L430,186.6L435,182L440,177L445,171.8L450,166.3L455,160.6L460,154.7L465,148.7L470,142.5L475,136.3L480,130L485,123.7L490,117.5L495,111.3L500,105.3L505,99.4L510,93.7L515,88.2L520,83L525,78L530,73.4L535,69.2L540,65.3L545,61.8L550,58.7L555,56.1L560,53.9L565,52.2L570,51L575,50.2L580,50L585,50.2L590,51L595,52.2L600,53.9L605,56.1L610,58.7L615,61.8L620,65.3L625,69.2L630,73.4L635,78L640,83L645,88.2L650,93.7L655,99.4L660,105.3L665,111.3L670,117.5L675,123.7L680,130" fill="none" stroke="var(--fg-dim)" stroke-dasharray="5 5"/>
+<path d="M80,130L85,136.3L90,142.5L95,148.7L100,154.7L105,160.6L110,166.3L115,171.8L120,177L125,182L130,186.6L135,190.8L140,194.7L145,198.2L150,201.3L155,203.9L160,206.1L165,207.8L170,209L175,209.8L180,210L185,209.8L190,209L195,207.8L200,206.1L205,203.9L210,201.3L215,198.2L220,194.7L225,190.8L230,186.6L235,182L240,177L245,171.8L250,166.3L255,160.6L260,154.7L265,148.7L270,142.5L275,136.3L280,130L285,123.7L290,117.5L295,111.3L300,105.3L305,99.4L310,93.7L315,88.2L320,83L325,78L330,73.4L335,69.2L340,65.3L345,61.8L350,58.7L355,56.1L360,53.9L365,52.2L370,51L375,50.2L380,50L385,50.2L390,51L395,52.2L400,53.9L405,56.1L410,58.7L415,61.8L420,65.3L425,69.2L430,73.4L435,78L440,83L445,88.2L450,93.7L455,99.4L460,105.3L465,111.3L470,117.5L475,123.7L480,130L485,136.3L490,142.5L495,148.7L500,154.7L505,160.6L510,166.3L515,171.8L520,177L525,182L530,186.6L535,190.8L540,194.7L545,198.2L550,201.3L555,203.9L560,206.1L565,207.8L570,209L575,209.8L580,210L585,209.8L590,209L595,207.8L600,206.1L605,203.9L610,201.3L615,198.2L620,194.7L625,190.8L630,186.6L635,182L640,177L645,171.8L650,166.3L655,160.6L660,154.7L665,148.7L670,142.5L675,136.3L680,130" fill="none" stroke="var(--fg-dim)" stroke-dasharray="5 5"/>
+<path d="M80,130L85,126.2L90,122.5L95,118.8L100,115.2L105,111.6L110,108.2L115,104.9L120,101.8L125,98.8L130,96.1L135,93.5L140,91.2L145,89.1L150,87.2L155,85.7L160,84.3L165,83.3L170,82.6L175,82.1L180,82L185,82.1L190,82.6L195,83.3L200,84.3L205,85.7L210,87.2L215,89.1L220,91.2L225,93.5L230,96.1L235,98.8L240,101.8L245,104.9L250,108.2L255,111.6L260,115.2L265,118.8L270,122.5L275,126.2L280,130L285,133.8L290,137.5L295,141.2L300,144.8L305,148.4L310,151.8L315,155.1L320,158.2L325,161.2L330,163.9L335,166.5L340,168.8L345,170.9L350,172.8L355,174.3L360,175.7L365,176.7L370,177.4L375,177.9L380,178L385,177.9L390,177.4L395,176.7L400,175.7L405,174.3L410,172.8L415,170.9L420,168.8L425,166.5L430,163.9L435,161.2L440,158.2L445,155.1L450,151.8L455,148.4L460,144.8L465,141.2L470,137.5L475,133.8L480,130L485,126.2L490,122.5L495,118.8L500,115.2L505,111.6L510,108.2L515,104.9L520,101.8L525,98.8L530,96.1L535,93.5L540,91.2L545,89.1L550,87.2L555,85.7L560,84.3L565,83.3L570,82.6L575,82.1L580,82L585,82.1L590,82.6L595,83.3L600,84.3L605,85.7L610,87.2L615,89.1L620,91.2L625,93.5L630,96.1L635,98.8L640,101.8L645,104.9L650,108.2L655,111.6L660,115.2L665,118.8L670,122.5L675,126.2L680,130" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<path d="M80,130L85,131.9L90,133.8L95,135.6L100,137.4L105,139.2L110,140.9L115,142.5L120,144.1L125,145.6L130,147L135,148.2L140,149.4L145,150.5L150,151.4L155,152.2L160,152.8L165,153.3L170,153.7L175,153.9L180,154L185,153.9L190,153.7L195,153.3L200,152.8L205,152.2L210,151.4L215,150.5L220,149.4L225,148.2L230,147L235,145.6L240,144.1L245,142.5L250,140.9L255,139.2L260,137.4L265,135.6L270,133.8L275,131.9L280,130L285,128.1L290,126.2L295,124.4L300,122.6L305,120.8L310,119.1L315,117.5L320,115.9L325,114.4L330,113L335,111.8L340,110.6L345,109.5L350,108.6L355,107.8L360,107.2L365,106.7L370,106.3L375,106.1L380,106L385,106.1L390,106.3L395,106.7L400,107.2L405,107.8L410,108.6L415,109.5L420,110.6L425,111.8L430,113L435,114.4L440,115.9L445,117.5L450,119.1L455,120.8L460,122.6L465,124.4L470,126.2L475,128.1L480,130L485,131.9L490,133.8L495,135.6L500,137.4L505,139.2L510,140.9L515,142.5L520,144.1L525,145.6L530,147L535,148.2L540,149.4L545,150.5L550,151.4L555,152.2L560,152.8L565,153.3L570,153.7L575,153.9L580,154L585,153.9L590,153.7L595,153.3L600,152.8L605,152.2L610,151.4L615,150.5L620,149.4L625,148.2L630,147L635,145.6L640,144.1L645,142.5L650,140.9L655,139.2L660,137.4L665,135.6L670,133.8L675,131.9L680,130" fill="none" stroke="var(--pos)" stroke-width="2"/>
+<g fill="var(--field)"><circle cx="80" cy="130" r="6"/><circle cx="280" cy="130" r="6"/><circle cx="480" cy="130" r="6"/><circle cx="680" cy="130" r="6"/></g>
+<line x1="282" y1="232" x2="478" y2="232" stroke="var(--field)" marker-start="url(#ahF)" marker-end="url(#ahF)"/>
+<text x="368" y="226" font-size="14" fill="var(--field)">λ/2</text>
+<text x="290" y="120" font-size="12" fill="var(--field)">nodo</text>
+<text x="160" y="40" font-size="12" fill="var(--fg-dim)">vientre</text>
+<text x="40" y="245" font-size="12" fill="var(--fg-dim)">x = 0</text>
+<text x="665" y="245" font-size="12" fill="var(--fg-dim)">x = L</text>
+</svg>
+<figcaption>Dos instantes (azul, rojo) y la envolvente $\pm E_0|\sin kx|$. Entre dos espejos solo “caben” un número entero de medias longitudes de onda (aquí $n=3$).</figcaption>
+</figure>
+<h3>Dos espejos: cuantización</h3>
+<div class="box formula"><span class="label">Fórmula · modos permitidos entre espejos separados L</span>
+$$\sin kL=0\Rightarrow k_n=\frac{n\pi}{L}\qquad\lambda_n=\frac{2L}{n}\qquad\omega_n=ck_n=\frac{cn\pi}{L}\qquad f_n=\frac{nc}{2L}$$
+<p class="legend">$n=1,2,3,\ldots$ Solo valores <b>discretos</b> (cuantización), consecuencia de imponer condiciones de contorno en las fronteras.</p>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Como una cuerda de guitarra fija por los dos extremos: solo suenan las notas en las que cabe un número entero de “barrigas” ($\lambda/2$) entre los extremos.</p>
+</div>
+<p><b>Armónicos y Fourier:</b> cada modo $E_{y,n}=E_{0,n}\sin(k_nx)\sin(\omega_nt+\varphi_n)$ es un <b>armónico</b>. Cualquier perturbación en la cavidad es una superposición: $E_y=\sum_n E_{0,n}\sin(nk_1x)\sin(n\omega_1t+\varphi_n)$, con $k_1=\pi/L$, $\omega_1=c\pi/L$ (teorema de Fourier).</p>
+<div class="sim"><span class="label">Simulación · modos entre dos espejos (L = 1.5 m)</span>
+<svg id="st-svg" viewBox="0 0 800 220" role="img" aria-label="Onda estacionaria animada">
+<rect x="46" y="20" width="14" height="180" fill="var(--fg-dim)"/>
+<rect x="740" y="20" width="14" height="180" fill="var(--fg-dim)"/>
+<line x1="60" y1="110" x2="740" y2="110" stroke="var(--line)"/>
+<path id="st-env" fill="none" stroke="var(--fg-dim)" stroke-dasharray="5 5" d=""/>
+<path id="st-path" fill="none" stroke="var(--accent)" stroke-width="3" d=""/>
+<g id="st-nodes" fill="var(--field)"></g>
+</svg>
+<div class="controls">
+<label for="st-n">Modo n</label><input type="range" id="st-n" min="1" max="6" step="1" value="3"><output>3</output>
+</div>
+<div class="readout" id="st-out"></div>
+</div>
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 6.5</span>
+<p>Una bocina de microondas y una pantalla metálica crean una onda estacionaria. El detector encuentra mínimos de campo separados 15 cm. ¿Frecuencia?</p>
+<details><summary>Plan</summary><p>Mínimos = nodos, separados $\lambda/2$ ⇒ $\lambda$ ⇒ $f=c/\lambda$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\lambda=2\cdot0.15=0.3$ m.</div>
+<div class="step">$f=\dfrac{c}{\lambda}=\dfrac{3\times10^8}{0.3}=10^9$ Hz = <b>1 GHz</b>. (Ojo: en los apuntes aparece la errata “$\lambda=cf$, $f=\lambda/c$”; lo correcto es $c=\lambda f$.)</div>
+</div></details>
+</div>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>Distancia entre nodos = $\lambda/2$, <b>no</b> $\lambda$.</li>
+<li>Nodo–vientre consecutivos = $\lambda/4$.</li>
+<li>Una estacionaria no transporta energía neta, aunque sea suma de dos viajeras.</li>
+</ul>
+</div>
+</section>
+
+<section id="espectro">
+<h2>6.9 Espectro electromagnético</h2>
+<p>Luz, radio, microondas, rayos X, gamma… son <b>lo mismo</b>: campos $\vec E$ y $\vec B$ oscilando. Solo cambia la <b>frecuencia</b> (y por tanto $\lambda$). En el vacío:</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$\lambda=\frac{c}{f}\qquad\lambda f=c=3\times10^8\ \text{m/s}$$
+<p class="legend">A más frecuencia, menos longitud de onda. Atajos: $\lambda(\text{m})=\dfrac{300}{f(\text{MHz})}$; $\lambda(\text{nm})=\dfrac{3\times10^5}{f(\text{THz})}$.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 900 250" role="img" aria-label="Espectro electromagnético">
+<defs>
+<linearGradient id="visgrad" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0" stop-color="#ff2a2a"/><stop offset="0.2" stop-color="#ff9a1f"/><stop offset="0.38" stop-color="#ffe600"/><stop offset="0.55" stop-color="#3ddc4a"/><stop offset="0.75" stop-color="#2f7bff"/><stop offset="1" stop-color="#8a3dff"/>
+</linearGradient>
+</defs>
+<text x="40" y="22" font-size="13" fill="var(--fg-dim)">f crece →   λ decrece ←</text>
+<g stroke="var(--bg)" stroke-width="1">
+<rect x="40" y="60" width="227.8" height="44" fill="#3b4a7a"/>
+<rect x="267.8" y="60" width="112.8" height="44" fill="#3f6f8f"/>
+<rect x="380.6" y="60" width="143.8" height="44" fill="#8a4a3a"/>
+<rect x="524.4" y="60" width="11" height="44" fill="url(#visgrad)"/>
+<rect x="535.4" y="60" width="73" height="44" fill="#6b4a9a"/>
+<rect x="608.4" y="60" width="136.7" height="44" fill="#4a5a6a"/>
+<rect x="745.1" y="60" width="114.9" height="44" fill="#2f3a46"/>
+</g>
+<g font-size="12.5" fill="var(--fg)" text-anchor="middle">
+<text x="154" y="87">Radio (AM, FM, TV)</text>
+<text x="324" y="87">Microondas</text>
+<text x="452" y="87">Infrarrojo</text>
+<text x="572" y="87">UV</text>
+<text x="677" y="87">Rayos X</text>
+<text x="802" y="87">Gamma</text>
+<text x="530" y="52" fill="var(--field)">visible</text>
+</g>
+<g stroke="var(--fg-dim)">
+<line x1="131.1" y1="104" x2="131.1" y2="114"/><line x1="267.8" y1="104" x2="267.8" y2="114"/><line x1="404.4" y1="104" x2="404.4" y2="114"/><line x1="541.1" y1="104" x2="541.1" y2="114"/><line x1="677.8" y1="104" x2="677.8" y2="114"/><line x1="814.4" y1="104" x2="814.4" y2="114"/>
+</g>
+<g font-size="11.5" text-anchor="middle">
+<text x="131.1" y="128" fill="var(--fg)">1 MHz</text><text x="267.8" y="128" fill="var(--fg)">1 GHz</text><text x="404.4" y="128" fill="var(--fg)">1 THz</text><text x="541.1" y="128" fill="var(--fg)">1 PHz</text><text x="677.8" y="128" fill="var(--fg)">1 EHz</text><text x="814.4" y="128" fill="var(--fg)">10²¹ Hz</text>
+<text x="131.1" y="144" fill="var(--fg-dim)">300 m</text><text x="267.8" y="144" fill="var(--fg-dim)">30 cm</text><text x="404.4" y="144" fill="var(--fg-dim)">0.3 mm</text><text x="541.1" y="144" fill="var(--fg-dim)">300 nm</text><text x="677.8" y="144" fill="var(--fg-dim)">0.3 nm</text><text x="814.4" y="144" fill="var(--fg-dim)">0.3 pm</text>
+</g>
+<line x1="524.4" y1="104" x2="350" y2="180" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<line x1="535.4" y1="104" x2="650" y2="180" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<rect x="350" y="180" width="300" height="26" fill="url(#visgrad)"/>
+<g font-size="12" fill="var(--fg)" text-anchor="middle">
+<text x="350" y="224">700 nm · 428 THz</text>
+<text x="650" y="224">400 nm · 750 THz</text>
+<text x="500" y="242" fill="var(--fg-dim)">visible: lo único que ve el ojo</text>
+</g>
+</svg>
+<figcaption>Escala logarítmica en frecuencia. Cada banda es una OEM con la misma física; cambia cómo interactúa con la materia.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué</span>
+<p><b>¿Por qué $\lambda$ decide el comportamiento?</b></p>
+<ul>
+<li><b>Difracción</b> depende de $\lambda/b$: la luz visible (400–700 nm) apenas difracta con objetos cotidianos ⇒ se puede tratar como <b>rayo</b>. Las ondas de radio largas ($10^2$–$10^7$ m) rodean edificios y montes.</li>
+<li><b>Rayos X</b> ($10^{-12}$–$10^{-8}$ m): longitud de onda tan pequeña que atraviesan materiales opacos a $\lambda$ mayores.</li>
+<li><b>Microondas</b> ($\lambda\sim12$–15 cm): caen en el espectro de absorción del <b>agua</b> ⇒ los alimentos se calientan.</li>
+</ul>
+</div>
+<table>
+<tr><th>Prefijo</th><th>Factor</th><th>Prefijo</th><th>Factor</th></tr>
+<tr><td>k (kilo)</td><td>10³</td><td>m (mili)</td><td>10⁻³</td></tr>
+<tr><td>M (mega)</td><td>10⁶</td><td>µ (micro)</td><td>10⁻⁶</td></tr>
+<tr><td>G (giga)</td><td>10⁹</td><td>n (nano)</td><td>10⁻⁹</td></tr>
+<tr><td>T (tera)</td><td>10¹²</td><td>p (pico)</td><td>10⁻¹²</td></tr>
+<tr><td>P (peta)</td><td>10¹⁵</td><td>Å (ángstrom)</td><td>10⁻¹⁰ m</td></tr>
+<tr><td>E (exa)</td><td>10¹⁸</td><td></td><td></td></tr>
+</table>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>nm → m: <b>×10⁻⁹</b>. 600 nm = 6×10⁻⁷ m (no 6×10⁻⁹).</li>
+<li>THz → Hz: <b>×10¹²</b>. Visible ≈ 430–750 THz ≈ (4.3–7.5)×10¹⁴ Hz.</li>
+<li>Usa $f$ (Hz) en $\lambda=c/f$, <b>no</b> $\omega$: con $\omega$ es $\lambda=2\pi c/\omega$.</li>
+<li>Rojo = λ larga = f baja; violeta = λ corta = f alta.</li>
+</ul>
+</div>
+</section>
+
+<section id="fuentes">
+<h2>6.10 Fuentes de las ondas electromagnéticas</h2>
+<div class="chain"><span>carga en reposo → $\vec E$ estático</span><span>corriente estacionaria → $\vec B$ estático</span><span>campos estáticos no se “regeneran”</span><span>hace falta <b>aceleración</b></span></div>
+<div class="box formula"><span class="label">Ley cualitativa</span>
+<p><b>Las cargas eléctricas aceleradas son las fuentes de las OEM.</b></p>
+$$\text{carga oscilando a }\omega\ \Rightarrow\ \text{OEM de frecuencia }\omega,\quad\lambda=\frac{2\pi c}{\omega}$$
+</div>
+<div class="box why"><span class="label">Por qué solo las aceleradas</span>
+<p>Para que arranque la cadena $\vec B\Rightarrow\vec E\Rightarrow\vec B\ldots$ el campo primario debe <b>variar en el tiempo</b>. Una carga quieta da $\vec E$ constante; una corriente continua (cargas a velocidad constante) da $\vec B$ constante. El único estado de movimiento que queda —y el único que no habíamos estudiado— es la <b>aceleración</b>.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 800 220" role="img" aria-label="Antena dipolo emisora y receptora">
+<line x1="150" y1="30" x2="150" y2="95" stroke="var(--fg)" stroke-width="6"/>
+<line x1="150" y1="125" x2="150" y2="190" stroke="var(--fg)" stroke-width="6"/>
+<circle cx="150" cy="110" r="14" fill="var(--bg-3)" stroke="var(--field)" stroke-width="2"/>
+<path d="M142,110 q4,-8 8,0 t8,0" fill="none" stroke="var(--field)" stroke-width="2"/>
+<text x="60" y="114" font-size="12" fill="var(--field)">generador ~</text>
+<line x1="135" y1="50" x2="135" y2="80" stroke="var(--pos)" stroke-width="2" marker-start="url(#ahE)" marker-end="url(#ahE)"/>
+<text x="60" y="60" font-size="12" fill="var(--pos)">e⁻ oscilan</text>
+<g fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.8">
+<path d="M190,60 A70,70 0 0,1 190,160"/><path d="M230,40 A100,100 0 0,1 230,180"/><path d="M270,25 A130,130 0 0,1 270,195"/>
+</g>
+<line x1="320" y1="110" x2="560" y2="110" stroke="var(--field)" stroke-width="2.5" marker-end="url(#ahF)"/>
+<text x="360" y="100" font-size="13" fill="var(--field)">OEM (viaja a c)</text>
+<line x1="640" y1="40" x2="640" y2="180" stroke="var(--fg)" stroke-width="6"/>
+<line x1="625" y1="70" x2="625" y2="100" stroke="var(--pos)" stroke-width="2" marker-start="url(#ahE)" marker-end="url(#ahE)"/>
+<text x="660" y="90" font-size="12" fill="var(--fg)">antena receptora:</text>
+<text x="660" y="108" font-size="12" fill="var(--fg-dim)">E de la onda mueve</text>
+<text x="660" y="124" font-size="12" fill="var(--fg-dim)">los e⁻ ⇒ corriente</text>
+<text x="660" y="140" font-size="12" fill="var(--fg-dim)">oscilante detectable</text>
+</svg>
+<figcaption>La antena emisora (dos varillas + generador AC) hace oscilar electrones; la receptora reproduce ese movimiento con un retraso = distancia/c.</figcaption>
+</figure>
+<ul>
+<li>Una sola carga oscilando da una onda casi indetectable ⇒ en la práctica <b>muchas cargas</b> oscilan juntas: <b>antenas</b> (radio y TV, MHz–GHz).</li>
+<li>Luz visible ($f\sim10^{15}$ Hz): oscilaciones de cargas <b>atómicas</b>. Frecuencias mayores: oscilaciones electrónicas y <b>nucleares</b> rápidas.</li>
+<li><b>Recepción:</b> la misma antena sin generador. El $\vec E$ que llega empuja a los electrones a la frecuencia de la onda ⇒ corriente oscilante que copia la del emisor. Así se transmite información con muy poca energía, incluso a satélites.</li>
+</ul>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>“¿Una corriente continua intensa emite OEM?” <b>No</b>: velocidad constante ⇒ $\vec B$ estático. Hace falta corriente <b>variable</b> (cargas aceleradas).</p>
+</div>
+</section>
+
+<section id="problemas">
+<h2>Problemas resueltos (boletín T6)</h2>
+<p>Datos: $c=3\times10^8$ m/s, $\mu_0=4\pi\times10^{-7}$ H/m, $\varepsilon_0=8.85\times10^{-12}$ F/m. Pequeñas diferencias en la 3.ª cifra salen de usar $c\varepsilon_0$ o $1/(\mu_0c)$.</p>
+
+<div class="box example"><span class="label">Problema 1 · demostrar que es onda</span>
+<p>Demuestra, calculando las derivadas, que $y(x,t)=A\sin(kx-\omega t+\varphi)$ satisface la ecuación de ondas con velocidad de fase $\omega/k$.</p>
+<details><summary>Plan</summary><p>Calcular $\partial^2y/\partial x^2$ y $\partial^2y/\partial t^2$; ambas son proporcionales a $-y$. Sustituir y ver qué $v$ hace cero la ecuación.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\dfrac{\partial y}{\partial x}=Ak\cos(\ldots)$, $\dfrac{\partial^2y}{\partial x^2}=-Ak^2\sin(\ldots)=-k^2y$.</div>
+<div class="step">$\dfrac{\partial y}{\partial t}=-A\omega\cos(\ldots)$, $\dfrac{\partial^2y}{\partial t^2}=-A\omega^2\sin(\ldots)=-\omega^2y$.</div>
+<div class="step">Sustituye: $-k^2y-\dfrac{1}{v^2}(-\omega^2y)=y\left(\dfrac{\omega^2}{v^2}-k^2\right)=0\iff v=\dfrac{\omega}{k}$ ✔.</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 2 · onda en una cuerda</span>
+<p>$y(x,t)=0.03\sin(3x-6t)$ m. (a) Desplazamiento en $x=0.1,\,0.2,\,0.3$ m para $t=0$. (b) $\lambda$, $f$, $T$, $v$. (c) Velocidad de oscilación de las partículas y su máximo. (d) Desfase entre puntos a 5 m; distancia (en $\lambda$) para un desfase de $\pi/6$.</p>
+<details><summary>Plan</summary><p>Leer $A=0.03$ m, $k=3$ rad/m, $\omega=6$ rad/s. (a) sustituir (calculadora en <b>radianes</b>). (b) fórmulas de $k$ y $\omega$. (c) derivar respecto a $t$. (d) $\Delta\phi=k\Delta x$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">(a) $y=0.03\sin(3x)$: $0.03\sin0.3=8.87$ mm; $0.03\sin0.6=16.9$ mm; $0.03\sin0.9=23.5$ mm.</div>
+<div class="step">(b) $\lambda=2\pi/3=2.094$ m; $f=6/2\pi=0.955$ Hz; $T=1/f=2\pi/6=1.047$ s; $v=\omega/k=2$ m/s (hacia $+x$: signos distintos).</div>
+<div class="step">(c) $v_y=\partial y/\partial t=0.03\cdot(-6)\cos(3x-6t)=-0.18\cos(3x-6t)$ m/s ⇒ $v_{y,\max}=A\omega=0.18$ m/s. ¡Distinta de $v=2$ m/s!</div>
+<div class="step">(d) $\Delta\phi=k\Delta x=3\cdot5=15$ rad. Para $\Delta\phi=\pi/6$: $\Delta x=\dfrac{\pi/6}{3}=\dfrac{\pi}{18}=0.175$ m $=\dfrac{\lambda}{12}$ (porque $2\pi\leftrightarrow\lambda$, y $\pi/6$ es 1/12 de $2\pi$).</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 4 · de E₀ a B₀ e I</span>
+<p>OEM plana en el vacío, $f=1$ GHz, $E_0=27$ mV/m. Calcula $\lambda$, $B_0$ e $I$.</p>
+<details><summary>Plan</summary><p>Tres fórmulas directas: $\lambda=c/f$, $B_0=E_0/c$, $I=\frac12c\varepsilon_0E_0^2$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\lambda=\dfrac{3\times10^8}{10^9}=0.3$ m = 30 cm.</div>
+<div class="step">$B_0=\dfrac{0.027}{3\times10^8}=9\times10^{-11}$ T = 90 pT.</div>
+<div class="step">$I=\tfrac12\cdot3\times10^8\cdot8.85\times10^{-12}\cdot(0.027)^2=\tfrac12\cdot2.655\times10^{-3}\cdot7.29\times10^{-4}=9.7\times10^{-7}$ W/m² = <b>0.97 µW/m²</b>.</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 5 · de la expresión de E a todo lo demás</span>
+<p>$\vec E(x,t)=3\cos(kx-2\pi\times10^8t)\,\hat\jmath$ mV/m. (a) $\lambda$, $f$, $T$, $k$. (b) $\vec B(x,t)$. (c) $\vec S(x,t)$ e $I$.</p>
+<details><summary>Plan</summary><p>Leer $\omega$ ⇒ $f$, $T$; vacío ⇒ $\lambda=c/f$, $k=2\pi/\lambda$. Signos distintos ⇒ $+x$ ⇒ $\hat\jmath\times\hat B=\hat\imath$ ⇒ $\hat B=\hat k$. $B_0=E_0/c$. $\vec S=\vec E\times\vec B/\mu_0$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$\omega=2\pi\times10^8$ ⇒ $f=10^8$ Hz = 100 MHz, $T=10$ ns, $\lambda=3$ m, $k=2\pi/3$ rad/m.</div>
+<div class="step">$B_0=\dfrac{3\times10^{-3}}{3\times10^8}=10^{-11}$ T = 0.01 nT ⇒ $\vec B=0.01\cos\!\left(\tfrac{2\pi}{3}x-2\pi\times10^8t\right)\hat k$ nT.</div>
+<div class="step">$\dfrac{E_0B_0}{\mu_0}=\dfrac{3\times10^{-3}\cdot10^{-11}}{4\pi\times10^{-7}}=2.39\times10^{-8}$ W/m² ⇒ $\vec S=0.0239\cos^2(\ldots)\,\hat\imath$ µW/m².</div>
+<div class="step">$I=\langle S\rangle=\tfrac12\cdot0.0239=0.0119$ µW/m².</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 6 · del vector de Poynting a los campos</span>
+<p>$\vec E$ oscila según $y$ y $\vec S(x,t)=100\cos^2(10x-3\times10^9t)\,\hat\imath$ µW/m². (a) Dirección y sentido. (b) $\lambda$ y $f$. (c) $\vec E$ y $\vec B$.</p>
+<details><summary>Plan</summary><p>El argumento del $\cos^2$ es la fase de los campos: $k=10$, $\omega=3\times10^9$. La amplitud de $S$ es el <b>pico</b> $S_0=c\varepsilon_0E_0^2$ (no la media). $\hat\jmath\times\hat B=\hat\imath\Rightarrow\hat B=\hat k$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">(a) Signos distintos y $\vec S\parallel+\hat\imath$ ⇒ se propaga hacia <b>+x</b>.</div>
+<div class="step">(b) $\lambda=2\pi/10=0.628$ m; $f=\dfrac{3\times10^9}{2\pi}=4.77\times10^8$ Hz = 477 MHz. Control: $\omega/k=3\times10^8$ m/s = $c$ ✔.</div>
+<div class="step">(c) $S_0=E_0^2/(\mu_0c)=10^{-4}$ W/m² ⇒ $E_0=\sqrt{10^{-4}\cdot377}=0.194$ V/m = 194 mV/m.</div>
+<div class="step">$B_0=E_0/c=6.47\times10^{-10}$ T = 0.647 nT. (La hoja pone 0.674 nT: errata; $194.2/3\times10^8=0.647$.)</div>
+<div class="step">$\vec E=194\cos(10x-3\times10^9t)\,\hat\jmath$ mV/m; $\vec B=0.647\cos(10x-3\times10^9t)\,\hat k$ nT.</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 7 · elegir la dirección de B</span>
+<p>OEM con $\lambda=6$ m y $B_0=0.2$ nT. (a) Campos y $\vec S$ si se propaga hacia $+y$ con $\vec E$ según $z$. (b) Ídem hacia $-y$ con $\vec E$ igual.</p>
+<details><summary>Plan</summary><p>$k=2\pi/\lambda$, $\omega=ck$, $E_0=cB_0$. Dirección de $\vec B$ desde $\vec E\times\vec B\parallel\vec c$. Variable espacial: $y$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$k=2\pi/6=\pi/3$ rad/m; $\omega=3\times10^8\cdot\pi/3=\pi\times10^8$ rad/s ($f=50$ MHz); $E_0=3\times10^8\cdot2\times10^{-10}=0.06$ V/m = 60 mV/m.</div>
+<div class="step">$S_0=\dfrac{E_0B_0}{\mu_0}=\dfrac{0.06\cdot2\times10^{-10}}{4\pi\times10^{-7}}=9.55\times10^{-6}$ W/m² $=\dfrac{30}{\pi}$ µW/m².</div>
+<div class="step">(a) $+y$: $\hat k\times\hat B=\hat\jmath\Rightarrow\hat B=\hat\imath$ (pues $\hat k\times\hat\imath=\hat\jmath$). $\vec E=60\cos\!\left(\tfrac{\pi}{3}y-\pi\times10^8t\right)\hat k$ mV/m, $\vec B=0.2\cos(\ldots)\,\hat\imath$ nT, $\vec S=\tfrac{30}{\pi}\cos^2(\ldots)\,\hat\jmath$ µW/m².</div>
+<div class="step">(b) $-y$: fase $\tfrac{\pi}{3}y+\pi\times10^8t$ (signos iguales). $\hat k\times\hat B=-\hat\jmath\Rightarrow\hat B=-\hat\imath$. $\vec B=0.2\cos(\ldots)(-\hat\imath)$ nT, $\vec S=\tfrac{30}{\pi}\cos^2(\ldots)(-\hat\jmath)$ µW/m². (La hoja escribe “60 mV/m” para $B$: errata, son 0.2 nT.)</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 8 · antena isótropa y límite de seguridad</span>
+<p>Antena de 1000 W a 900 MHz, emite igual en todas direcciones. (a) Distancia mínima para que $I&lt;0.57$ mW/cm². (b) $E_0$ a esa distancia. (c) $\lambda$.</p>
+<details><summary>Plan</summary><p>Conservación de energía en esferas: $I=P/(4\pi r^2)$, despejar $r$. Pasar mW/cm² a W/m². Luego $E_0=\sqrt{2I/(c\varepsilon_0)}$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$0.57$ mW/cm² $=0.57\times10^{-3}\cdot10^4=5.7$ W/m².</div>
+<div class="step">$r=\sqrt{\dfrac{P}{4\pi I}}=\sqrt{\dfrac{1000}{4\pi\cdot5.7}}=\sqrt{13.96}=3.74$ m. Más lejos, $I$ es menor.</div>
+<div class="step">$E_0=\sqrt{\dfrac{2I}{c\varepsilon_0}}=\sqrt{\dfrac{11.4}{2.655\times10^{-3}}}=\sqrt{4294}=65.5$ V/m.</div>
+<div class="step">$\lambda=\dfrac{3\times10^8}{9\times10^8}=\dfrac13$ m ≈ 33 cm.</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 9 · haz láser</span>
+<p>Haz láser de 1 mm de <b>diámetro</b> con potencia media 1 kW (onda plana armónica). Amplitudes de $\vec E$ y $\vec B$.</p>
+<details><summary>Plan</summary><p>$I=P/A$ con $A=\pi(0.5\text{ mm})^2$. Después $I=E_0^2/(2\mu_0c)$ ⇒ $E_0$, y $B_0=E_0/c$.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$A=\pi(5\times10^{-4})^2=7.85\times10^{-7}$ m².</div>
+<div class="step">$I=\dfrac{1000}{7.85\times10^{-7}}=1.27\times10^9$ W/m².</div>
+<div class="step">$E_0=\sqrt{2\mu_0cI}=\sqrt{2\cdot377\cdot1.27\times10^9}=\sqrt{9.60\times10^{11}}\approx9.8\times10^5$ V/m ≈ 980 kV/m.</div>
+<div class="step">$B_0=\dfrac{9.8\times10^5}{3\times10^8}\approx3.27\times10^{-3}$ T ≈ 3.3 mT.</div>
+</div></details>
+</div>
+
+<div class="box example"><span class="label">Problema 10 · espectro visible en frecuencias</span>
+<p>Rango de frecuencias del visible si $\lambda$ va de 400 nm a 700 nm.</p>
+<details><summary>Plan</summary><p>$f=c/\lambda$; nm → m (×10⁻⁹). La $\lambda$ menor da la $f$ mayor.</p></details>
+<details><summary>Solución paso a paso</summary><div class="steps">
+<div class="step">$f_{400}=\dfrac{3\times10^8}{4\times10^{-7}}=7.5\times10^{14}$ Hz = 750 THz (violeta).</div>
+<div class="step">$f_{700}=\dfrac{3\times10^8}{7\times10^{-7}}=4.29\times10^{14}$ Hz ≈ 428 THz (rojo).</div>
+<div class="step">Atajo: $\lambda(\text{nm})\cdot f(\text{THz})=3\times10^5$ ⇒ $3\times10^5/400=750$ ✔.</div>
+</div></details>
+</div>
+<p class="dim">Los problemas 3, 11, 12 y 13 son variaciones directas de $\lambda=c/f$ (o $v=\lambda f$ con 340 m/s para el sonido). Ej.: FM 87.5–108 MHz ⇒ $\lambda=300/f(\text{MHz})$ = 3.43–2.78 m; GPS L1 1575.42 MHz ⇒ 19.0 cm.</p>
+</section>
+
+<section id="estrategia">
+<h2>Estrategia de examen</h2>
+<h3>Paso 0: lee la expresión</h3>
+<div class="chain"><span>identifica $A$ (o $E_0$, $S_0$)</span><span>coeficiente de la variable espacial = $k$</span><span>coeficiente de $t$ = $\omega$</span><span>signos ⇒ sentido</span><span>vector unitario ⇒ dirección del campo</span></div>
+<table>
+<tr><th>Si te dan…</th><th>y te piden…</th><th>usa</th><th>porque…</th></tr>
+<tr><td>$u=A\sin(kx-\omega t+\varphi)$</td><td>$\lambda$, $f$, $T$, $v$</td><td>$\lambda=2\pi/k$, $f=\omega/2\pi$, $v=\omega/k$</td><td>$k$ y $\omega$ son radianes por metro y por segundo</td></tr>
+<tr><td>la misma expresión</td><td>velocidad/aceleración de un punto del medio</td><td>$\partial u/\partial t$, máx. $A\omega$</td><td>el punto oscila en su sitio; no confundir con $v$</td></tr>
+<tr><td>$\Delta x$ entre dos puntos</td><td>desfase</td><td>$\Delta\phi=k\Delta x$</td><td>$k$ = fase por metro</td></tr>
+<tr><td>$f$ o $\lambda$ de una OEM en el vacío</td><td>la otra</td><td>$\lambda f=c$</td><td>todas las OEM viajan a $c$ en el vacío</td></tr>
+<tr><td>$E_0$</td><td>$B_0$</td><td>$B_0=E_0/c$</td><td>Faraday aplicada a la onda</td></tr>
+<tr><td>$E_0$ o $B_0$</td><td>$I$</td><td>$I=\tfrac12c\varepsilon_0E_0^2=E_0B_0/(2\mu_0)$</td><td>$u\propto E^2$ y $\langle\cos^2\rangle=\tfrac12$</td></tr>
+<tr><td>$\vec S(x,t)=S_0\cos^2(\ldots)$</td><td>$E_0$, $I$</td><td>$S_0=c\varepsilon_0E_0^2$, $I=S_0/2$</td><td>$S_0$ es el pico</td></tr>
+<tr><td>dirección de $\vec E$ y sentido de propagación</td><td>dirección de $\vec B$</td><td>$\vec E\times\vec B\parallel\vec c$</td><td>triedro rectángulo, regla de la mano derecha</td></tr>
+<tr><td>potencia $P$ y área de un haz</td><td>$I$, $E_0$</td><td>$I=P/A$</td><td>intensidad = potencia por área</td></tr>
+<tr><td>fuente isótropa $P$, distancia $r$</td><td>$I$, $E_0$, o $r$ para una $I$</td><td>$I=P/(4\pi r^2)$</td><td>energía conservada a través de esferas</td></tr>
+<tr><td>dos focos coherentes, $\Delta r$</td><td>constructiva/destructiva</td><td>$\delta=k\Delta r+\Delta\varphi$</td><td>camino extra = fase extra</td></tr>
+<tr><td>Young: $d$, $D$, $\lambda$</td><td>posiciones de franjas</td><td>$y_M=n\lambda D/d$; $\Delta y=\lambda D/(2d)$</td><td>$\Delta r\approx dy/D$</td></tr>
+<tr><td>rendija $b$, $\lambda$</td><td>primer mínimo / franja central</td><td>$\sin\theta_1=\lambda/b$, $2a\approx2D\lambda/b$</td><td>cancelación por parejas</td></tr>
+<tr><td>distancia entre nodos / espejos $L$</td><td>$\lambda$, $f$ permitidas</td><td>nodos cada $\lambda/2$; $\lambda_n=2L/n$</td><td>campo nulo en los espejos</td></tr>
+</table>
+<div class="box trap"><span class="label">Checklist final antes de entregar</span>
+<ul>
+<li>¿Calculadora en <b>radianes</b>?</li>
+<li>¿Pasaste nm, mm, cm, MHz, GHz, mW/cm² a SI?</li>
+<li>¿Usaste $f$ y no $\omega$ en $\lambda=c/f$?</li>
+<li>¿$I$ es la <b>media</b> (con ½)?</li>
+<li>¿$\vec E\times\vec B$ apunta hacia donde va la onda?</li>
+<li>¿$B_0$ sale del orden de nT o menos para campos de mV/m–V/m? Si no, revisa.</li>
+</ul>
+</div>
+</section>
+
+<section id="formulario">
+<h2>Formulario</h2>
+<table>
+<tr><th>Concepto</th><th>Fórmula</th><th>Unidades / nota</th></tr>
+<tr><td>Ecuación de ondas</td><td>$\dfrac{\partial^2u}{\partial x^2}-\dfrac{1}{v^2}\dfrac{\partial^2u}{\partial t^2}=0$</td><td>solución $f(x\mp vt)$</td></tr>
+<tr><td>Onda armónica</td><td>$A\cos(\omega t\mp kx-\varphi)$</td><td>signos distintos ⇒ $+x$</td></tr>
+<tr><td>Número de onda</td><td>$k=2\pi/\lambda$</td><td>rad/m</td></tr>
+<tr><td>Frecuencia angular</td><td>$\omega=2\pi f=2\pi/T$</td><td>rad/s</td></tr>
+<tr><td>Velocidad de fase</td><td>$v=\lambda f=\lambda/T=\omega/k$</td><td>m/s</td></tr>
+<tr><td>Forma compleja</td><td>$Ae^{-j(kx+\varphi)}e^{j\omega t}$</td><td>parte real</td></tr>
+<tr><td>Velocidad de la luz</td><td>$c=1/\sqrt{\mu_0\varepsilon_0}$</td><td>$\approx3\times10^8$ m/s</td></tr>
+<tr><td>En un medio</td><td>$v=c/n$, $n=\sqrt{\varepsilon_r}$</td><td>$f$ fija, $\lambda$ cambia</td></tr>
+<tr><td>Relación de campos</td><td>$E_0=cB_0$, $\vec E=\vec B\times\vec c$</td><td>en fase, $\vec E\perp\vec B\perp\vec c$</td></tr>
+<tr><td>Densidades de energía</td><td>$u_E=\tfrac12\varepsilon_0E^2=u_B=\dfrac{B^2}{2\mu_0}$</td><td>J/m³</td></tr>
+<tr><td>Intensidad</td><td>$I=uc$</td><td>W/m²</td></tr>
+<tr><td>Poynting</td><td>$\vec S=\vec E\times\vec B/\mu_0$</td><td>W/m², instantáneo</td></tr>
+<tr><td>Intensidad media</td><td>$I=\tfrac12c\varepsilon_0E_0^2=\dfrac{E_0B_0}{2\mu_0}=\dfrac{E_0^2}{2\mu_0c}$</td><td>$=S_0/2$</td></tr>
+<tr><td>Potencia</td><td>$P=IA$; isótropa: $I=P/(4\pi r^2)$</td><td>W</td></tr>
+<tr><td>Interferencia</td><td>$I=I_1+I_2+2\sqrt{I_1I_2}\cos\delta$, $\delta=k\Delta r+\Delta\varphi$</td><td>incoherentes: $I_1+I_2$</td></tr>
+<tr><td>Constructiva / destructiva</td><td>$\Delta r=n\lambda$ / $(2n+1)\lambda/2$</td><td>focos en fase</td></tr>
+<tr><td>Young</td><td>$y_M=n\lambda D/d$, $y_m=\frac{2n+1}{2}\lambda D/d$, $\Delta y=\lambda D/(2d)$</td><td>$I_{\max}=4I_1$</td></tr>
+<tr><td>Rendija (mínimos)</td><td>$b\sin\theta_m=m\lambda$, $m\ge1$</td><td>franja central $2D\lambda/b$</td></tr>
+<tr><td>Estacionaria</td><td>$E_0\sin kx\sin\omega t$; nodos $x=n\lambda/2$</td><td>no transporta energía</td></tr>
+<tr><td>Cavidad</td><td>$k_n=n\pi/L$, $\lambda_n=2L/n$, $f_n=nc/(2L)$</td><td>cuantización</td></tr>
+<tr><td>Espectro</td><td>$\lambda=c/f=2\pi c/\omega$</td><td>visible 400–700 nm</td></tr>
+</table>
+</section>
+
+<section id="autotest">
+<h2>Comprueba (autotest conceptual)</h2>
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>1. Una onda viaja hacia +x por una cuerda. ¿Un trozo de cuerda se desplaza hacia +x?</summary><p>No. Solo oscila (arriba-abajo si es transversal) alrededor de su posición. La onda transporta energía y momento, no materia. Su velocidad $\partial y/\partial t$ oscila y vale como máximo $A\omega$, que no tiene nada que ver con $v=\omega/k$.</p></details>
+<details><summary>2. ¿Hacia dónde viaja $u=A\cos(\omega t+kx)$? ¿Y $A\sin(kx-\omega t)$?</summary><p>La primera hacia $-x$ (signos iguales ⇒ función de $x+vt$). La segunda hacia $+x$ (signos distintos ⇒ función de $x-vt$).</p></details>
+<details><summary>3. Duplicas la frecuencia de una OEM en el vacío. ¿Qué pasa con $v$ y $\lambda$?</summary><p>$v=c$ no cambia (solo depende de $\mu_0$ y $\varepsilon_0$). Como $\lambda f=c$, $\lambda$ se reduce a la mitad.</p></details>
+<details><summary>4. Si $E_0$ se triplica, ¿cuánto cambian $B_0$ e $I$?</summary><p>$B_0=E_0/c$ se triplica. $I\propto E_0^2$ se multiplica por 9: la energía de un campo va con su cuadrado.</p></details>
+<details><summary>5. Te alejas de una fuente puntual del doble de distancia. ¿$I$? ¿$E_0$?</summary><p>$I$ pasa a $I/4$: la misma potencia atraviesa una esfera de área $4\pi r^2$, 4 veces mayor. $E_0\propto\sqrt I$ pasa a la mitad.</p></details>
+<details><summary>6. ¿Por qué $\vec B$ es perpendicular a $\vec E$ y a la propagación, y no paralelo?</summary><p>Las ecuaciones de onda de Maxwell en el vacío solo admiten componentes transversales (sin componente $x$) para una onda plana que viaja según $x$, y Faraday relaciona $E_y$ con $B_z$: la variación espacial de $E_y$ crea un $B_z$ que varía en el tiempo. El resultado es el triedro $\vec E=\vec B\times\vec c$, con $\vec E\times\vec B$ en el sentido de propagación, como pide el flujo de energía.</p></details>
+<details><summary>7. Si $\vec S(x,t)=S_0\cos^2(kx-\omega t)$, ¿la intensidad del examen es $S_0$?</summary><p>No: $S_0$ es el valor de pico. La intensidad (media temporal) es $S_0/2$ porque $\langle\cos^2\rangle=1/2$. Además, el $k$ y la $\omega$ que aparecen dentro del $\cos^2$ son los de los campos.</p></details>
+<details><summary>8. Dos bombillas iluminan una pared. ¿Por qué no se ven franjas?</summary><p>Son focos incoherentes: su diferencia de fase cambia al azar en menos de $10^{-10}$ s, así que $\langle\cos\delta\rangle=0$ y $I=I_1+I_2$ en todas partes. Para ver franjas hacen falta focos coherentes (por ejemplo dos rendijas iluminadas por la misma fuente).</p></details>
+<details><summary>9. En el máximo central de Young, $I=4I_1$. ¿Se viola la conservación de la energía?</summary><p>No. Se suman amplitudes ($2E_{0,1}$ ⇒ $4I_1$), pero en los mínimos $I=0$. La energía se redistribuye; la media en la pantalla es $2I_1$.</p></details>
+<details><summary>10. ¿Por qué las ondas de radio rodean un edificio y la luz no?</summary><p>La difracción es notable cuando la abertura u obstáculo es comparable a $\lambda$ ($\sin\theta_1=\lambda/b$). La radio tiene $\lambda$ de metros a km, comparable a edificios; la luz tiene $\lambda\sim500$ nm ⇒ $\theta_1\approx0$ y se comporta como un rayo.</p></details>
+<details><summary>11. ¿Emite OEM una carga moviéndose a velocidad constante?</summary><p>No. Una corriente estacionaria crea un $\vec B$ estático, que no genera $\vec E$ y no arranca la cadena. Hace falta aceleración (por ejemplo, electrones oscilando en una antena).</p></details>
+<details><summary>12. Entre dos espejos a 1.5 m, ¿puede existir una OEM de 150 MHz? ¿Y de 120 MHz?</summary><p>$f_n=nc/(2L)=n\cdot100$ MHz. 150 MHz no ($n=1.5$ no es entero); 120 MHz tampoco. Sí 100, 200, 300 MHz… Es la cuantización por condiciones de contorno.</p></details>
+</div>
+<div class="box tldr"><span class="label">Resumen final</span>
+<p><b>Leer</b> $k$ y $\omega$ → $\lambda$, $f$, $v$. <b>OEM</b>: $c=1/\sqrt{\mu_0\varepsilon_0}$, $E=cB$, $\vec E\times\vec B\parallel\vec c$. <b>Energía</b>: $I=\tfrac12c\varepsilon_0E_0^2$, $I=P/A$ o $P/4\pi r^2$. <b>Superposición</b>: $\delta=k\Delta r$, Young $\lambda D/d$, rendija $b\sin\theta=m\lambda$, nodos $\lambda/2$, $\lambda_n=2L/n$. <b>Espectro</b>: $\lambda f=c$; nm ×10⁻⁹, THz ×10¹².</p>
+</div>
+</section>
+</main>
+<script>
+(function () {
+  "use strict";
+  var NS = "http://www.w3.org/2000/svg";
+  var C = 3e8, EPS0 = 8.854e-12, MU0 = 4 * Math.PI * 1e-7;
+  function el(id) { return document.getElementById(id); }
+  function val(id) { return parseFloat(el(id).value); }
+  function wire(id, fmt, onChange) {
+    var input = el(id);
+    var out = input.nextElementSibling;
+    function show() { out.textContent = fmt(parseFloat(input.value)); }
+    input.addEventListener("input", function () { show(); if (onChange) onChange(); });
+    show();
+  }
+  function trace(fn, a, b, n) {
+    var s = "";
+    for (var i = 0; i <= n; i++) {
+      var p = fn(a + (b - a) * i / n);
+      s += (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1);
+    }
+    return s;
+  }
+  function sci(x, d) {
+    if (x === 0) return "0";
+    var e = Math.floor(Math.log10(Math.abs(x)));
+    if (e >= -2 && e < 4) return x.toFixed(d);
+    return (x / Math.pow(10, e)).toFixed(d) + "e" + e;
+  }
+  function mod(a, m) { return ((a % m) + m) % m; }
+
+  var wave = {
+    t: 0,
+    X: function (x) { return 40 + x * 72; },
+    Y: function (y) { return 130 - y * 50; },
+    init: function () {
+      wire("sw-A", function (v) { return v.toFixed(1) + " m"; });
+      wire("sw-lam", function (v) { return v.toFixed(1) + " m"; });
+      wire("sw-f", function (v) { return v.toFixed(2) + " Hz"; });
+      wire("sw-dir", function (v) { return v > 0 ? "+x" : "−x"; });
+      wire("sw-phi", function (v) { return v + "π"; });
+      wire("sw-rate", function (v) { return "×" + v.toFixed(2); });
+    },
+    frame: function (dt) {
+      var A = val("sw-A"), lam = val("sw-lam"), f = val("sw-f");
+      var dir = val("sw-dir") > 0 ? 1 : -1, phi = val("sw-phi") * Math.PI;
+      this.t += dt * val("sw-rate");
+      var k = 2 * Math.PI / lam, w = 2 * Math.PI * f, t = this.t, self = this;
+      el("sw-path").setAttribute("d", trace(function (x) {
+        return [self.X(x), self.Y(A * Math.sin(k * x - dir * w * t + phi))];
+      }, 0, 10, 240));
+      var x0 = 3, y0 = A * Math.sin(k * x0 - dir * w * t + phi);
+      el("sw-dot").setAttribute("cy", this.Y(y0).toFixed(1));
+      el("sw-guide").setAttribute("y1", this.Y(A).toFixed(1));
+      el("sw-guide").setAttribute("y2", this.Y(-A).toFixed(1));
+      var xc = mod((Math.PI / 2 - phi + dir * w * t) / k, lam), d = "";
+      for (var xx = xc; xx <= 10; xx += lam) {
+        var px = this.X(xx), py = this.Y(A) - 8;
+        d += "M" + px.toFixed(1) + "," + py.toFixed(1) + "l-6,-10h12z";
+      }
+      el("sw-crests").setAttribute("d", d);
+      var sgn = dir > 0 ? "−" : "+";
+      el("sw-out").textContent =
+        "k = 2π/λ = " + k.toFixed(3) + " rad/m · ω = 2πf = " + w.toFixed(3) + " rad/s · T = " + (1 / f).toFixed(2) +
+        " s · v = λf = ω/k = " + (lam * f).toFixed(2) + " m/s → y = " + A.toFixed(1) + " sin(" + k.toFixed(3) + "x " + sgn + " " +
+        w.toFixed(3) + "t + " + (phi / Math.PI) + "π)";
+    }
+  };
+
+  var em = {
+    t: 0, ox: 110, oy: 150, n: 40, ev: [], bv: [],
+    init: function () {
+      var gE = el("em-Ev"), gB = el("em-Bv");
+      for (var i = 0; i < this.n; i++) {
+        var a = document.createElementNS(NS, "line"), b = document.createElementNS(NS, "line");
+        gE.appendChild(a); gB.appendChild(b); this.ev.push(a); this.bv.push(b);
+      }
+      wire("em-E0", function (v) { return v.toFixed(0) + " V/m"; });
+      wire("em-lam", function (v) { return v.toFixed(1) + " m"; });
+      wire("em-dir", function (v) { return v > 0 ? "+x" : "−x"; });
+    },
+    frame: function (dt) {
+      var E0 = val("em-E0"), lam = val("em-lam"), dir = val("em-dir") > 0 ? 1 : -1;
+      this.t += dt;
+      var lpx = lam * 100, kv = 2 * Math.PI / lpx, wv = kv * 110, amp = 90 * E0 / 100;
+      var ox = this.ox, oy = this.oy, t = this.t;
+      function phase(s) { return kv * s - dir * wv * t; }
+      el("em-Ec").setAttribute("d", trace(function (s) { return [ox + s, oy - amp * Math.cos(phase(s))]; }, 0, 600, 200));
+      el("em-Bc").setAttribute("d", trace(function (s) {
+        var b = dir * amp * Math.cos(phase(s));
+        return [ox + s - 0.55 * b, oy + 0.45 * b];
+      }, 0, 600, 200));
+      for (var i = 0; i < this.n; i++) {
+        var s = (i + 0.5) * 600 / this.n, e = amp * Math.cos(phase(s)), b = dir * e;
+        var L1 = this.ev[i], L2 = this.bv[i];
+        L1.setAttribute("x1", ox + s); L1.setAttribute("y1", oy); L1.setAttribute("x2", ox + s); L1.setAttribute("y2", (oy - e).toFixed(1));
+        L2.setAttribute("x1", ox + s); L2.setAttribute("y1", oy); L2.setAttribute("x2", (ox + s - 0.55 * b).toFixed(1)); L2.setAttribute("y2", (oy + 0.45 * b).toFixed(1));
+      }
+      var ar = el("em-arrow");
+      ar.setAttribute("x1", dir > 0 ? 640 : 740);
+      ar.setAttribute("x2", dir > 0 ? 740 : 640);
+      var f = C / lam, k = 2 * Math.PI / lam, B0 = E0 / C, I = 0.5 * C * EPS0 * E0 * E0;
+      el("em-out").textContent =
+        "f = c/λ = " + (f / 1e6).toFixed(1) + " MHz · k = " + k.toFixed(3) + " rad/m · ω = " + sci(2 * Math.PI * f, 3) +
+        " rad/s · B₀ = E₀/c = " + (B0 * 1e9).toFixed(1) + " nT · B en " + (dir > 0 ? "+z" : "−z") +
+        " · I = ½cε₀E₀² = " + I.toFixed(2) + " W/m² · uE = uB = " + sci(0.25 * EPS0 * E0 * E0, 2) + " J/m³ (medias)";
+    }
+  };
+
+  var ps = {
+    rx: function (r) { return 420 + (r - 1) / 19 * 350; },
+    top: 1,
+    iy: function (I) { return 250 - Math.min(I / this.top, 1.05) * 200; },
+    init: function () {
+      var self = this;
+      wire("ps-P", function (v) { return v.toFixed(0) + " W"; }, function () { self.draw(); });
+      wire("ps-r", function (v) { return v.toFixed(2) + " m"; }, function () { self.draw(); });
+      this.draw();
+    },
+    draw: function () {
+      var P = val("ps-P"), r = val("ps-r"), self = this;
+      this.top = P / (4 * Math.PI);
+      el("ps-ymax").textContent = "tope: I(1 m) = P/4π = " + this.top.toFixed(1) + " W/m²";
+      el("ps-curve").setAttribute("d", trace(function (rr) { return [self.rx(rr), self.iy(P / (4 * Math.PI * rr * rr))]; }, 1, 20, 200));
+      var I = P / (4 * Math.PI * r * r), x = this.rx(r), y = this.iy(I);
+      el("ps-dot").setAttribute("cx", x.toFixed(1)); el("ps-dot").setAttribute("cy", y.toFixed(1));
+      var vl = el("ps-vline");
+      vl.setAttribute("x1", x.toFixed(1)); vl.setAttribute("x2", x.toFixed(1)); vl.setAttribute("y2", y.toFixed(1));
+      var sp = el("ps-sphere");
+      sp.setAttribute("r", (6 * r).toFixed(1));
+      sp.setAttribute("fill-opacity", Math.min(0.85, 0.05 + I / 40).toFixed(2));
+      var E0 = Math.sqrt(2 * I / (C * EPS0));
+      el("ps-out").textContent =
+        "Área 4πr² = " + (4 * Math.PI * r * r).toFixed(1) + " m² · I = P/4πr² = " + sci(I, 3) + " W/m² (= " + sci(I / 10, 3) +
+        " mW/cm²) · E₀ = √(2I/cε₀) = " + E0.toFixed(1) + " V/m · B₀ = " + (E0 / C * 1e9).toFixed(1) + " nT · a 2r: I/4 = " + sci(I / 4, 3) + " W/m²";
+    }
+  };
+
+  function wlColor(l) {
+    var r = 0, g = 0, b = 0;
+    if (l < 440) { r = (440 - l) / 60; b = 1; }
+    else if (l < 490) { g = (l - 440) / 50; b = 1; }
+    else if (l < 510) { g = 1; b = (510 - l) / 20; }
+    else if (l < 580) { r = (l - 510) / 70; g = 1; }
+    else if (l < 645) { r = 1; g = (645 - l) / 65; }
+    else { r = 1; }
+    return "rgb(" + Math.round(r * 255) + "," + Math.round(g * 255) + "," + Math.round(b * 255) + ")";
+  }
+
+  var young = {
+    n: 180, rects: [],
+    init: function () {
+      var g = el("yg-band"), w = 720 / this.n, self = this;
+      for (var i = 0; i < this.n; i++) {
+        var r = document.createElementNS(NS, "rect");
+        r.setAttribute("x", (40 + i * w).toFixed(2)); r.setAttribute("y", "15");
+        r.setAttribute("width", (w + 0.6).toFixed(2)); r.setAttribute("height", "70");
+        g.appendChild(r); this.rects.push(r);
+      }
+      wire("yg-lam", function (v) { return v.toFixed(0) + " nm"; }, function () { self.draw(); });
+      wire("yg-d", function (v) { return v.toFixed(2) + " mm"; }, function () { self.draw(); });
+      wire("yg-D", function (v) { return v.toFixed(1) + " m"; }, function () { self.draw(); });
+      this.draw();
+    },
+    draw: function () {
+      var lam = val("yg-lam") * 1e-9, d = val("yg-d") * 1e-3, D = val("yg-D");
+      var col = wlColor(val("yg-lam"));
+      function I(ymm) { var c = Math.cos(Math.PI * d * ymm * 1e-3 / (lam * D)); return c * c; }
+      for (var i = 0; i < this.n; i++) {
+        var ymm = -25 + 50 * (i + 0.5) / this.n;
+        this.rects[i].setAttribute("fill", col);
+        this.rects[i].setAttribute("fill-opacity", I(ymm).toFixed(3));
+      }
+      el("yg-curve").setAttribute("d", trace(function (ymm) { return [400 + ymm * 14.4, 200 - 95 * I(ymm)]; }, -25, 25, 600));
+      var fr = lam * D / d * 1e3;
+      el("yg-out").textContent =
+        "Interfranja (máx→máx) λD/d = " + fr.toFixed(2) + " mm · máx→mín Δy = λD/2d = " + (fr / 2).toFixed(2) +
+        " mm · 1.er mínimo en y = " + (fr / 2).toFixed(2) + " mm · Imáx = 4I₁ (centro), Imín = 0";
+    }
+  };
+
+  var stand = {
+    t: 0, L: 1.5,
+    init: function () {
+      var self = this;
+      wire("st-n", function (v) { return v.toFixed(0); }, function () { self.nodes(); });
+      this.nodes();
+    },
+    X: function (x) { return 60 + x / this.L * 680; },
+    nodes: function () {
+      var n = val("st-n"), g = el("st-nodes"), self = this;
+      while (g.firstChild) g.removeChild(g.firstChild);
+      for (var i = 0; i <= n; i++) {
+        var c = document.createElementNS(NS, "circle");
+        c.setAttribute("cx", this.X(i * this.L / n).toFixed(1)); c.setAttribute("cy", "110"); c.setAttribute("r", "6");
+        g.appendChild(c);
+      }
+      var k = n * Math.PI / this.L;
+      el("st-env").setAttribute("d",
+        trace(function (x) { return [self.X(x), 110 - 80 * Math.abs(Math.sin(k * x))]; }, 0, this.L, 300) +
+        trace(function (x) { return [self.X(x), 110 + 80 * Math.abs(Math.sin(k * x))]; }, 0, this.L, 300));
+      var lam = 2 * this.L / n, f = n * C / (2 * this.L);
+      el("st-out").textContent =
+        "λₙ = 2L/n = " + lam.toFixed(3) + " m · kₙ = nπ/L = " + k.toFixed(3) + " rad/m · fₙ = nc/2L = " + (f / 1e6).toFixed(0) +
+        " MHz · nodos cada λ/2 = " + (lam / 2).toFixed(3) + " m (" + (n + 1) + " nodos)";
+    },
+    frame: function (dt) {
+      this.t += dt;
+      var n = val("st-n"), k = n * Math.PI / this.L, s = Math.sin(1.6 * n * this.t), self = this;
+      el("st-path").setAttribute("d", trace(function (x) { return [self.X(x), 110 - 80 * Math.sin(k * x) * s]; }, 0, this.L, 300));
+    }
+  };
+
+  wave.init(); em.init(); ps.init(); young.init(); stand.init();
+  var last = null;
+  function loop(ts) {
+    var dt = last === null ? 0 : Math.min((ts - last) / 1000, 0.05);
+    last = ts;
+    wave.frame(dt); em.frame(dt); stand.frame(dt);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T5 · Corriente alterna</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+<nav class="toc">
+<a class="home" href="index.html">← Índice</a>
+<h2>T5 · Corriente alterna</h2>
+<ol>
+<li><a href="#sec-intro">Por qué corriente alterna</a></li>
+<li><a href="#sec-generador">Generador de fem alterna</a></li>
+<li><a href="#sec-armonicas">Funciones armónicas</a></li>
+<li><a href="#sec-eficaz">Valores eficaces</a></li>
+<li><a href="#sec-fasores">Complejos y fasores</a></li>
+<li><a href="#sec-elementos">Relación I↔V en R, C, L</a></li>
+<li><a href="#sec-impedancia">Reactancia e impedancia</a></li>
+<li><a href="#sec-kirchhoff">Kirchhoff fasorial</a></li>
+<li><a href="#sec-rlc">Circuito RLC serie</a></li>
+<li><a href="#sec-resonancia">Resonancia</a></li>
+<li><a href="#sec-mallas">(*) Análisis de mallas</a></li>
+<li><a href="#sec-potencia">Potencia en CA</a></li>
+<li><a href="#sec-problemas">Problemas resueltos</a></li>
+<li><a href="#sec-estrategia">Estrategia de examen</a></li>
+<li><a href="#sec-formulas">Hoja de fórmulas</a></li>
+<li><a href="#sec-test">Autoevaluación</a></li>
+</ol>
+</nav>
+<main>
+<svg width="0" height="0" aria-hidden="true">
+<defs>
+<marker id="ah-fg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fg)"/></marker>
+<marker id="ah-dim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fg-dim)"/></marker>
+<marker id="ah-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+<marker id="ah-pos" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--pos)"/></marker>
+<marker id="ah-neg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--neg)"/></marker>
+<marker id="ah-field" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--field)"/></marker>
+<marker id="ah-int" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--intuition)"/></marker>
+<marker id="ah-why" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--why)"/></marker>
+</defs>
+</svg>
+
+<header class="theme">
+<h1>T5 · Circuitos de corriente alterna</h1>
+<p class="subtitle">De la espira que gira (T4) a resolver cualquier circuito de CA como si fuera de continua… pero con números complejos.</p>
+</header>
+
+<div class="map">
+<svg viewBox="0 0 900 350" role="img" aria-label="Mapa conceptual del tema 5">
+<g font-size="15" text-anchor="middle">
+<rect x="20" y="25" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--fg-dim)"/>
+<text x="110" y="51" fill="var(--fg)">T4: Faraday</text>
+<text x="110" y="72" fill="var(--fg-dim)" font-size="13">espira girando en B</text>
+<rect x="240" y="25" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--pos)"/>
+<text x="335" y="51" fill="var(--fg)">fem sinusoidal</text>
+<text x="335" y="72" fill="var(--fg-dim)" font-size="13">ξ = ξ₀ cos(ωt + φ)</text>
+<rect x="470" y="25" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="565" y="51" fill="var(--fg)">Funciones armónicas</text>
+<text x="565" y="72" fill="var(--fg-dim)" font-size="13">A, ω = 2πf, φ</text>
+<rect x="700" y="25" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="790" y="51" fill="var(--fg)">Valores eficaces</text>
+<text x="790" y="72" fill="var(--fg-dim)" font-size="13">I_ef = I₀/√2</text>
+<rect x="470" y="145" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--why)"/>
+<text x="565" y="171" fill="var(--fg)">Fasores</text>
+<text x="565" y="192" fill="var(--fg-dim)" font-size="13">d/dt → multiplicar por jω</text>
+<rect x="240" y="145" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--why)"/>
+<text x="335" y="171" fill="var(--fg)">R, C, L</text>
+<text x="335" y="192" fill="var(--fg-dim)" font-size="13">Ṽ = Z Ĩ (Ohm complejo)</text>
+<rect x="20" y="145" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--why)"/>
+<text x="110" y="171" fill="var(--fg)">Kirchhoff fasorial</text>
+<text x="110" y="192" fill="var(--fg-dim)" font-size="13">igual que en CC</text>
+<rect x="20" y="265" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--field)"/>
+<text x="110" y="291" fill="var(--fg)">RLC serie</text>
+<text x="110" y="312" fill="var(--fg-dim)" font-size="13">Z = R + j(X_L − X_C)</text>
+<rect x="240" y="265" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--field)"/>
+<text x="335" y="291" fill="var(--fg)">Resonancia</text>
+<text x="335" y="312" fill="var(--fg-dim)" font-size="13">X_L = X_C, ω₀ = 1/√(LC)</text>
+<rect x="470" y="265" width="190" height="62" rx="10" fill="var(--bg-3)" stroke="var(--tldr)"/>
+<text x="565" y="291" fill="var(--fg)">Potencia media</text>
+<text x="565" y="312" fill="var(--fg-dim)" font-size="13">V_ef I_ef cos φ</text>
+<rect x="700" y="265" width="180" height="62" rx="10" fill="var(--bg-3)" stroke="var(--tldr)"/>
+<text x="790" y="291" fill="var(--fg)">Factor de potencia</text>
+<text x="790" y="312" fill="var(--fg-dim)" font-size="13">cos φ = Re Z / |Z|</text>
+</g>
+<g stroke="var(--fg-dim)" stroke-width="2" fill="none" marker-end="url(#ah-dim)">
+<path d="M200,56 H236"/>
+<path d="M430,56 H466"/>
+<path d="M660,56 H696"/>
+<path d="M565,87 V141"/>
+<path d="M470,176 H434"/>
+<path d="M240,176 H204"/>
+<path d="M110,207 V261"/>
+<path d="M200,296 H236"/>
+<path d="M430,296 H466"/>
+<path d="M660,296 H696"/>
+<path d="M790,87 V261"/>
+</g>
+<g font-size="12" fill="var(--fg-dim)">
+<text x="572" y="120">foto en t = 0</text>
+<text x="782" y="180" text-anchor="end">la potencia usa rms</text>
+<text x="118" y="240">aplicación</text>
+<text x="435" y="252">cos φ = 1 en resonancia</text>
+</g>
+</svg>
+</div>
+
+<div class="chain">
+<span>Espira girando en <b>B</b> (T4)</span>
+<span>$\Phi = BS\cos\omega t$</span>
+<span>$\xi = -N\,d\Phi/dt$ sinusoidal</span>
+<span>Fasores: $d/dt \to j\omega$</span>
+<span>$\tilde V = Z\tilde I$</span>
+<span>Kirchhoff como en CC</span>
+<span>Resonancia y potencia</span>
+</div>
+
+<div class="box tldr"><span class="label">La idea del tema en una frase</span>
+<p>Un circuito de CA con R, L, C se resuelve <b>exactamente igual que uno de continua</b> si cambias: tensiones e intensidades → <b>fasores</b> (números complejos), resistencias → <b>impedancias</b> $Z$. Todo lo demás (Ohm, Kirchhoff, serie/paralelo, mallas, Thévenin) se conserva.</p>
+</div>
+
+<section id="sec-intro">
+<h2>1 · Por qué corriente alterna</h2>
+<p>En este tema solo estudiamos corrientes con variación <b>armónica</b>:</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$I(t) = I_0\cos(\omega t + \varphi)$$
+<p class="legend">$I_0$: amplitud (A) · $\omega$: frecuencia angular (rad/s) · $\varphi$: fase inicial (rad).</p>
+</div>
+<p>Dos razones para elegir precisamente esta forma:</p>
+<table>
+<tr><th>Razón</th><th>Qué significa</th></tr>
+<tr><td><b>Tecnológica</b></td><td>Se <b>genera fácil</b> (espira girando, §2). Se <b>transporta a alta tensión</b> y baja intensidad → pocas pérdidas Joule. Luego un <b>transformador</b> (inducción, T4) la baja a 230 V. Sirve para motores. En Europa: <span class="hl">50 Hz</span>.</td></tr>
+<tr><td><b>Matemática</b></td><td><b>Teorema de Fourier</b>: cualquier señal periódica = suma de armónicos. Si sabes tratar <i>un</i> armónico, sabes tratar cualquier señal en una red lineal.</td></tr>
+</table>
+<div class="box why"><span class="label">Por qué alta tensión = menos pérdidas</span>
+<p>La potencia transportada es $P = VI$. La pérdida en los cables es $P_{\text{pérd}} = I^2 R_{\text{cable}}$.</p>
+<p>Si subes $V$ ×10 para la <b>misma</b> $P$, la $I$ baja ×10 → las pérdidas bajan <b>×100</b>. Y subir/bajar tensión solo es fácil con transformadores, que solo funcionan con corriente <b>variable</b> (Faraday).</p>
+</div>
+<div class="box intuition"><span class="label">Intuición clave: por qué la sinusoide "sobrevive"</span>
+<p>R, C y L solo hacen tres cosas con una señal: <b>multiplicarla</b> por una constante, <b>derivarla</b> o <b>integrarla</b>. Y la derivada de un coseno es otro coseno <b>de la misma frecuencia</b>, solo desplazado y escalado.</p>
+<p>Por eso, en un circuito lineal alimentado a frecuencia $\omega$, <b>todas</b> las tensiones e intensidades son sinusoides de la misma $\omega$. Solo cambian dos números: <span class="hl">amplitud y fase</span>. Ese es el germen de los fasores.</p>
+</div>
+</section>
+
+<section id="sec-generador">
+<h2>2 · Generador de fem alterna</h2>
+<p>Una espira (o $N$ espiras) de área $S$ gira con velocidad angular <b>constante</b> $\omega$ dentro de un campo $\vec B$ uniforme. Transforma energía <b>mecánica → eléctrica</b> (lo contrario que un motor).</p>
+<figure class="diagram">
+<svg viewBox="0 0 760 270" role="img" aria-label="Generador: espira girando en un campo B, flujo y fem frente al tiempo">
+<g stroke="var(--field)" stroke-width="2" marker-end="url(#ah-field)">
+<line x1="30" y1="60" x2="300" y2="60"/>
+<line x1="30" y1="110" x2="300" y2="110"/>
+<line x1="30" y1="160" x2="300" y2="160"/>
+<line x1="30" y1="210" x2="300" y2="210"/>
+</g>
+<text x="285" y="48" fill="var(--field)" font-size="16">B</text>
+<line x1="165" y1="20" x2="165" y2="250" stroke="var(--fg-dim)" stroke-dasharray="5 5"/>
+<ellipse cx="165" cy="135" rx="38" ry="85" fill="var(--accent)" fill-opacity="0.12" stroke="var(--accent)" stroke-width="3"/>
+<line x1="165" y1="135" x2="240" y2="92" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<text x="246" y="90" fill="var(--pos)" font-size="15">n̂</text>
+<path d="M205,135 A40,40 0 0 0 200,115" fill="none" stroke="var(--fg)"/>
+<text x="210" y="128" fill="var(--fg)" font-size="14">α</text>
+<path d="M140,22 A30,10 0 1 0 192,24" fill="none" stroke="var(--fg)" stroke-width="2" marker-end="url(#ah-fg)"/>
+<text x="200" y="20" fill="var(--fg)" font-size="15">ω</text>
+<text x="110" y="262" fill="var(--fg-dim)" font-size="13">α = ωt + α₀</text>
+<line x1="370" y1="135" x2="745" y2="135" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="380" y1="240" x2="380" y2="30" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<text x="735" y="155" fill="var(--fg-dim)" font-size="14">t</text>
+<path d="M380,60L381.5,60.1L382.9,60.4L384.4,60.9L385.8,61.6L387.3,62.6L388.8,63.7L390.2,65L391.7,66.5L393.1,68.2L394.6,70L396,72.1L397.5,74.3L399,76.7L400.4,79.3L401.9,82L403.3,84.8L404.8,87.8L406.3,90.9L407.7,94.2L409.2,97.5L410.6,101L412.1,104.5L413.5,108.1L415,111.8L416.5,115.6L417.9,119.4L419.4,123.3L420.8,127.2L422.3,131.1L423.8,135L425.2,138.9L426.7,142.8L428.1,146.7L429.6,150.6L431,154.4L432.5,158.2L434,161.9L435.4,165.5L436.9,169L438.3,172.5L439.8,175.8L441.3,179.1L442.7,182.2L444.2,185.2L445.6,188L447.1,190.7L448.5,193.3L450,195.7L451.5,197.9L452.9,200L454.4,201.8L455.8,203.5L457.3,205L458.8,206.3L460.2,207.4L461.7,208.4L463.1,209.1L464.6,209.6L466,209.9L467.5,210L469,209.9L470.4,209.6L471.9,209.1L473.3,208.4L474.8,207.4L476.3,206.3L477.7,205L479.2,203.5L480.6,201.8L482.1,200L483.5,197.9L485,195.7L486.5,193.3L487.9,190.7L489.4,188L490.8,185.2L492.3,182.2L493.8,179.1L495.2,175.8L496.7,172.5L498.1,169L499.6,165.5L501,161.9L502.5,158.2L504,154.4L505.4,150.6L506.9,146.7L508.3,142.8L509.8,138.9L511.3,135L512.7,131.1L514.2,127.2L515.6,123.3L517.1,119.4L518.5,115.6L520,111.8L521.5,108.1L522.9,104.5L524.4,101L525.8,97.5L527.3,94.2L528.8,90.9L530.2,87.8L531.7,84.8L533.1,82L534.6,79.3L536,76.7L537.5,74.3L539,72.1L540.4,70L541.9,68.2L543.3,66.5L544.8,65L546.3,63.7L547.7,62.6L549.2,61.6L550.6,60.9L552.1,60.4L553.5,60.1L555,60L556.5,60.1L557.9,60.4L559.4,60.9L560.8,61.6L562.3,62.6L563.8,63.7L565.2,65L566.7,66.5L568.1,68.2L569.6,70L571,72.1L572.5,74.3L574,76.7L575.4,79.3L576.9,82L578.3,84.8L579.8,87.8L581.3,90.9L582.7,94.2L584.2,97.5L585.6,101L587.1,104.5L588.5,108.1L590,111.8L591.5,115.6L592.9,119.4L594.4,123.3L595.8,127.2L597.3,131.1L598.8,135L600.2,138.9L601.7,142.8L603.1,146.7L604.6,150.6L606,154.4L607.5,158.2L609,161.9L610.4,165.5L611.9,169L613.3,172.5L614.8,175.8L616.3,179.1L617.7,182.2L619.2,185.2L620.6,188L622.1,190.7L623.5,193.3L625,195.7L626.5,197.9L627.9,200L629.4,201.8L630.8,203.5L632.3,205L633.8,206.3L635.2,207.4L636.7,208.4L638.1,209.1L639.6,209.6L641,209.9L642.5,210L644,209.9L645.4,209.6L646.9,209.1L648.3,208.4L649.8,207.4L651.3,206.3L652.7,205L654.2,203.5L655.6,201.8L657.1,200L658.5,197.9L660,195.7L661.5,193.3L662.9,190.7L664.4,188L665.8,185.2L667.3,182.2L668.8,179.1L670.2,175.8L671.7,172.5L673.1,169L674.6,165.5L676,161.9L677.5,158.2L679,154.4L680.4,150.6L681.9,146.7L683.3,142.8L684.8,138.9L686.3,135L687.7,131.1L689.2,127.2L690.6,123.3L692.1,119.4L693.5,115.6L695,111.8L696.5,108.1L697.9,104.5L699.4,101L700.8,97.5L702.3,94.2L703.8,90.9L705.2,87.8L706.7,84.8L708.1,82L709.6,79.3L711,76.7L712.5,74.3L714,72.1L715.4,70L716.9,68.2L718.3,66.5L719.8,65L721.3,63.7L722.7,62.6L724.2,61.6L725.6,60.9L727.1,60.4L728.5,60.1L730,60" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<path d="M380,135L381.5,131.1L382.9,127.2L384.4,123.3L385.8,119.4L387.3,115.6L388.8,111.8L390.2,108.1L391.7,104.5L393.1,101L394.6,97.5L396,94.2L397.5,90.9L399,87.8L400.4,84.8L401.9,82L403.3,79.3L404.8,76.7L406.3,74.3L407.7,72.1L409.2,70L410.6,68.2L412.1,66.5L413.5,65L415,63.7L416.5,62.6L417.9,61.6L419.4,60.9L420.8,60.4L422.3,60.1L423.8,60L425.2,60.1L426.7,60.4L428.1,60.9L429.6,61.6L431,62.6L432.5,63.7L434,65L435.4,66.5L436.9,68.2L438.3,70L439.8,72.1L441.3,74.3L442.7,76.7L444.2,79.3L445.6,82L447.1,84.8L448.5,87.8L450,90.9L451.5,94.2L452.9,97.5L454.4,101L455.8,104.5L457.3,108.1L458.8,111.8L460.2,115.6L461.7,119.4L463.1,123.3L464.6,127.2L466,131.1L467.5,135L469,138.9L470.4,142.8L471.9,146.7L473.3,150.6L474.8,154.4L476.3,158.2L477.7,161.9L479.2,165.5L480.6,169L482.1,172.5L483.5,175.8L485,179.1L486.5,182.2L487.9,185.2L489.4,188L490.8,190.7L492.3,193.3L493.8,195.7L495.2,197.9L496.7,200L498.1,201.8L499.6,203.5L501,205L502.5,206.3L504,207.4L505.4,208.4L506.9,209.1L508.3,209.6L509.8,209.9L511.3,210L512.7,209.9L514.2,209.6L515.6,209.1L517.1,208.4L518.5,207.4L520,206.3L521.5,205L522.9,203.5L524.4,201.8L525.8,200L527.3,197.9L528.8,195.7L530.2,193.3L531.7,190.7L533.1,188L534.6,185.2L536,182.2L537.5,179.1L539,175.8L540.4,172.5L541.9,169L543.3,165.5L544.8,161.9L546.3,158.2L547.7,154.4L549.2,150.6L550.6,146.7L552.1,142.8L553.5,138.9L555,135L556.5,131.1L557.9,127.2L559.4,123.3L560.8,119.4L562.3,115.6L563.8,111.8L565.2,108.1L566.7,104.5L568.1,101L569.6,97.5L571,94.2L572.5,90.9L574,87.8L575.4,84.8L576.9,82L578.3,79.3L579.8,76.7L581.3,74.3L582.7,72.1L584.2,70L585.6,68.2L587.1,66.5L588.5,65L590,63.7L591.5,62.6L592.9,61.6L594.4,60.9L595.8,60.4L597.3,60.1L598.8,60L600.2,60.1L601.7,60.4L603.1,60.9L604.6,61.6L606,62.6L607.5,63.7L609,65L610.4,66.5L611.9,68.2L613.3,70L614.8,72.1L616.3,74.3L617.7,76.7L619.2,79.3L620.6,82L622.1,84.8L623.5,87.8L625,90.9L626.5,94.2L627.9,97.5L629.4,101L630.8,104.5L632.3,108.1L633.8,111.8L635.2,115.6L636.7,119.4L638.1,123.3L639.6,127.2L641,131.1L642.5,135L644,138.9L645.4,142.8L646.9,146.7L648.3,150.6L649.8,154.4L651.3,158.2L652.7,161.9L654.2,165.5L655.6,169L657.1,172.5L658.5,175.8L660,179.1L661.5,182.2L662.9,185.2L664.4,188L665.8,190.7L667.3,193.3L668.8,195.7L670.2,197.9L671.7,200L673.1,201.8L674.6,203.5L676,205L677.5,206.3L679,207.4L680.4,208.4L681.9,209.1L683.3,209.6L684.8,209.9L686.3,210L687.7,209.9L689.2,209.6L690.6,209.1L692.1,208.4L693.5,207.4L695,206.3L696.5,205L697.9,203.5L699.4,201.8L700.8,200L702.3,197.9L703.8,195.7L705.2,193.3L706.7,190.7L708.1,188L709.6,185.2L711,182.2L712.5,179.1L714,175.8L715.4,172.5L716.9,169L718.3,165.5L719.8,161.9L721.3,158.2L722.7,154.4L724.2,150.6L725.6,146.7L727.1,142.8L728.5,138.9L730,135" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<text x="392" y="48" fill="var(--neg)" font-size="14">Φ(t) ∝ cos ωt</text>
+<text x="520" y="48" fill="var(--pos)" font-size="14">ξ(t) = −N dΦ/dt ∝ sen ωt</text>
+<line x1="423.8" y1="60" x2="423.8" y2="215" stroke="var(--fg-dim)" stroke-dasharray="3 4"/>
+<text x="428" y="232" fill="var(--fg-dim)" font-size="12">Φ = 0 → ξ máxima</text>
+</svg>
+<figcaption>Cuando el flujo es <b>máximo</b> (plano ⟂ B) la fem es <b>cero</b>, y cuando el flujo pasa por cero (cambia más rápido) la fem es máxima: la fem va 90° por delante del flujo.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué sale una sinusoide</span>
+<div class="steps">
+<div class="step">Flujo con $\vec B$ uniforme: $\Phi = \vec B\cdot\vec S = BS\cos\alpha$, con $\alpha$ el ángulo entre $\vec B$ y la normal $\hat n$.</div>
+<div class="step">Giro uniforme: $\alpha = \omega t + \alpha_0$, así que $\Phi(t) = BS\cos(\omega t + \alpha_0)$.</div>
+<div class="step">Faraday con $N$ espiras: $\xi = -N\dfrac{d\Phi}{dt} = NBS\omega\,\operatorname{sen}(\omega t + \alpha_0)$.</div>
+<div class="step">Como $\operatorname{sen}x = \cos(x - \pi/2)$: $\xi(t) = \xi_0\cos(\omega t + \varphi)$ con $\xi_0 = NBS\omega$ y $\varphi = \alpha_0 - \pi/2$.</div>
+</div>
+</div>
+<div class="box formula"><span class="label">Fórmula</span>
+$$\xi(t) = \xi_0\cos(\omega t+\varphi),\qquad \xi_0 = NBS\omega$$
+<p class="legend">$N$: nº de espiras · $B$: campo (T) · $S$: área de una espira (m²) · $\omega$: velocidad angular de giro (rad/s) · $\xi_0$: fem máxima (V).</p>
+</div>
+<div class="box intuition"><span class="label">Intuición: por qué la fem crece con la velocidad de giro</span>
+<p>Si giras el doble de rápido, el flujo recorre los mismos valores en la mitad de tiempo → $d\Phi/dt$ es el doble. Además la frecuencia de la fem es la del giro: <b>más rápido = más voltaje y más frecuencia</b>, a la vez.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>"Gira a 50 revoluciones por segundo" → $f = 50$ Hz → $\omega = 2\pi\cdot 50 = 100\pi$ rad/s. <b>No</b> uses $\omega = 50$.</li>
+<li>Área en cm² → m²: $4\ \text{cm}^2 = 4\times10^{-4}\ \text{m}^2$. Radio en cm: $S = \pi r^2$ con $r$ en m.</li>
+<li>Si el enunciado define el flujo "a través de la bobina", puede que ya incluya la $N$: lee bien.</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividad 5.1)</span>
+<details><summary>¿Por qué hace falta que la espira gire a ω constante?</summary><p>Porque si $\alpha(t)$ no es lineal en $t$, $\cos\alpha(t)$ no es un coseno de frecuencia fija: la fem no sería armónica (cambiarían amplitud y frecuencia a la vez).</p></details>
+<details><summary>¿Qué ventaja tienen muchas vueltas N?</summary><p>Cada espira aporta la misma fem y están en serie: $\xi_0 = NBS\omega$. Más vueltas = más fem sin girar más rápido ni usar imanes más fuertes.</p></details>
+<details><summary>¿Por qué cualquier CA puede escribirse como $I_0\cos(\omega t+\varphi)$?</summary><p>Porque un seno también es un coseno desplazado ($\operatorname{sen}x = \cos(x-\pi/2)$), y la suma $a\cos\omega t + b\operatorname{sen}\omega t$ siempre se reduce a un único coseno con amplitud $\sqrt{a^2+b^2}$ y cierta fase.</p></details>
+<details><summary>Da un ejemplo de señal variable NO armónica</summary><p>Una onda cuadrada, una diente de sierra, un pulso, una exponencial de carga de un condensador… (por Fourier, las periódicas son sumas de armónicos).</p></details>
+</div>
+</section>
+
+<section id="sec-armonicas">
+<h2>3 · Funciones armónicas</h2>
+<div class="box formula"><span class="label">Fórmula</span>
+$$f(t) = A\cos(\omega t + \varphi),\qquad \omega = 2\pi f = \frac{2\pi}{T}$$
+<p class="legend">$A$: amplitud, $-A\le f(t)\le A$ · $\omega$: frecuencia angular (rad/s) · $f$: frecuencia (Hz) · $T$: periodo (s), $f(t+T)=f(t)$ · $\varphi$: fase inicial (rad), fija el valor en $t=0$: $f(0) = A\cos\varphi$.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 720 250" role="img" aria-label="Dos cosenos desfasados">
+<line x1="50" y1="125" x2="710" y2="125" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="60" y1="235" x2="60" y2="15" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<text x="695" y="145" fill="var(--fg-dim)" font-size="14">t</text>
+<path d="M60,40L62.7,40.1L65.3,40.3L68,40.6L70.7,41L73.3,41.6L76,42.3L78.7,43.2L81.3,44.2L84,45.3L86.7,46.5L89.3,47.8L92,49.3L94.7,50.8L97.3,52.5L100,54.3L102.7,56.2L105.3,58.2L108,60.4L110.7,62.6L113.3,64.9L116,67.3L118.7,69.8L121.3,72.4L124,75L126.7,77.8L129.3,80.6L132,83.5L134.7,86.4L137.3,89.4L140,92.5L142.7,95.6L145.3,98.7L148,101.9L150.7,105.2L153.3,108.4L156,111.7L158.7,115L161.3,118.3L164,121.7L166.7,125L169.3,128.3L172,131.7L174.7,135L177.3,138.3L180,141.6L182.7,144.8L185.3,148.1L188,151.3L190.7,154.4L193.3,157.5L196,160.6L198.7,163.6L201.3,166.5L204,169.4L206.7,172.2L209.3,175L212,177.6L214.7,180.2L217.3,182.7L220,185.1L222.7,187.4L225.3,189.6L228,191.8L230.7,193.8L233.3,195.7L236,197.5L238.7,199.2L241.3,200.7L244,202.2L246.7,203.5L249.3,204.7L252,205.8L254.7,206.8L257.3,207.7L260,208.4L262.7,209L265.3,209.4L268,209.7L270.7,209.9L273.3,210L276,209.9L278.7,209.7L281.3,209.4L284,209L286.7,208.4L289.3,207.7L292,206.8L294.7,205.8L297.3,204.7L300,203.5L302.7,202.2L305.3,200.7L308,199.2L310.7,197.5L313.3,195.7L316,193.8L318.7,191.8L321.3,189.6L324,187.4L326.7,185.1L329.3,182.7L332,180.2L334.7,177.6L337.3,175L340,172.2L342.7,169.4L345.3,166.5L348,163.6L350.7,160.6L353.3,157.5L356,154.4L358.7,151.3L361.3,148.1L364,144.8L366.7,141.6L369.3,138.3L372,135L374.7,131.7L377.3,128.3L380,125L382.7,121.7L385.3,118.3L388,115L390.7,111.7L393.3,108.4L396,105.2L398.7,101.9L401.3,98.7L404,95.6L406.7,92.5L409.3,89.4L412,86.4L414.7,83.5L417.3,80.6L420,77.8L422.7,75L425.3,72.4L428,69.8L430.7,67.3L433.3,64.9L436,62.6L438.7,60.4L441.3,58.2L444,56.2L446.7,54.3L449.3,52.5L452,50.8L454.7,49.3L457.3,47.8L460,46.5L462.7,45.3L465.3,44.2L468,43.2L470.7,42.3L473.3,41.6L476,41L478.7,40.6L481.3,40.3L484,40.1L486.7,40L489.3,40.1L492,40.3L494.7,40.6L497.3,41L500,41.6L502.7,42.3L505.3,43.2L508,44.2L510.7,45.3L513.3,46.5L516,47.8L518.7,49.3L521.3,50.8L524,52.5L526.7,54.3L529.3,56.2L532,58.2L534.7,60.4L537.3,62.6L540,64.9L542.7,67.3L545.3,69.8L548,72.4L550.7,75L553.3,77.8L556,80.6L558.7,83.5L561.3,86.4L564,89.4L566.7,92.5L569.3,95.6L572,98.7L574.7,101.9L577.3,105.2L580,108.4L582.7,111.7L585.3,115L588,118.3L590.7,121.7L593.3,125L596,128.3L598.7,131.7L601.3,135L604,138.3L606.7,141.6L609.3,144.8L612,148.1L614.7,151.3L617.3,154.4L620,157.5L622.7,160.6L625.3,163.6L628,166.5L630.7,169.4L633.3,172.2L636,175L638.7,177.6L641.3,180.2L644,182.7L646.7,185.1L649.3,187.4L652,189.6L654.7,191.8L657.3,193.8L660,195.7L662.7,197.5L665.3,199.2L668,200.7L670.7,202.2L673.3,203.5L676,204.7L678.7,205.8L681.3,206.8L684,207.7L686.7,208.4L689.3,209L692,209.4L694.7,209.7L697.3,209.9L700,210" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<path d="M60,82.5L62.7,85.4L65.3,88.4L68,91.4L70.7,94.5L73.3,97.7L76,100.9L78.7,104.1L81.3,107.3L84,110.6L86.7,113.9L89.3,117.2L92,120.6L94.7,123.9L97.3,127.2L100,130.6L102.7,133.9L105.3,137.2L108,140.5L110.7,143.8L113.3,147L116,150.2L118.7,153.4L121.3,156.5L124,159.6L126.7,162.6L129.3,165.6L132,168.5L134.7,171.3L137.3,174.1L140,176.7L142.7,179.4L145.3,181.9L148,184.3L150.7,186.7L153.3,188.9L156,191.1L158.7,193.1L161.3,195.1L164,196.9L166.7,198.6L169.3,200.2L172,201.7L174.7,203.1L177.3,204.4L180,205.5L182.7,206.5L185.3,207.4L188,208.1L190.7,208.8L193.3,209.3L196,209.6L198.7,209.9L201.3,210L204,210L206.7,209.8L209.3,209.5L212,209.1L214.7,208.6L217.3,207.9L220,207.1L222.7,206.2L225.3,205.1L228,203.9L230.7,202.7L233.3,201.2L236,199.7L238.7,198L241.3,196.3L244,194.4L246.7,192.4L249.3,190.4L252,188.2L254.7,185.9L257.3,183.5L260,181L262.7,178.5L265.3,175.9L268,173.1L270.7,170.4L273.3,167.5L276,164.6L278.7,161.6L281.3,158.6L284,155.5L286.7,152.3L289.3,149.1L292,145.9L294.7,142.7L297.3,139.4L300,136.1L302.7,132.8L305.3,129.4L308,126.1L310.7,122.8L313.3,119.4L316,116.1L318.7,112.8L321.3,109.5L324,106.2L326.7,103L329.3,99.8L332,96.6L334.7,93.5L337.3,90.4L340,87.4L342.7,84.4L345.3,81.5L348,78.7L350.7,75.9L353.3,73.3L356,70.6L358.7,68.1L361.3,65.7L364,63.3L366.7,61.1L369.3,58.9L372,56.9L374.7,54.9L377.3,53.1L380,51.4L382.7,49.8L385.3,48.3L388,46.9L390.7,45.6L393.3,44.5L396,43.5L398.7,42.6L401.3,41.9L404,41.2L406.7,40.7L409.3,40.4L412,40.1L414.7,40L417.3,40L420,40.2L422.7,40.5L425.3,40.9L428,41.4L430.7,42.1L433.3,42.9L436,43.8L438.7,44.9L441.3,46.1L444,47.3L446.7,48.8L449.3,50.3L452,52L454.7,53.7L457.3,55.6L460,57.6L462.7,59.6L465.3,61.8L468,64.1L470.7,66.5L473.3,69L476,71.5L478.7,74.1L481.3,76.9L484,79.6L486.7,82.5L489.3,85.4L492,88.4L494.7,91.4L497.3,94.5L500,97.7L502.7,100.9L505.3,104.1L508,107.3L510.7,110.6L513.3,113.9L516,117.2L518.7,120.6L521.3,123.9L524,127.2L526.7,130.6L529.3,133.9L532,137.2L534.7,140.5L537.3,143.8L540,147L542.7,150.2L545.3,153.4L548,156.5L550.7,159.6L553.3,162.6L556,165.6L558.7,168.5L561.3,171.3L564,174.1L566.7,176.7L569.3,179.4L572,181.9L574.7,184.3L577.3,186.7L580,188.9L582.7,191.1L585.3,193.1L588,195.1L590.7,196.9L593.3,198.6L596,200.2L598.7,201.7L601.3,203.1L604,204.4L606.7,205.5L609.3,206.5L612,207.4L614.7,208.1L617.3,208.8L620,209.3L622.7,209.6L625.3,209.9L628,210L630.7,210L633.3,209.8L636,209.5L638.7,209.1L641.3,208.6L644,207.9L646.7,207.1L649.3,206.2L652,205.1L654.7,203.9L657.3,202.7L660,201.2L662.7,199.7L665.3,198L668,196.3L670.7,194.4L673.3,192.4L676,190.4L678.7,188.2L681.3,185.9L684,183.5L686.7,181L689.3,178.5L692,175.9L694.7,173.1L697.3,170.4L700,167.5" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<line x1="40" y1="125" x2="40" y2="42" stroke="var(--field)" stroke-width="2" marker-end="url(#ah-field)"/>
+<text x="22" y="90" fill="var(--field)" font-size="15">A</text>
+<line x1="60" y1="24" x2="486.7" y2="24" stroke="var(--fg)" marker-start="url(#ah-fg)" marker-end="url(#ah-fg)"/>
+<text x="260" y="18" fill="var(--fg)" font-size="14">T = 2π/ω</text>
+<line x1="415.6" y1="225" x2="486.7" y2="225" stroke="var(--field)" stroke-width="2" marker-start="url(#ah-field)" marker-end="url(#ah-field)"/>
+<text x="425" y="245" fill="var(--field)" font-size="13">Δt = φ/ω</text>
+<line x1="415.6" y1="40" x2="415.6" y2="225" stroke="var(--fg-dim)" stroke-dasharray="3 4"/>
+<line x1="486.7" y1="40" x2="486.7" y2="225" stroke="var(--fg-dim)" stroke-dasharray="3 4"/>
+<text x="520" y="70" fill="var(--neg)" font-size="14">A cos(ωt)</text>
+<text x="520" y="92" fill="var(--pos)" font-size="14">A cos(ωt + 60°): adelantada</text>
+</svg>
+<figcaption>Con $\varphi>0$ la curva alcanza el máximo <b>antes</b> (se desplaza a la izquierda $\Delta t=\varphi/\omega$): decimos que va <b>adelantada</b>.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué una fase positiva es un adelanto</span>
+<p>El máximo ocurre cuando el argumento vale 0: $\omega t + \varphi = 0 \Rightarrow t = -\varphi/\omega$. Si $\varphi>0$, el pico llega en un tiempo <b>anterior</b>. Un desfase de $\varphi$ radianes equivale a un retraso/adelanto temporal $\Delta t = \varphi/\omega = \dfrac{\varphi}{2\pi}T$.</p>
+</div>
+<p><b>Trigonometría que necesitas</b> (para pasar senos a cosenos):</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$\cos(a\pm b) = \cos a\cos b \mp \operatorname{sen}a\operatorname{sen}b,\qquad \operatorname{sen}(a\pm b) = \operatorname{sen}a\cos b \pm \cos a\operatorname{sen}b$$
+$$\cos\!\left(\omega t+\varphi-\tfrac{\pi}{2}\right) = \operatorname{sen}(\omega t+\varphi)$$
+<p class="legend">Regla práctica: <b>un seno es un coseno retrasado 90°</b>. Y $-\cos x = \cos(x\pm\pi)$.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li><b>ω vs f</b>: $\omega = 2\pi f$. "50 Hz" → $\omega = 314{,}16$ rad/s. Las reactancias usan <b>ω</b>.</li>
+<li><b>Grados vs radianes</b>: en $\cos(\omega t + \varphi)$, $\omega t$ está en radianes, así que $\varphi$ también. Calculadora en RAD (o convierte con cuidado).</li>
+<li>"Retrasada un sexto del periodo" → $\varphi = 2\pi/6 = 60°$.</li>
+<li>Si te dan un <b>seno</b>, pásalo a coseno <b>antes</b> de sacar el fasor: $20\operatorname{sen}(\omega t) = 20\cos(\omega t - \pi/2)$.</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>$f(t) = 7{,}32\cos(3{,}8\pi t + \pi/6)$: amplitud, periodo y fase inicial</summary><p>$A = 7{,}32$; $\omega = 3{,}8\pi$ rad/s → $f = \omega/2\pi = 1{,}9$ Hz → $T = 1/1{,}9 = 0{,}526$ s; $\varphi = \pi/6 = 30°$ (adelantada respecto a $\cos\omega t$). En $t=0$ vale $7{,}32\cos 30° = 6{,}34$.</p></details>
+</div>
+</section>
+
+<section id="sec-eficaz">
+<h2>4 · Valores eficaces (rms)</h2>
+<p>La media de $I(t)$ en un periodo es <b>cero</b> (tanto positivo como negativo). Inútil para medir "cuánta corriente hay". Por eso se usa la raíz de la <b>media del cuadrado</b>:</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$I_{ef} = \sqrt{\langle I^2(t)\rangle},\qquad \langle F(t)\rangle = \frac{1}{T}\int_0^T F(t)\,dt\qquad\Longrightarrow\qquad I_{ef} = \frac{I_0}{\sqrt 2}$$
+<p class="legend">$I_{ef}$: valor eficaz (A) · $I_0$: amplitud (A). Igual para tensiones: $V_{ef} = V_0/\sqrt2$. Es lo que mide un <b>polímetro</b>.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 720 230" role="img" aria-label="cos cuadrado y sen cuadrado con media un medio">
+<line x1="50" y1="200" x2="710" y2="200" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="60" y1="215" x2="60" y2="20" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<path d="M60,50L62.6,50.4L65.2,51.6L67.8,53.7L70.3,56.5L72.9,60L75.5,64.3L78.1,69.3L80.7,74.8L83.3,80.9L85.8,87.5L88.4,94.5L91,101.8L93.6,109.4L96.2,117.2L98.8,125L101.3,132.8L103.9,140.6L106.5,148.2L109.1,155.5L111.7,162.5L114.3,169.1L116.8,175.2L119.4,180.7L122,185.7L124.6,190L127.2,193.5L129.8,196.3L132.3,198.4L134.9,199.6L137.5,200L140.1,199.6L142.7,198.4L145.3,196.3L147.8,193.5L150.4,190L153,185.7L155.6,180.7L158.2,175.2L160.8,169.1L163.3,162.5L165.9,155.5L168.5,148.2L171.1,140.6L173.7,132.8L176.3,125L178.8,117.2L181.4,109.4L184,101.8L186.6,94.5L189.2,87.5L191.8,80.9L194.3,74.8L196.9,69.3L199.5,64.3L202.1,60L204.7,56.5L207.3,53.7L209.8,51.6L212.4,50.4L215,50L217.6,50.4L220.2,51.6L222.8,53.7L225.3,56.5L227.9,60L230.5,64.3L233.1,69.3L235.7,74.8L238.3,80.9L240.8,87.5L243.4,94.5L246,101.8L248.6,109.4L251.2,117.2L253.8,125L256.3,132.8L258.9,140.6L261.5,148.2L264.1,155.5L266.7,162.5L269.3,169.1L271.8,175.2L274.4,180.7L277,185.7L279.6,190L282.2,193.5L284.8,196.3L287.3,198.4L289.9,199.6L292.5,200L295.1,199.6L297.7,198.4L300.3,196.3L302.8,193.5L305.4,190L308,185.7L310.6,180.7L313.2,175.2L315.8,169.1L318.3,162.5L320.9,155.5L323.5,148.2L326.1,140.6L328.7,132.8L331.3,125L333.8,117.2L336.4,109.4L339,101.8L341.6,94.5L344.2,87.5L346.8,80.9L349.3,74.8L351.9,69.3L354.5,64.3L357.1,60L359.7,56.5L362.3,53.7L364.8,51.6L367.4,50.4L370,50L372.6,50.4L375.2,51.6L377.8,53.7L380.3,56.5L382.9,60L385.5,64.3L388.1,69.3L390.7,74.8L393.3,80.9L395.8,87.5L398.4,94.5L401,101.8L403.6,109.4L406.2,117.2L408.8,125L411.3,132.8L413.9,140.6L416.5,148.2L419.1,155.5L421.7,162.5L424.3,169.1L426.8,175.2L429.4,180.7L432,185.7L434.6,190L437.2,193.5L439.8,196.3L442.3,198.4L444.9,199.6L447.5,200L450.1,199.6L452.7,198.4L455.3,196.3L457.8,193.5L460.4,190L463,185.7L465.6,180.7L468.2,175.2L470.8,169.1L473.3,162.5L475.9,155.5L478.5,148.2L481.1,140.6L483.7,132.8L486.3,125L488.8,117.2L491.4,109.4L494,101.8L496.6,94.5L499.2,87.5L501.8,80.9L504.3,74.8L506.9,69.3L509.5,64.3L512.1,60L514.7,56.5L517.3,53.7L519.8,51.6L522.4,50.4L525,50L527.6,50.4L530.2,51.6L532.8,53.7L535.3,56.5L537.9,60L540.5,64.3L543.1,69.3L545.7,74.8L548.3,80.9L550.8,87.5L553.4,94.5L556,101.8L558.6,109.4L561.2,117.2L563.8,125L566.3,132.8L568.9,140.6L571.5,148.2L574.1,155.5L576.7,162.5L579.3,169.1L581.8,175.2L584.4,180.7L587,185.7L589.6,190L592.2,193.5L594.8,196.3L597.3,198.4L599.9,199.6L602.5,200L605.1,199.6L607.7,198.4L610.3,196.3L612.8,193.5L615.4,190L618,185.7L620.6,180.7L623.2,175.2L625.8,169.1L628.3,162.5L630.9,155.5L633.5,148.2L636.1,140.6L638.7,132.8L641.3,125L643.8,117.2L646.4,109.4L649,101.8L651.6,94.5L654.2,87.5L656.8,80.9L659.3,74.8L661.9,69.3L664.5,64.3L667.1,60L669.7,56.5L672.3,53.7L674.8,51.6L677.4,50.4L680,50" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<path d="M60,200L62.6,199.6L65.2,198.4L67.8,196.3L70.3,193.5L72.9,190L75.5,185.7L78.1,180.7L80.7,175.2L83.3,169.1L85.8,162.5L88.4,155.5L91,148.2L93.6,140.6L96.2,132.8L98.8,125L101.3,117.2L103.9,109.4L106.5,101.8L109.1,94.5L111.7,87.5L114.3,80.9L116.8,74.8L119.4,69.3L122,64.3L124.6,60L127.2,56.5L129.8,53.7L132.3,51.6L134.9,50.4L137.5,50L140.1,50.4L142.7,51.6L145.3,53.7L147.8,56.5L150.4,60L153,64.3L155.6,69.3L158.2,74.8L160.8,80.9L163.3,87.5L165.9,94.5L168.5,101.8L171.1,109.4L173.7,117.2L176.3,125L178.8,132.8L181.4,140.6L184,148.2L186.6,155.5L189.2,162.5L191.8,169.1L194.3,175.2L196.9,180.7L199.5,185.7L202.1,190L204.7,193.5L207.3,196.3L209.8,198.4L212.4,199.6L215,200L217.6,199.6L220.2,198.4L222.8,196.3L225.3,193.5L227.9,190L230.5,185.7L233.1,180.7L235.7,175.2L238.3,169.1L240.8,162.5L243.4,155.5L246,148.2L248.6,140.6L251.2,132.8L253.8,125L256.3,117.2L258.9,109.4L261.5,101.8L264.1,94.5L266.7,87.5L269.3,80.9L271.8,74.8L274.4,69.3L277,64.3L279.6,60L282.2,56.5L284.8,53.7L287.3,51.6L289.9,50.4L292.5,50L295.1,50.4L297.7,51.6L300.3,53.7L302.8,56.5L305.4,60L308,64.3L310.6,69.3L313.2,74.8L315.8,80.9L318.3,87.5L320.9,94.5L323.5,101.8L326.1,109.4L328.7,117.2L331.3,125L333.8,132.8L336.4,140.6L339,148.2L341.6,155.5L344.2,162.5L346.8,169.1L349.3,175.2L351.9,180.7L354.5,185.7L357.1,190L359.7,193.5L362.3,196.3L364.8,198.4L367.4,199.6L370,200L372.6,199.6L375.2,198.4L377.8,196.3L380.3,193.5L382.9,190L385.5,185.7L388.1,180.7L390.7,175.2L393.3,169.1L395.8,162.5L398.4,155.5L401,148.2L403.6,140.6L406.2,132.8L408.8,125L411.3,117.2L413.9,109.4L416.5,101.8L419.1,94.5L421.7,87.5L424.3,80.9L426.8,74.8L429.4,69.3L432,64.3L434.6,60L437.2,56.5L439.8,53.7L442.3,51.6L444.9,50.4L447.5,50L450.1,50.4L452.7,51.6L455.3,53.7L457.8,56.5L460.4,60L463,64.3L465.6,69.3L468.2,74.8L470.8,80.9L473.3,87.5L475.9,94.5L478.5,101.8L481.1,109.4L483.7,117.2L486.3,125L488.8,132.8L491.4,140.6L494,148.2L496.6,155.5L499.2,162.5L501.8,169.1L504.3,175.2L506.9,180.7L509.5,185.7L512.1,190L514.7,193.5L517.3,196.3L519.8,198.4L522.4,199.6L525,200L527.6,199.6L530.2,198.4L532.8,196.3L535.3,193.5L537.9,190L540.5,185.7L543.1,180.7L545.7,175.2L548.3,169.1L550.8,162.5L553.4,155.5L556,148.2L558.6,140.6L561.2,132.8L563.8,125L566.3,117.2L568.9,109.4L571.5,101.8L574.1,94.5L576.7,87.5L579.3,80.9L581.8,74.8L584.4,69.3L587,64.3L589.6,60L592.2,56.5L594.8,53.7L597.3,51.6L599.9,50.4L602.5,50L605.1,50.4L607.7,51.6L610.3,53.7L612.8,56.5L615.4,60L618,64.3L620.6,69.3L623.2,74.8L625.8,80.9L628.3,87.5L630.9,94.5L633.5,101.8L636.1,109.4L638.7,117.2L641.3,125L643.8,132.8L646.4,140.6L649,148.2L651.6,155.5L654.2,162.5L656.8,169.1L659.3,175.2L661.9,180.7L664.5,185.7L667.1,190L669.7,193.5L672.3,196.3L674.8,198.4L677.4,199.6L680,200" fill="none" stroke="var(--why)" stroke-width="2" stroke-dasharray="6 5"/>
+<line x1="60" y1="125" x2="690" y2="125" stroke="var(--field)" stroke-width="2"/>
+<text x="20" y="55" fill="var(--fg-dim)" font-size="14">1</text>
+<text x="18" y="130" fill="var(--field)" font-size="14">½</text>
+<line x1="55" y1="50" x2="65" y2="50" stroke="var(--fg-dim)"/>
+<text x="470" y="40" fill="var(--neg)" font-size="14">cos²(ωt)</text>
+<text x="560" y="40" fill="var(--why)" font-size="14">sen²(ωt)</text>
+<text x="470" y="18" fill="var(--field)" font-size="14">línea amarilla: media = ½</text>
+</svg>
+<figcaption>$\cos^2$ y $\operatorname{sen}^2$ son la misma curva desplazada → tienen la <b>misma media</b>; y suman 1 → cada una tiene media ½.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué aparece √2</span>
+<div class="steps">
+<div class="step">$\langle I^2\rangle = I_0^2\langle\cos^2(\omega t+\varphi)\rangle$.</div>
+<div class="step">Argumento elegante: $\cos^2 + \operatorname{sen}^2 = 1$ siempre, y en un periodo completo ambas tienen la misma media (una es la otra desplazada $T/4$). Luego $\langle\cos^2\rangle = \tfrac12$. (También: $\cos^2x = \tfrac{1+\cos 2x}{2}$ y $\langle\cos 2x\rangle=0$.)</div>
+<div class="step">$\langle I^2\rangle = I_0^2/2 \Rightarrow I_{ef} = I_0/\sqrt 2 \approx 0{,}707\,I_0$.</div>
+</div>
+</div>
+<div class="box intuition"><span class="label">Intuición: la "corriente continua equivalente"</span>
+<p>$I_{ef}$ es la <b>corriente continua que calentaría igual</b> una resistencia. Energía Joule en un periodo:</p>
+<p>$W_{CA} = \int_0^T I^2R\,dt = I_0^2 R\,\dfrac{T}{2} = I_{ef}^2RT = W_{CC}$.</p>
+<p>Ejemplo: el enchufe "de 230 V" tiene $V_0 = 230\sqrt2 \approx 325$ V de pico.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen: pico vs eficaz</span>
+<ul>
+<li>"Tensión de 220 V" en un enunciado de red = <b>eficaz</b>. "Tensión máxima 100 V" = amplitud. Mira siempre cuál te dan.</li>
+<li>$v(t) = V_0\cos(\ldots)$ lleva la <b>amplitud</b>: si te dan $V_{ef}=220$ V, escribe $v(t) = 220\sqrt2\cos(\ldots)$.</li>
+<li>El $1/\sqrt2$ vale <b>solo para sinusoides</b>.</li>
+<li>Los valores eficaces <b>no se suman</b> si las señales están desfasadas (ver problema 10): se suman los fasores.</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-fasores">
+<h2>5 · Números complejos y fasores</h2>
+<h3>5.1 · Repaso exprés de complejos</h3>
+<p>En circuitos la unidad imaginaria es $j=\sqrt{-1}$ (la $i$ ya es la intensidad).</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$z = a + jb = |z|\,e^{j\varphi},\qquad |z| = \sqrt{a^2+b^2},\qquad \varphi = \arctan\frac{b}{a}$$
+$$e^{j\varphi} = \cos\varphi + j\operatorname{sen}\varphi\quad(\text{Euler})$$
+<p class="legend">$a=\operatorname{Re}z$, $b=\operatorname{Im}z$ · $|z|$: módulo · $\varphi$: argumento, medido antihorario desde el eje real. Notación abreviada: $|z|\angle\varphi$.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 760 290" role="img" aria-label="Plano complejo y fasor giratorio">
+<line x1="40" y1="150" x2="270" y2="150" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="150" y1="270" x2="150" y2="25" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<text x="255" y="170" fill="var(--fg-dim)" font-size="13">Re</text>
+<text x="158" y="35" fill="var(--fg-dim)" font-size="13">Im</text>
+<line x1="150" y1="150" x2="226.6" y2="85.7" stroke="var(--accent)" stroke-width="3" marker-end="url(#ah-acc)"/>
+<line x1="226.6" y1="85.7" x2="226.6" y2="150" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<line x1="226.6" y1="85.7" x2="150" y2="85.7" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<path d="M180,150 A30,30 0 0 0 173,130.7" fill="none" stroke="var(--field)" stroke-width="2"/>
+<text x="185" y="142" fill="var(--field)" font-size="14">φ</text>
+<text x="232" y="80" fill="var(--accent)" font-size="15">z = a + jb</text>
+<text x="168" y="108" fill="var(--accent)" font-size="13">|z|</text>
+<text x="215" y="168" fill="var(--fg)" font-size="14">a</text>
+<text x="132" y="90" fill="var(--fg)" font-size="14">b</text>
+<text x="60" y="285" fill="var(--fg-dim)" font-size="13">a = |z| cos φ ,  b = |z| sen φ</text>
+<circle cx="520" cy="150" r="100" fill="none" stroke="var(--line)" stroke-width="2"/>
+<line x1="390" y1="150" x2="650" y2="150" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="520" y1="270" x2="520" y2="25" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="520" y1="150" x2="584.3" y2="73.4" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<line x1="584.3" y1="73.4" x2="584.3" y2="150" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<line x1="520" y1="150" x2="584.3" y2="150" stroke="var(--field)" stroke-width="6"/>
+<path d="M638,107 A125,125 0 0 0 565,33" fill="none" stroke="var(--fg)" stroke-width="2" marker-end="url(#ah-fg)"/>
+<text x="580" y="22" fill="var(--fg)" font-size="14">gira a ω</text>
+<text x="545" y="62" fill="var(--pos)" font-size="13" text-anchor="end">A e<tspan baseline-shift="super" font-size="10">j(ωt+φ)</tspan></text>
+<text x="500" y="178" fill="var(--field)" font-size="13">f(t) = Re = A cos(ωt+φ)</text>
+<text x="420" y="282" fill="var(--fg-dim)" font-size="13">el fasor f̃ = A e<tspan baseline-shift="super" font-size="10">jφ</tspan> es la "foto" en t = 0</text>
+</svg>
+<figcaption>Izquierda: un complejo en forma binómica y polar. Derecha: un vector que gira a ω; su <b>proyección sobre el eje real</b> es la señal armónica.</figcaption>
+</figure>
+<div class="box trap"><span class="label">Trampa: el cuadrante del arctan</span>
+<p>$\arctan(b/a)$ solo devuelve ángulos entre −90° y 90°. Si $a&lt;0$, <b>suma 180°</b>. Ejemplo: $-1-j$ → $\arctan(1) = 45°$ es <b>falso</b>; el ángulo correcto es $-135°$ (o $225°$). Dibuja siempre el punto antes de calcular el ángulo.</p>
+</div>
+<p><b>Cómo operar</b>: sumas/restas en <b>binómica</b>; productos/cocientes en <b>polar</b> (módulos se multiplican/dividen, ángulos se suman/restan). Para dividir en binómica, multiplica por el conjugado: $\dfrac{1}{a+jb} = \dfrac{a-jb}{a^2+b^2}$. Recuerda $\dfrac1j = -j$.</p>
+
+<h3>5.2 · El fasor</h3>
+<div class="box why"><span class="label">De dónde sale el fasor</span>
+<div class="steps">
+<div class="step">Por Euler, $A\cos(\omega t+\varphi) = \operatorname{Re}\!\left[Ae^{j(\omega t+\varphi)}\right] = \operatorname{Re}\!\left[\underbrace{Ae^{j\varphi}}_{\tilde f}\,e^{j\omega t}\right]$.</div>
+<div class="step">El factor $e^{j\omega t}$ es <b>común a todas las señales del circuito</b> (misma ω). No aporta información: lo "quitamos".</div>
+<div class="step">Lo que queda, $\tilde f = Ae^{j\varphi}$, guarda justo lo que distingue a cada señal: <b>amplitud y fase</b>.</div>
+</div>
+</div>
+<div class="box formula"><span class="label">Fórmula</span>
+$$f(t) = A\cos(\omega t+\varphi)\ \longleftrightarrow\ \tilde f = Ae^{j\varphi},\qquad f(t) = \operatorname{Re}\!\left[\tilde f\,e^{j\omega t}\right]$$
+$$f_1+f_2 \leftrightarrow \tilde f_1 + \tilde f_2,\qquad \alpha f\leftrightarrow\alpha\tilde f,\qquad \boxed{\frac{df}{dt}\leftrightarrow j\omega\tilde f}$$
+<p class="legend">Correspondencia uno a uno (a ω fija). $\alpha$ real. El fasor <b>no contiene ω</b>: hay que recordarla para volver al dominio del tiempo.</p>
+</div>
+<div class="box why"><span class="label">Por qué derivar es girar 90° y escalar</span>
+<p><b>Vía rápida</b>: $\dfrac{d}{dt}e^{j\omega t} = j\omega\,e^{j\omega t}$. La exponencial es "autofunción" de la derivada.</p>
+<p><b>Vía de las diapositivas</b> (sin trucos):</p>
+<p>$\dfrac{df}{dt} = -\omega A\operatorname{sen}(\omega t+\varphi) = -\omega A\cos(\omega t+\varphi-\tfrac\pi2) = \operatorname{Re}\!\left[-\omega Ae^{j\varphi}e^{-j\pi/2}e^{j\omega t}\right]$</p>
+<p>y como $-e^{-j\pi/2} = -(-j) = j$: $\;\dfrac{df}{dt} = \operatorname{Re}\!\left[j\omega\tilde f e^{j\omega t}\right]$.</p>
+<p><b>Lectura geométrica</b>: $j = e^{j\pi/2}$ → multiplicar por $j$ es <b>girar +90°</b>. Derivar = escalar por ω y adelantar 90°. Integrar = dividir por $j\omega$ = escalar por $1/\omega$ y <b>retrasar 90°</b>.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 520 280" role="img" aria-label="Multiplicar por j gira 90 grados">
+<line x1="60" y1="150" x2="350" y2="150" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="200" y1="275" x2="200" y2="15" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="200" y1="150" x2="299.7" y2="103.5" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<line x1="200" y1="150" x2="153.5" y2="50.3" stroke="var(--intuition)" stroke-width="3" marker-end="url(#ah-int)"/>
+<line x1="200" y1="150" x2="242.3" y2="240.6" stroke="var(--why)" stroke-width="3" marker-end="url(#ah-why)"/>
+<path d="M240,131 A45,45 0 0 0 181,109" fill="none" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<text x="305" y="100" fill="var(--pos)" font-size="15">f̃</text>
+<text x="40" y="45" fill="var(--intuition)" font-size="14">jω f̃ ↔ df/dt</text>
+<text x="40" y="65" fill="var(--intuition)" font-size="12">(+90°: adelanta)</text>
+<text x="252" y="245" fill="var(--why)" font-size="14">f̃/(jω) ↔ ∫f dt</text>
+<text x="252" y="265" fill="var(--why)" font-size="12">(−90°: retrasa)</text>
+<text x="370" y="120" fill="var(--fg-dim)" font-size="13">× j  = girar +90°</text>
+<text x="370" y="142" fill="var(--fg-dim)" font-size="13">× (−j) = ÷ j = −90°</text>
+<text x="370" y="164" fill="var(--fg-dim)" font-size="13">× ω = estirar</text>
+</svg>
+<figcaption>Las longitudes reales se multiplican por ω (o 1/ω); aquí se dibujan iguales para ver solo el giro.</figcaption>
+</figure>
+<div class="box intuition"><span class="label">Intuición: el estroboscopio</span>
+<p>Imagina todos los fasores del circuito como flechas pegadas a una rueda que gira a ω. Como giran <b>juntas</b>, sus ángulos relativos no cambian. Con un flash en $t=0$ las "congelas": eso es el diagrama fasorial. Las <b>ecuaciones diferenciales</b> se convierten en <b>álgebra</b> con flechas.</p>
+</div>
+<div class="box example"><span class="label">Ejemplos rápidos (problemas 2 y 3)</span>
+<table>
+<tr><th>Señal</th><th>Fasor polar</th><th>Fasor binómico</th></tr>
+<tr><td>$8\cos\omega t$</td><td>$8\angle 0°$</td><td>$8$</td></tr>
+<tr><td>$6\cos(\omega t+\pi/3)$</td><td>$6\angle 60°$</td><td>$3+j3\sqrt3$</td></tr>
+<tr><td>$2\cos(\omega t-3\pi/4)$</td><td>$2\angle -135°$</td><td>$-\sqrt2 - j\sqrt2$</td></tr>
+<tr><td>$2\cos(\omega t+\pi)$</td><td>$2\angle 180°$</td><td>$-2$</td></tr>
+<tr><td>$8\operatorname{sen}(\omega t+\pi/3) = 8\cos(\omega t-\pi/6)$</td><td>$8\angle -30°$</td><td>$4\sqrt3 - j4$</td></tr>
+<tr><td>$\tilde f = -j\sqrt3 \;\Rightarrow$</td><td>$\sqrt3\angle -90°$</td><td>$\sqrt3\cos(\omega t-\pi/2)$</td></tr>
+<tr><td>$\tilde f = -1-j \;\Rightarrow$</td><td>$\sqrt2\angle -135°$</td><td>$\sqrt2\cos(\omega t-3\pi/4)$</td></tr>
+</table>
+</div>
+</section>
+
+<section id="sec-elementos">
+<h2>6 · Relación I ↔ V en resistencia, condensador y bobina</h2>
+<p>Convenio: la corriente entra por el terminal marcado <b>+</b> (el de mayor potencial). Las tres leyes "de siempre" valen también <b>instante a instante</b>:</p>
+<table>
+<tr><th>Elemento</th><th>Ley</th><th>De dónde sale</th><th>Desfase</th></tr>
+<tr><td><b>Resistencia</b></td><td>$V(t) = R\,I(t)$</td><td>Ley de Ohm (T2), sigue valiendo en CA</td><td>En fase</td></tr>
+<tr><td><b>Condensador</b></td><td>$I(t) = C\,\dfrac{dV}{dt}$</td><td>$Q = CV$ (T1) y $I = dQ/dt$</td><td><span class="neg">$I$</span> adelanta 90° a <span class="pos">$V$</span></td></tr>
+<tr><td><b>Bobina</b></td><td>$V(t) = L\,\dfrac{dI}{dt}$</td><td>Autoinducción (T4)</td><td><span class="neg">$I$</span> se retrasa 90° respecto a <span class="pos">$V$</span></td></tr>
+</table>
+<figure class="diagram">
+<svg viewBox="0 0 900 340" role="img" aria-label="Formas de onda y fasores de tensión e intensidad en R, C y L">
+<g stroke="var(--fg-dim)">
+<line x1="20" y1="80" x2="285" y2="80"/>
+<line x1="320" y1="80" x2="585" y2="80"/>
+<line x1="620" y1="80" x2="885" y2="80"/>
+<line x1="300" y1="10" x2="300" y2="330" stroke-dasharray="2 6"/>
+<line x1="600" y1="10" x2="600" y2="330" stroke-dasharray="2 6"/>
+</g>
+<path d="M20,30L21.1,30L22.2,30.1L23.3,30.2L24.3,30.4L25.4,30.7L26.5,31L27.6,31.3L28.7,31.7L29.8,32.2L30.8,32.7L31.9,33.2L33,33.8L34.1,34.5L35.2,35.2L36.3,35.9L37.3,36.7L38.4,37.5L39.5,38.4L40.6,39.4L41.7,40.3L42.8,41.3L43.8,42.4L44.9,43.5L46,44.6L47.1,45.8L48.2,47L49.3,48.3L50.3,49.6L51.4,50.9L52.5,52.2L53.6,53.6L54.7,55L55.8,56.4L56.8,57.9L57.9,59.4L59,60.9L60.1,62.4L61.2,63.9L62.3,65.5L63.3,67.1L64.4,68.6L65.5,70.2L66.6,71.9L67.7,73.5L68.8,75.1L69.8,76.7L70.9,78.4L72,80L73.1,81.6L74.2,83.3L75.3,84.9L76.3,86.5L77.4,88.1L78.5,89.8L79.6,91.4L80.7,92.9L81.8,94.5L82.8,96.1L83.9,97.6L85,99.1L86.1,100.6L87.2,102.1L88.3,103.6L89.3,105L90.4,106.4L91.5,107.8L92.6,109.1L93.7,110.4L94.8,111.7L95.8,113L96.9,114.2L98,115.4L99.1,116.5L100.2,117.6L101.3,118.7L102.3,119.7L103.4,120.6L104.5,121.6L105.6,122.5L106.7,123.3L107.8,124.1L108.8,124.8L109.9,125.5L111,126.2L112.1,126.8L113.2,127.3L114.3,127.8L115.3,128.3L116.4,128.7L117.5,129L118.6,129.3L119.7,129.6L120.8,129.8L121.8,129.9L122.9,130L124,130L125.1,130L126.2,129.9L127.3,129.8L128.3,129.6L129.4,129.3L130.5,129L131.6,128.7L132.7,128.3L133.8,127.8L134.8,127.3L135.9,126.8L137,126.2L138.1,125.5L139.2,124.8L140.3,124.1L141.3,123.3L142.4,122.5L143.5,121.6L144.6,120.6L145.7,119.7L146.8,118.7L147.8,117.6L148.9,116.5L150,115.4L151.1,114.2L152.2,113L153.3,111.7L154.3,110.4L155.4,109.1L156.5,107.8L157.6,106.4L158.7,105L159.8,103.6L160.8,102.1L161.9,100.6L163,99.1L164.1,97.6L165.2,96.1L166.3,94.5L167.3,92.9L168.4,91.4L169.5,89.8L170.6,88.1L171.7,86.5L172.8,84.9L173.8,83.3L174.9,81.6L176,80L177.1,78.4L178.2,76.7L179.3,75.1L180.3,73.5L181.4,71.9L182.5,70.2L183.6,68.6L184.7,67.1L185.8,65.5L186.8,63.9L187.9,62.4L189,60.9L190.1,59.4L191.2,57.9L192.3,56.4L193.3,55L194.4,53.6L195.5,52.2L196.6,50.9L197.7,49.6L198.8,48.3L199.8,47L200.9,45.8L202,44.6L203.1,43.5L204.2,42.4L205.3,41.3L206.3,40.3L207.4,39.4L208.5,38.4L209.6,37.5L210.7,36.7L211.8,35.9L212.8,35.2L213.9,34.5L215,33.8L216.1,33.2L217.2,32.7L218.3,32.2L219.3,31.7L220.4,31.3L221.5,31L222.6,30.7L223.7,30.4L224.8,30.2L225.8,30.1L226.9,30L228,30L229.1,30L230.2,30.1L231.3,30.2L232.3,30.4L233.4,30.7L234.5,31L235.6,31.3L236.7,31.7L237.8,32.2L238.8,32.7L239.9,33.2L241,33.8L242.1,34.5L243.2,35.2L244.3,35.9L245.3,36.7L246.4,37.5L247.5,38.4L248.6,39.4L249.7,40.3L250.8,41.3L251.8,42.4L252.9,43.5L254,44.6L255.1,45.8L256.2,47L257.3,48.3L258.3,49.6L259.4,50.9L260.5,52.2L261.6,53.6L262.7,55L263.8,56.4L264.8,57.9L265.9,59.4L267,60.9L268.1,62.4L269.2,63.9L270.3,65.5L271.3,67.1L272.4,68.6L273.5,70.2L274.6,71.9L275.7,73.5L276.8,75.1L277.8,76.7L278.9,78.4L280,80" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<path d="M20,48L21.1,48L22.2,48.1L23.3,48.2L24.3,48.3L25.4,48.4L26.5,48.6L27.6,48.8L28.7,49.1L29.8,49.4L30.8,49.7L31.9,50.1L33,50.4L34.1,50.9L35.2,51.3L36.3,51.8L37.3,52.3L38.4,52.8L39.5,53.4L40.6,54L41.7,54.6L42.8,55.3L43.8,55.9L44.9,56.6L46,57.4L47.1,58.1L48.2,58.9L49.3,59.7L50.3,60.5L51.4,61.4L52.5,62.2L53.6,63.1L54.7,64L55.8,64.9L56.8,65.8L57.9,66.8L59,67.8L60.1,68.7L61.2,69.7L62.3,70.7L63.3,71.7L64.4,72.7L65.5,73.8L66.6,74.8L67.7,75.8L68.8,76.9L69.8,77.9L70.9,79L72,80L73.1,81L74.2,82.1L75.3,83.1L76.3,84.2L77.4,85.2L78.5,86.2L79.6,87.3L80.7,88.3L81.8,89.3L82.8,90.3L83.9,91.3L85,92.2L86.1,93.2L87.2,94.2L88.3,95.1L89.3,96L90.4,96.9L91.5,97.8L92.6,98.6L93.7,99.5L94.8,100.3L95.8,101.1L96.9,101.9L98,102.6L99.1,103.4L100.2,104.1L101.3,104.7L102.3,105.4L103.4,106L104.5,106.6L105.6,107.2L106.7,107.7L107.8,108.2L108.8,108.7L109.9,109.1L111,109.6L112.1,109.9L113.2,110.3L114.3,110.6L115.3,110.9L116.4,111.2L117.5,111.4L118.6,111.6L119.7,111.7L120.8,111.8L121.8,111.9L122.9,112L124,112L125.1,112L126.2,111.9L127.3,111.8L128.3,111.7L129.4,111.6L130.5,111.4L131.6,111.2L132.7,110.9L133.8,110.6L134.8,110.3L135.9,109.9L137,109.6L138.1,109.1L139.2,108.7L140.3,108.2L141.3,107.7L142.4,107.2L143.5,106.6L144.6,106L145.7,105.4L146.8,104.7L147.8,104.1L148.9,103.4L150,102.6L151.1,101.9L152.2,101.1L153.3,100.3L154.3,99.5L155.4,98.6L156.5,97.8L157.6,96.9L158.7,96L159.8,95.1L160.8,94.2L161.9,93.2L163,92.2L164.1,91.3L165.2,90.3L166.3,89.3L167.3,88.3L168.4,87.3L169.5,86.2L170.6,85.2L171.7,84.2L172.8,83.1L173.8,82.1L174.9,81L176,80L177.1,79L178.2,77.9L179.3,76.9L180.3,75.8L181.4,74.8L182.5,73.8L183.6,72.7L184.7,71.7L185.8,70.7L186.8,69.7L187.9,68.7L189,67.8L190.1,66.8L191.2,65.8L192.3,64.9L193.3,64L194.4,63.1L195.5,62.2L196.6,61.4L197.7,60.5L198.8,59.7L199.8,58.9L200.9,58.1L202,57.4L203.1,56.6L204.2,55.9L205.3,55.3L206.3,54.6L207.4,54L208.5,53.4L209.6,52.8L210.7,52.3L211.8,51.8L212.8,51.3L213.9,50.9L215,50.4L216.1,50.1L217.2,49.7L218.3,49.4L219.3,49.1L220.4,48.8L221.5,48.6L222.6,48.4L223.7,48.3L224.8,48.2L225.8,48.1L226.9,48L228,48L229.1,48L230.2,48.1L231.3,48.2L232.3,48.3L233.4,48.4L234.5,48.6L235.6,48.8L236.7,49.1L237.8,49.4L238.8,49.7L239.9,50.1L241,50.4L242.1,50.9L243.2,51.3L244.3,51.8L245.3,52.3L246.4,52.8L247.5,53.4L248.6,54L249.7,54.6L250.8,55.3L251.8,55.9L252.9,56.6L254,57.4L255.1,58.1L256.2,58.9L257.3,59.7L258.3,60.5L259.4,61.4L260.5,62.2L261.6,63.1L262.7,64L263.8,64.9L264.8,65.8L265.9,66.8L267,67.8L268.1,68.7L269.2,69.7L270.3,70.7L271.3,71.7L272.4,72.7L273.5,73.8L274.6,74.8L275.7,75.8L276.8,76.9L277.8,77.9L278.9,79L280,80" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<path d="M320,30L321.1,30L322.2,30.1L323.3,30.2L324.3,30.4L325.4,30.7L326.5,31L327.6,31.3L328.7,31.7L329.8,32.2L330.8,32.7L331.9,33.2L333,33.8L334.1,34.5L335.2,35.2L336.3,35.9L337.3,36.7L338.4,37.5L339.5,38.4L340.6,39.4L341.7,40.3L342.8,41.3L343.8,42.4L344.9,43.5L346,44.6L347.1,45.8L348.2,47L349.3,48.3L350.3,49.6L351.4,50.9L352.5,52.2L353.6,53.6L354.7,55L355.8,56.4L356.8,57.9L357.9,59.4L359,60.9L360.1,62.4L361.2,63.9L362.3,65.5L363.3,67.1L364.4,68.6L365.5,70.2L366.6,71.9L367.7,73.5L368.8,75.1L369.8,76.7L370.9,78.4L372,80L373.1,81.6L374.2,83.3L375.3,84.9L376.3,86.5L377.4,88.1L378.5,89.8L379.6,91.4L380.7,92.9L381.8,94.5L382.8,96.1L383.9,97.6L385,99.1L386.1,100.6L387.2,102.1L388.3,103.6L389.3,105L390.4,106.4L391.5,107.8L392.6,109.1L393.7,110.4L394.8,111.7L395.8,113L396.9,114.2L398,115.4L399.1,116.5L400.2,117.6L401.3,118.7L402.3,119.7L403.4,120.6L404.5,121.6L405.6,122.5L406.7,123.3L407.8,124.1L408.8,124.8L409.9,125.5L411,126.2L412.1,126.8L413.2,127.3L414.3,127.8L415.3,128.3L416.4,128.7L417.5,129L418.6,129.3L419.7,129.6L420.8,129.8L421.8,129.9L422.9,130L424,130L425.1,130L426.2,129.9L427.3,129.8L428.3,129.6L429.4,129.3L430.5,129L431.6,128.7L432.7,128.3L433.8,127.8L434.8,127.3L435.9,126.8L437,126.2L438.1,125.5L439.2,124.8L440.3,124.1L441.3,123.3L442.4,122.5L443.5,121.6L444.6,120.6L445.7,119.7L446.8,118.7L447.8,117.6L448.9,116.5L450,115.4L451.1,114.2L452.2,113L453.3,111.7L454.3,110.4L455.4,109.1L456.5,107.8L457.6,106.4L458.7,105L459.8,103.6L460.8,102.1L461.9,100.6L463,99.1L464.1,97.6L465.2,96.1L466.3,94.5L467.3,92.9L468.4,91.4L469.5,89.8L470.6,88.1L471.7,86.5L472.8,84.9L473.8,83.3L474.9,81.6L476,80L477.1,78.4L478.2,76.7L479.3,75.1L480.3,73.5L481.4,71.9L482.5,70.2L483.6,68.6L484.7,67.1L485.8,65.5L486.8,63.9L487.9,62.4L489,60.9L490.1,59.4L491.2,57.9L492.3,56.4L493.3,55L494.4,53.6L495.5,52.2L496.6,50.9L497.7,49.6L498.8,48.3L499.8,47L500.9,45.8L502,44.6L503.1,43.5L504.2,42.4L505.3,41.3L506.3,40.3L507.4,39.4L508.5,38.4L509.6,37.5L510.7,36.7L511.8,35.9L512.8,35.2L513.9,34.5L515,33.8L516.1,33.2L517.2,32.7L518.3,32.2L519.3,31.7L520.4,31.3L521.5,31L522.6,30.7L523.7,30.4L524.8,30.2L525.8,30.1L526.9,30L528,30L529.1,30L530.2,30.1L531.3,30.2L532.3,30.4L533.4,30.7L534.5,31L535.6,31.3L536.7,31.7L537.8,32.2L538.8,32.7L539.9,33.2L541,33.8L542.1,34.5L543.2,35.2L544.3,35.9L545.3,36.7L546.4,37.5L547.5,38.4L548.6,39.4L549.7,40.3L550.8,41.3L551.8,42.4L552.9,43.5L554,44.6L555.1,45.8L556.2,47L557.3,48.3L558.3,49.6L559.4,50.9L560.5,52.2L561.6,53.6L562.7,55L563.8,56.4L564.8,57.9L565.9,59.4L567,60.9L568.1,62.4L569.2,63.9L570.3,65.5L571.3,67.1L572.4,68.6L573.5,70.2L574.6,71.9L575.7,73.5L576.8,75.1L577.8,76.7L578.9,78.4L580,80" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<path d="M320,80L321.1,81L322.2,82.1L323.3,83.1L324.3,84.2L325.4,85.2L326.5,86.2L327.6,87.3L328.7,88.3L329.8,89.3L330.8,90.3L331.9,91.3L333,92.2L334.1,93.2L335.2,94.2L336.3,95.1L337.3,96L338.4,96.9L339.5,97.8L340.6,98.6L341.7,99.5L342.8,100.3L343.8,101.1L344.9,101.9L346,102.6L347.1,103.4L348.2,104.1L349.3,104.7L350.3,105.4L351.4,106L352.5,106.6L353.6,107.2L354.7,107.7L355.8,108.2L356.8,108.7L357.9,109.1L359,109.6L360.1,109.9L361.2,110.3L362.3,110.6L363.3,110.9L364.4,111.2L365.5,111.4L366.6,111.6L367.7,111.7L368.8,111.8L369.8,111.9L370.9,112L372,112L373.1,112L374.2,111.9L375.3,111.8L376.3,111.7L377.4,111.6L378.5,111.4L379.6,111.2L380.7,110.9L381.8,110.6L382.8,110.3L383.9,109.9L385,109.6L386.1,109.1L387.2,108.7L388.3,108.2L389.3,107.7L390.4,107.2L391.5,106.6L392.6,106L393.7,105.4L394.8,104.7L395.8,104.1L396.9,103.4L398,102.6L399.1,101.9L400.2,101.1L401.3,100.3L402.3,99.5L403.4,98.6L404.5,97.8L405.6,96.9L406.7,96L407.8,95.1L408.8,94.2L409.9,93.2L411,92.2L412.1,91.3L413.2,90.3L414.3,89.3L415.3,88.3L416.4,87.3L417.5,86.2L418.6,85.2L419.7,84.2L420.8,83.1L421.8,82.1L422.9,81L424,80L425.1,79L426.2,77.9L427.3,76.9L428.3,75.8L429.4,74.8L430.5,73.8L431.6,72.7L432.7,71.7L433.8,70.7L434.8,69.7L435.9,68.7L437,67.8L438.1,66.8L439.2,65.8L440.3,64.9L441.3,64L442.4,63.1L443.5,62.2L444.6,61.4L445.7,60.5L446.8,59.7L447.8,58.9L448.9,58.1L450,57.4L451.1,56.6L452.2,55.9L453.3,55.3L454.3,54.6L455.4,54L456.5,53.4L457.6,52.8L458.7,52.3L459.8,51.8L460.8,51.3L461.9,50.9L463,50.4L464.1,50.1L465.2,49.7L466.3,49.4L467.3,49.1L468.4,48.8L469.5,48.6L470.6,48.4L471.7,48.3L472.8,48.2L473.8,48.1L474.9,48L476,48L477.1,48L478.2,48.1L479.3,48.2L480.3,48.3L481.4,48.4L482.5,48.6L483.6,48.8L484.7,49.1L485.8,49.4L486.8,49.7L487.9,50.1L489,50.4L490.1,50.9L491.2,51.3L492.3,51.8L493.3,52.3L494.4,52.8L495.5,53.4L496.6,54L497.7,54.6L498.8,55.3L499.8,55.9L500.9,56.6L502,57.4L503.1,58.1L504.2,58.9L505.3,59.7L506.3,60.5L507.4,61.4L508.5,62.2L509.6,63.1L510.7,64L511.8,64.9L512.8,65.8L513.9,66.8L515,67.8L516.1,68.7L517.2,69.7L518.3,70.7L519.3,71.7L520.4,72.7L521.5,73.8L522.6,74.8L523.7,75.8L524.8,76.9L525.8,77.9L526.9,79L528,80L529.1,81L530.2,82.1L531.3,83.1L532.3,84.2L533.4,85.2L534.5,86.2L535.6,87.3L536.7,88.3L537.8,89.3L538.8,90.3L539.9,91.3L541,92.2L542.1,93.2L543.2,94.2L544.3,95.1L545.3,96L546.4,96.9L547.5,97.8L548.6,98.6L549.7,99.5L550.8,100.3L551.8,101.1L552.9,101.9L554,102.6L555.1,103.4L556.2,104.1L557.3,104.7L558.3,105.4L559.4,106L560.5,106.6L561.6,107.2L562.7,107.7L563.8,108.2L564.8,108.7L565.9,109.1L567,109.6L568.1,109.9L569.2,110.3L570.3,110.6L571.3,110.9L572.4,111.2L573.5,111.4L574.6,111.6L575.7,111.7L576.8,111.8L577.8,111.9L578.9,112L580,112" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<path d="M620,30L621.1,30L622.2,30.1L623.3,30.2L624.3,30.4L625.4,30.7L626.5,31L627.6,31.3L628.7,31.7L629.8,32.2L630.8,32.7L631.9,33.2L633,33.8L634.1,34.5L635.2,35.2L636.3,35.9L637.3,36.7L638.4,37.5L639.5,38.4L640.6,39.4L641.7,40.3L642.8,41.3L643.8,42.4L644.9,43.5L646,44.6L647.1,45.8L648.2,47L649.3,48.3L650.3,49.6L651.4,50.9L652.5,52.2L653.6,53.6L654.7,55L655.8,56.4L656.8,57.9L657.9,59.4L659,60.9L660.1,62.4L661.2,63.9L662.3,65.5L663.3,67.1L664.4,68.6L665.5,70.2L666.6,71.9L667.7,73.5L668.8,75.1L669.8,76.7L670.9,78.4L672,80L673.1,81.6L674.2,83.3L675.3,84.9L676.3,86.5L677.4,88.1L678.5,89.8L679.6,91.4L680.7,92.9L681.8,94.5L682.8,96.1L683.9,97.6L685,99.1L686.1,100.6L687.2,102.1L688.3,103.6L689.3,105L690.4,106.4L691.5,107.8L692.6,109.1L693.7,110.4L694.8,111.7L695.8,113L696.9,114.2L698,115.4L699.1,116.5L700.2,117.6L701.3,118.7L702.3,119.7L703.4,120.6L704.5,121.6L705.6,122.5L706.7,123.3L707.8,124.1L708.8,124.8L709.9,125.5L711,126.2L712.1,126.8L713.2,127.3L714.3,127.8L715.3,128.3L716.4,128.7L717.5,129L718.6,129.3L719.7,129.6L720.8,129.8L721.8,129.9L722.9,130L724,130L725.1,130L726.2,129.9L727.3,129.8L728.3,129.6L729.4,129.3L730.5,129L731.6,128.7L732.7,128.3L733.8,127.8L734.8,127.3L735.9,126.8L737,126.2L738.1,125.5L739.2,124.8L740.3,124.1L741.3,123.3L742.4,122.5L743.5,121.6L744.6,120.6L745.7,119.7L746.8,118.7L747.8,117.6L748.9,116.5L750,115.4L751.1,114.2L752.2,113L753.3,111.7L754.3,110.4L755.4,109.1L756.5,107.8L757.6,106.4L758.7,105L759.8,103.6L760.8,102.1L761.9,100.6L763,99.1L764.1,97.6L765.2,96.1L766.3,94.5L767.3,92.9L768.4,91.4L769.5,89.8L770.6,88.1L771.7,86.5L772.8,84.9L773.8,83.3L774.9,81.6L776,80L777.1,78.4L778.2,76.7L779.3,75.1L780.3,73.5L781.4,71.9L782.5,70.2L783.6,68.6L784.7,67.1L785.8,65.5L786.8,63.9L787.9,62.4L789,60.9L790.1,59.4L791.2,57.9L792.3,56.4L793.3,55L794.4,53.6L795.5,52.2L796.6,50.9L797.7,49.6L798.8,48.3L799.8,47L800.9,45.8L802,44.6L803.1,43.5L804.2,42.4L805.3,41.3L806.3,40.3L807.4,39.4L808.5,38.4L809.6,37.5L810.7,36.7L811.8,35.9L812.8,35.2L813.9,34.5L815,33.8L816.1,33.2L817.2,32.7L818.3,32.2L819.3,31.7L820.4,31.3L821.5,31L822.6,30.7L823.7,30.4L824.8,30.2L825.8,30.1L826.9,30L828,30L829.1,30L830.2,30.1L831.3,30.2L832.3,30.4L833.4,30.7L834.5,31L835.6,31.3L836.7,31.7L837.8,32.2L838.8,32.7L839.9,33.2L841,33.8L842.1,34.5L843.2,35.2L844.3,35.9L845.3,36.7L846.4,37.5L847.5,38.4L848.6,39.4L849.7,40.3L850.8,41.3L851.8,42.4L852.9,43.5L854,44.6L855.1,45.8L856.2,47L857.3,48.3L858.3,49.6L859.4,50.9L860.5,52.2L861.6,53.6L862.7,55L863.8,56.4L864.8,57.9L865.9,59.4L867,60.9L868.1,62.4L869.2,63.9L870.3,65.5L871.3,67.1L872.4,68.6L873.5,70.2L874.6,71.9L875.7,73.5L876.8,75.1L877.8,76.7L878.9,78.4L880,80" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<path d="M620,80L621.1,79L622.2,77.9L623.3,76.9L624.3,75.8L625.4,74.8L626.5,73.8L627.6,72.7L628.7,71.7L629.8,70.7L630.8,69.7L631.9,68.7L633,67.8L634.1,66.8L635.2,65.8L636.3,64.9L637.3,64L638.4,63.1L639.5,62.2L640.6,61.4L641.7,60.5L642.8,59.7L643.8,58.9L644.9,58.1L646,57.4L647.1,56.6L648.2,55.9L649.3,55.3L650.3,54.6L651.4,54L652.5,53.4L653.6,52.8L654.7,52.3L655.8,51.8L656.8,51.3L657.9,50.9L659,50.4L660.1,50.1L661.2,49.7L662.3,49.4L663.3,49.1L664.4,48.8L665.5,48.6L666.6,48.4L667.7,48.3L668.8,48.2L669.8,48.1L670.9,48L672,48L673.1,48L674.2,48.1L675.3,48.2L676.3,48.3L677.4,48.4L678.5,48.6L679.6,48.8L680.7,49.1L681.8,49.4L682.8,49.7L683.9,50.1L685,50.4L686.1,50.9L687.2,51.3L688.3,51.8L689.3,52.3L690.4,52.8L691.5,53.4L692.6,54L693.7,54.6L694.8,55.3L695.8,55.9L696.9,56.6L698,57.4L699.1,58.1L700.2,58.9L701.3,59.7L702.3,60.5L703.4,61.4L704.5,62.2L705.6,63.1L706.7,64L707.8,64.9L708.8,65.8L709.9,66.8L711,67.8L712.1,68.7L713.2,69.7L714.3,70.7L715.3,71.7L716.4,72.7L717.5,73.8L718.6,74.8L719.7,75.8L720.8,76.9L721.8,77.9L722.9,79L724,80L725.1,81L726.2,82.1L727.3,83.1L728.3,84.2L729.4,85.2L730.5,86.2L731.6,87.3L732.7,88.3L733.8,89.3L734.8,90.3L735.9,91.3L737,92.2L738.1,93.2L739.2,94.2L740.3,95.1L741.3,96L742.4,96.9L743.5,97.8L744.6,98.6L745.7,99.5L746.8,100.3L747.8,101.1L748.9,101.9L750,102.6L751.1,103.4L752.2,104.1L753.3,104.7L754.3,105.4L755.4,106L756.5,106.6L757.6,107.2L758.7,107.7L759.8,108.2L760.8,108.7L761.9,109.1L763,109.6L764.1,109.9L765.2,110.3L766.3,110.6L767.3,110.9L768.4,111.2L769.5,111.4L770.6,111.6L771.7,111.7L772.8,111.8L773.8,111.9L774.9,112L776,112L777.1,112L778.2,111.9L779.3,111.8L780.3,111.7L781.4,111.6L782.5,111.4L783.6,111.2L784.7,110.9L785.8,110.6L786.8,110.3L787.9,109.9L789,109.6L790.1,109.1L791.2,108.7L792.3,108.2L793.3,107.7L794.4,107.2L795.5,106.6L796.6,106L797.7,105.4L798.8,104.7L799.8,104.1L800.9,103.4L802,102.6L803.1,101.9L804.2,101.1L805.3,100.3L806.3,99.5L807.4,98.6L808.5,97.8L809.6,96.9L810.7,96L811.8,95.1L812.8,94.2L813.9,93.2L815,92.2L816.1,91.3L817.2,90.3L818.3,89.3L819.3,88.3L820.4,87.3L821.5,86.2L822.6,85.2L823.7,84.2L824.8,83.1L825.8,82.1L826.9,81L828,80L829.1,79L830.2,77.9L831.3,76.9L832.3,75.8L833.4,74.8L834.5,73.8L835.6,72.7L836.7,71.7L837.8,70.7L838.8,69.7L839.9,68.7L841,67.8L842.1,66.8L843.2,65.8L844.3,64.9L845.3,64L846.4,63.1L847.5,62.2L848.6,61.4L849.7,60.5L850.8,59.7L851.8,58.9L852.9,58.1L854,57.4L855.1,56.6L856.2,55.9L857.3,55.3L858.3,54.6L859.4,54L860.5,53.4L861.6,52.8L862.7,52.3L863.8,51.8L864.8,51.3L865.9,50.9L867,50.4L868.1,50.1L869.2,49.7L870.3,49.4L871.3,49.1L872.4,48.8L873.5,48.6L874.6,48.4L875.7,48.3L876.8,48.2L877.8,48.1L878.9,48L880,48" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<text x="150" y="160" fill="var(--fg)" font-size="16" text-anchor="middle">R: en fase</text>
+<text x="450" y="160" fill="var(--fg)" font-size="16" text-anchor="middle">C: Ĩ adelanta 90°</text>
+<text x="750" y="160" fill="var(--fg)" font-size="16" text-anchor="middle">L: Ĩ se retrasa 90°</text>
+<g stroke="var(--fg-dim)" stroke-width="1">
+<line x1="50" y1="250" x2="250" y2="250"/>
+<line x1="350" y1="250" x2="550" y2="250"/>
+<line x1="650" y1="250" x2="850" y2="250"/>
+<line x1="70" y1="180" x2="70" y2="325"/>
+<line x1="370" y1="180" x2="370" y2="325"/>
+<line x1="670" y1="180" x2="670" y2="325"/>
+</g>
+<line x1="70" y1="250" x2="220" y2="250" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<line x1="70" y1="250" x2="160" y2="250" stroke="var(--neg)" stroke-width="6" marker-end="url(#ah-neg)"/>
+<text x="200" y="240" fill="var(--pos)" font-size="15">Ṽ</text>
+<text x="135" y="275" fill="var(--neg)" font-size="15">Ĩ</text>
+<line x1="370" y1="250" x2="520" y2="250" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<line x1="370" y1="250" x2="370" y2="185" stroke="var(--neg)" stroke-width="4" marker-end="url(#ah-neg)"/>
+<text x="505" y="240" fill="var(--pos)" font-size="15">Ṽ</text>
+<text x="380" y="195" fill="var(--neg)" font-size="15">Ĩ = jωC Ṽ</text>
+<line x1="670" y1="250" x2="820" y2="250" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<line x1="670" y1="250" x2="670" y2="318" stroke="var(--neg)" stroke-width="4" marker-end="url(#ah-neg)"/>
+<text x="805" y="240" fill="var(--pos)" font-size="15">Ṽ</text>
+<text x="680" y="315" fill="var(--neg)" font-size="15">Ĩ = Ṽ/(jωL)</text>
+<text x="20" y="20" fill="var(--pos)" font-size="13">v(t)</text>
+<text x="60" y="20" fill="var(--neg)" font-size="13">i(t)</text>
+</svg>
+<figcaption>Arriba: <span class="pos">v(t)</span> y <span class="neg">i(t)</span>. Abajo: sus fasores (tensión como referencia, fase 0). "Adelantar" = pico antes = fasor girado en sentido antihorario.</figcaption>
+</figure>
+<div class="box why"><span class="label">Por qué en el condensador I va por delante</span>
+<p>$I = C\,dV/dt$: la corriente es máxima cuando la tensión <b>cambia más rápido</b>, es decir, cuando $V$ pasa por cero subiendo. La tensión alcanza su máximo un cuarto de periodo <b>después</b>, cuando ya se ha acumulado toda la carga (y en ese momento $I=0$).</p>
+<p>Primero fluye la carga, luego se nota la tensión → <b>I adelanta 90°</b>. Matemáticamente: si $V = V_0\cos\omega t$, $I = -\omega CV_0\operatorname{sen}\omega t = \omega CV_0\cos(\omega t+\pi/2)$.</p>
+</div>
+<div class="box why"><span class="label">Por qué en la bobina I va por detrás</span>
+<p>$V = L\,dI/dt$: la tensión es máxima cuando la corriente <b>cambia más rápido</b> (pasa por cero). La bobina "se resiste" a los cambios de $I$ (Lenz): hace falta empujar con tensión <b>antes</b> de que la corriente crezca.</p>
+<p>Primero la tensión, luego la corriente → <b>I se retrasa 90°</b>. Si $I = I_0\cos\omega t$, $V = -\omega LI_0\operatorname{sen}\omega t = \omega LI_0\cos(\omega t+\pi/2)$.</p>
+</div>
+<div class="box intuition"><span class="label">Regla mnemotécnica: CIVIL</span>
+<p><b>C</b>: <b>I</b> antes que <b>V</b>. &nbsp; <b>V</b> antes que <b>I</b> en <b>L</b>. &nbsp; → <span class="hl">C-I-V-I-L</span>.</p>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividad 5.2)</span>
+<details><summary>¿Diferencia esencial entre la relación I↔V de R y la de C o L?</summary><p>En R es <b>algebraica</b> (proporcional, sin memoria). En C y L interviene una <b>derivada temporal</b>: lo que importa es cómo <i>cambia</i> la señal. Por eso aparecen desfases y dependencia con la frecuencia.</p></details>
+<details><summary>¿Y entre C y L?</summary><p>Son "duales": en C la derivada es de la tensión ($I\propto dV/dt$), en L de la corriente ($V\propto dI/dt$). Por eso los desfases son opuestos (+90° y −90°) y sus reactancias van al revés con ω.</p></details>
+</div>
+</section>
+
+<section id="sec-impedancia">
+<h2>7 · Reactancia e impedancia</h2>
+<p>Aplicamos $d/dt \to j\omega$ a las tres leyes. Las ecuaciones <b>diferenciales</b> pasan a ser <b>multiplicaciones</b>:</p>
+<table>
+<tr><th>Elemento</th><th>Tiempo</th><th>Fasores</th><th>Impedancia $Z$</th></tr>
+<tr><td>R</td><td>$V = RI$</td><td>$\tilde V = R\tilde I$</td><td>$R$</td></tr>
+<tr><td>C</td><td>$I = C\,dV/dt$</td><td>$\tilde I = j\omega C\tilde V \Rightarrow \tilde V = \dfrac{1}{j\omega C}\tilde I = -jX_C\tilde I$</td><td>$-jX_C$, $\;X_C = \dfrac{1}{\omega C}$</td></tr>
+<tr><td>L</td><td>$V = L\,dI/dt$</td><td>$\tilde V = j\omega L\tilde I = jX_L\tilde I$</td><td>$jX_L$, $\;X_L = \omega L$</td></tr>
+</table>
+<div class="box formula"><span class="label">Fórmula: Ohm generalizado</span>
+$$\tilde V = Z\,\tilde I,\qquad Z_R = R,\quad Z_C = -jX_C = \frac{1}{j\omega C},\quad Z_L = jX_L = j\omega L$$
+<p class="legend">$Z$: impedancia (Ω), número complejo · $X_C = 1/(\omega C)$: reactancia capacitiva (Ω) · $X_L = \omega L$: reactancia inductiva (Ω). Ambas reactancias son <b>positivas</b>; el signo lo pone $\pm j$.</p>
+</div>
+<div class="box why"><span class="label">Por qué Z no es un fasor</span>
+<p>Un fasor representa una señal que <b>oscila</b> ($\operatorname{Re}[\tilde f e^{j\omega t}]$). $Z = \tilde V/\tilde I$ es un <b>cociente</b> de fasores: el factor $e^{j\omega t}$ se cancela. $Z$ no gira, no representa nada que oscile: es una propiedad del elemento (a esa ω). Su módulo da el cociente de amplitudes, $|Z| = V_0/I_0$, y su argumento el desfase $\varphi_V - \varphi_I$.</p>
+</div>
+<div class="box why"><span class="label">Por qué las reactancias dependen así de la frecuencia: casos límite</span>
+<table>
+<tr><th></th><th>$\omega\to 0$ (continua)</th><th>$\omega\to\infty$</th></tr>
+<tr><td><b>Bobina</b> $X_L = \omega L$</td><td>$X_L\to 0$: <b>cable</b> (cortocircuito). Sin cambios de $I$ no hay fem inducida.</td><td>$X_L\to\infty$: <b>circuito abierto</b>. Cambios rapidísimos → fem inducida enorme que se opone.</td></tr>
+<tr><td><b>Condensador</b> $X_C = 1/(\omega C)$</td><td>$X_C\to\infty$: <b>circuito abierto</b>. En CC se carga del todo y bloquea.</td><td>$X_C\to 0$: <b>cable</b>. Cada semiciclo es tan corto que apenas se carga: no llega a acumular tensión que frene la corriente.</td></tr>
+</table>
+<p>Dimensionalmente: $[\omega L] = \text{s}^{-1}\cdot\dfrac{\text{V}\cdot\text{s}}{\text{A}} = \Omega$ y $\left[\dfrac{1}{\omega C}\right] = \dfrac{1}{\text{s}^{-1}\cdot\text{C/V}} = \dfrac{\text{V}\cdot\text{s}}{\text{C}} = \dfrac{\text{V}}{\text{A}} = \Omega$.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 700 310" role="img" aria-label="Reactancias frente a la frecuencia angular">
+<line x1="60" y1="260" x2="670" y2="260" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="60" y1="275" x2="60" y2="20" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<text x="655" y="282" fill="var(--fg-dim)" font-size="14">ω</text>
+<text x="20" y="35" fill="var(--fg-dim)" font-size="14">Ω</text>
+<line x1="60" y1="190" x2="640" y2="190" stroke="var(--field)" stroke-width="2.5"/>
+<line x1="60" y1="260" x2="620" y2="40" stroke="var(--intuition)" stroke-width="2.5"/>
+<path d="M194,30.1L197.7,36.4L201.4,42.2L205.2,47.8L208.9,53.1L212.6,58.1L216.3,62.9L220,67.5L223.7,71.9L227.5,76.1L231.2,80.1L234.9,83.9L238.6,87.5L242.3,91.1L246,94.4L249.8,97.7L253.5,100.8L257.2,103.8L260.9,106.7L264.6,109.5L268.3,112.2L272.1,114.8L275.8,117.3L279.5,119.7L283.2,122L286.9,124.3L290.6,126.5L294.4,128.6L298.1,130.6L301.8,132.6L305.5,134.5L309.2,136.4L312.9,138.2L316.7,140L320.4,141.7L324.1,143.4L327.8,145L331.5,146.6L335.2,148.1L339,149.6L342.7,151L346.4,152.5L350.1,153.8L353.8,155.2L357.5,156.5L361.3,157.8L365,159L368.7,160.2L372.4,161.4L376.1,162.6L379.8,163.7L383.5,164.8L387.3,165.9L391,166.9L394.7,168L398.4,169L402.1,170L405.9,170.9L409.6,171.9L413.3,172.8L417,173.7L420.7,174.6L424.4,175.5L428.2,176.3L431.9,177.2L435.6,178L439.3,178.8L443,179.6L446.7,180.4L450.5,181.1L454.2,181.9L457.9,182.6L461.6,183.3L465.3,184L469,184.7L472.8,185.4L476.5,186L480.2,186.7L483.9,187.3L487.6,188L491.3,188.6L495.1,189.2L498.8,189.8L502.5,190.4L506.2,191L509.9,191.5L513.6,192.1L517.3,192.7L521.1,193.2L524.8,193.7L528.5,194.3L532.2,194.8L535.9,195.3L539.7,195.8L543.4,196.3L547.1,196.8L550.8,197.2L554.5,197.7L558.2,198.2L562,198.6L565.7,199.1L569.4,199.5L573.1,200L576.8,200.4L580.5,200.8L584.3,201.2L588,201.7L591.7,202.1L595.4,202.5L599.1,202.9L602.8,203.3L606.6,203.6L610.3,204L614,204.4L617.7,204.8L621.4,205.1L625.1,205.5L628.8,205.9L632.6,206.2L636.3,206.6L640,206.9" fill="none" stroke="var(--why)" stroke-width="2.5"/>
+<line x1="340" y1="150" x2="340" y2="260" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<circle cx="340" cy="150" r="5" fill="var(--fg)"/>
+<text x="330" y="280" fill="var(--fg)" font-size="14">ω₀</text>
+<text x="346" y="212" fill="var(--fg)" font-size="13">X_L = X_C</text>
+<text x="575" y="100" fill="var(--intuition)" font-size="14">X_L = ωL</text>
+<text x="205" y="45" fill="var(--why)" font-size="14">X_C = 1/(ωC)</text>
+<text x="520" y="183" fill="var(--field)" font-size="14">R (no depende de ω)</text>
+<text x="70" y="302" fill="var(--fg-dim)" font-size="12">ω→0: L cable, C abierto</text>
+<text x="470" y="302" fill="var(--fg-dim)" font-size="12">ω→∞: L abierto, C cable</text>
+</svg>
+<figcaption>$X_L$ crece lineal con ω, $X_C$ decrece como $1/\omega$: se cruzan en una única frecuencia, $\omega_0$ (la de resonancia, §10).</figcaption>
+</figure>
+<p><b>Asociación de impedancias</b> (igual que resistencias, porque Kirchhoff vale con fasores, §8):</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$\text{Serie: } Z_{eq} = Z_1 + Z_2 + \dots\qquad\text{Paralelo: } \frac{1}{Z_{eq}} = \frac{1}{Z_1}+\frac{1}{Z_2}+\dots\qquad Y = \frac1Z$$
+<p class="legend">$Y$: admitancia (S = Ω⁻¹). En paralelo conviene sumar admitancias. Dos en paralelo: $Z_{eq} = \dfrac{Z_1Z_2}{Z_1+Z_2}$.</p>
+</div>
+<div class="box example"><span class="label">Ejemplos rápidos (problemas 5 y 8)</span>
+<p><b>R–L serie</b>, $R=100\ \Omega$, $L = 50$ mH, $f = 1$ kHz: $X_L = 2\pi\cdot10^3\cdot 0{,}05 = 100\pi\ \Omega$ → $Z = 100(1+j\pi)\ \Omega$.</p>
+<p><b>L ∥ C</b>, $L=12$ mH, $C = 250\ \mu$F, $\omega = 10^3$ rad/s: $Z_L = j12$, $Z_C = -j4$ → $Z = \dfrac{(j12)(-j4)}{j12-j4} = \dfrac{48}{j8} = -j6\ \Omega$ (¡capacitivo!). Con $V_{ef} = 36$ V: $I_{ef} = 36/6 = 6$ A; $f = 10^3/2\pi = 159{,}15$ Hz.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>$X_C = 1/(\omega C)$ <b>con ω</b>, no con $f$. Y $\mu$F = $10^{-6}$ F, mH = $10^{-3}$ H.</li>
+<li><b>No sumes módulos</b>: en serie se suman las $Z$ complejas, $|Z_1+Z_2|\neq|Z_1|+|Z_2|$.</li>
+<li>Un paralelo L–C puede dar reactancia <b>negativa</b> aunque haya bobina: depende de cuál "gana".</li>
+<li>$\dfrac{1}{j\omega C} = -\dfrac{j}{\omega C}$ (porque $1/j = -j$). Olvidar ese signo invierte el desfase.</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividad 5.3)</span>
+<details><summary>¿Es útil la impedancia en CC?</summary><p>En CC ($\omega=0$) se reduce a: R → R, L → 0 (cable), C → ∞ (abierto). Ya lo sabías del T2; la impedancia es la generalización que lo incluye como caso particular.</p></details>
+<details><summary>¿Por qué una bobina es un abierto a alta frecuencia y un condensador un cortocircuito?</summary><p>Bobina: $|Z_L| = \omega L\to\infty$ (la fem de autoinducción crece con la rapidez del cambio). Condensador: $|Z_C| = 1/(\omega C)\to 0$ (no le da tiempo a cargarse y no acumula tensión que se oponga).</p></details>
+</div>
+</section>
+
+<section id="sec-kirchhoff">
+<h2>8 · Reglas de Kirchhoff en forma fasorial</h2>
+<p>Suponemos que las reglas de Kirchhoff valen <b>en cada instante</b> (en cada instante se alcanza una situación cuasi-estacionaria):</p>
+<div class="box formula"><span class="label">Fórmula: dominio del tiempo</span>
+$$V_{12}(t) = \sum_j V_j(t) - \sum_i \xi_i(t),\qquad \sum_{\text{nudo}} I_i(t) = 0$$
+<p class="legend">$V_j$: caída de potencial en el elemento $j$ del recorrido de 1 a 2 · $\xi_i$: fem del recorrido (signos como en el T2).</p>
+</div>
+<div class="box formula"><span class="label">Fórmula: dominio fasorial</span>
+$$\tilde V_{12} = \sum_j Z_j\tilde I_j - \sum_i\tilde\xi_i,\qquad \sum_{\text{nudo}}\tilde I_i = 0$$
+<p class="legend">Idénticas a las de CC, cambiando números reales → fasores y resistencias → impedancias.</p>
+</div>
+<div class="box why"><span class="label">Por qué se pueden pasar a fasores</span>
+<p>Por <b>linealidad</b>: la suma de señales ↔ suma de fasores. Si $\sum_i I_i(t) = \operatorname{Re}\!\left[\left(\sum_i\tilde I_i\right)e^{j\omega t}\right] = 0$ para <b>todo</b> $t$, el complejo $\sum\tilde I_i$ tiene que ser cero (si no, su proyección giratoria no sería nula siempre).</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>Se suman <b>fasores</b>, nunca amplitudes ni valores eficaces sueltos: $I_{4,0}\neq I_{1,0}+I_{2,0}+I_{3,0}$.</li>
+<li>Los fasores solo valen si <b>todas</b> las fuentes tienen la <b>misma</b> ω.</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividad 5.4)</span>
+<details><summary>Si hay fuentes de CC y de CA a la vez, ¿valen Kirchhoff? ¿Y los fasores?</summary><p>Kirchhoff sí (son instantáneas). Los fasores no directamente, porque mezclan frecuencias distintas (0 y ω). Se usa <b>superposición</b>: se resuelve el circuito solo con CC (L cable, C abierto) y solo con CA (fasores), y se suman las respuestas temporales.</p></details>
+<details><summary>¿Qué ventaja tienen los fasores frente a Kirchhoff "en el tiempo"?</summary><p>En el tiempo, cada malla da una ecuación <b>integro-diferencial</b>. Con fasores son <b>ecuaciones lineales algebraicas</b> (con coeficientes complejos), como en el T2.</p></details>
+</div>
+</section>
+
+<section id="sec-rlc">
+<h2>9 · Circuito RLC serie</h2>
+<p>Fuente $\xi(t) = \xi_0\cos(\omega t+\theta)$ → $\tilde\xi = \xi_0e^{j\theta}$, en serie con R, L y C. La <b>misma corriente</b> $\tilde I$ pasa por los tres.</p>
+<div class="box why"><span class="label">Derivación</span>
+<div class="steps">
+<div class="step">Kirchhoff de tensiones: $\xi(t) = V_R + V_C + V_L$ → $\tilde\xi = \tilde V_R + \tilde V_C + \tilde V_L$.</div>
+<div class="step">Ohm complejo en cada uno: $\tilde\xi = R\tilde I - jX_C\tilde I + jX_L\tilde I = \left[R + j(X_L - X_C)\right]\tilde I = Z\tilde I$.</div>
+<div class="step">Despejar: $\tilde I = \tilde\xi/Z$. En polar, $Z = |Z|e^{j\alpha}$ → $\tilde I = \dfrac{\xi_0}{|Z|}e^{j(\theta-\alpha)}$.</div>
+</div>
+<p>Compárese con el camino "en el tiempo": $L\dfrac{dI}{dt} + RI + \dfrac{1}{C}\int I\,dt = \xi(t)$, una ecuación diferencial de 2º orden. Los fasores dan directamente su solución en <b>régimen permanente</b>.</p>
+</div>
+<div class="box formula"><span class="label">Fórmula</span>
+$$Z = R + j(X_L - X_C),\qquad |Z| = \sqrt{R^2 + (X_L-X_C)^2},\qquad \alpha = \arctan\frac{X_L - X_C}{R}$$
+$$I_0 = \frac{\xi_0}{\sqrt{R^2+(X_L-X_C)^2}},\qquad \varphi_I = \theta - \arctan\frac{X_L-X_C}{R}$$
+<p class="legend">$|Z|$ (Ω) · $\alpha$: argumento de Z = desfase de la tensión respecto a la corriente · $I_0$: amplitud de corriente (A) · $\varphi_I$: fase inicial de la corriente. Como $R\ge 0$, $-90°\le\alpha\le 90°$ y el arctan no da problemas de cuadrante.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 860 320" role="img" aria-label="Diagrama fasorial del RLC serie y triángulo de impedancias">
+<line x1="40" y1="220" x2="400" y2="220" stroke="var(--line)"/>
+<line x1="60" y1="300" x2="60" y2="30" stroke="var(--line)"/>
+<line x1="60" y1="220" x2="300" y2="220" stroke="var(--field)" stroke-width="3" marker-end="url(#ah-field)"/>
+<line x1="60" y1="220" x2="160" y2="220" stroke="var(--neg)" stroke-width="6" marker-end="url(#ah-neg)"/>
+<line x1="300" y1="220" x2="300" y2="50" stroke="var(--intuition)" stroke-width="3" marker-end="url(#ah-int)"/>
+<line x1="306" y1="220" x2="306" y2="290" stroke="var(--why)" stroke-width="3" marker-end="url(#ah-why)"/>
+<line x1="300" y1="220" x2="300" y2="122" stroke="var(--fg)" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="60" y1="220" x2="298" y2="121" stroke="var(--pos)" stroke-width="3.5" marker-end="url(#ah-pos)"/>
+<path d="M110,220 A50,50 0 0 0 106.2,200.8" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<text x="117" y="210" fill="var(--fg)" font-size="14">α</text>
+<text x="95" y="245" fill="var(--neg)" font-size="15">Ĩ</text>
+<text x="215" y="245" fill="var(--field)" font-size="14">Ṽ_R = R Ĩ</text>
+<text x="312" y="60" fill="var(--intuition)" font-size="14">Ṽ_L = jX_L Ĩ</text>
+<text x="315" y="290" fill="var(--why)" font-size="14">Ṽ_C = −jX_C Ĩ</text>
+<text x="312" y="160" fill="var(--fg)" font-size="13">Ṽ_L + Ṽ_C</text>
+<text x="140" y="140" fill="var(--pos)" font-size="15">ξ̃ = Z Ĩ</text>
+<line x1="480" y1="250" x2="720" y2="250" stroke="var(--field)" stroke-width="3"/>
+<line x1="720" y1="250" x2="720" y2="150" stroke="var(--intuition)" stroke-width="3"/>
+<line x1="480" y1="250" x2="720" y2="150" stroke="var(--accent)" stroke-width="3"/>
+<path d="M530,250 A50,50 0 0 0 526.2,230.8" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<text x="537" y="240" fill="var(--fg)" font-size="14">α</text>
+<text x="590" y="275" fill="var(--field)" font-size="15">R</text>
+<text x="730" y="205" fill="var(--intuition)" font-size="15">X_L − X_C</text>
+<text x="560" y="182" fill="var(--accent)" font-size="15">|Z|</text>
+<text x="480" y="60" fill="var(--fg)" font-size="15">Triángulo de impedancias</text>
+<text x="480" y="85" fill="var(--fg-dim)" font-size="13">cos α = R/|Z|,  sen α = (X_L−X_C)/|Z|</text>
+<text x="480" y="105" fill="var(--fg-dim)" font-size="13">si X_C &gt; X_L el triángulo apunta hacia abajo</text>
+</svg>
+<figcaption>Corriente como referencia (fase 0). <span class="hl">Ṽ_R</span> va con Ĩ, Ṽ_L 90° por delante, Ṽ_C 90° por detrás: L y C se <b>restan</b>. Dividiendo todo el triángulo de tensiones entre $I_0$ sale el triángulo de impedancias.</figcaption>
+</figure>
+<table>
+<tr><th>Caso</th><th>Signo de α</th><th>Corriente</th><th>Comportamiento</th></tr>
+<tr><td>$X_L > X_C$</td><td>$\alpha>0$</td><td>retrasada respecto a ξ</td><td><b>inductivo</b></td></tr>
+<tr><td>$X_L &lt; X_C$</td><td>$\alpha&lt;0$</td><td>adelantada respecto a ξ</td><td><b>capacitivo</b></td></tr>
+<tr><td>$X_L = X_C$</td><td>$\alpha=0$</td><td>en fase</td><td><b>resistivo</b> (resonancia)</td></tr>
+</table>
+<div class="sim"><span class="label">Simulación · RLC serie con fasores giratorios</span>
+<svg id="rlcSvg" viewBox="0 0 900 340" role="img" aria-label="Simulación de circuito RLC serie">
+<circle cx="170" cy="170" r="140" fill="none" stroke="var(--line)"/>
+<line x1="20" y1="170" x2="320" y2="170" stroke="var(--line)"/>
+<line x1="170" y1="20" x2="170" y2="320" stroke="var(--line)"/>
+<line id="rlcProj" x1="0" y1="0" x2="0" y2="0" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<line id="rlcVR" x1="0" y1="0" x2="0" y2="0" stroke="var(--field)" stroke-width="3" marker-end="url(#ah-field)"/>
+<line id="rlcVL" x1="0" y1="0" x2="0" y2="0" stroke="var(--intuition)" stroke-width="3" marker-end="url(#ah-int)"/>
+<line id="rlcVC" x1="0" y1="0" x2="0" y2="0" stroke="var(--why)" stroke-width="3" marker-end="url(#ah-why)"/>
+<line id="rlcE" x1="0" y1="0" x2="0" y2="0" stroke="var(--pos)" stroke-width="3.5" marker-end="url(#ah-pos)"/>
+<line id="rlcI" x1="0" y1="0" x2="0" y2="0" stroke="var(--neg)" stroke-width="5" marker-end="url(#ah-neg)"/>
+<text x="20" y="20" fill="var(--pos)" font-size="13">ξ̃</text>
+<text x="45" y="20" fill="var(--neg)" font-size="13">Ĩ</text>
+<text x="65" y="20" fill="var(--field)" font-size="13">Ṽ_R</text>
+<text x="100" y="20" fill="var(--intuition)" font-size="13">Ṽ_L</text>
+<text x="135" y="20" fill="var(--why)" font-size="13">Ṽ_C</text>
+<line x1="370" y1="170" x2="885" y2="170" stroke="var(--line)"/>
+<line x1="380" y1="30" x2="380" y2="310" stroke="var(--line)"/>
+<path id="rlcWV" d="" fill="none" stroke="var(--pos)" stroke-width="2.5"/>
+<path id="rlcWI" d="" fill="none" stroke="var(--neg)" stroke-width="2.5"/>
+<line id="rlcCur" x1="0" y1="30" x2="0" y2="310" stroke="var(--fg-dim)" stroke-dasharray="3 4"/>
+<circle id="rlcDV" cx="0" cy="0" r="5" fill="var(--pos)"/>
+<circle id="rlcDI" cx="0" cy="0" r="5" fill="var(--neg)"/>
+<text x="390" y="28" fill="var(--pos)" font-size="13">ξ(t)</text>
+<text x="430" y="28" fill="var(--neg)" font-size="13">i(t) (escala: I₀ = ξ₀/R llena el eje)</text>
+<text x="860" y="190" fill="var(--fg-dim)" font-size="13">t</text>
+</svg>
+<div class="controls">
+<label for="rlcR">R (Ω)</label><input type="range" id="rlcR" min="1" max="200" step="1" value="40"><output id="rlcRo">40</output>
+<label for="rlcL">L (mH)</label><input type="range" id="rlcL" min="10" max="1000" step="10" value="200"><output id="rlcLo">200</output>
+<label for="rlcC">C (µF)</label><input type="range" id="rlcC" min="1" max="100" step="1" value="20"><output id="rlcCo">20</output>
+<label for="rlcF">f (Hz)</label><input type="range" id="rlcF" min="10" max="300" step="1" value="60"><output id="rlcFo">60</output>
+<label for="rlcS">velocidad de giro</label><input type="range" id="rlcS" min="0" max="1" step="0.05" value="0.3"><output id="rlcSo">0.3</output>
+</div>
+<div class="readout" id="rlcOut"></div>
+</div>
+<div class="box intuition"><span class="label">Qué probar en la simulación</span>
+<ul>
+<li>Sube $f$ despacio: $\tilde V_L$ crece, $\tilde V_C$ mengua; la corriente pasa de <b>adelantada</b> (capacitivo) a <b>retrasada</b> (inductivo).</li>
+<li>Busca la $f$ en la que Ṽ_L y Ṽ_C se anulan: Ĩ queda alineada con ξ̃ y es máxima.</li>
+<li>Con R pequeña cerca de resonancia, $V_{L,0}$ y $V_{C,0}$ son <b>mayores que ξ₀</b>. No es un error.</li>
+</ul>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>$V_{ef}\neq V_{R,ef}+V_{L,ef}+V_{C,ef}$. Se cumple el teorema de Pitágoras: $V_{ef}^2 = V_{R,ef}^2 + (V_{L,ef}-V_{C,ef})^2$.</li>
+<li><b>Signo de φ</b>: en las diapositivas la misma letra φ se usa como <i>fase inicial de la corriente</i> ($\varphi_I = \theta-\alpha$) y como <i>desfase</i> V−I (= α, en potencia). Antes de operar, decide cuál es la tuya y dilo con palabras: "la corriente va retrasada 30°".</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividad 5.5)</span>
+<details><summary>¿Qué implica $X_L = X_C$ en el RLC serie?</summary><p>$Z = R$: la impedancia es mínima y real. La corriente es máxima y en fase con la fuente; $\tilde V_L + \tilde V_C = 0$ (se cancelan a cada instante). Es la <b>resonancia</b>.</p></details>
+<details><summary>¿Valen Kirchhoff para cualquier variación temporal?</summary><p>No en general: suponen que el circuito es pequeño frente a la longitud de onda ($\lambda = c/f$), de modo que en cada instante la situación es cuasi-estacionaria. A 50 Hz, $\lambda = 6000$ km: sobradamente válido.</p></details>
+</div>
+</section>
+
+<section id="sec-resonancia">
+<h2>10 · Resonancia</h2>
+<p>Escribimos la amplitud de la corriente del RLC serie como función de ω:</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$I_0(\omega) = \frac{\xi_0}{\sqrt{R^2+\left(\omega L - \dfrac{1}{\omega C}\right)^2}} = \frac{\omega\,\xi_0}{\sqrt{\omega^2R^2 + L^2(\omega^2-\omega_0^2)^2}},\qquad \omega_0 = \frac{1}{\sqrt{LC}}$$
+<p class="legend">$\omega_0$: frecuencia (angular) de resonancia (rad/s); $f_0 = \omega_0/2\pi$ (Hz). En $\omega = \omega_0$: $X_L = X_C$, $Z = R$, $I_{0,\max} = \xi_0/R$, $\cos\varphi = 1$.</p>
+</div>
+<div class="box why"><span class="label">Por qué hay un máximo justo cuando X_L = X_C</span>
+<p>El numerador es fijo; $I_0$ es máxima cuando el denominador $|Z|$ es mínimo. $R^2$ no depende de ω, y $(X_L - X_C)^2\ge 0$ vale cero solo si $\omega L = 1/(\omega C)$, es decir, $\omega^2 = 1/(LC)$.</p>
+<p>Lejos de ω₀ domina una reactancia: a <b>baja</b> ω el condensador "bloquea" ($X_C$ enorme); a <b>alta</b> ω la bobina "bloquea" ($X_L$ enorme). En medio hay una ventana donde ambas se cancelan.</p>
+</div>
+<div class="box intuition"><span class="label">Intuición: columpio</span>
+<p>L y C intercambian energía entre sí (campo magnético ↔ campo eléctrico) con su ritmo propio $\omega_0$, como un columpio. Si la fuente empuja <b>a ese mismo ritmo</b>, cada empujón llega en fase con la corriente: la fuente solo tiene que reponer lo que se pierde en R. Por eso $Z = R$.</p>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 700 280" role="img" aria-label="Curva de resonancia para dos resistencias">
+<line x1="60" y1="240" x2="680" y2="240" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<line x1="60" y1="255" x2="60" y2="20" stroke="var(--fg-dim)" marker-end="url(#ah-dim)"/>
+<text x="660" y="262" fill="var(--fg-dim)" font-size="14">f</text>
+<text x="20" y="35" fill="var(--fg-dim)" font-size="14">I₀</text>
+<path d="M60,240L61.5,239.8L63,239.6L64.5,239.3L66,239.1L67.5,238.9L69,238.7L70.5,238.4L72,238.2L73.5,238L75,237.7L76.5,237.5L78,237.3L79.5,237.1L81,236.8L82.5,236.6L84,236.4L85.5,236.1L87,235.9L88.5,235.7L90,235.4L91.5,235.2L93,234.9L94.5,234.7L96,234.4L97.5,234.2L99,233.9L100.5,233.7L102,233.4L103.5,233.2L105,232.9L106.5,232.7L108,232.4L109.5,232.1L111,231.9L112.5,231.6L114,231.3L115.5,231L117,230.7L118.5,230.5L120,230.2L121.5,229.9L123,229.6L124.5,229.3L126,229L127.5,228.6L129,228.3L130.5,228L132,227.7L133.5,227.3L135,227L136.5,226.7L138,226.3L139.5,225.9L141,225.6L142.5,225.2L144,224.8L145.5,224.4L147,224.1L148.5,223.6L150,223.2L151.5,222.8L153,222.4L154.5,221.9L156,221.5L157.5,221L159,220.6L160.5,220.1L162,219.6L163.5,219.1L165,218.6L166.5,218L168,217.5L169.5,216.9L171,216.3L172.5,215.7L174,215.1L175.5,214.5L177,213.8L178.5,213.1L180,212.4L181.5,211.7L183,211L184.5,210.2L186,209.4L187.5,208.6L189,207.7L190.5,206.8L192,205.9L193.5,205L195,204L196.5,202.9L198,201.8L199.5,200.7L201,199.5L202.5,198.3L204,197L205.5,195.7L207,194.3L208.5,192.8L210,191.2L211.5,189.6L213,187.9L214.5,186.1L216,184.2L217.5,182.1L219,180L220.5,177.7L222,175.3L223.5,172.8L225,170.1L226.5,167.2L228,164.1L229.5,160.8L231,157.3L232.5,153.5L234,149.5L235.5,145.1L237,140.5L238.5,135.6L240,130.3L241.5,124.6L243,118.6L244.5,112.2L246,105.4L247.5,98.4L249,91.2L250.5,83.9L252,76.6L253.5,69.7L255,63.4L256.5,57.9L258,53.6L259.5,50.8L261,49.6L262.5,50L264,52.1L265.5,55.7L267,60.3L268.5,65.9L270,72L271.5,78.4L273,85L274.5,91.5L276,97.8L277.5,103.9L279,109.7L280.5,115.2L282,120.4L283.5,125.2L285,129.8L286.5,134.1L288,138.1L289.5,141.8L291,145.3L292.5,148.6L294,151.7L295.5,154.5L297,157.2L298.5,159.8L300,162.2L301.5,164.5L303,166.6L304.5,168.6L306,170.5L307.5,172.3L309,174L310.5,175.7L312,177.2L313.5,178.7L315,180.1L316.5,181.4L318,182.7L319.5,183.9L321,185.1L322.5,186.2L324,187.3L325.5,188.3L327,189.3L328.5,190.2L330,191.1L331.5,192L333,192.8L334.5,193.6L336,194.4L337.5,195.2L339,195.9L340.5,196.6L342,197.3L343.5,197.9L345,198.6L346.5,199.2L348,199.8L349.5,200.3L351,200.9L352.5,201.4L354,202L355.5,202.5L357,203L358.5,203.4L360,203.9L361.5,204.4L363,204.8L364.5,205.2L366,205.6L367.5,206L369,206.4L370.5,206.8L372,207.2L373.5,207.6L375,207.9L376.5,208.3L378,208.6L379.5,208.9L381,209.3L382.5,209.6L384,209.9L385.5,210.2L387,210.5L388.5,210.8L390,211.1L391.5,211.4L393,211.6L394.5,211.9L396,212.2L397.5,212.4L399,212.7L400.5,212.9L402,213.1L403.5,213.4L405,213.6L406.5,213.8L408,214.1L409.5,214.3L411,214.5L412.5,214.7L414,214.9L415.5,215.1L417,215.3L418.5,215.5L420,215.7L421.5,215.9L423,216.1L424.5,216.3L426,216.4L427.5,216.6L429,216.8L430.5,217L432,217.1L433.5,217.3L435,217.4L436.5,217.6L438,217.8L439.5,217.9L441,218.1L442.5,218.2L444,218.4L445.5,218.5L447,218.7L448.5,218.8L450,218.9L451.5,219.1L453,219.2L454.5,219.3L456,219.5L457.5,219.6L459,219.7L460.5,219.9L462,220L463.5,220.1L465,220.2L466.5,220.3L468,220.5L469.5,220.6L471,220.7L472.5,220.8L474,220.9L475.5,221L477,221.1L478.5,221.2L480,221.3L481.5,221.5L483,221.6L484.5,221.7L486,221.8L487.5,221.9L489,222L490.5,222.1L492,222.2L493.5,222.2L495,222.3L496.5,222.4L498,222.5L499.5,222.6L501,222.7L502.5,222.8L504,222.9L505.5,223L507,223.1L508.5,223.1L510,223.2L511.5,223.3L513,223.4L514.5,223.5L516,223.5L517.5,223.6L519,223.7L520.5,223.8L522,223.9L523.5,223.9L525,224L526.5,224.1L528,224.2L529.5,224.2L531,224.3L532.5,224.4L534,224.4L535.5,224.5L537,224.6L538.5,224.7L540,224.7L541.5,224.8L543,224.9L544.5,224.9L546,225L547.5,225.1L549,225.1L550.5,225.2L552,225.2L553.5,225.3L555,225.4L556.5,225.4L558,225.5L559.5,225.5L561,225.6L562.5,225.7L564,225.7L565.5,225.8L567,225.8L568.5,225.9L570,226L571.5,226L573,226.1L574.5,226.1L576,226.2L577.5,226.2L579,226.3L580.5,226.3L582,226.4L583.5,226.4L585,226.5L586.5,226.5L588,226.6L589.5,226.6L591,226.7L592.5,226.7L594,226.8L595.5,226.8L597,226.9L598.5,226.9L600,227L601.5,227L603,227.1L604.5,227.1L606,227.2L607.5,227.2L609,227.3L610.5,227.3L612,227.4L613.5,227.4L615,227.4L616.5,227.5L618,227.5L619.5,227.6L621,227.6L622.5,227.7L624,227.7L625.5,227.7L627,227.8L628.5,227.8L630,227.9L631.5,227.9L633,228L634.5,228L636,228L637.5,228.1L639,228.1L640.5,228.2L642,228.2L643.5,228.2L645,228.3L646.5,228.3L648,228.3L649.5,228.4L651,228.4L652.5,228.5L654,228.5L655.5,228.5L657,228.6L658.5,228.6L660,228.6" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<path d="M60,240L61.5,239.8L63,239.6L64.5,239.3L66,239.1L67.5,238.9L69,238.7L70.5,238.4L72,238.2L73.5,238L75,237.7L76.5,237.5L78,237.3L79.5,237.1L81,236.8L82.5,236.6L84,236.4L85.5,236.1L87,235.9L88.5,235.7L90,235.4L91.5,235.2L93,234.9L94.5,234.7L96,234.5L97.5,234.2L99,234L100.5,233.7L102,233.5L103.5,233.2L105,233L106.5,232.7L108,232.4L109.5,232.2L111,231.9L112.5,231.6L114,231.4L115.5,231.1L117,230.8L118.5,230.5L120,230.3L121.5,230L123,229.7L124.5,229.4L126,229.1L127.5,228.8L129,228.5L130.5,228.2L132,227.9L133.5,227.6L135,227.2L136.5,226.9L138,226.6L139.5,226.2L141,225.9L142.5,225.6L144,225.2L145.5,224.8L147,224.5L148.5,224.1L150,223.7L151.5,223.4L153,223L154.5,222.6L156,222.2L157.5,221.7L159,221.3L160.5,220.9L162,220.5L163.5,220L165,219.6L166.5,219.1L168,218.6L169.5,218.2L171,217.7L172.5,217.2L174,216.7L175.5,216.1L177,215.6L178.5,215.1L180,214.5L181.5,213.9L183,213.4L184.5,212.8L186,212.2L187.5,211.5L189,210.9L190.5,210.3L192,209.6L193.5,208.9L195,208.2L196.5,207.5L198,206.8L199.5,206.1L201,205.3L202.5,204.6L204,203.8L205.5,203L207,202.2L208.5,201.3L210,200.5L211.5,199.6L213,198.8L214.5,197.9L216,197L217.5,196.1L219,195.2L220.5,194.3L222,193.4L223.5,192.4L225,191.5L226.5,190.6L228,189.6L229.5,188.7L231,187.8L232.5,186.9L234,186L235.5,185.1L237,184.2L238.5,183.4L240,182.6L241.5,181.8L243,181.1L244.5,180.4L246,179.8L247.5,179.2L249,178.6L250.5,178.2L252,177.7L253.5,177.4L255,177.1L256.5,176.8L258,176.7L259.5,176.6L261,176.5L262.5,176.5L264,176.6L265.5,176.7L267,176.9L268.5,177.2L270,177.5L271.5,177.8L273,178.2L274.5,178.7L276,179.1L277.5,179.6L279,180.2L280.5,180.7L282,181.3L283.5,181.9L285,182.5L286.5,183.2L288,183.8L289.5,184.5L291,185.1L292.5,185.8L294,186.4L295.5,187.1L297,187.8L298.5,188.4L300,189.1L301.5,189.7L303,190.4L304.5,191L306,191.6L307.5,192.3L309,192.9L310.5,193.5L312,194.1L313.5,194.7L315,195.2L316.5,195.8L318,196.4L319.5,196.9L321,197.4L322.5,198L324,198.5L325.5,199L327,199.5L328.5,200L330,200.4L331.5,200.9L333,201.4L334.5,201.8L336,202.3L337.5,202.7L339,203.1L340.5,203.5L342,203.9L343.5,204.3L345,204.7L346.5,205.1L348,205.5L349.5,205.8L351,206.2L352.5,206.5L354,206.9L355.5,207.2L357,207.5L358.5,207.9L360,208.2L361.5,208.5L363,208.8L364.5,209.1L366,209.4L367.5,209.7L369,210L370.5,210.2L372,210.5L373.5,210.8L375,211L376.5,211.3L378,211.6L379.5,211.8L381,212L382.5,212.3L384,212.5L385.5,212.8L387,213L388.5,213.2L390,213.4L391.5,213.6L393,213.9L394.5,214.1L396,214.3L397.5,214.5L399,214.7L400.5,214.9L402,215.1L403.5,215.2L405,215.4L406.5,215.6L408,215.8L409.5,216L411,216.1L412.5,216.3L414,216.5L415.5,216.7L417,216.8L418.5,217L420,217.1L421.5,217.3L423,217.5L424.5,217.6L426,217.8L427.5,217.9L429,218L430.5,218.2L432,218.3L433.5,218.5L435,218.6L436.5,218.7L438,218.9L439.5,219L441,219.1L442.5,219.3L444,219.4L445.5,219.5L447,219.7L448.5,219.8L450,219.9L451.5,220L453,220.1L454.5,220.3L456,220.4L457.5,220.5L459,220.6L460.5,220.7L462,220.8L463.5,220.9L465,221L466.5,221.1L468,221.2L469.5,221.3L471,221.4L472.5,221.5L474,221.6L475.5,221.7L477,221.8L478.5,221.9L480,222L481.5,222.1L483,222.2L484.5,222.3L486,222.4L487.5,222.5L489,222.6L490.5,222.7L492,222.7L493.5,222.8L495,222.9L496.5,223L498,223.1L499.5,223.2L501,223.2L502.5,223.3L504,223.4L505.5,223.5L507,223.6L508.5,223.6L510,223.7L511.5,223.8L513,223.9L514.5,223.9L516,224L517.5,224.1L519,224.2L520.5,224.2L522,224.3L523.5,224.4L525,224.4L526.5,224.5L528,224.6L529.5,224.6L531,224.7L532.5,224.8L534,224.8L535.5,224.9L537,225L538.5,225L540,225.1L541.5,225.2L543,225.2L544.5,225.3L546,225.3L547.5,225.4L549,225.5L550.5,225.5L552,225.6L553.5,225.6L555,225.7L556.5,225.8L558,225.8L559.5,225.9L561,225.9L562.5,226L564,226L565.5,226.1L567,226.1L568.5,226.2L570,226.3L571.5,226.3L573,226.4L574.5,226.4L576,226.5L577.5,226.5L579,226.6L580.5,226.6L582,226.7L583.5,226.7L585,226.8L586.5,226.8L588,226.9L589.5,226.9L591,226.9L592.5,227L594,227L595.5,227.1L597,227.1L598.5,227.2L600,227.2L601.5,227.3L603,227.3L604.5,227.4L606,227.4L607.5,227.4L609,227.5L610.5,227.5L612,227.6L613.5,227.6L615,227.7L616.5,227.7L618,227.7L619.5,227.8L621,227.8L622.5,227.9L624,227.9L625.5,227.9L627,228L628.5,228L630,228.1L631.5,228.1L633,228.1L634.5,228.2L636,228.2L637.5,228.3L639,228.3L640.5,228.3L642,228.4L643.5,228.4L645,228.4L646.5,228.5L648,228.5L649.5,228.5L651,228.6L652.5,228.6L654,228.7L655.5,228.7L657,228.7L658.5,228.8L660,228.8" fill="none" stroke="var(--tldr)" stroke-width="2.5"/>
+<line x1="261.3" y1="40" x2="261.3" y2="240" stroke="var(--fg-dim)" stroke-dasharray="4 4"/>
+<text x="250" y="260" fill="var(--fg)" font-size="14">f₀</text>
+<text x="290" y="60" fill="var(--accent)" font-size="14">R pequeña: pico alto y estrecho</text>
+<text x="380" y="150" fill="var(--tldr)" font-size="14">R grande: pico bajo y ancho</text>
+<text x="70" y="40" fill="var(--fg-dim)" font-size="13">ξ₀/R</text>
+</svg>
+<figcaption>L = 0,1 H, C = 25 µF (f₀ ≈ 100,7 Hz), ξ₀ = 10 V. Mismo f₀ para ambas: <b>R no mueve la resonancia</b>, solo su altura y anchura. Si R → 0 el pico → ∞.</figcaption>
+</figure>
+<div class="sim"><span class="label">Simulación · curva de resonancia</span>
+<svg id="resSvg" viewBox="0 0 900 320" role="img" aria-label="Simulación de la curva de resonancia">
+<line x1="70" y1="280" x2="885" y2="280" stroke="var(--fg-dim)"/>
+<line x1="70" y1="290" x2="70" y2="30" stroke="var(--fg-dim)"/>
+<text x="860" y="300" fill="var(--fg-dim)" font-size="13">f (Hz)</text>
+<text x="10" y="40" fill="var(--fg-dim)" font-size="13">I₀ (A)</text>
+<text x="62" y="300" fill="var(--fg-dim)" font-size="12">0</text>
+<text x="255" y="300" fill="var(--fg-dim)" font-size="12">100</text>
+<text x="455" y="300" fill="var(--fg-dim)" font-size="12">200</text>
+<text x="655" y="300" fill="var(--fg-dim)" font-size="12">300</text>
+<text x="40" y="55" fill="var(--fg-dim)" font-size="12">2</text>
+<text x="40" y="167" fill="var(--fg-dim)" font-size="12">1</text>
+<path id="resNorm" d="" fill="none" stroke="var(--fg-dim)" stroke-width="1.5" stroke-dasharray="5 5"/>
+<path id="resCurve" d="" fill="none" stroke="var(--accent)" stroke-width="3"/>
+<line id="resF0" x1="0" y1="30" x2="0" y2="280" stroke="var(--field)" stroke-dasharray="4 4"/>
+<line id="resBand" x1="0" y1="0" x2="0" y2="0" stroke="var(--tldr)" stroke-width="3"/>
+<line id="resMark" x1="0" y1="30" x2="0" y2="280" stroke="var(--pos)"/>
+<circle id="resDot" cx="0" cy="0" r="6" fill="var(--pos)"/>
+<text x="560" y="45" fill="var(--accent)" font-size="13">I₀(f) real</text>
+<text x="560" y="63" fill="var(--fg-dim)" font-size="13">misma curva normalizada al pico</text>
+<text x="560" y="81" fill="var(--tldr)" font-size="13">ancho a I₀,máx/√2</text>
+</svg>
+<div class="controls">
+<label for="resR">R (Ω)</label><input type="range" id="resR" min="5" max="100" step="1" value="20"><output id="resRo">20</output>
+<label for="resL">L (mH)</label><input type="range" id="resL" min="20" max="500" step="5" value="100"><output id="resLo">100</output>
+<label for="resC">C (µF)</label><input type="range" id="resC" min="5" max="100" step="1" value="25"><output id="resCo">25</output>
+<label for="resF">f de la fuente (Hz)</label><input type="range" id="resF" min="1" max="400" step="1" value="150"><output id="resFo">150</output>
+</div>
+<div class="readout" id="resOut"></div>
+</div>
+<div class="box why"><span class="label">Sobretensión en resonancia</span>
+<p>En resonancia $I_0 = \xi_0/R$, así que $V_{L,0} = V_{C,0} = \omega_0 L\,\dfrac{\xi_0}{R}$. Si $\omega_0L \gg R$, la tensión en la bobina (y en el condensador) es <b>mucho mayor que la de la fuente</b>. No viola nada: $\tilde V_L$ y $\tilde V_C$ están en oposición y se anulan entre sí; la energía va y viene entre L y C.</p>
+<p class="dim">Para la intuición (no aparece en las diapositivas): el cociente $Q = \omega_0L/R$ ("factor de calidad") mide cuántas veces se amplifica, y el ancho del pico es $\Delta\omega = R/L$.</p>
+</div>
+<div class="box intuition"><span class="label">Aplicación: sintonizar una radio</span>
+<p>El circuito de sintonía es un RLC serie. Girando el dial cambias $C$ → cambias $\omega_0$. La emisora cuya frecuencia coincide con $\omega_0$ produce una corriente grande; las demás, casi nada.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>$\omega_0 = 1/\sqrt{LC}$ está en <b>rad/s</b>; $f_0 = \dfrac{1}{2\pi\sqrt{LC}}$ en Hz. Error clásico: dar ω₀ cuando piden f.</li>
+<li>Despejar C para resonancia: $C = \dfrac{1}{\omega^2L}$ (con ω, no f).</li>
+<li>R <b>no cambia</b> ω₀ en el RLC serie.</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividad 5.6 y problema 22)</span>
+<details><summary>Radio con C = 32,3 pF y L = 0,25 mH: ¿qué frecuencia sintoniza?</summary><p>$LC = 0{,}25\times10^{-3}\cdot32{,}3\times10^{-12} = 8{,}075\times10^{-15}$ s² → $\sqrt{LC} = 8{,}99\times10^{-8}$ s → $f_0 = \dfrac{1}{2\pi\cdot8{,}99\times10^{-8}} = 1{,}77$ MHz.</p></details>
+<details><summary>¿Por qué la amplitud de la corriente depende de la frecuencia de la fuente?</summary><p>Porque $X_L$ y $X_C$ dependen de ω, y con ellas $|Z|$. La fuente "ve" una oposición distinta según lo rápido que oscila.</p></details>
+<details><summary>¿Y si R, L y C están en <b>paralelo</b> con la fuente?</summary><p>Cada rama recibe ξ directamente: $\tilde I = \tilde\xi\left[\dfrac1R + j\left(\omega C - \dfrac{1}{\omega L}\right)\right]$. En $\omega_0 = 1/\sqrt{LC}$ las ramas L y C se cancelan y la corriente total es <b>mínima</b> ($\xi_0/R$): resonancia "al revés" (antirresonancia).</p></details>
+</div>
+</section>
+
+<section id="sec-mallas">
+<h2>11 · (*) Análisis de mallas</h2>
+<p>Como Kirchhoff y Ohm valen con fasores e impedancias, <b>todas las técnicas del T2</b> se trasladan tal cual: corrientes de malla, superposición, Thévenin… La ecuación de mallas es</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$[\tilde\xi_i] = [Z_{ij}]\,[\tilde I_j]$$
+<p class="legend">$Z_{ii}$: suma de impedancias de la malla $i$ · $Z_{ij}$ ($i\neq j$): menos la impedancia compartida por las mallas $i$ y $j$ (si ambas corrientes giran en el mismo sentido) · $\tilde\xi_i$: suma de fem de la malla $i$.</p>
+</div>
+<div class="box trap"><span class="label">Consejo de las diapositivas</span>
+<p>Sustituye <b>números</b> (impedancias ya calculadas) <b>antes</b> de resolver el sistema. Con símbolos te pierdes en el álgebra compleja.</p>
+</div>
+<div class="box example"><span class="label">Problema resuelto (Ejemplo 5.1 de las diapositivas)</span>
+<p>Determinar $\tilde I_1,\tilde I_2,\tilde I_3$ e $i_1(t), i_2(t), i_3(t)$. Datos: $\xi(t) = 20\operatorname{sen}(4\times10^4t)$ V, $R_1 = 8\ \Omega$, $R_2 = 4\ \Omega$, $L = 0{,}2$ mH, $C = 3{,}125\ \mu$F. La rama inferior izquierda tiene un condensador $C/2$ y la derecha uno $C$; la bobina es la rama común; $\tilde I_3$ es la corriente por la bobina.</p>
+<figure class="diagram">
+<svg viewBox="0 0 460 250" role="img" aria-label="Circuito de dos mallas del ejemplo 5.1">
+<path d="M60,40 V104 M60,136 V200 M60,40 H110 M170,40 H290 M350,40 H400 V200 M230,40 V90 M230,150 V200 M60,200 H115 M175,200 H290 M350,200 H400" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="60" cy="120" r="16" fill="var(--bg-2)" stroke="var(--fg)" stroke-width="2"/><path d="M51,120 q4.5,-9 9,0 t9,0" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M110,40 h10 l5,-8 l10,16 l10,-16 l10,16 l5,-8 h10" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M290,40 h10 l5,-8 l10,16 l10,-16 l10,16 l5,-8 h10" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M230,90 v6 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 v6" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M115,200 h26 M141,188 v24 M149,188 v24 M149,200 h26" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M290,200 h26 M316,188 v24 M324,188 v24 M324,200 h26" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="230" cy="40" r="3.5" fill="var(--fg)"/>
+<circle cx="230" cy="200" r="3.5" fill="var(--fg)"/>
+<g font-size="14" fill="var(--fg)">
+<text x="125" y="25">8 Ω</text>
+<text x="305" y="25">4 Ω</text>
+<text x="246" y="125">j8 Ω</text>
+<text x="118" y="235">−j16 Ω</text>
+<text x="298" y="235">−j8 Ω</text>
+<text x="2" y="160">−j20 V</text>
+</g>
+<g font-size="15">
+<text x="125" y="128" fill="var(--neg)">↻ Ĩ₁</text>
+<text x="300" y="128" fill="var(--neg)">↻ Ĩ₂</text>
+</g>
+</svg>
+<figcaption>Circuito equivalente con impedancias ya calculadas.</figcaption>
+</figure>
+<details><summary>Plan</summary>
+<p>1) Pasar la fuente a coseno y fasor. 2) Calcular reactancias. 3) Dos ecuaciones de malla. 4) Resolver por sustitución. 5) $\tilde I_3 = \tilde I_1 - \tilde I_2$. 6) Polar → tiempo, cuidando el cuadrante.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$\xi = 20\operatorname{sen}(4\times10^4t) = 20\cos(4\times10^4t - \pi/2)$ → $\tilde\xi = 20e^{-j\pi/2} = -j20$ V; $\omega = 4\times10^4$ rad/s.</div>
+<div class="step">$X_L = 4\times10^4\cdot2\times10^{-4} = 8\ \Omega$; $X_C = \dfrac{1}{4\times10^4\cdot3{,}125\times10^{-6}} = 8\ \Omega$; el de $C/2$: $16\ \Omega$.</div>
+<div class="step">Malla 1: $(8 - j16 + j8)\tilde I_1 - j8\,\tilde I_2 = -j20$. Malla 2: $-j8\,\tilde I_1 + (4 + j8 - j8)\tilde I_2 = 0$. Dividiendo entre 4: $\begin{pmatrix}-j5\\0\end{pmatrix} = \begin{pmatrix}2-j2 &amp; -j2\\ -j2 &amp; 1\end{pmatrix}\begin{pmatrix}\tilde I_1\\ \tilde I_2\end{pmatrix}$.</div>
+<div class="step">De la 2ª: $\tilde I_2 = 2j\,\tilde I_1$. En la 1ª: $-j5 = (2-j2)\tilde I_1 - j2\cdot2j\,\tilde I_1 = (6 - j2)\tilde I_1$.</div>
+<div class="step">$\tilde I_1 = \dfrac{-j5(6+j2)}{40} = \dfrac{10 - j30}{40} = \dfrac{1-j3}{4}$ A; $\;\tilde I_2 = 2j\,\dfrac{1-j3}{4} = \dfrac{3+j}{2}$ A.</div>
+<div class="step">$\tilde I_3 = \tilde I_1 - \tilde I_2 = \dfrac{1 - j3 - 6 - j2}{4} = \dfrac{-5-j5}{4}$ A (tercer cuadrante: ángulo $\pi+\pi/4 = 5\pi/4$).</div>
+<div class="step">$i_1 = \tfrac{\sqrt{10}}{4}\cos(4\times10^4t - 1{,}249)$ A; $\;i_2 = \tfrac{\sqrt{10}}{2}\cos(4\times10^4t + 0{,}322)$ A; $\;i_3 = \tfrac{5\sqrt2}{4}\cos(4\times10^4t + 5\pi/4)$ A.</div>
+</div>
+<p class="dim">Errata de los apuntes: escriben 0,291 rad para la fase de $\tilde I_2$; el valor correcto es $\arctan(1/3) = 0{,}322$ rad.</p>
+</details>
+</div>
+</section>
+
+<section id="sec-potencia">
+<h2>12 · Potencia en corriente alterna</h2>
+<h3>12.1 · Potencia instantánea y potencia media</h3>
+<p>Rama de impedancia $Z$ con $V(t) = V_0\cos\omega t$ e $I(t) = I_0\cos(\omega t-\varphi)$, donde <span class="hl">φ = desfase de V respecto a I</span> (φ &gt; 0: la corriente va retrasada).</p>
+<p>$P(t) = V(t)I(t) = V_0I_0\cos\omega t\cos(\omega t-\varphi)$ oscila con el tiempo (incluso cambia de signo). Lo que importa para la factura es la <b>media en un periodo</b>: la energía en un tiempo largo es $\Delta E \simeq P_{med}\,\Delta t$.</p>
+<div class="box why"><span class="label">Derivación de P_med</span>
+<div class="steps">
+<div class="step">Expandir: $\cos(\omega t-\varphi) = \cos\omega t\cos\varphi + \operatorname{sen}\omega t\operatorname{sen}\varphi$.</div>
+<div class="step">$P_{med} = \dfrac{V_0I_0}{T}\left[\cos\varphi\displaystyle\int_0^T\cos^2\omega t\,dt + \operatorname{sen}\varphi\int_0^T\cos\omega t\operatorname{sen}\omega t\,dt\right]$.</div>
+<div class="step">La 1ª integral vale $T/2$ (media de cos² = ½). La 2ª vale 0 ($\cos\operatorname{sen} = \tfrac12\operatorname{sen}2\omega t$, media nula).</div>
+<div class="step">$P_{med} = \tfrac12V_0I_0\cos\varphi = V_{ef}I_{ef}\cos\varphi$.</div>
+</div>
+<p><b>Lectura física</b>: descompón la corriente en una parte <b>en fase</b> con V ($I_0\cos\varphi$) y otra <b>en cuadratura</b> ($I_0\operatorname{sen}\varphi$). Solo la parte en fase transporta energía neta; la de cuadratura entrega energía medio ciclo y la devuelve el otro medio.</p>
+</div>
+<div class="box formula"><span class="label">Fórmula: potencia media consumida</span>
+$$P_{med} = \frac12V_0I_0\cos\varphi = V_{ef}I_{ef}\cos\varphi = \frac12\operatorname{Re}\!\left(\tilde V\tilde I^{*}\right) = \frac12\operatorname{Re}\!\left(\tilde V^{*}\tilde I\right)$$
+<p class="legend">$P_{med}$ (W) · $V_0, I_0$: amplitudes · $\varphi = \varphi_V-\varphi_I$ · $\tilde I^{*}$: conjugado. Comprobación: $\tilde V = V_0$, $\tilde I = I_0e^{-j\varphi}$ → $\tfrac12\operatorname{Re}(V_0I_0e^{j\varphi}) = \tfrac12V_0I_0\cos\varphi$.</p>
+</div>
+<div class="sim"><span class="label">Simulación · potencia instantánea y desfase</span>
+<svg id="powSvg" viewBox="0 0 900 300" role="img" aria-label="Simulación de potencia instantánea">
+<path id="powPos" d="" fill="var(--field)" fill-opacity="0.25" stroke="none"/>
+<path id="powNeg" d="" fill="var(--trap)" fill-opacity="0.3" stroke="none"/>
+<line x1="60" y1="150" x2="870" y2="150" stroke="var(--fg-dim)"/>
+<path id="powV" d="" fill="none" stroke="var(--pos)" stroke-width="2"/>
+<path id="powI" d="" fill="none" stroke="var(--neg)" stroke-width="2"/>
+<path id="powP" d="" fill="none" stroke="var(--field)" stroke-width="3"/>
+<line id="powAvg" x1="60" y1="150" x2="860" y2="150" stroke="var(--field)" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="70" y="25" fill="var(--pos)" font-size="13">v(t)</text>
+<text x="110" y="25" fill="var(--neg)" font-size="13">i(t)</text>
+<text x="150" y="25" fill="var(--field)" font-size="13">p(t) = v·i</text>
+<text x="240" y="25" fill="var(--field)" font-size="13">- - - P_med</text>
+<text x="350" y="25" fill="var(--trap)" font-size="13">zona roja: energía devuelta a la fuente</text>
+</svg>
+<div class="controls">
+<label for="powPhi">φ (°) = desfase V−I</label><input type="range" id="powPhi" min="-90" max="90" step="1" value="40"><output id="powPhio">40</output>
+</div>
+<div class="readout" id="powOut"></div>
+</div>
+<div class="box why"><span class="label">Por qué bobinas y condensadores no consumen potencia media</span>
+<p>En L o C puros $\varphi = \pm90°$ → $\cos\varphi = 0$. Físicamente: durante un cuarto de ciclo almacenan energía ($\tfrac12LI^2$ en el campo magnético, $\tfrac12CV^2$ en el eléctrico) y el cuarto siguiente la <b>devuelven</b> íntegra. Mueve el deslizador a ±90°: zona amarilla y roja iguales.</p>
+</div>
+
+<h3>12.2 · Factor de potencia</h3>
+<p>Si $Z = |Z|e^{j\alpha}$ y $\tilde V = V_0$, entonces $\tilde I = \tilde V/Z = \dfrac{V_0}{|Z|}e^{-j\alpha}$: $I_0 = V_0/|Z|$ y <b>φ = α</b>. El desfase V–I es el argumento de la impedancia.</p>
+<div class="box formula"><span class="label">Fórmula</span>
+$$\cos\varphi = \frac{\operatorname{Re}(Z)}{|Z|},\qquad P_{med} = I_{ef}^2\operatorname{Re}(Z) = \frac{V_{ef}^2\operatorname{Re}(Z)}{|Z|^2}$$
+<p class="legend">$\cos\varphi$: <b>factor de potencia</b> (adimensional), en $[-1,1]$. Para una carga pasiva $-90°\le\varphi\le 90°$ → $\cos\varphi\ge 0$. Un valor negativo indica que ese elemento (p. ej. una fuente) <b>entrega</b> energía en vez de consumirla.</p>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>$\cos\varphi$ dice qué fracción del "esfuerzo" $V_{ef}I_{ef}$ se convierte en trabajo útil. En resonancia $\varphi = 0$ → $\cos\varphi = 1$: consumo máximo para esa corriente. Con $\varphi=\pi/2$ hay corriente pero <b>cero</b> consumo.</p>
+</div>
+
+<h3>12.3 · Consumo y balance de potencia</h3>
+<ul>
+<li>Solo se disipa energía en las <b>resistencias</b> (efecto Joule). Pero L y C deciden <b>cuánta</b> corriente pasa por ellas, y por tanto cuánta se disipa.</li>
+<li>En un circuito <b>serie</b>, $\operatorname{Re}(Z) = \sum R$. En otros, $\operatorname{Re}(Z)$ mezcla R con L y C (ejemplo 5.3: $\operatorname{Re}Z = 5{,}8\ \Omega\neq1{,}2+6+3$).</li>
+</ul>
+<div class="box formula"><span class="label">Fórmula: potencia de un generador y balance</span>
+$$P^{gen}_{med} = \frac1T\int_0^T\xi(t)I(t)\,dt = \frac12\operatorname{Re}\!\left(\tilde\xi\,\tilde I^{*}\right),\qquad \sum_{\text{gen}}P_{med} = \sum_{\text{R}}\tfrac12 I_{0,R}^2R$$
+<p class="legend">$\tilde I$: corriente que sale por el borne + del generador. <b>Lo que suministran los generadores = lo que disipan las resistencias.</b> Es la comprobación estrella de los problemas.</p>
+</div>
+<div class="box example"><span class="label">Ejemplo 5.2 (diapositivas): balance</span>
+<p>Dos fuentes $\tilde\xi_1 = 8$ V y $\tilde\xi_2 = 4$ V; resistencias de 2 kΩ y 4 kΩ, condensador $-6j$ kΩ y bobina $2j$ kΩ. Resolviendo: $\tilde I_1 = 1+j$ mA ($\sqrt2e^{j\pi/4}$), $\tilde I_2 = 1-j$ mA, $\tilde I_3 = 2$ mA.</p>
+<table>
+<tr><th>Consumido</th><th>Suministrado</th></tr>
+<tr><td>$R=2$ kΩ: $\tfrac12(\sqrt2\ \text{mA})^2\cdot2\ \text{k}\Omega = 2$ mW</td><td>$\xi_1$: $\tfrac12\operatorname{Re}[8\cdot(1-j)] = 4$ mW</td></tr>
+<tr><td>$R=4$ kΩ: $\tfrac12(\sqrt2\ \text{mA})^2\cdot4\ \text{k}\Omega = 4$ mW</td><td>$\xi_2$: $\tfrac12\operatorname{Re}[4\cdot(1+j)] = 2$ mW</td></tr>
+<tr><td><b>Total 6 mW</b></td><td><b>Total 6 mW</b> ✓</td></tr>
+</table>
+</div>
+<div class="box example"><span class="label">Problema resuelto (Ejemplo 5.3 de las diapositivas)</span>
+<p>Fuente $V_{ef} = 10$ V, $f = 50$ Hz, en serie con $1{,}2 + j1{,}6\ \Omega$ y con el paralelo de $6+j8\ \Omega$ y $3 - j4\ \Omega$ (entre A y B). Calcular: (1) la intensidad por la fuente; (2) la potencia media; (3) el equivalente Thévenin entre A y B; (4) la energía en la bobina de $X_L = 1{,}6\ \Omega$.</p>
+<details><summary>Plan</summary><p>Reducir impedancias (paralelo con admitancias, luego serie) → $\tilde I = \tilde\xi/Z$ → $P = V_{ef}I_{ef}\cos\varphi$ → Thévenin: cortocircuitar la fuente para $Z_{TH}$, $\tilde V_{TH} = \tilde V_{AB}$ en circuito abierto → $U_m = \tfrac12LI^2(t)$. Aquí se trabaja con <b>fasores eficaces</b> ($|\tilde\xi| = 10$ V).</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$\dfrac{1}{Z_{AB}} = \dfrac{6-j8}{100} + \dfrac{3+j4}{25} = 0{,}18 + j0{,}08$ → $Z_{AB} \approx 4{,}6 - j2\ \Omega$.</div>
+<div class="step">$Z = (1{,}2+j1{,}6) + (4{,}6-j2) = 5{,}8 - j0{,}4 = 5{,}8\,e^{-j0{,}069}\ \Omega$.</div>
+<div class="step">$\tilde I = \dfrac{10}{5{,}8e^{-j0{,}069}} = 1{,}72\,e^{j0{,}069}$ A → $I_{ef} = 1{,}72$ A, $I(t) = 1{,}72\sqrt2\cos(100\pi t + 0{,}069) = 2{,}43\cos(100\pi t + 0{,}069)$ A (adelantada: carga capacitiva).</div>
+<div class="step">$P_{med} = 10\cdot1{,}72\cdot\cos(0{,}069) = 17{,}16$ W. Comprobación: $I_{ef}^2\operatorname{Re}Z = 1{,}72^2\cdot5{,}8 = 17{,}16$ W ✓.</div>
+<div class="step">Thévenin: $\dfrac{1}{Z_{TH}} = \dfrac{1}{4{,}6-j2} + \dfrac{1}{1{,}2+j1{,}6}$ → $Z_{TH} = 1{,}43 + j0{,}95\ \Omega$; $\tilde V_{TH} = Z_{AB}\tilde I = 5e^{-j0{,}418}\cdot1{,}72e^{j0{,}069} = 8{,}6\,e^{-j0{,}349}$ V.</div>
+<div class="step">$L = X_L/\omega = 1{,}6/(100\pi) = 5{,}09$ mH → $U_m(t) = \tfrac12 L I^2(t) = \tfrac12\cdot5{,}09\times10^{-3}\cdot2{,}43^2\cos^2(\ldots) = 0{,}015\cos^2(100\pi t+0{,}069)$ J.</div>
+</div>
+</details>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li><b>El ½ va con amplitudes, no con eficaces</b>: $\tfrac12V_0I_0\cos\varphi = V_{ef}I_{ef}\cos\varphi$. Si usas fasores eficaces, $P = \operatorname{Re}(\tilde V\tilde I^*)$ <b>sin</b> ½.</li>
+<li>$P = I_{ef}^2R$ con la corriente <b>que pasa por esa R</b>; $P = V_{ef}^2/R$ con la tensión <b>en bornes de esa R</b> (no la de la fuente si hay más cosas en serie).</li>
+<li>$\cos\varphi$ es par: $\cos(30°) = \cos(-30°)$. El factor de potencia <b>no dice</b> si es inductivo o capacitivo; hay que añadirlo ("0,8 inductivo").</li>
+<li>"Potencia activa" = potencia media.</li>
+</ul>
+</div>
+<div class="box check"><span class="label">Comprueba (Actividades 5.8 y 5.9, problema 17)</span>
+<details><summary>¿Por qué usar potencia media en vez de instantánea?</summary><p>La instantánea oscila a $2\omega$ (100 veces por segundo a 50 Hz) y puede ser negativa. Lo que pasa en un periodo se repite: la media por periodo resume todo y da la energía en cualquier intervalo largo.</p></details>
+<details><summary>¿Cuándo es nula la potencia media?</summary><p>Si $\cos\varphi = 0$ (carga puramente reactiva: solo L y C) o si $I=0$. Ejemplo con resistencia: R en serie con un paralelo LC <b>en resonancia</b>: el paralelo tiene $Z\to\infty$, la corriente total es 0 y R no disipa.</p></details>
+<details><summary>¿Cuándo es máxima la potencia en un RLC serie? ¿Y en un RLC paralelo?</summary><p><b>Serie</b>: en resonancia ($|Z|$ mínimo = R, corriente máxima, cos φ = 1). <b>Paralelo</b> con fuente ideal: R siempre tiene $V_{ef}$ de la fuente → $P = V_{ef}^2/R$, <b>independiente de ω</b>.</p></details>
+<details><summary>$\xi_{ef} = 220$ V, $I_{ef} = 150$ mA, corriente retrasada un sexto del periodo. ¿Potencia?</summary><p>$\varphi = 2\pi/6 = 60°$ → $P = 220\cdot0{,}15\cdot\cos60° = 16{,}5$ W.</p></details>
+</div>
+</section>
+
+<section id="sec-problemas">
+<h2>13 · Problemas resueltos (boletín T5)</h2>
+<p class="dim">Numeración del boletín de problemas. Abre el <b>Plan</b> antes que la solución: intenta el problema con él.</p>
+
+<div class="box example"><span class="label">Problema 1 · Generador</span>
+<p>Bobina de $N$ espiras circulares de radio $R$ girando a ω constante en un campo $B$ uniforme perpendicular al eje; en $t=0$ la normal forma un ángulo δ con $\vec B$. (a) Flujo $\Phi(t)$ y fem $\varepsilon(t)$. (b) Valor máximo y eficaz de ε si $N=200$, $R=1$ cm, 50 rev/s, $B = 0{,}5$ T.</p>
+<details><summary>Plan</summary><p>$\Phi = NBS\cos(\text{ángulo})$ con ángulo $=\omega t+\delta$ → derivar (Faraday) → $\varepsilon_0 = NBS\omega$ → eficaz $=\varepsilon_0/\sqrt2$. Ojo: rev/s → rad/s.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$\Phi(t) = NB\pi R^2\cos(\omega t+\delta)$ (flujo total por las N espiras).</div>
+<div class="step">$\varepsilon(t) = -\dfrac{d\Phi}{dt} = NB\pi R^2\omega\operatorname{sen}(\omega t+\delta)$.</div>
+<div class="step">Datos SI: $S = \pi(0{,}01)^2 = 3{,}14\times10^{-4}$ m²; $\omega = 2\pi\cdot50 = 100\pi = 314{,}2$ rad/s.</div>
+<div class="step">$\varepsilon_0 = 200\cdot0{,}5\cdot3{,}14\times10^{-4}\cdot314{,}2 = 9{,}87$ V.</div>
+<div class="step">$\varepsilon_{ef} = 9{,}87/\sqrt2 = 6{,}98$ V.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 4 · Kirchhoff de nudos con fasores</span>
+<p>En un nudo concurren cuatro ramas con $\sum I_i(t) = 0$. $I_1 = 2\cos\omega t$ A, $I_2 = 4\cos(\omega t+\pi/3)$ A, $I_3 = 8\cos(\omega t+2\pi/3)$ A. Hallar $I_4(t)$.</p>
+<details><summary>Plan</summary><p>Pasar a fasores → binómica (para sumar) → $\tilde I_4 = -(\tilde I_1+\tilde I_2+\tilde I_3)$ → polar → tiempo. <b>Nunca</b> sumes amplitudes.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$\tilde I_1 = 2$; $\tilde I_2 = 4\angle60° = 2 + j2\sqrt3$; $\tilde I_3 = 8\angle120° = -4 + j4\sqrt3$.</div>
+<div class="step">Suma: $(2+2-4) + j(2\sqrt3+4\sqrt3) = j6\sqrt3$.</div>
+<div class="step">$\tilde I_4 = -j6\sqrt3 = 6\sqrt3\angle -90°$ A.</div>
+<div class="step">$I_4(t) = 6\sqrt3\cos(\omega t - \pi/2) = 10{,}39\operatorname{sen}\omega t$ A. (La suma de amplitudes, 14 A, no tiene nada que ver.)</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 7 · Impedancia a partir de medidas</span>
+<p>Un circuito conectado a $V_{ef} = 220$ V consume $I_{ef} = 500$ mA, con la intensidad <b>adelantada</b> π/3 respecto a la tensión. Calcular su impedancia.</p>
+<details><summary>Plan</summary><p>$|Z| = V_{ef}/I_{ef}$ (el cociente de eficaces = cociente de amplitudes). Argumento de $Z$ = $\varphi_V - \varphi_I$. Corriente adelantada → argumento negativo → capacitivo.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$|Z| = 220/0{,}5 = 440\ \Omega$.</div>
+<div class="step">$\varphi_V - \varphi_I = -\pi/3$ (I va por delante).</div>
+<div class="step">$Z = 440\,e^{-j\pi/3} = 440(\cos60° - j\operatorname{sen}60°) = 220 - j220\sqrt3 = 220(1-j\sqrt3)\ \Omega$.</div>
+<div class="step">Interpretación: $R = 220\ \Omega$ en serie con una reactancia capacitiva $X_C = 381\ \Omega$. Potencia: $220\cdot0{,}5\cdot\cos60° = 55$ W $= I_{ef}^2R$ ✓.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 10 · Los eficaces no se suman</span>
+<p>Bobina de 10 mH en serie con condensador de 12,5 µF; $I_{ef} = 0{,}5$ A y $V_{C,ef} = 10$ V. Hallar $f$, $V_{L,ef}$ y la tensión eficaz total. Comprobar que no es la suma.</p>
+<details><summary>Plan</summary><p>De $V_C = I X_C$ sale $X_C$ → ω (porque $X_C = 1/\omega C$) → $X_L$ → $V_L$ → total con $|Z| = |X_L - X_C|$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$X_C = V_{C,ef}/I_{ef} = 10/0{,}5 = 20\ \Omega$.</div>
+<div class="step">$\omega = \dfrac{1}{X_CC} = \dfrac{1}{20\cdot12{,}5\times10^{-6}} = 4000$ rad/s → $f = 4000/2\pi = 636{,}6$ Hz.</div>
+<div class="step">$X_L = 4000\cdot0{,}01 = 40\ \Omega$ → $V_{L,ef} = 40\cdot0{,}5 = 20$ V.</div>
+<div class="step">$Z = j(40-20) = j20\ \Omega$ → $V_{ef} = 20\cdot0{,}5 = 10$ V, ¡no 30 V!</div>
+<div class="step">Por qué: $\tilde V_L$ (+90°) y $\tilde V_C$ (−90°) están en <b>oposición</b>: se restan. Los eficaces son proporcionales a las amplitudes, que solo se suman si las señales están en fase.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 11 · R–L serie y diagrama fasorial</span>
+<p>Asociación serie R–L a 955 Hz; tensión eficaz total 10 V; $R = 80\ \Omega$ con $V_{R,ef} = 8$ V. (a) Potencia media, $V_{L,ef}$ y $L$. (b) Diagrama fasorial de tensiones con fase cero en la corriente.</p>
+<details><summary>Plan</summary><p>$V_R$ y R dan la corriente → potencia solo en R → Pitágoras en el triángulo de tensiones (V_R y V_L a 90°) → $X_L = V_L/I$ → $L = X_L/\omega$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$I_{ef} = 8/80 = 0{,}1$ A.</div>
+<div class="step">$P = I_{ef}^2R = 0{,}01\cdot80 = 0{,}8$ W (la bobina no consume).</div>
+<div class="step">$V_{L,ef} = \sqrt{10^2 - 8^2} = 6$ V (no $10-8 = 2$).</div>
+<div class="step">$X_L = 6/0{,}1 = 60\ \Omega$ → $L = \dfrac{60}{2\pi\cdot955} = 10{,}0$ mH.</div>
+<div class="step">Comprobación: $\cos\varphi = 8/10 = 0{,}8$ → $P = 10\cdot0{,}1\cdot0{,}8 = 0{,}8$ W ✓; φ = 36,9° (inductivo).</div>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 380 210" role="img" aria-label="Diagrama fasorial del problema 11">
+<line x1="40" y1="170" x2="360" y2="170" stroke="var(--line)"/>
+<line x1="40" y1="170" x2="200" y2="170" stroke="var(--field)" stroke-width="3" marker-end="url(#ah-field)"/>
+<line x1="40" y1="170" x2="110" y2="170" stroke="var(--neg)" stroke-width="6" marker-end="url(#ah-neg)"/>
+<line x1="200" y1="170" x2="200" y2="50" stroke="var(--intuition)" stroke-width="3" marker-end="url(#ah-int)"/>
+<line x1="40" y1="170" x2="198" y2="52" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<path d="M90,170 A50,50 0 0 0 80,140" fill="none" stroke="var(--fg)"/>
+<text x="95" y="155" fill="var(--fg)" font-size="13">36,9°</text>
+<text x="60" y="195" fill="var(--neg)" font-size="14">Ĩ (0,1 A)</text>
+<text x="140" y="195" fill="var(--field)" font-size="14">Ṽ_R = 8 V</text>
+<text x="210" y="110" fill="var(--intuition)" font-size="14">Ṽ_L = 6 V</text>
+<text x="70" y="90" fill="var(--pos)" font-size="14">Ṽ = 10 V</text>
+</svg>
+<figcaption>Triángulo 6–8–10: la tensión total adelanta 36,9° a la corriente.</figcaption>
+</figure>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 20 · Circuito con ramas en paralelo y balance</span>
+<p>ω = 10³ rad/s. Fuente $8\angle0°$ V (amplitud) entre C y B; resistencia de 4 Ω de C a A; entre A y B, en paralelo, una bobina de 2 mH y un condensador de 250 µF. (a) Intensidades $\tilde I_1$ (fuente), $\tilde I_2$ (condensador), $\tilde I_3$ (bobina). (b) $V_{AB}(t)$ y $V_{CB}(t)$. (c) Potencia suministrada y consumida.</p>
+<figure class="diagram">
+<svg viewBox="0 0 460 250" role="img" aria-label="Circuito del problema 20">
+<path d="M60,40 V104 M60,136 V200 M60,40 H110 M170,40 H360 V90 M360,150 V200 M230,40 V90 M230,150 V200 M60,200 H360" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="60" cy="120" r="16" fill="var(--bg-2)" stroke="var(--fg)" stroke-width="2"/><path d="M51,120 q4.5,-9 9,0 t9,0" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M110,40 h10 l5,-8 l10,16 l10,-16 l10,16 l5,-8 h10" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M230,90 v6 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 v6" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M360,90 v26 M348,116 h24 M348,124 h24 M360,124 v26" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="230" cy="40" r="3.5" fill="var(--fg)"/>
+<circle cx="230" cy="200" r="3.5" fill="var(--fg)"/>
+<circle cx="60" cy="40" r="3.5" fill="var(--fg)"/>
+<g font-size="14" fill="var(--fg)">
+<text x="125" y="25">4 Ω</text>
+<text x="48" y="30">C</text>
+<text x="236" y="30">A</text>
+<text x="236" y="222">B</text>
+<text x="244" y="118">2 mH</text>
+<text x="244" y="136" fill="var(--fg-dim)">(j2 Ω)</text>
+<text x="380" y="118">250 µF</text>
+<text x="380" y="136" fill="var(--fg-dim)">(−j4 Ω)</text>
+<text x="2" y="160">8∠0° V</text>
+</g>
+<line x1="75" y1="52" x2="100" y2="52" stroke="var(--neg)" stroke-width="2" marker-end="url(#ah-neg)"/>
+<text x="76" y="70" fill="var(--neg)" font-size="14">Ĩ₁</text>
+<line x1="218" y1="55" x2="218" y2="80" stroke="var(--neg)" stroke-width="2" marker-end="url(#ah-neg)"/>
+<text x="198" y="75" fill="var(--neg)" font-size="14">Ĩ₃</text>
+<line x1="290" y1="52" x2="315" y2="52" stroke="var(--neg)" stroke-width="2" marker-end="url(#ah-neg)"/>
+<text x="295" y="70" fill="var(--neg)" font-size="14">Ĩ₂</text>
+</svg>
+<figcaption>Fuente + R en serie con un paralelo L–C.</figcaption>
+</figure>
+<details><summary>Plan</summary><p>Reactancias → impedancia del paralelo → $Z$ total → $\tilde I_1 = \tilde\xi/Z$ → $\tilde V_{AB} = Z_{\parallel}\tilde I_1$ → cada rama $\tilde V_{AB}/Z_k$ → comprobar nudo ($\tilde I_1 = \tilde I_2+\tilde I_3$) → balance de potencias.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$X_L = 10^3\cdot2\times10^{-3} = 2\ \Omega$; $X_C = \dfrac{1}{10^3\cdot250\times10^{-6}} = 4\ \Omega$.</div>
+<div class="step">$Z_\parallel = \dfrac{(j2)(-j4)}{j2 - j4} = \dfrac{8}{-j2} = j4\ \Omega$ (gana la bobina: inductivo). $Z = 4 + j4 = 4\sqrt2\angle45°\ \Omega$.</div>
+<div class="step">$\tilde I_1 = \dfrac{8}{4+j4} = \dfrac{8(4-j4)}{32} = 1 - j = \sqrt2\angle-45°$ A → $I_1(t) = \sqrt2\cos(10^3t - \pi/4)$ A.</div>
+<div class="step">$\tilde V_{AB} = j4(1-j) = 4 + j4 = 4\sqrt2\angle45°$ V → $V_{AB}(t) = 4\sqrt2\cos(10^3t+\pi/4)$ V. Y $V_{CB}(t) = 8\cos(10^3t)$ V (la fuente).</div>
+<div class="step">$\tilde I_3 = \dfrac{4+j4}{j2} = 2 - j2 = 2\sqrt2\angle-45°$ A; $\;\tilde I_2 = \dfrac{4+j4}{-j4} = -1 + j = \sqrt2\angle135°$ A.</div>
+<div class="step">Nudo A: $\tilde I_2 + \tilde I_3 = (-1+j)+(2-j2) = 1-j = \tilde I_1$ ✓. ¡$|\tilde I_3| = 2\sqrt2 &gt; |\tilde I_1| = \sqrt2$!: L y C se intercambian corriente.</div>
+<div class="step">Suministrada: $\tfrac12\cdot8\cdot\sqrt2\cos(0 - (-45°)) = 4$ W. Consumida: $\tfrac12\cdot(\sqrt2)^2\cdot4 = 4$ W ✓.</div>
+</div>
+<figure class="diagram">
+<svg viewBox="0 0 380 260" role="img" aria-label="Diagrama fasorial de intensidades del problema 20">
+<line x1="40" y1="120" x2="350" y2="120" stroke="var(--line)"/>
+<line x1="180" y1="20" x2="180" y2="250" stroke="var(--line)"/>
+<line x1="180" y1="120" x2="230" y2="170" stroke="var(--neg)" stroke-width="3.5" marker-end="url(#ah-neg)"/>
+<line x1="180" y1="120" x2="130" y2="70" stroke="var(--why)" stroke-width="3" marker-end="url(#ah-why)"/>
+<line x1="180" y1="120" x2="280" y2="220" stroke="var(--intuition)" stroke-width="3" marker-end="url(#ah-int)"/>
+<line x1="180" y1="120" x2="290" y2="120" stroke="var(--pos)" stroke-width="3" marker-end="url(#ah-pos)"/>
+<text x="238" y="165" fill="var(--neg)" font-size="14">Ĩ₁ = 1 − j</text>
+<text x="70" y="62" fill="var(--why)" font-size="14">Ĩ₂ = −1 + j</text>
+<text x="285" y="225" fill="var(--intuition)" font-size="14">Ĩ₃ = 2 − 2j</text>
+<text x="270" y="110" fill="var(--pos)" font-size="14">ξ̃ = 8</text>
+</svg>
+<figcaption>Ĩ₂ e Ĩ₃ casi se anulan; su resta es la corriente de la fuente.</figcaption>
+</figure>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 21 · Corrección del factor de potencia</span>
+<p>ω = 400 rad/s, fuente de $V_{ef} = 220$ V entre a y b; en serie una resistencia de 5 Ω y el paralelo de un condensador de 125 µF y una bobina de 0,01 H. (a) $Z_{ab}$. (b) $I(t)$. (c) Potencia suministrada y consumida. (d) Elemento a conectar entre a y b para que $I$ y $V$ de la fuente estén en fase; nueva intensidad y potencias.</p>
+<figure class="diagram">
+<svg viewBox="0 0 460 250" role="img" aria-label="Circuito del problema 21">
+<path d="M60,40 V104 M60,136 V200 M60,40 H110 M170,40 H360 V90 M360,150 V200 M260,40 V90 M260,150 V200 M60,200 H360" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="60" cy="120" r="16" fill="var(--bg-2)" stroke="var(--fg)" stroke-width="2"/><path d="M51,120 q4.5,-9 9,0 t9,0" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M110,40 h10 l5,-8 l10,16 l10,-16 l10,16 l5,-8 h10" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M260,90 v26 M248,116 h24 M248,124 h24 M260,124 v26" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<path d="M360,90 v6 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 a6,6 0 0 1 0,12 v6" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<circle cx="80" cy="40" r="3.5" fill="var(--fg)"/>
+<circle cx="80" cy="200" r="3.5" fill="var(--fg)"/>
+<g font-size="14" fill="var(--fg)">
+<text x="125" y="25">5 Ω</text>
+<text x="76" y="30">a</text>
+<text x="76" y="222">b</text>
+<text x="180" y="118">125 µF</text>
+<text x="180" y="136" fill="var(--fg-dim)">(−j20 Ω)</text>
+<text x="378" y="118">0,01 H</text>
+<text x="378" y="136" fill="var(--fg-dim)">(j4 Ω)</text>
+<text x="2" y="170">220 V ef</text>
+</g>
+</svg>
+<figcaption>R en serie con un paralelo C–L.</figcaption>
+</figure>
+<details><summary>Plan</summary><p>Igual que el 20 para (a)–(c). Para (d): "en fase" ⇔ la impedancia total es <b>real</b>. Como el elemento va en <b>paralelo</b>, es más fácil imponer que la <b>admitancia</b> total sea real: $\operatorname{Im}(Y_{nueva} + Y_{ab}) = 0$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$X_C = \dfrac{1}{400\cdot125\times10^{-6}} = 20\ \Omega$; $X_L = 400\cdot0{,}01 = 4\ \Omega$.</div>
+<div class="step">$Z_\parallel = \dfrac{(-j20)(j4)}{-j20+j4} = \dfrac{80}{-j16} = j5\ \Omega$ → $Z_{ab} = 5 + j5 = 5\sqrt2\angle45°\ \Omega$.</div>
+<div class="step">$\tilde V = 220\sqrt2\angle0°$ V (amplitud) → $\tilde I = \dfrac{220\sqrt2}{5\sqrt2}\angle-45° = 44\angle-45°$ A → $I(t) = 44\cos(400t - \pi/4)$ A.</div>
+<div class="step">$P_{sum} = \tfrac12\cdot220\sqrt2\cdot44\cos45° = 4840$ W; $P_R = \tfrac12\cdot44^2\cdot5 = 4840$ W ✓.</div>
+<div class="step">$Y_{ab} = \dfrac{1}{5+j5} = \dfrac{5-j5}{50} = 0{,}1 - j0{,}1$ S. Para anular la parte imaginaria hace falta $Y' = +j0{,}1$ S → $Z' = \dfrac{1}{j0{,}1} = -j10\ \Omega$: un <b>condensador</b> con $\dfrac{1}{\omega C} = 10$ → $C = \dfrac{1}{400\cdot10} = 250\ \mu$F.</div>
+<div class="step">Nueva $Y = 0{,}1$ S → $Z = 10\ \Omega$ → $I(t) = \dfrac{220\sqrt2}{10}\cos 400t = 22\sqrt2\cos400t$ A. $P_{sum} = 220\cdot22\cdot\cos0 = 4840$ W = $P_R$ (la rama de R no ha cambiado).</div>
+<div class="step"><b>Moraleja</b>: misma potencia útil con <b>menos corriente</b> (31 A de pico frente a 44 A) → menos pérdidas en los cables de la compañía. Por eso se corrige el factor de potencia.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema 23 · Resonancia y sobretensión</span>
+<p>Bobina de 0,1 H en serie con un condensador y una resistencia de 10 Ω. Se elige C para resonancia a 60 Hz. Hallar C y las tensiones en cada elemento con una fuente de 100 V de <b>amplitud</b> a esa frecuencia (fase 0 en la fuente).</p>
+<details><summary>Plan</summary><p>Resonancia ⇔ $X_L = X_C$ ⇔ $C = 1/(\omega^2L)$ → $Z = R$ → $\tilde I = \tilde\xi/R$ en fase → $\tilde V_k = Z_k\tilde I$.</p></details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$\omega = 2\pi\cdot60 = 120\pi = 377$ rad/s.</div>
+<div class="step">$C = \dfrac{1}{\omega^2L} = \dfrac{1}{(377)^2\cdot0{,}1} = 70{,}4\ \mu$F.</div>
+<div class="step">$Z = R = 10\ \Omega$ → $\tilde I = 100/10 = 10\angle0°$ A.</div>
+<div class="step">$X_L = X_C = 120\pi\cdot0{,}1 = 12\pi = 37{,}7\ \Omega$.</div>
+<div class="step">$V_R(t) = 100\cos(120\pi t)$ V; $\;V_L(t) = 120\pi\cos(120\pi t + \pi/2)$ V; $\;V_C(t) = 120\pi\cos(120\pi t - \pi/2) = -V_L(t)$.</div>
+<div class="step">¡$V_{L,0} = 377$ V &gt; 100 V de la fuente! L y C se anulan a cada instante ($V_L + V_C = 0$) y toda la tensión de la fuente cae en R.</div>
+</div>
+</details>
+</div>
+</section>
+
+<section id="sec-estrategia">
+<h2>14 · Estrategia de examen</h2>
+<h3>Receta general para cualquier circuito</h3>
+<div class="chain">
+<span>Todo a <b>coseno</b> (sen = cos − 90°)</span>
+<span>Fasores (amplitud o eficaz, ¡elige uno!)</span>
+<span>$\omega$, $X_L=\omega L$, $X_C = 1/\omega C$</span>
+<span>Reducir $Z$ (serie/paralelo) o mallas</span>
+<span>$\tilde I = \tilde\xi/Z$</span>
+<span>Volver al tiempo</span>
+<span>Potencias y balance</span>
+</div>
+<h3>Árbol de decisión</h3>
+<table>
+<tr><th>Si te dan…</th><th>y piden…</th><th>usa…</th><th>porque…</th></tr>
+<tr><td>N, B, S, rev/s</td><td>fem máx/eficaz</td><td>$\xi_0 = NBS\omega$, $\omega = 2\pi f$</td><td>Faraday con flujo $BS\cos\omega t$</td></tr>
+<tr><td>$V_{ef}$, $I_{ef}$</td><td>$|Z|$</td><td>$|Z| = V_{ef}/I_{ef}$</td><td>el cociente de eficaces = cociente de amplitudes</td></tr>
+<tr><td>$V_{ef}$, $I_{ef}$, $P$</td><td>R y X equivalentes</td><td>$\cos\varphi = P/(V_{ef}I_{ef})$; $R = |Z|\cos\varphi$, $X = |Z|\operatorname{sen}\varphi$</td><td>triángulo de impedancias</td></tr>
+<tr><td>"I adelantada / retrasada"</td><td>tipo de reactancia, signo de φ</td><td>adelantada → capacitivo, $\arg Z&lt;0$; retrasada → inductivo, $\arg Z&gt;0$</td><td>CIVIL</td></tr>
+<tr><td>retraso como fracción de T o Δt</td><td>φ</td><td>$\varphi = 2\pi\,\Delta t/T = \omega\Delta t$</td><td>un periodo = 2π rad</td></tr>
+<tr><td>tensiones eficaces de varios elementos en serie</td><td>la total (o una que falta)</td><td>suma <b>fasorial</b>: $V^2 = V_R^2 + (V_L-V_C)^2$</td><td>están desfasadas 90°</td></tr>
+<tr><td>varias corrientes en un nudo</td><td>la que falta</td><td>$\sum\tilde I = 0$ en binómica</td><td>Kirchhoff lineal ↔ fasores</td></tr>
+<tr><td>L y C</td><td>frecuencia de resonancia / sintonía</td><td>$\omega_0 = 1/\sqrt{LC}$, $f_0 = \omega_0/2\pi$</td><td>$X_L = X_C$</td></tr>
+<tr><td>"corriente máxima al variar f"</td><td>L o C desconocido</td><td>es resonancia: $L = 1/(\omega_0^2C)$, $I_{max} = \xi_0/R$</td><td>$|Z|$ mínimo = R</td></tr>
+<tr><td>"I y V en fase", "factor de potencia 1", "globalmente resistivo"</td><td>elemento a añadir</td><td>$\operatorname{Im}Z_{tot} = 0$ (en serie) o $\operatorname{Im}Y_{tot}=0$ (en paralelo)</td><td>desfase 0 ⇔ Z real</td></tr>
+<tr><td>circuito con varias fuentes/mallas</td><td>corrientes</td><td>mallas o nudos con fasores, <b>números primero</b></td><td>mismas técnicas que T2</td></tr>
+<tr><td>circuito resuelto</td><td>potencia consumida</td><td>$\sum\tfrac12I_{0,R}^2R$ o $\tfrac12\operatorname{Re}(\tilde\xi\tilde I^*)$; comprobar balance</td><td>solo R disipa</td></tr>
+<tr><td>frecuencia muy alta / muy baja</td><td>comportamiento cualitativo</td><td>L: cable→abierto; C: abierto→cable</td><td>$X_L\propto\omega$, $X_C\propto1/\omega$</td></tr>
+<tr><td>$i(t)$ por una bobina / $v(t)$ en un condensador</td><td>energía almacenada en $t$</td><td>$U_m = \tfrac12Li^2(t)$, $U_e = \tfrac12Cv^2(t)$</td><td>energía de los campos (T1, T4)</td></tr>
+</table>
+<div class="box trap"><span class="label">Las 6 trampas que más puntos cuestan</span>
+<ol>
+<li><b>Pico vs eficaz</b>: el fasor y $v(t)$ llevan amplitud; la red da eficaces. $\times\sqrt2$.</li>
+<li><b>ω vs f</b>: reactancias y resonancia con ω (rad/s). Si piden f, divide entre 2π.</li>
+<li><b>Grados vs radianes</b>: calculadora en RAD para $\cos(\omega t + \ldots)$.</li>
+<li><b>Seno sin convertir</b>: $\operatorname{sen} x = \cos(x - \pi/2)$ antes de sacar fasores.</li>
+<li><b>Signo de φ</b>: di siempre en palabras quién adelanta a quién. $Z_C = -jX_C$.</li>
+<li><b>Cuadrante del arctan</b>: si la parte real es negativa, suma 180°.</li>
+</ol>
+</div>
+</section>
+
+<section id="sec-formulas">
+<h2>15 · Hoja de fórmulas</h2>
+<table>
+<tr><th>Concepto</th><th>Fórmula</th><th>Unidades / nota</th></tr>
+<tr><td>Generador</td><td>$\xi = NBS\omega\operatorname{sen}(\omega t+\alpha_0)$, $\xi_0 = NBS\omega$</td><td>V; ω en rad/s</td></tr>
+<tr><td>Armónica</td><td>$f = A\cos(\omega t+\varphi)$, $\omega = 2\pi f = 2\pi/T$</td><td>rad/s, Hz, s</td></tr>
+<tr><td>Valor medio</td><td>$\langle F\rangle = \frac1T\int_0^TF\,dt$</td><td>$\langle\cos^2\rangle = \tfrac12$</td></tr>
+<tr><td>Eficaz</td><td>$I_{ef} = \sqrt{\langle I^2\rangle} = I_0/\sqrt2$</td><td>solo sinusoides</td></tr>
+<tr><td>Complejos</td><td>$z = a+jb = |z|e^{j\varphi}$, $e^{j\varphi} = \cos\varphi+j\operatorname{sen}\varphi$</td><td>$1/j = -j$</td></tr>
+<tr><td>Fasor</td><td>$f(t) = \operatorname{Re}[\tilde fe^{j\omega t}]$, $\tilde f = Ae^{j\varphi}$</td><td>no contiene ω</td></tr>
+<tr><td>Derivada</td><td>$df/dt\leftrightarrow j\omega\tilde f$</td><td>+90° y ×ω</td></tr>
+<tr><td>R, C, L (tiempo)</td><td>$V = RI$, $I = C\,dV/dt$, $V = L\,dI/dt$</td><td>CIVIL</td></tr>
+<tr><td>Reactancias</td><td>$X_C = 1/(\omega C)$, $X_L = \omega L$</td><td>Ω</td></tr>
+<tr><td>Impedancias</td><td>$Z_R = R$, $Z_C = -jX_C$, $Z_L = jX_L$; $\tilde V = Z\tilde I$</td><td>Ω; $|Z| = V_0/I_0$</td></tr>
+<tr><td>Asociación</td><td>serie $\sum Z$; paralelo $1/Z = \sum 1/Z_k$</td><td>$Y = 1/Z$ (S)</td></tr>
+<tr><td>Kirchhoff</td><td>$\sum\tilde I = 0$; $\tilde V_{12} = \sum Z_j\tilde I_j - \sum\tilde\xi_i$</td><td>misma ω</td></tr>
+<tr><td>RLC serie</td><td>$Z = R + j(X_L-X_C)$, $|Z| = \sqrt{R^2+(X_L-X_C)^2}$</td><td>$\alpha = \arctan\frac{X_L-X_C}{R}$</td></tr>
+<tr><td>Corriente RLC</td><td>$I_0 = \xi_0/|Z|$, $\varphi_I = \theta-\alpha$</td><td>A, rad</td></tr>
+<tr><td>Resonancia</td><td>$\omega_0 = 1/\sqrt{LC}$, $f_0 = \frac{1}{2\pi\sqrt{LC}}$; $I_{0,max} = \xi_0/R$</td><td>$X_L = X_C$, $Z = R$</td></tr>
+<tr><td>Potencia media</td><td>$P = \tfrac12V_0I_0\cos\varphi = V_{ef}I_{ef}\cos\varphi = \tfrac12\operatorname{Re}(\tilde V\tilde I^*)$</td><td>W</td></tr>
+<tr><td>Factor de potencia</td><td>$\cos\varphi = \operatorname{Re}Z/|Z|$, $P = I_{ef}^2\operatorname{Re}Z$</td><td>φ = arg Z</td></tr>
+<tr><td>Generador</td><td>$P^{gen} = \tfrac12\operatorname{Re}(\tilde\xi\tilde I^*)$</td><td>$\sum P_{gen} = \sum P_R$</td></tr>
+<tr><td>Energía</td><td>$U_m = \tfrac12LI^2(t)$, $U_e = \tfrac12CV^2(t)$</td><td>J</td></tr>
+</table>
+</section>
+
+<section id="sec-test">
+<h2>16 · Autoevaluación</h2>
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>1. Un elemento con $V_{ef}$ fija: si duplicas la frecuencia, ¿qué pasa con $I_{ef}$? (problema 6)</summary><p>R: no cambia. Bobina: $X_L = \omega L$ se duplica → $I$ a la <b>mitad</b>. Condensador: $X_C = 1/\omega C$ se reduce a la mitad → $I$ se <b>duplica</b>. Respuesta f).</p></details>
+<details><summary>2. Circuito solo con bobinas y condensadores: ¿potencia consumida? (problema 13)</summary><p><b>Nula</b>, sea cual sea la frecuencia o la conexión. Sin resistencias no hay efecto Joule; la energía solo va y viene ($\operatorname{Re}Z = 0$ → $\cos\varphi = 0$). Respuesta a).</p></details>
+<details><summary>3. En un diagrama fasorial de dos elementos, Ĩ está adelantada a Ṽ (menos de 90°). ¿Qué son? (problema 14)</summary><p>Una <b>resistencia y un condensador</b>: corriente adelantada = capacitivo, y al ser &lt; 90° hay parte resistiva. Vale tanto en serie como en paralelo (en ambos casos el argumento de Z es negativo). Respuesta a).</p></details>
+<details><summary>4. Resistencia con $V_{ef}$ fija; le añado una L o una C. ¿La potencia? (problema 15)</summary><p>Si va en <b>paralelo</b>, R sigue teniendo la misma tensión → misma potencia. Si va en <b>serie</b>, $|Z|$ crece → baja la corriente → baja $I^2R$. Respuesta d).</p></details>
+<details><summary>5. R en serie con un elemento reactivo X; frecuencia muy alta. ¿$V_X$ frente a $V_R$? (problema 16)</summary><p>Bobina: $X_L\to\infty$ → casi toda la tensión cae en ella: $V_X\gg V_R$. Condensador: $X_C\to0$ → es un cable: $V_X\ll V_R$. Respuesta e) (a y d).</p></details>
+<details><summary>6. En resonancia, ¿cómo puede $V_L$ superar a la fem de la fuente sin violar la conservación de la energía?</summary><p>Porque $\tilde V_L$ y $\tilde V_C$ están en oposición exacta y se cancelan; su suma es 0. La energía que ves en L no viene de la fuente en cada ciclo: es energía que oscila entre L y C. La fuente solo repone lo que disipa R.</p></details>
+<details><summary>7. ¿Por qué no puedes usar un único diagrama fasorial si hay dos fuentes de frecuencias distintas?</summary><p>Porque los fasores de distinta ω giran a ritmos diferentes: el ángulo entre ellos cambia con el tiempo y no se pueden "congelar" juntos. Hay que resolver cada frecuencia por separado y superponer en el tiempo.</p></details>
+<details><summary>8. ¿La impedancia es un fasor?</summary><p>No. Es el cociente $\tilde V/\tilde I$: el $e^{j\omega t}$ se cancela y no representa ninguna magnitud que oscile. Es un número complejo que caracteriza al elemento a esa ω.</p></details>
+<details><summary>9. El polímetro marca 230 V en un enchufe. ¿Cuál es la tensión máxima? ¿Y la media?</summary><p>Marca el eficaz: $V_0 = 230\sqrt2\approx325$ V. La media en un periodo es <b>0</b>; por eso se usa el eficaz.</p></details>
+<details><summary>10. En régimen de continua estacionario, ¿qué es una bobina? ¿Y un condensador?</summary><p>Con $\omega = 0$: bobina $X_L = 0$ → cable; condensador $X_C\to\infty$ → circuito abierto. Coincide con lo visto en T2/T4.</p></details>
+<details><summary>11. ¿Por qué derivar una señal adelanta su fasor 90°?</summary><p>Porque la derivada de $\cos$ es $-\operatorname{sen} = \cos(\cdot+\pi/2)$: el máximo de la derivada ocurre donde la señal sube más rápido, un cuarto de periodo antes de su máximo. En fasores: multiplicar por $j = e^{j\pi/2}$.</p></details>
+<details><summary>12. Corregir el factor de potencia de una fábrica (añadir condensadores): ¿cambia la potencia que consume?</summary><p>No: la potencia en las resistencias de la fábrica es la misma. Lo que baja es la <b>corriente</b> total por la línea, y con ella las pérdidas $I^2R$ en los cables de la compañía (problema 21).</p></details>
+</div>
+<div class="box tldr"><span class="label">Resumen final</span>
+<ul>
+<li>La espira girando da una fem <b>sinusoidal</b>; los elementos lineales conservan la sinusoide.</li>
+<li><b>Eficaz</b> = amplitud/√2 porque $\langle\cos^2\rangle = \tfrac12$.</li>
+<li><b>Fasor</b> = amplitud y fase como un complejo; derivar = ×jω.</li>
+<li>R en fase, C: I adelanta, L: I se retrasa → $Z_R = R$, $Z_C = -j/\omega C$, $Z_L = j\omega L$.</li>
+<li>Kirchhoff, serie/paralelo, mallas, Thévenin: <b>igual que en CC</b> con Z.</li>
+<li>RLC serie: $Z = R + j(X_L - X_C)$; <b>resonancia</b> cuando $X_L = X_C$, $\omega_0 = 1/\sqrt{LC}$.</li>
+<li>Potencia: $P = V_{ef}I_{ef}\cos\varphi$; solo las R consumen; generadores = resistencias.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(() => {
+  const el = (id) => document.getElementById(id);
+  const TAU = 2 * Math.PI;
+  const fx = (v, d) => Number(v).toFixed(d);
+  const setLine = (node, x1, y1, x2, y2) => {
+    node.setAttribute("x1", x1.toFixed(1));
+    node.setAttribute("y1", y1.toFixed(1));
+    node.setAttribute("x2", x2.toFixed(1));
+    node.setAttribute("y2", y2.toFixed(1));
+  };
+  const pathFrom = (n, fn) => {
+    let d = "";
+    for (let k = 0; k <= n; k++) {
+      const [x, y] = fn(k / n);
+      d += (k ? "L" : "M") + x.toFixed(1) + "," + y.toFixed(1);
+    }
+    return d;
+  };
+  const bindOutputs = (ids) => ids.forEach((id) => { el(id + "o").textContent = el(id).value; });
+
+  const rlcIds = ["rlcR", "rlcL", "rlcC", "rlcF", "rlcS"];
+  const E0 = 10;
+  let rlc = null;
+  let theta = 0;
+  let lastT = null;
+
+  function rlcCompute() {
+    bindOutputs(rlcIds);
+    const R = +el("rlcR").value;
+    const L = +el("rlcL").value / 1000;
+    const C = +el("rlcC").value * 1e-6;
+    const f = +el("rlcF").value;
+    const w = TAU * f;
+    const XL = w * L;
+    const XC = 1 / (w * C);
+    const X = XL - XC;
+    const Z = Math.hypot(R, X);
+    const phi = Math.atan2(X, R);
+    const I0 = E0 / Z;
+    const f0 = 1 / (TAU * Math.sqrt(L * C));
+    rlc = { R, L, C, f, w, XL, XC, X, Z, phi, I0, f0 };
+    const kind = Math.abs(phi) < 0.02 ? "≈ resonancia (resistivo)" : phi > 0 ? "inductivo: i retrasada" : "capacitivo: i adelantada";
+    el("rlcOut").innerHTML =
+      "ω = " + fx(w, 1) + " rad/s · X_L = " + fx(XL, 1) + " Ω · X_C = " + fx(XC, 1) + " Ω · |Z| = " + fx(Z, 1) + " Ω<br>" +
+      "φ = arg Z = " + fx(phi * 180 / Math.PI, 1) + "° (" + kind + ") · f₀ = " + fx(f0, 1) + " Hz<br>" +
+      "ξ₀ = 10 V · I₀ = " + fx(I0, 3) + " A · I_ef = " + fx(I0 / Math.SQRT2, 3) + " A · cos φ = " + fx(Math.cos(phi), 3) +
+      " · P_med = " + fx(0.5 * E0 * I0 * Math.cos(phi), 3) + " W<br>" +
+      "V_R0 = " + fx(I0 * R, 2) + " V · V_L0 = " + fx(I0 * XL, 2) + " V · V_C0 = " + fx(I0 * XC, 2) + " V";
+    const x0 = 380, w0 = 500, yc = 170, amp = 120, ki = R / Z;
+    el("rlcWV").setAttribute("d", pathFrom(300, (u) => [x0 + w0 * u, yc - amp * Math.cos(2 * TAU * u)]));
+    el("rlcWI").setAttribute("d", pathFrom(300, (u) => [x0 + w0 * u, yc - amp * ki * Math.cos(2 * TAU * u - phi)]));
+  }
+
+  function rlcDraw() {
+    if (!rlc) return;
+    const cx = 170, cy = 170;
+    const { R, XL, XC, phi, I0, Z } = rlc;
+    const VR = I0 * R, VL = I0 * XL, VC = I0 * XC;
+    const s = 135 / Math.max(E0, Math.hypot(VR, VL));
+    const ai = theta - phi;
+    const step = (p, mag, ang) => [p[0] + s * mag * Math.cos(ang), p[1] - s * mag * Math.sin(ang)];
+    const p0 = [cx, cy];
+    const p1 = step(p0, VR, ai);
+    const p2 = step(p1, VL, ai + Math.PI / 2);
+    const p3 = step(p2, VC, ai - Math.PI / 2);
+    setLine(el("rlcVR"), p0[0], p0[1], p1[0], p1[1]);
+    setLine(el("rlcVL"), p1[0], p1[1], p2[0], p2[1]);
+    setLine(el("rlcVC"), p2[0], p2[1], p3[0], p3[1]);
+    setLine(el("rlcE"), p0[0], p0[1], p3[0], p3[1]);
+    setLine(el("rlcProj"), p3[0], p3[1], p3[0], cy);
+    const li = 70 * R / Z;
+    setLine(el("rlcI"), cx, cy, cx + li * Math.cos(ai), cy - li * Math.sin(ai));
+    const tt = ((theta % (2 * TAU)) + 2 * TAU) % (2 * TAU);
+    const xc = 380 + 500 * tt / (2 * TAU);
+    setLine(el("rlcCur"), xc, 30, xc, 310);
+    el("rlcDV").setAttribute("cx", xc.toFixed(1));
+    el("rlcDV").setAttribute("cy", (170 - 120 * Math.cos(tt)).toFixed(1));
+    el("rlcDI").setAttribute("cx", xc.toFixed(1));
+    el("rlcDI").setAttribute("cy", (170 - 120 * (R / Z) * Math.cos(tt - phi)).toFixed(1));
+  }
+
+  function rlcLoop(t) {
+    if (lastT !== null) theta += TAU * 0.5 * (+el("rlcS").value) * (t - lastT) / 1000;
+    lastT = t;
+    rlcDraw();
+    requestAnimationFrame(rlcLoop);
+  }
+
+  rlcIds.forEach((id) => el(id).addEventListener("input", rlcCompute));
+  rlcCompute();
+  requestAnimationFrame(rlcLoop);
+
+  const resIds = ["resR", "resL", "resC", "resF"];
+  function resUpdate() {
+    bindOutputs(resIds);
+    const R = +el("resR").value;
+    const L = +el("resL").value / 1000;
+    const C = +el("resC").value * 1e-6;
+    const fm = +el("resF").value;
+    const x0 = 70, W = 800, yb = 280, H = 230, fmax = 400, ymax = 2.1;
+    const I0 = (f) => {
+      const w = TAU * Math.max(f, 0.01);
+      return E0 / Math.hypot(R, w * L - 1 / (w * C));
+    };
+    const X = (f) => x0 + W * f / fmax;
+    const Y = (i) => yb - H * Math.min(i, ymax) / ymax;
+    const f0 = 1 / (TAU * Math.sqrt(L * C));
+    const Imax = E0 / R;
+    el("resCurve").setAttribute("d", pathFrom(500, (u) => [X(fmax * u), Y(I0(fmax * u))]));
+    el("resNorm").setAttribute("d", pathFrom(500, (u) => [X(fmax * u), yb - H * I0(fmax * u) / Imax]));
+    const xf0 = X(Math.min(f0, fmax));
+    setLine(el("resF0"), xf0, 30, xf0, 280);
+    const root = Math.sqrt(R * R + 4 * L / C);
+    const f1 = (-R + root) / (2 * L) / TAU;
+    const f2 = (R + root) / (2 * L) / TAU;
+    const yBand = Y(Imax / Math.SQRT2);
+    setLine(el("resBand"), X(Math.min(f1, fmax)), yBand, X(Math.min(f2, fmax)), yBand);
+    const xm = X(fm);
+    const im = I0(fm);
+    setLine(el("resMark"), xm, 30, xm, 280);
+    el("resDot").setAttribute("cx", xm.toFixed(1));
+    el("resDot").setAttribute("cy", Y(im).toFixed(1));
+    const wm = TAU * fm;
+    const Xm = wm * L - 1 / (wm * C);
+    el("resOut").innerHTML =
+      "f₀ = 1/(2π√LC) = " + fx(f0, 1) + " Hz · I₀,máx = ξ₀/R = " + fx(Imax, 3) + " A · ancho Δf = R/(2πL) = " + fx(f2 - f1, 1) + " Hz · Q = ω₀L/R = " + fx(TAU * f0 * L / R, 2) + "<br>" +
+      "en f = " + fm + " Hz: X_L − X_C = " + fx(Xm, 1) + " Ω · |Z| = " + fx(Math.hypot(R, Xm), 1) + " Ω · I₀ = " + fx(im, 3) + " A (" + fx(100 * im / Imax, 1) + " % del máximo) · φ = " + fx(Math.atan2(Xm, R) * 180 / Math.PI, 1) + "°";
+  }
+  resIds.forEach((id) => el(id).addEventListener("input", resUpdate));
+  resUpdate();
+
+  function powUpdate() {
+    bindOutputs(["powPhi"]);
+    const phiDeg = +el("powPhi").value;
+    const phi = phiDeg * Math.PI / 180;
+    const x0 = 60, W = 800, yc = 150, A = 100;
+    const th = (u) => 2 * TAU * u;
+    const p = (u) => Math.cos(th(u)) * Math.cos(th(u) - phi);
+    el("powV").setAttribute("d", pathFrom(400, (u) => [x0 + W * u, yc - A * Math.cos(th(u))]));
+    el("powI").setAttribute("d", pathFrom(400, (u) => [x0 + W * u, yc - 0.7 * A * Math.cos(th(u) - phi)]));
+    el("powP").setAttribute("d", pathFrom(400, (u) => [x0 + W * u, yc - A * p(u)]));
+    const fill = (sign) => pathFrom(400, (u) => [x0 + W * u, yc - A * (sign > 0 ? Math.max(p(u), 0) : Math.min(p(u), 0))]) + "L" + (x0 + W) + "," + yc + "L" + x0 + "," + yc + "Z";
+    el("powPos").setAttribute("d", fill(1));
+    el("powNeg").setAttribute("d", fill(-1));
+    const yAvg = yc - A * 0.5 * Math.cos(phi);
+    setLine(el("powAvg"), x0, yAvg, x0 + W, yAvg);
+    let pos = 0, neg = 0;
+    for (let k = 0; k < 2000; k++) {
+      const v = p(k / 2000);
+      if (v > 0) pos += v; else neg -= v;
+    }
+    const kind = phiDeg === 0 ? "resistivo puro" : phiDeg > 0 ? "inductivo (i retrasada)" : "capacitivo (i adelantada)";
+    el("powOut").innerHTML =
+      "Comportamiento " + kind + " · cos φ = " + fx(Math.cos(phi), 3) + "<br>" +
+      "Con V₀ = 10 V, I₀ = 2 A: V_ef I_ef = 10 W → P_med = 10·cos φ = " + fx(10 * Math.cos(phi), 2) + " W<br>" +
+      "Energía devuelta a la fuente / energía entregada en cada ciclo = " + fx(pos > 0 ? 100 * neg / pos : 0, 1) + " %";
+  }
+  el("powPhi").addEventListener("input", powUpdate);
+  powUpdate();
+})();
+</script>
+</body>
+</html>

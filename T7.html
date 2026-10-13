@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T7 · Semiconductores</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<script defer src="app.js"></script>
+</head>
+<body>
+<nav class="toc">
+<a class="home" href="index.html">← Índice</a>
+<h2>T7 · Semiconductores</h2>
+<ol>
+<li><a href="#sec-clasif">Conductores, semiconductores, aislantes</a></li>
+<li><a href="#sec-metales">Conducción en metales</a></li>
+<li><a href="#sec-cristal">Estructura cristalina</a></li>
+<li><a href="#sec-bandas">Bandas de energía</a></li>
+<li><a href="#sec-tipos">Bandas → tipo de sólido</a></li>
+<li><a href="#sec-huecos">Masa efectiva, huecos, generación</a></li>
+<li><a href="#sec-intrinseco">Semiconductor intrínseco</a></li>
+<li><a href="#sec-extrinseco">Semiconductores extrínsecos</a></li>
+<li><a href="#sec-transporte">Arrastre y difusión</a></li>
+<li><a href="#sec-union">Unión p-n en equilibrio</a></li>
+<li><a href="#sec-polarizada">Unión p-n polarizada</a></li>
+<li><a href="#sec-diodo">Ecuación del diodo</a></li>
+<li><a href="#sec-problemas">Problemas de los apuntes</a></li>
+<li><a href="#sec-mates">Herramientas matemáticas</a></li>
+<li><a href="#sec-estrategia">Estrategia de examen</a></li>
+<li><a href="#sec-formulario">Formulario</a></li>
+<li><a href="#sec-test">Autoevaluación</a></li>
+</ol>
+</nav>
+<main>
+<header class="theme">
+<h1>T7 · Semiconductores</h1>
+<p class="subtitle">Por qué un metal, un semiconductor y un aislante conducen tan distinto, y cómo aprovechamos eso para fabricar un diodo.</p>
+</header>
+
+<div class="map">
+<svg viewBox="0 0 900 430" role="img" aria-label="Mapa conceptual del tema">
+<defs>
+<marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--fg-dim)"/></marker>
+</defs>
+<g font-size="14" text-anchor="middle" fill="var(--fg)">
+<rect x="20" y="20" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--fg-dim)"/>
+<text x="150" y="44">T2: ley de Ohm J = σE</text><text x="150" y="64" fill="var(--fg-dim)">σ era solo un número</text>
+<rect x="320" y="20" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="450" y="44">Metales: modelo de Drude</text><text x="450" y="64" fill="var(--fg-dim)">σ = ne²τ/mₑ</text>
+<rect x="620" y="20" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--field)"/>
+<text x="750" y="44">¿Por qué σ(T) baja en metales</text><text x="750" y="64">y sube en semiconductores?</text>
+<rect x="20" y="110" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="150" y="134">Cristal: red periódica</text><text x="150" y="154" fill="var(--fg-dim)">Si, Ge: estructura diamante</text>
+<rect x="320" y="110" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="450" y="134">Bandas de energía</text><text x="450" y="154" fill="var(--fg-dim)">BV · banda prohibida Eg · BC</text>
+<rect x="620" y="110" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--field)"/>
+<text x="750" y="134">Conductor / semic. / aislante</text><text x="750" y="154" fill="var(--fg-dim)">lo decide el llenado y Eg</text>
+<rect x="20" y="200" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--pos)"/>
+<text x="150" y="224">Masa efectiva → huecos h⁺</text><text x="150" y="244" fill="var(--fg-dim)">BV casi llena = pocos h⁺</text>
+<rect x="320" y="200" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="450" y="224">Intrínseco: n = p = nᵢ</text><text x="450" y="244" fill="var(--fg-dim)">nᵢ ∝ T^3/2 · e^(−Eg/2kT)</text>
+<rect x="620" y="200" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="750" y="224">Extrínseco: dopaje V / III</text><text x="750" y="244" fill="var(--fg-dim)">np = nᵢ² · neutralidad</text>
+<rect x="20" y="290" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="150" y="314">σ = q(nμₙ + pμₚ)</text><text x="150" y="334" fill="var(--fg-dim)">vuelta a T2, ahora con porqué</text>
+<rect x="320" y="290" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--accent)"/>
+<text x="450" y="314">Arrastre + difusión</text><text x="450" y="334" fill="var(--fg-dim)">Einstein: D/μ = kT/q</text>
+<rect x="620" y="290" width="260" height="56" rx="10" fill="var(--bg-3)" stroke="var(--intuition)"/>
+<text x="750" y="314">Unión p-n en equilibrio</text><text x="750" y="334" fill="var(--fg-dim)">carga espacial, campo, V₀</text>
+<rect x="320" y="370" width="260" height="50" rx="10" fill="var(--bg-3)" stroke="var(--intuition)"/>
+<text x="450" y="392">Polarización → diodo</text><text x="450" y="411" fill="var(--fg-dim)">I = I₀(e^(qV/kT) − 1)</text>
+</g>
+<g stroke="var(--fg-dim)" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+<line x1="280" y1="48" x2="318" y2="48"/>
+<line x1="580" y1="48" x2="618" y2="48"/>
+<line x1="750" y1="76" x2="750" y2="108"/>
+<line x1="280" y1="138" x2="318" y2="138"/>
+<line x1="580" y1="138" x2="618" y2="138"/>
+<line x1="450" y1="166" x2="450" y2="198"/>
+<line x1="280" y1="228" x2="318" y2="228"/>
+<line x1="580" y1="228" x2="618" y2="228"/>
+<line x1="380" y1="256" x2="210" y2="288"/>
+<line x1="750" y1="256" x2="750" y2="288"/>
+<line x1="280" y1="318" x2="318" y2="318"/>
+<line x1="580" y1="318" x2="618" y2="318"/>
+<line x1="700" y1="346" x2="582" y2="380"/>
+</g>
+</svg>
+</div>
+
+<div class="chain"><span>Niveles atómicos discretos</span><span>Cristal: bandas</span><span>El hueco Eg decide σ</span><span>Pares e⁻/h⁺ y dopaje fijan n, p</span><span>σ = q(nμₙ + pμₚ)</span><span>Unión p-n</span><span>Diodo</span></div>
+
+<div class="box tldr"><span class="label">La historia en 30 segundos</span>
+<p>En el T2 la conductividad $\sigma$ era un dato. Aquí averiguamos <b>de dónde sale</b>. Dos ingredientes: <b>cuántos portadores libres</b> hay ($n$, $p$) y <b>lo fácil que se mueven</b> ($\mu$). Los metales tienen muchísimos portadores fijos; los semiconductores tienen pocos y su número <b>se dispara con la temperatura</b> y con el <b>dopaje</b>. Juntando una zona p y una zona n aparece una barrera que deja pasar la corriente en un sentido y no en el otro: el <b>diodo</b>.</p>
+</div>
+
+<section id="sec-clasif">
+<h2>1 · Conductores, semiconductores y aislantes</h2>
+<p>Clasificamos los sólidos por su <b>conductividad a temperatura ambiente</b> y, sobre todo, por <b>cómo cambia con la temperatura</b>. Ese segundo dato es la pista clave.</p>
+
+<table>
+<tr><th></th><th>Conductores (metales)</th><th>Semiconductores</th><th>Aislantes</th></tr>
+<tr><td>$\sigma$ a 300 K</td><td>$> 10^{4}\ (\Omega\,\text{m})^{-1}$<br><span class="dim">Cu, Ag ∼ $10^{7}$</span></td><td>$10^{-8}$ – $10^{4}\ (\Omega\,\text{m})^{-1}$<br><span class="dim">Si puro ∼ $5\times10^{-4}$, Ge puro ∼ $2$</span></td><td>$&lt; 10^{-8}\ (\Omega\,\text{m})^{-1}$<br><span class="dim">vidrio ∼ $10^{-11}$, poliuretano ∼ $10^{-20}$</span></td></tr>
+<tr><td>$d\sigma/dT$</td><td class="neg"><b>&lt; 0</b>: baja al calentar</td><td class="pos"><b>&gt; 0</b>: sube al calentar</td><td class="pos"><b>&gt; 0</b> (igual que semic.)</td></tr>
+<tr><td>Impurezas</td><td>$\sigma$ <b>baja</b></td><td>$\sigma$ <b>sube</b> (¡mucho!)</td><td>—</td></tr>
+<tr><td>Electrones libres $n$</td><td>$\sim 10^{28}\ \text{m}^{-3}$, casi <b>no cambia</b> con $T$</td><td>$\sim 10^{17}\ \text{m}^{-3}$, cambia <b>exponencialmente</b> con $T$</td><td>muchísimos menos</td></tr>
+</table>
+<p class="dim">Nota: los apuntes escriben “Si ∼ 4×10⁴, Ge ∼ 4×10⁴”, lo cual es una errata (superaría el límite superior de 10⁴). Los valores de la tabla salen de $\sigma = q n_i(\mu_n+\mu_p)$ con los datos de los problemas 7.7 y 7.8.</p>
+
+<div class="box formula"><span class="label">Fórmula · metales (7.1)</span>
+$$\sigma = \frac{\sigma_0}{1+\alpha\,(T-T_0)}$$
+<p class="legend">$\sigma_0$: conductividad a la temperatura de referencia $T_0$ [$(\Omega\,\text{m})^{-1}$]; $\alpha$: coeficiente térmico [K⁻¹]. Es lo mismo que la resistividad lineal del T2: $\rho = \rho_0[1+\alpha(T-T_0)]$.</p>
+</div>
+<div class="box formula"><span class="label">Fórmula · semiconductores y aislantes (7.2)</span>
+$$\sigma = \sigma_0\, e^{-\alpha/T}$$
+<p class="legend">Aquí $\alpha$ tiene unidades de <b>temperatura</b> [K] y no es el mismo $\alpha$ de arriba. Veremos que $\alpha \approx E_g/2k$: la anchura de la banda prohibida dividida por $2k$.</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 240" role="img" aria-label="sigma frente a T en metal y semiconductor">
+<g stroke="var(--fg-dim)" stroke-width="1.5" fill="none">
+<path d="M60 200 H330 M60 200 V30"/>
+<path d="M420 200 H690 M420 200 V30"/>
+</g>
+<path d="M75 45 C 120 110, 180 150, 320 178" stroke="var(--neg)" stroke-width="3" fill="none"/>
+<path d="M435 197 C 520 196, 570 190, 610 160 S 670 60, 680 40" stroke="var(--pos)" stroke-width="3" fill="none"/>
+<g font-size="14" fill="var(--fg)">
+<text x="40" y="35">σ</text><text x="325" y="220">T</text>
+<text x="400" y="35">σ</text><text x="685" y="220">T</text>
+<text x="150" y="80" fill="var(--neg)">Metal: σ = σ₀/[1+α(T−T₀)]</text>
+<text x="445" y="80" fill="var(--pos)">Semiconductor: σ = σ₀e^(−α/T)</text>
+<text x="120" y="232" fill="var(--fg-dim)">n fijo, choques ↑ ⇒ σ ↓</text>
+<text x="470" y="232" fill="var(--fg-dim)">n crece exponencialmente ⇒ σ ↑</text>
+</g>
+</svg>
+<figcaption>Comportamiento opuesto con la temperatura: es la gran pregunta que el tema responde.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué (adelanto)</span>
+<p>Recuerda del T2: $\sigma = n\,q\,\mu$. La conductividad es <b>(cuántos portadores) × (lo bien que se mueven)</b>.</p>
+<ul>
+<li><b>Metal</b>: $n$ ya es enorme y <b>no depende de T</b>. Al calentar, los iones vibran más → más choques → $\mu$ baja → $\sigma$ baja.</li>
+<li><b>Semiconductor</b>: $\mu$ también baja un poco, pero $n$ <b>se multiplica por factores enormes</b> al calentar (hay que “arrancar” electrones a través de un hueco de energía). Gana $n$ por goleada → $\sigma$ sube.</li>
+</ul>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>“Aislantes y semiconductores son lo mismo con distinto $\sigma$.” <b>Es verdad</b> según los apuntes: tienen el mismo comportamiento térmico ($d\sigma/dT>0$); solo difieren en el <b>valor</b> de $\sigma$ a 300 K (porque su $E_g$ es distinto). No contestes que son “fenómenos diferentes”.</p>
+</div>
+</section>
+
+<section id="sec-metales">
+<h2>2 · Conducción eléctrica en metales</h2>
+<p><b>Modelo</b> (enlace metálico): cada átomo cede sus electrones de valencia a un <b>gas de electrones</b> común. Quedan:</p>
+<ul>
+<li>una red de <b>iones positivos</b> casi estáticos y regularmente colocados;</li>
+<li>un <b>gas clásico de electrones libres</b> que se mueven al azar (agitación térmica) con $v_T \sim 10^{5}$ m/s y desplazamiento neto nulo.</li>
+</ul>
+<p>La <b>cohesión</b> del metal es precisamente la atracción entre el “mar” de electrones y los iones.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 200" role="img" aria-label="Electrón chocando con iones y derivando">
+<g fill="var(--pos)" fill-opacity="0.35" stroke="var(--pos)">
+<circle cx="100" cy="60" r="14"/><circle cx="200" cy="60" r="14"/><circle cx="300" cy="60" r="14"/><circle cx="400" cy="60" r="14"/><circle cx="500" cy="60" r="14"/><circle cx="600" cy="60" r="14"/>
+<circle cx="100" cy="150" r="14"/><circle cx="200" cy="150" r="14"/><circle cx="300" cy="150" r="14"/><circle cx="400" cy="150" r="14"/><circle cx="500" cy="150" r="14"/><circle cx="600" cy="150" r="14"/>
+</g>
+<polyline points="620,105 560,85 585,128 520,112 470,80 455,130 380,105 350,82 330,125 250,112 230,80 160,120 120,100" fill="none" stroke="var(--neg)" stroke-width="2" stroke-dasharray="5 3"/>
+<circle cx="120" cy="100" r="6" fill="var(--neg)"/>
+<line x1="250" y1="185" x2="470" y2="185" stroke="var(--field)" stroke-width="2.5" marker-end="url(#arr)"/>
+<text x="480" y="190" font-size="14" fill="var(--field)">E</text>
+<text x="20" y="104" font-size="13" fill="var(--neg)">e⁻</text>
+<text x="200" y="20" font-size="13" fill="var(--fg-dim)">zigzag rápido (v<tspan baseline-shift="sub" font-size="70%">T</tspan> ∼ 10⁵ m/s) + deriva lenta contra E (vₐ ≪ v<tspan baseline-shift="sub" font-size="70%">T</tspan>)</text>
+</svg>
+<figcaption>El electrón choca continuamente con los iones; el campo solo añade una pequeña deriva neta en sentido opuesto a E.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué σ = ne²τ/mₑ</span>
+<div class="steps">
+<div class="step">El campo acelera al electrón: $\vec a = -e\vec E/m_e$.</div>
+<div class="step">Pero cada cierto tiempo medio $\tau$ choca y “olvida” la velocidad ganada. En promedio solo conserva lo ganado en un tiempo $\tau$: $\vec v_a = \vec a\,\tau = -\dfrac{e\vec E}{m_e}\tau$ <b>(velocidad de arrastre)</b>.</div>
+<div class="step">Densidad de corriente (T2): $\vec J = n(-e)\vec v_a = \dfrac{ne^2\tau}{m_e}\vec E$. ¡Proporcional a $\vec E$! Es la <b>ley de Ohm</b> deducida.</div>
+<div class="step">El coeficiente es la conductividad: $\sigma = ne^2\tau/m_e$.</div>
+</div>
+</div>
+
+<div class="box formula"><span class="label">Fórmulas (7.3)–(7.5)</span>
+$$\vec v_a = -\frac{e\vec E}{m_e}\tau \qquad \vec J = \frac{ne^2\tau}{m_e}\vec E \qquad \sigma = \frac{ne^2\tau}{m_e}$$
+<p class="legend">$e = 1{,}6\times10^{-19}$ C; $m_e = 9{,}1\times10^{-31}$ kg; $n$: electrones libres por m³; $\tau$: tiempo medio entre colisiones [s]; $\sigma$ en $(\Omega\,\text{m})^{-1}$. Movilidad (T2): $\mu = e\tau/m_e$, así que $\sigma = ne\mu$.</p>
+</div>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Una multitud corriendo nerviosa por un pasillo lleno de columnas (iones). Si inclinas el suelo (campo), la multitud se desplaza lentamente cuesta abajo aunque cada persona siga rebotando a lo loco. <b>Calentar</b> = las columnas tiemblan más = más choques = $\tau$ menor = $\sigma$ menor. Las <b>impurezas</b> son columnas mal puestas: también reducen $\tau$.</p>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>No confundas $v_T\sim10^5$ m/s (agitación, desordenada, no produce corriente) con $v_a$ (deriva, ordenada, mucho menor). La corriente la da <b>solo</b> $v_a$.</li>
+<li>En metales $\sigma$ baja con $T$ por $\tau$, <b>no</b> porque cambie $n$.</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-cristal">
+<h2>3 · Estructura cristalina</h2>
+<p>El transporte de carga depende de los electrones <b>y</b> de cómo están colocados los átomos. Modelo: el <b>cristal ideal</b>, un medio discreto, <b>infinito</b> y periódico, caracterizado por:</p>
+<ul>
+<li><b>homogeneidad</b>,</li>
+<li><b>simetría de traslación</b> (desplazarlo un vector $\vec T$ lo deja igual),</li>
+<li><b>anisotropía</b> (las propiedades pueden depender de la dirección).</li>
+</ul>
+<p>¿“Infinito” no es irreal? Sí, pero las propiedades de transporte apenas dependen de la superficie, así que el modelo funciona.</p>
+
+<div class="box formula"><span class="label">Definiciones clave</span>
+<p><b>Red cristalina</b>: conjunto infinito y discreto de puntos que se ve <b>exactamente igual</b> desde cualquiera de ellos. Se genera trasladando una <b>celdilla elemental</b>:</p>
+$$\vec T = n_1\vec a + n_2\vec b \quad (n_1, n_2 \in \mathbb{Z})$$
+<p class="legend"><b>Estructura reticular = red cristalina + motivo</b> (el átomo o grupo de átomos que se coloca en cada punto). Hay solo <b>14 redes de Bravais</b> en 3D. Sistema cúbico: cúbica simple (P), <b>bcc</b> (centrada en el interior: Ba, Cr, Cs, Fe, K…) y <b>fcc</b> (centrada en las caras: Ag, Al, Au, Cu…).</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 250" role="img" aria-label="Red 2D y tetraedro del diamante">
+<g fill="var(--accent)">
+<circle cx="40" cy="200" r="5"/><circle cx="100" cy="200" r="5"/><circle cx="160" cy="200" r="5"/><circle cx="220" cy="200" r="5"/><circle cx="280" cy="200" r="5"/>
+<circle cx="60" cy="150" r="5"/><circle cx="120" cy="150" r="5"/><circle cx="180" cy="150" r="5"/><circle cx="240" cy="150" r="5"/><circle cx="300" cy="150" r="5"/>
+<circle cx="80" cy="100" r="5"/><circle cx="140" cy="100" r="5"/><circle cx="200" cy="100" r="5"/><circle cx="260" cy="100" r="5"/><circle cx="320" cy="100" r="5"/>
+<circle cx="100" cy="50" r="5"/><circle cx="160" cy="50" r="5"/><circle cx="220" cy="50" r="5"/><circle cx="280" cy="50" r="5"/><circle cx="340" cy="50" r="5"/>
+</g>
+<polygon points="100,200 160,200 180,150 120,150" fill="var(--field)" fill-opacity="0.25" stroke="var(--field)"/>
+<line x1="100" y1="200" x2="157" y2="200" stroke="var(--pos)" stroke-width="2.5" marker-end="url(#arr)"/>
+<line x1="100" y1="200" x2="119" y2="153" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#arr)"/>
+<text x="125" y="222" font-size="14" fill="var(--pos)">a</text><text x="88" y="175" font-size="14" fill="var(--intuition)">b</text>
+<text x="40" y="235" font-size="13" fill="var(--fg-dim)">celdilla elemental repetida con T = n₁a + n₂b</text>
+<g stroke="var(--fg-dim)" stroke-width="2">
+<line x1="540" y1="125" x2="540" y2="45"/><line x1="540" y1="125" x2="470" y2="165"/><line x1="540" y1="125" x2="610" y2="165"/><line x1="540" y1="125" x2="560" y2="190"/>
+</g>
+<g stroke="var(--fg-dim)" stroke-dasharray="4 4" fill="none"><polygon points="540,45 470,165 560,190 610,165"/><line x1="540" y1="45" x2="560" y2="190"/></g>
+<g fill="var(--bg-3)" stroke="var(--accent)" stroke-width="2"><circle cx="540" cy="125" r="16"/><circle cx="540" cy="45" r="12"/><circle cx="470" cy="165" r="12"/><circle cx="610" cy="165" r="12"/><circle cx="560" cy="190" r="12"/></g>
+<text x="540" y="130" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text>
+<text x="540" y="230" text-anchor="middle" font-size="13" fill="var(--fg-dim)">diamante: cada átomo en el centro de un tetraedro, 4 vecinos</text>
+</svg>
+<figcaption>Izquierda: red cristalina 2D generada por traslación. Derecha: disposición tetraédrica de la estructura tipo diamante (Si, Ge, C).</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué importa la estructura diamante</span>
+<p>Los elementos del <b>grupo IV</b> (C, Si, Ge) y los compuestos III-V cristalizan en la <b>estructura tipo diamante</b>: dos redes fcc interpenetradas, desplazadas $1/4$ de la diagonal del cubo. No es una red de Bravais por sí misma.</p>
+<p>Resultado: cada átomo tiene <b>exactamente 4 vecinos</b> y forma un enlace covalente con cada uno. Con 4 electrones de valencia, <b>todos</b> quedan comprometidos en enlaces. Esto será la clave de por qué el Si puro a 0 K es aislante y de cómo funciona el dopaje.</p>
+</div>
+</section>
+
+<section id="sec-bandas">
+<h2>4 · Bandas de energía</h2>
+<p>En un átomo aislado los electrones solo pueden tener <b>energías discretas</b> (niveles 1s, 2s, 2p…). ¿Qué pasa cuando juntamos muchos átomos en un cristal?</p>
+
+<div class="box why"><span class="label">Por qué aparecen bandas</span>
+<div class="steps">
+<div class="step"><b>Dos átomos muy separados</b>: el sistema tiene los mismos niveles que un átomo, pero cada uno <b>por duplicado</b> (degeneración de orden 2: dos estados con la misma energía).</div>
+<div class="step"><b>Principio clave</b>: al <b>acercar</b> dos átomos idénticos <b>se rompe la degeneración</b>: los dos estados pasan a tener energías ligeramente <b>distintas</b>. Un nivel → dos niveles.</div>
+<div class="step"><b>N átomos</b>: cada nivel atómico se desdobla en <b>N niveles</b>. Con $N\sim10^{28}$ átomos/m³ están tan juntos que forman un <b>continuo</b> práctico: una <b>banda</b>.</div>
+<div class="step"><b>Capas externas se desdoblan más</b> que las internas: los electrones internos apenas “notan” al vecino (su entorno energético casi no cambia); los externos sí, porque sus órbitas se solapan con las de los vecinos.</div>
+</div>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 300" role="img" aria-label="Desdoblamiento de niveles al acercar átomos">
+<g stroke="var(--fg-dim)" stroke-width="1.5" fill="none"><path d="M80 270 H690 M80 270 V20"/></g>
+<text x="60" y="30" font-size="14" fill="var(--fg)">E</text>
+<text x="470" y="292" font-size="13" fill="var(--fg-dim)">distancia interatómica →</text>
+<g stroke="var(--accent)" stroke-width="1.6" fill="none">
+<polyline points="680,110 460,110 120,50"/><polyline points="680,110 460,110 120,70"/><polyline points="680,110 460,110 120,90"/><polyline points="680,110 460,110 120,110"/><polyline points="680,110 460,110 120,130"/><polyline points="680,110 460,110 120,150"/><polyline points="680,110 460,110 120,170"/>
+</g>
+<g stroke="var(--intuition)" stroke-width="1.6" fill="none">
+<polyline points="680,230 260,230 120,222"/><polyline points="680,230 260,230 120,226"/><polyline points="680,230 260,230 120,230"/><polyline points="680,230 260,230 120,234"/><polyline points="680,230 260,230 120,238"/>
+</g>
+<line x1="180" y1="30" x2="180" y2="270" stroke="var(--field)" stroke-dasharray="5 4"/>
+<text x="172" y="288" font-size="13" fill="var(--field)">r₀</text>
+<text x="540" y="100" font-size="13" fill="var(--accent)">E₂ (capa externa)</text>
+<text x="540" y="220" font-size="13" fill="var(--intuition)">E₁ (capa interna)</text>
+<text x="190" y="45" font-size="13" fill="var(--fg)">banda ancha</text>
+<text x="190" y="215" font-size="13" fill="var(--fg)">banda estrecha</text>
+<text x="560" y="150" font-size="12" fill="var(--fg-dim)">átomos aislados:</text>
+<text x="560" y="166" font-size="12" fill="var(--fg-dim)">niveles discretos</text>
+</svg>
+<figcaption>Al acercar N átomos hasta la distancia de equilibrio r₀, cada nivel se abre en N niveles. El nivel externo se abre mucho más que el interno.</figcaption>
+</figure>
+
+<div class="box formula"><span class="label">Cuenta de estados</span>
+<p>Cada nivel atómico con $g$ estados (incluyendo el espín) da una banda con $g\,N$ estados:</p>
+$$\text{1s, 2s, 3s} \to 2N \qquad \text{2p, 3p} \to 6N \qquad \text{banda híbrida } s\!+\!p \to 8N$$
+<p class="legend">$N$: número de átomos del cristal. Contar estados vs. electrones disponibles es lo que decide si la última banda queda llena o a medias.</p>
+</div>
+
+<h3>Nombres de las bandas importantes</h3>
+<ul>
+<li><b>Banda de valencia (BV)</b>: la banda <b>más alta que contiene electrones</b>.</li>
+<li><b>Banda prohibida (BP)</b>: rango de energías <b>sin niveles permitidos</b>. Su anchura es $E_g$ (<i>gap</i>).</li>
+<li><b>Banda de conducción (BC)</b>: si la BV está <b>parcialmente llena</b>, ella misma es la BC. Si la BV está <b>totalmente llena</b> a 0 K, la BC es la banda vacía inmediatamente superior.</li>
+</ul>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Piensa en un edificio de pisos (bandas) con escaleras rotas entre ciertos pisos (banda prohibida). Lo que importa para conducir son <b>los dos últimos pisos</b>: el último ocupado y el primero vacío.</p>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>El modelo de una dimensión es solo una guía. En 3D aparece la <b>hibridación de bandas</b>: bandas formadas mezclando niveles de distinto origen (p.ej. 3s + 3p). Sin ella no se explican ni el Mg ni el diamante (siguiente sección).</p>
+</div>
+</section>
+
+<section id="sec-tipos">
+<h2>5 · Del diagrama de bandas al tipo de sólido</h2>
+<div class="box why"><span class="label">La regla de oro</span>
+<p>Para conducir, un electrón tiene que <b>ganar energía</b> del campo (acelerarse). Eso solo es posible si tiene <b>estados vacíos permitidos justo encima</b>. Por tanto:</p>
+$$\vec J_{\text{banda llena}} = 0$$
+<p>Una banda <b>completamente llena no conduce</b>: no hay sitio libre al que moverse. (Por cada electrón con velocidad $\vec v$ hay otro con $-\vec v$ y el campo no puede alterar ese reparto.)</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 290" role="img" aria-label="Bandas en aislante, semiconductor y conductor a 0 K">
+<g stroke="var(--fg-dim)" stroke-width="1.5">
+<rect x="40" y="40" width="170" height="55" fill="none"/>
+<rect x="40" y="185" width="170" height="55" fill="var(--neg)" fill-opacity="0.55"/>
+<rect x="275" y="80" width="170" height="55" fill="none"/>
+<rect x="275" y="165" width="170" height="55" fill="var(--neg)" fill-opacity="0.55"/>
+<rect x="510" y="60" width="170" height="70" fill="none"/>
+<rect x="510" y="130" width="170" height="110" fill="var(--neg)" fill-opacity="0.55"/>
+</g>
+<g font-size="13" fill="var(--fg)">
+<text x="125" y="72" text-anchor="middle">BC vacía</text><text x="125" y="217" text-anchor="middle">BV llena</text>
+<text x="360" y="112" text-anchor="middle">BC vacía</text><text x="360" y="197" text-anchor="middle">BV llena</text>
+<text x="595" y="100" text-anchor="middle">estados libres</text><text x="595" y="190" text-anchor="middle">BV parcialmente llena</text><text x="595" y="208" text-anchor="middle">(= BC)</text>
+</g>
+<g stroke="var(--field)" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr)"><line x1="225" y1="98" x2="225" y2="182"/><line x1="460" y1="138" x2="460" y2="162"/></g>
+<text x="232" y="145" font-size="13" fill="var(--field)">Eg grande</text>
+<text x="466" y="155" font-size="13" fill="var(--field)">Eg ∼ 1 eV</text>
+<g font-size="15" font-weight="700" text-anchor="middle" fill="var(--fg)"><text x="125" y="268">Aislante</text><text x="360" y="268">Semiconductor</text><text x="595" y="268">Conductor</text></g>
+<text x="20" y="22" font-size="13" fill="var(--fg-dim)">T = 0 K</text>
+</svg>
+<figcaption>A 0 K, aislante y semiconductor tienen la BV llena (no conducen). Solo cambia la anchura de la banda prohibida.</figcaption>
+</figure>
+
+<h3>A T = 0 K</h3>
+<ul>
+<li><b>BV llena</b> → nadie puede ganar energía dentro de la banda, y la BP impide saltar → <b>aislante</b>.</li>
+<li><b>BV parcialmente llena</b> → hay estados libres justo encima → <b>conductor</b>.</li>
+<li>Un aislante con BP <b>pequeña</b> se llama <b>semiconductor</b>. Pero a 0 K ¡también es un aislante perfecto!</li>
+</ul>
+<h3>A T &gt; 0 K</h3>
+<ul>
+<li>La agitación térmica puede subir algunos electrones de la BV a la BC atravesando la BP. Ahora sí hay portadores.</li>
+<li>Cuanto <b>mayor $T$</b> → más saltos; cuanto <b>mayor $E_g$</b> → menos saltos (la dependencia real es exponencial en $-E_g/2kT$, ver sección 7).</li>
+<li>Por eso: $E_g$ pequeño (Si 1,1 eV, Ge 0,67 eV) → algo de conducción = <b>semiconductor</b>; $E_g$ grande (diamante ∼6 eV) → prácticamente nada = <b>aislante</b>. Y en ambos $\sigma$ <b>crece con $T$</b>.</li>
+<li>En un <b>conductor</b> los electrones de la banda a medio llenar se comportan casi como libres: el modelo de bandas da $\sigma \sim T^{-1}$.</li>
+</ul>
+
+<div class="box trap"><span class="label">Trampa de examen (muy típica)</span>
+<p>“La corriente eléctrica consiste en electrones saltando de la BV a la BC.” <b>FALSO.</b> El salto entre bandas lo produce la <b>excitación térmica</b> (o la luz), <b>no</b> el campo eléctrico. El campo solo <b>mueve</b> a los portadores <b>dentro</b> de su banda. El salto crea portadores; el campo los pone en marcha.</p>
+</div>
+
+<h3>Ejemplos: Na, Mg y diamante</h3>
+<figure class="diagram">
+<svg viewBox="0 0 720 300" role="img" aria-label="Bandas de Na, Mg y diamante">
+<g stroke="var(--fg-dim)" stroke-width="1.2">
+<rect x="40" y="250" width="150" height="12" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="40" y="215" width="150" height="12" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="40" y="168" width="150" height="22" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="40" y="110" width="150" height="20" fill="none"/>
+<rect x="40" y="120" width="150" height="10" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="285" y="250" width="150" height="12" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="285" y="215" width="150" height="12" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="285" y="168" width="150" height="22" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="285" y="70" width="150" height="60" fill="none"/>
+<rect x="285" y="115" width="150" height="15" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="530" y="250" width="150" height="12" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="530" y="165" width="150" height="35" fill="var(--neg)" fill-opacity="0.6"/>
+<rect x="530" y="70" width="150" height="35" fill="none"/>
+</g>
+<g font-size="12" fill="var(--fg)">
+<text x="195" y="260">1s</text><text x="195" y="225">2s</text><text x="195" y="183">2p</text><text x="195" y="124">3s (½)</text>
+<text x="440" y="260">1s</text><text x="440" y="225">2s</text><text x="440" y="183">2p</text><text x="440" y="96">3s3p</text><text x="440" y="111">8N</text>
+<text x="600" y="246">1s</text><text x="540" y="186">2s2p inf. 4N</text><text x="540" y="92">2s2p sup. 4N</text>
+</g>
+<line x1="690" y1="108" x2="690" y2="162" stroke="var(--field)" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<text x="620" y="140" font-size="12" fill="var(--field)">Eg ≈ 6 eV</text>
+<g font-size="14" font-weight="700" text-anchor="middle" fill="var(--fg)"><text x="115" y="40">Na (conductor)</text><text x="360" y="40">Mg (conductor)</text><text x="605" y="40">Diamante (aislante)</text></g>
+<g font-size="12" text-anchor="middle" fill="var(--fg-dim)"><text x="115" y="58">N e⁻ en 2N estados</text><text x="360" y="58">2N e⁻ en 8N estados</text><text x="605" y="58">4N e⁻ llenan 4N</text></g>
+</svg>
+<figcaption>Relleno azul = estados ocupados. La clave siempre es: ¿la última banda con electrones está llena o a medias?</figcaption>
+</figure>
+<ul>
+<li><b>Na</b> ($1s^2 2s^2 2p^6 3s^1$): la banda 3s tiene $2N$ estados y solo $N$ electrones → <b>medio llena</b> → conductor. ✔ Coincide con el experimento.</li>
+<li><b>Mg</b> ($\dots 3s^2$): con el modelo 1D la banda 3s quedaría llena ($2N$ e⁻ en $2N$ estados) → predeciría aislante. ✘ ¡Pero es buen conductor! Solución: <b>hibridación</b> 3s+3p → una banda de $8N$ estados con solo $2N$ electrones → parcialmente llena → conductor.</li>
+<li><b>Diamante</b> (C: $1s^2 2s^2 2p^2$): el modelo 1D diría conductor (2p a medias). Pero la banda híbrida 2s2p ($8N$ estados) <b>se parte en dos</b> de $4N$ cada una. Los $4N$ electrones de valencia llenan exactamente la inferior → BV llena, $E_g\approx6$ eV → <b>aislante excelente</b>.</li>
+<li><b>Si y Ge</b>: misma configuración externa que el C → misma hibridación (3s3p, 4s4p) → aislantes a 0 K, pero con $E_g$ mucho menor → <b>semiconductores</b> a $T&gt;0$.</li>
+</ul>
+
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>¿Por qué el Mg rompe el modelo sencillo y cómo se arregla?</summary>
+<p>Con 2 electrones 3s por átomo llenaría exactamente la banda 3s ($2N$ estados) y sería aislante. En 3D las bandas 3s y 3p se mezclan en una sola de $8N$ estados; $2N$ electrones solo ocupan una cuarta parte → hay estados libres justo encima → conductor.</p>
+</details>
+</div>
+</section>
+
+<section id="sec-huecos">
+<h2>6 · Masa efectiva, huecos y generación de pares</h2>
+<h3>6.1 Masa efectiva</h3>
+<p>Dentro del cristal, un electrón no solo siente la fuerza externa $\vec F_{\text{ext}} = -e\vec E$; también las <b>fuerzas internas</b> del potencial periódico de la red. Newton dice:</p>
+$$\vec F_{\text{int}} + \vec F_{\text{ext}} = m_e\,\vec a$$
+<p>Pero las fuerzas internas son un lío. Truco: <b>esconderlas dentro de una masa “efectiva”</b> $m^*$ y quedarnos solo con la fuerza que controlamos:</p>
+<div class="box formula"><span class="label">Fórmula (7.7)</span>
+$$\vec a = \frac{\vec F_{\text{ext}}}{m^*}$$
+<p class="legend">$m^*$: masa efectiva [kg]. Resume el efecto de toda la red. Puede ser $\neq m_e$, mayor, infinita, menor e incluso <b>negativa</b>.</p>
+</div>
+<table>
+<tr><th>Posición en la banda</th><th>$m^*$</th><th>Interpretación</th></tr>
+<tr><td>Borde <b>inferior</b></td><td class="pos">$m^* &gt; 0$</td><td>Gana el campo externo: el electrón acelera a favor de la fuerza.</td></tr>
+<tr><td>Punto intermedio</td><td>$m^* \to \infty$</td><td>Campo y red se compensan: no cambia su velocidad.</td></tr>
+<tr><td>Borde <b>superior</b></td><td class="neg">$m^* &lt; 0$</td><td>Gana la red: el electrón acelera <b>en contra</b> de la fuerza externa.</td></tr>
+</table>
+
+<h3>6.2 Huecos: por qué un “electrón que falta” se comporta como carga positiva</h3>
+<div class="box why"><span class="label">Por qué (deducción de los apuntes)</span>
+<div class="steps">
+<div class="step">BV casi llena: le falta un electrón $i$ del <b>borde superior</b>. Queremos la corriente del resto, $\vec J_{\text{resto}}$.</div>
+<div class="step">Banda llena no conduce: $\vec J_{\text{llena}} = \vec J_{\text{resto}} + \vec J_i = 0 \Rightarrow \vec J_{\text{resto}} = -\vec J_i$.</div>
+<div class="step">Con $\vec J_i = -e\vec v_i$ y $\vec v_i = \vec a_i\tau_i$: $\ \vec J_{\text{resto}} = +e\,\vec a_i\,\tau_i$.</div>
+<div class="step">El electrón $i$ está arriba de la banda → $m_i^* = -|m_i^*|$. Su aceleración: $\vec a_i = \dfrac{-e\vec E}{-|m_i^*|} = \dfrac{+e\vec E}{|m_i^*|}$.</div>
+<div class="step">¡Es la aceleración de una partícula de <b>carga $+e$</b> y <b>masa positiva</b> $|m_i^*|$! A esa pseudopartícula la llamamos <b>hueco</b> ($h^+$).</div>
+</div>
+</div>
+<div class="box formula"><span class="label">Resultado (7.9)–(7.11)</span>
+$$\vec J_{\text{resto}} = e\,\vec a_i\,\tau_i,\qquad \vec a_i = \frac{e\vec E}{|m_i^*|}\qquad\Rightarrow\qquad \vec J = \vec J_n + \vec J_p$$
+<p class="legend">La corriente de <b>muchísimos electrones</b> de una BV casi llena = corriente de <b>unos pocos huecos</b> positivos. $\vec J_n$: electrones en BC; $\vec J_p$: huecos en BV.</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 250" role="img" aria-label="Movimiento de un hueco">
+<line x1="250" y1="18" x2="470" y2="18" stroke="var(--field)" stroke-width="2.5" marker-end="url(#arr)"/>
+<text x="480" y="23" font-size="14" fill="var(--field)">E</text>
+<text x="40" y="65" font-size="14" fill="var(--fg-dim)">t₁</text><circle cx="120" cy="60" r="12" fill="var(--neg)"/><circle cx="180" cy="60" r="12" fill="var(--neg)"/><circle cx="240" cy="60" r="12" fill="var(--neg)"/><circle cx="300" cy="60" r="12" fill="none" stroke="var(--pos)" stroke-width="2.5"/><text x="300" y="65" text-anchor="middle" font-size="15" fill="var(--pos)">+</text><circle cx="360" cy="60" r="12" fill="var(--neg)"/><circle cx="420" cy="60" r="12" fill="var(--neg)"/><circle cx="480" cy="60" r="12" fill="var(--neg)"/><circle cx="540" cy="60" r="12" fill="var(--neg)"/><circle cx="600" cy="60" r="12" fill="var(--neg)"/><path d="M360 44 Q 330 26 306 43" fill="none" stroke="var(--neg)" stroke-width="1.8" marker-end="url(#arr)"/><text x="40" y="125" font-size="14" fill="var(--fg-dim)">t₂</text><circle cx="120" cy="120" r="12" fill="var(--neg)"/><circle cx="180" cy="120" r="12" fill="var(--neg)"/><circle cx="240" cy="120" r="12" fill="var(--neg)"/><circle cx="300" cy="120" r="12" fill="var(--neg)"/><circle cx="360" cy="120" r="12" fill="none" stroke="var(--pos)" stroke-width="2.5"/><text x="360" y="125" text-anchor="middle" font-size="15" fill="var(--pos)">+</text><circle cx="420" cy="120" r="12" fill="var(--neg)"/><circle cx="480" cy="120" r="12" fill="var(--neg)"/><circle cx="540" cy="120" r="12" fill="var(--neg)"/><circle cx="600" cy="120" r="12" fill="var(--neg)"/><path d="M420 104 Q 390 86 366 103" fill="none" stroke="var(--neg)" stroke-width="1.8" marker-end="url(#arr)"/><text x="40" y="185" font-size="14" fill="var(--fg-dim)">t₃</text><circle cx="120" cy="180" r="12" fill="var(--neg)"/><circle cx="180" cy="180" r="12" fill="var(--neg)"/><circle cx="240" cy="180" r="12" fill="var(--neg)"/><circle cx="300" cy="180" r="12" fill="var(--neg)"/><circle cx="360" cy="180" r="12" fill="var(--neg)"/><circle cx="420" cy="180" r="12" fill="none" stroke="var(--pos)" stroke-width="2.5"/><text x="420" y="185" text-anchor="middle" font-size="15" fill="var(--pos)">+</text><circle cx="480" cy="180" r="12" fill="var(--neg)"/><circle cx="540" cy="180" r="12" fill="var(--neg)"/><circle cx="600" cy="180" r="12" fill="var(--neg)"/><path d="M480 164 Q 450 146 426 163" fill="none" stroke="var(--neg)" stroke-width="1.8" marker-end="url(#arr)"/>
+<text x="250" y="232" font-size="14" fill="var(--neg)" text-anchor="middle">los e⁻ saltan ←</text>
+<text x="480" y="232" font-size="14" fill="var(--pos)" text-anchor="middle">el hueco avanza →</text>
+</svg>
+<figcaption>Cada vez que un electrón vecino salta al hueco hacia la izquierda (contra E), el hueco se desplaza a la derecha (a favor de E), como una carga positiva.</figcaption>
+</figure>
+
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Un parking <b>lleno</b>: nadie se mueve. Quita un coche: ahora un coche avanza al hueco, luego otro… Es mucho más fácil seguir <b>el hueco</b> (uno) que todos los coches (muchos). Físicamente se mueven los coches (electrones); el hueco es una forma cómoda de contarlo.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>Los huecos <b>no son partículas reales</b> ni positrones: la corriente la llevan físicamente solo electrones. El hueco es una <b>pseudopartícula</b> introducida para simplificar. Pero a efectos de cálculo es un portador con carga $+e$ y masa positiva, y se trata igual que los electrones de la BC.</p>
+</div>
+
+<h3>6.3 Generación y recombinación de pares e⁻/h⁺</h3>
+<figure class="diagram">
+<svg viewBox="0 0 720 240" role="img" aria-label="Generación térmica, óptica y recombinación">
+<rect x="40" y="30" width="640" height="50" fill="none" stroke="var(--fg-dim)"/>
+<rect x="40" y="160" width="640" height="50" fill="var(--neg)" fill-opacity="0.35" stroke="var(--fg-dim)"/>
+<text x="50" y="50" font-size="13" fill="var(--fg)">BC</text><text x="50" y="200" font-size="13" fill="var(--fg)">BV</text>
+<line x1="150" y1="168" x2="150" y2="72" stroke="var(--why)" stroke-width="2" marker-end="url(#arr)"/>
+<circle cx="150" cy="62" r="6" fill="var(--neg)"/><circle cx="150" cy="178" r="7" fill="var(--bg)" stroke="var(--pos)" stroke-width="2"/>
+<text x="160" y="125" font-size="13" fill="var(--why)">térmica (kT)</text>
+<path d="M250 110 q 8 -10 16 0 t 16 0 t 16 0 t 16 0 t 16 0" fill="none" stroke="var(--field)" stroke-width="2"/>
+<text x="235" y="100" font-size="13" fill="var(--field)">hν ≥ Eg</text>
+<line x1="360" y1="168" x2="360" y2="72" stroke="var(--field)" stroke-width="2" marker-end="url(#arr)"/>
+<circle cx="360" cy="62" r="6" fill="var(--neg)"/><circle cx="360" cy="178" r="7" fill="var(--bg)" stroke="var(--pos)" stroke-width="2"/>
+<text x="370" y="125" font-size="13" fill="var(--field)">óptica</text>
+<line x1="570" y1="66" x2="570" y2="166" stroke="var(--intuition)" stroke-width="2" marker-end="url(#arr)"/>
+<circle cx="570" cy="58" r="6" fill="var(--neg)"/>
+<text x="580" y="110" font-size="13" fill="var(--intuition)">recombinación</text>
+<text x="580" y="128" font-size="12" fill="var(--fg-dim)">libera calor o luz</text>
+<text x="360" y="232" font-size="13" text-anchor="middle" fill="var(--fg-dim)">Eg separa BV y BC: crear un par cuesta al menos Eg</text>
+</svg>
+<figcaption>Tres formas de que aparezcan portadores (las impurezas, la tercera, se ven en la sección 8) y la recombinación que los elimina.</figcaption>
+</figure>
+<ul>
+<li><b>Térmica</b>: a $T&gt;0$ algunos electrones de la BV saltan a la BC. Cada salto crea un <b>par</b> e⁻ (en BC) + h⁺ (en BV).</li>
+<li><b>Óptica</b>: un fotón con $h\nu \ge E_g$ es absorbido y sube un electrón → crea un par. (Si $h\nu &lt; E_g$, el material es <b>transparente</b> a esa luz.)</li>
+<li><b>Impurezas</b> (átomos que no son del grupo IV): generan <b>solo un tipo</b> de portador (e⁻ <b>o</b> h⁺), <b>no pares</b>.</li>
+</ul>
+<p>A la vez ocurre la <b>recombinación</b>: un electrón de la BC cae a la BV y “tapa” un hueco, soltando energía como calor o luz. Si nada externo cambia, generación = recombinación → <b>equilibrio dinámico</b> (las concentraciones quedan constantes aunque haya tráfico continuo).</p>
+
+<div class="box formula"><span class="label">Fórmula (7.12)</span>
+$$R = \alpha_r\, n\, p$$
+<p class="legend">$R$: velocidad de recombinación [pares/(m³·s)]; $n$, $p$: concentraciones de e⁻ en BC y h⁺ en BV [m⁻³]; $\alpha_r$: constante del material y del mecanismo [m³/s]. La generación $G$ depende de $T$ y del proceso, <b>no</b> de $n$ ni $p$.</p>
+</div>
+<div class="box why"><span class="label">Por qué R ∝ n·p</span>
+<p>Para recombinarse, un electrón tiene que <b>encontrarse</b> con un hueco. La probabilidad de encuentro es proporcional a cuántos electrones hay <b>y</b> a cuántos huecos hay: como las colisiones entre dos especies en química. Doble de electrones → doble de encuentros.</p>
+</div>
+</section>
+
+<section id="sec-intrinseco">
+<h2>7 · Semiconductor intrínseco</h2>
+<p><b>Intrínseco</b> = sus propiedades eléctricas dependen <b>solo</b> de la estructura de bandas del cristal (en la práctica: impurezas tan pocas que no influyen). Sus portadores se crean <b>únicamente por excitación térmica</b> a través de la BP.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 290" role="img" aria-label="Red de silicio con un enlace roto y bandas">
+<defs><g id="lat3"><line x1="18" y1="0" x2="72" y2="0" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="38" cy="0" r="4" fill="var(--neg)"/><circle cx="52" cy="0" r="4" fill="var(--neg)"/><line x1="108" y1="0" x2="162" y2="0" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="128" cy="0" r="4" fill="var(--neg)"/><circle cx="142" cy="0" r="4" fill="var(--neg)"/><line x1="18" y1="90" x2="72" y2="90" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="38" cy="90" r="4" fill="var(--neg)"/><circle cx="52" cy="90" r="4" fill="var(--neg)"/><line x1="108" y1="90" x2="162" y2="90" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="128" cy="90" r="4" fill="var(--neg)"/><circle cx="142" cy="90" r="4" fill="var(--neg)"/><line x1="18" y1="180" x2="72" y2="180" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="38" cy="180" r="4" fill="var(--neg)"/><circle cx="52" cy="180" r="4" fill="var(--neg)"/><line x1="108" y1="180" x2="162" y2="180" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="128" cy="180" r="4" fill="var(--neg)"/><circle cx="142" cy="180" r="4" fill="var(--neg)"/><line x1="0" y1="18" x2="0" y2="72" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="0" cy="38" r="4" fill="var(--neg)"/><circle cx="0" cy="52" r="4" fill="var(--neg)"/><line x1="0" y1="108" x2="0" y2="162" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="0" cy="128" r="4" fill="var(--neg)"/><circle cx="0" cy="142" r="4" fill="var(--neg)"/><line x1="90" y1="18" x2="90" y2="72" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="90" cy="38" r="4" fill="var(--neg)"/><circle cx="90" cy="52" r="4" fill="var(--neg)"/><line x1="90" y1="108" x2="90" y2="162" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="90" cy="128" r="4" fill="var(--neg)"/><circle cx="90" cy="142" r="4" fill="var(--neg)"/><line x1="180" y1="18" x2="180" y2="72" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="180" cy="38" r="4" fill="var(--neg)"/><circle cx="180" cy="52" r="4" fill="var(--neg)"/><line x1="180" y1="108" x2="180" y2="162" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="180" cy="128" r="4" fill="var(--neg)"/><circle cx="180" cy="142" r="4" fill="var(--neg)"/><line x1="0" y1="-40" x2="0" y2="-18" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="0" y1="198" x2="0" y2="220" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="90" y1="-40" x2="90" y2="-18" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="90" y1="198" x2="90" y2="220" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="180" y1="-40" x2="180" y2="-18" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="180" y1="198" x2="180" y2="220" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="-40" y1="0" x2="-18" y2="0" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="198" y1="0" x2="220" y2="0" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="-40" y1="90" x2="-18" y2="90" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="198" y1="90" x2="220" y2="90" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="-40" y1="180" x2="-18" y2="180" stroke="var(--fg-dim)" stroke-width="1.5"/><line x1="198" y1="180" x2="220" y2="180" stroke="var(--fg-dim)" stroke-width="1.5"/><circle cx="0" cy="0" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="0" y="4" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="90" cy="0" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="90" y="4" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="180" cy="0" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="180" y="4" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="0" cy="90" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="0" y="94" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="90" cy="90" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="90" y="94" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="180" cy="90" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="180" y="94" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="0" cy="180" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="0" y="184" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="90" cy="180" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="90" y="184" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text><circle cx="180" cy="180" r="18" fill="var(--bg-3)" stroke="var(--fg-dim)"/><text x="180" y="184" text-anchor="middle" font-size="12" fill="var(--fg)">Si</text></g></defs>
+<use href="#lat3" transform="translate(80,45)"/>
+<circle cx="222" cy="135" r="7" fill="var(--bg)" stroke="var(--pos)" stroke-width="2.5"/>
+<text x="230" y="160" font-size="13" fill="var(--pos)">h⁺</text>
+<circle cx="215" cy="90" r="6" fill="var(--neg)"/>
+<text x="215" y="76" font-size="13" text-anchor="middle" fill="var(--neg)">e⁻ libre</text>
+<path d="M222 127 Q 228 110 217 98" fill="none" stroke="var(--fg-dim)" stroke-dasharray="3 3" marker-end="url(#arr)"/>
+<rect x="420" y="50" width="260" height="60" fill="none" stroke="var(--fg-dim)"/>
+<rect x="420" y="180" width="260" height="60" fill="var(--neg)" fill-opacity="0.45" stroke="var(--fg-dim)"/>
+<circle cx="550" cy="95" r="6" fill="var(--neg)"/>
+<circle cx="550" cy="193" r="7" fill="var(--bg)" stroke="var(--pos)" stroke-width="2.5"/>
+<line x1="550" y1="186" x2="550" y2="105" stroke="var(--why)" stroke-width="2" marker-end="url(#arr)"/>
+<text x="560" y="150" font-size="13" fill="var(--why)">Eg (térmica)</text>
+<text x="430" y="70" font-size="13" fill="var(--fg)">BC</text><text x="430" y="232" font-size="13" fill="var(--fg)">BV</text>
+<text x="550" y="275" font-size="13" text-anchor="middle" fill="var(--fg-dim)">mismo suceso visto en bandas</text>
+</svg>
+<figcaption>T &gt; 0 K: la agitación rompe un enlace covalente. El electrón queda deslocalizado (portador) y el enlace roto, que un vecino puede ocupar, es el hueco.</figcaption>
+</figure>
+
+<ul>
+<li><b>T = 0 K</b>: cada átomo de Si comparte un par de electrones con cada uno de sus 4 vecinos (octeto completo). <b>Ningún electrón libre</b> → aislante. En bandas: BV llena, BC vacía.</li>
+<li><b>T &gt; 0 K</b>: algún enlace se rompe → un <b>electrón deslocalizado</b> (en la BC) y un <b>enlace vacío</b> (hueco en la BV) que los electrones vecinos pueden ir ocupando.</li>
+<li>Equivalencia útil: un átomo con un enlace roto = átomo “normal” + un par e⁻/h⁺.</li>
+</ul>
+
+<div class="box formula"><span class="label">Fórmulas (7.13)–(7.14)</span>
+$$n = p \equiv n_i \qquad\qquad R_i = G_i$$
+<p class="legend">$n_i$: concentración intrínseca [m⁻³]. Los portadores nacen <b>a pares</b>, así que hay tantos electrones en BC como huecos en BV. En equilibrio, la generación térmica $G_i$ se compensa con la recombinación $R_i$.</p>
+</div>
+
+<h3>¿Cuánto vale nᵢ? (fórmula del problema 7.9)</h3>
+<div class="box formula"><span class="label">Fórmula</span>
+$$n_i = C\,T^{3/2}\exp\!\left(-\frac{E_g}{2kT}\right)$$
+<p class="legend">$C$: constante del material [m⁻³K⁻³ᐟ²] (Ge: $1{,}91\times10^{21}$); $T$ en K; $E_g$ en eV si $k = 8{,}62\times10^{-5}$ eV/K. Valores a 300 K usados en los apuntes: $n_i(\text{Si}) = 1{,}45\times10^{16}$ m⁻³, $n_i(\text{Ge}) = 2{,}36\times10^{19}$ m⁻³. $kT$(300 K) ≈ 0,0259 eV.</p>
+</div>
+<div class="box why"><span class="label">Por qué la exponencial y por qué Eg/2</span>
+<ul>
+<li><b>Exponencial</b>: la energía térmica típica es $kT\approx0{,}026$ eV, ¡unas 40 veces menor que $E_g$ del Si! Solo unos poquísimos electrones “afortunados” de la cola de la distribución térmica reúnen $E_g$. Esa fracción va como $e^{-E_g/kT}$: <b>pequeños cambios de $T$ o de $E_g$ cambian $n_i$ en órdenes de magnitud</b>.</li>
+<li><b>¿Por qué $E_g/2$?</b> Crear un par cuesta $E_g$, así que el <b>producto</b> $n\,p \propto e^{-E_g/kT}$. Como $n = p = n_i$, cada uno se lleva la raíz: $n_i \propto e^{-E_g/2kT}$.</li>
+<li>Esto explica la ley experimental (7.2): $\sigma = \sigma_0 e^{-\alpha/T}$ con $\alpha \approx E_g/2k$.</li>
+</ul>
+</div>
+
+<div class="sim"><span class="label">Simulación · concentración intrínseca frente a T (escala log)</span>
+<svg id="simNiSvg" viewBox="0 0 640 320" role="img" aria-label="Gráfica log de n_i frente a T"></svg>
+<div class="controls">
+<label for="niT">Temperatura T</label><input type="range" id="niT" min="150" max="700" step="5" value="300"><output id="niTOut">300 K</output>
+<label for="niEg">Eg del material X</label><input type="range" id="niEg" min="0.2" max="3" step="0.05" value="1.4"><output id="niEgOut">1.40 eV</output>
+</div>
+<div class="readout" id="niReadout"></div>
+</div>
+<p class="dim">Curvas: Si ($E_g$ = 1,1 eV), Ge ($E_g$ = 0,67 eV) y un material X con tu $E_g$ (misma $C$ que el Si). Arriba, la referencia de un metal ($n\sim10^{28}$ m⁻³). Las movilidades se toman constantes (datos de los problemas 7.7 y 7.8).</p>
+
+<div class="box check"><span class="label">Comprueba con la simulación</span>
+<details><summary>Sube T de 300 K a 350 K. ¿Por cuánto se multiplica nᵢ(Si)?</summary>
+<p>Por ≈ 26. Un 17 % más de temperatura multiplica los portadores por 26: eso es la exponencial. Un metal, en cambio, apenas cambiaría su $n$.</p>
+</details>
+<details><summary>Pon Eg = 3 eV. ¿Qué tipo de material es a 300 K?</summary>
+<p>$n_i$ cae por debajo de 1 portador por m³ (fuera de la gráfica): <b>aislante</b>. Mismo mecanismo que el Si; solo cambia $E_g$.</p>
+</details>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<ul>
+<li>$n_i$ <b>no es una constante universal</b>: depende muchísimo de $T$ y del material ($E_g$).</li>
+<li>En el intrínseco $n = p$ <b>siempre</b> (se generan a pares), aunque las movilidades sean distintas.</li>
+<li>Equilibrio no significa que no pase nada: significa <b>generación = recombinación</b>.</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-extrinseco">
+<h2>8 · Semiconductores extrínsecos (dopados)</h2>
+<p><b>Dopar</b> = añadir una fracción pequeña de átomos de otro grupo que <b>sustituyen</b> a átomos del cristal <b>sin cambiar</b> la red ni (apreciablemente) la estructura de bandas.</p>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 320" role="img" aria-label="Silicio dopado con fósforo y con aluminio">
+<use href="#lat3" transform="translate(70,55)"/>
+<circle cx="160" cy="145" r="18" fill="var(--bg-3)" stroke="var(--intuition)" stroke-width="2.5"/>
+<text x="160" y="150" text-anchor="middle" font-size="13" fill="var(--intuition)">P</text>
+<circle cx="160" cy="145" r="42" fill="none" stroke="var(--neg)" stroke-dasharray="4 4"/>
+<circle cx="190" cy="115" r="6" fill="var(--neg)"/>
+<text x="200" y="108" font-size="12" fill="var(--neg)">5.º e⁻</text>
+<use href="#lat3" transform="translate(430,55)"/>
+<circle cx="520" cy="145" r="18" fill="var(--bg-3)" stroke="var(--why)" stroke-width="2.5"/>
+<text x="520" y="150" text-anchor="middle" font-size="13" fill="var(--why)">Al</text>
+<circle cx="558" cy="145" r="7" fill="var(--bg)" stroke="var(--pos)" stroke-width="2.5"/>
+<text x="552" y="128" font-size="12" fill="var(--pos)">h⁺</text>
+<text x="160" y="305" text-anchor="middle" font-size="13" fill="var(--fg)">Tipo n: P (grupo V) → sobra 1 e⁻</text>
+<text x="520" y="305" text-anchor="middle" font-size="13" fill="var(--fg)">Tipo p: Al (grupo III) → falta 1 e⁻</text>
+</svg>
+<figcaption>El 5.º electrón del P queda débilmente ligado (∼0,01 eV) y se libera con muy poca energía térmica. Al Al le falta un electrón: el enlace incompleto es un hueco débilmente ligado.</figcaption>
+</figure>
+
+<h3>8.1 Tipo n: impurezas donadoras (grupo V: N, P, As, Sb)</h3>
+<ul>
+<li>El átomo de impureza usa 4 electrones en los enlaces; el <b>5.º</b> queda ligado solo por fuerzas electrostáticas débiles (centésimas de eV).</li>
+<li>Se ioniza muy fácilmente: $\text{P} \to \text{P}^+ + e^-$. El electrón va a la BC; el ion $\text{P}^+$ queda <b>fijo</b> en la red.</li>
+<li>En bandas: aparece un <b>nivel donador $E_D$</b> dentro de la BP, <b>muy cerca de la BC</b> ($E_C - E_D \sim 0{,}01$ eV frente a $E_g\sim1$ eV), con $2N_D$ estados.</li>
+<li><b>No se crea hueco</b> a la vez: la carga positiva es el ion inmóvil. Resultado: $n \gg p$. Electrones = <b>mayoritarios</b>, huecos = <b>minoritarios</b>.</li>
+</ul>
+<h3>8.2 Tipo p: impurezas aceptoras (grupo III: B, Al, Ga, In)</h3>
+<ul>
+<li>Solo 3 electrones de valencia → un enlace queda <b>incompleto</b>. Un electrón vecino lo completa y el enlace incompleto “vaga” por el cristal: es un <b>hueco</b>.</li>
+<li>Visión equivalente: átomo de Al = átomo de Si + <b>carga negativa fija</b> + hueco débilmente ligado. Una débil excitación térmica libera el hueco: $\text{Al} \to \text{Al}^- + h^+$.</li>
+<li>En bandas: <b>nivel aceptor $E_A$</b> <b>muy cerca de la BV</b> ($E_A - E_V\sim0{,}01$ eV), con $2N_A$ estados. Electrones de la BV suben a él y dejan huecos en la BV.</li>
+<li>Resultado: $p \gg n$. Huecos mayoritarios, electrones minoritarios.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 270" role="img" aria-label="Niveles donador y aceptor en la banda prohibida">
+<text x="200" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)">Tipo n (T &gt; 0): n ≫ p</text>
+<rect x="70" y="30" width="260" height="50" fill="none" stroke="var(--fg-dim)"/>
+<line x1="70" y1="97" x2="330" y2="97" stroke="var(--intuition)" stroke-dasharray="6 4" stroke-width="2"/>
+<rect x="70" y="180" width="260" height="50" fill="var(--neg)" fill-opacity="0.45" stroke="var(--fg-dim)"/>
+<g fill="var(--neg)"><circle cx="110" cy="68" r="5"/><circle cx="165" cy="68" r="5"/><circle cx="220" cy="68" r="5"/><circle cx="275" cy="68" r="5"/></g>
+<g font-size="14" fill="var(--intuition)" text-anchor="middle"><text x="110" y="113">+</text><text x="165" y="113">+</text><text x="220" y="113">+</text><text x="275" y="113">+</text></g>
+<g stroke="var(--intuition)" stroke-width="1.5" marker-end="url(#arr)"><line x1="110" y1="94" x2="110" y2="76"/><line x1="220" y1="94" x2="220" y2="76"/></g>
+<circle cx="300" cy="192" r="6" fill="var(--bg)" stroke="var(--pos)" stroke-width="2"/>
+<g font-size="13" fill="var(--fg)" text-anchor="end"><text x="62" y="35">E<tspan baseline-shift="sub" font-size="70%">C</tspan></text><text x="62" y="101">E<tspan baseline-shift="sub" font-size="70%">D</tspan></text><text x="62" y="185">E<tspan baseline-shift="sub" font-size="70%">V</tspan></text></g>
+<text x="200" y="255" text-anchor="middle" font-size="12" fill="var(--fg-dim)">E<tspan baseline-shift="sub" font-size="70%">C</tspan> − E<tspan baseline-shift="sub" font-size="70%">D</tspan> ≈ 0,01 eV ≪ Eg ≈ 1 eV · iones D⁺ fijos</text>
+<text x="560" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)">Tipo p (T &gt; 0): p ≫ n</text>
+<rect x="430" y="30" width="260" height="50" fill="none" stroke="var(--fg-dim)"/>
+<line x1="430" y1="163" x2="690" y2="163" stroke="var(--why)" stroke-dasharray="6 4" stroke-width="2"/>
+<rect x="430" y="180" width="260" height="50" fill="var(--neg)" fill-opacity="0.45" stroke="var(--fg-dim)"/>
+<circle cx="460" cy="68" r="5" fill="var(--neg)"/>
+<g font-size="15" fill="var(--why)" text-anchor="middle"><text x="470" y="159">−</text><text x="525" y="159">−</text><text x="580" y="159">−</text><text x="635" y="159">−</text></g>
+<g fill="var(--bg)" stroke="var(--pos)" stroke-width="2"><circle cx="470" cy="192" r="6"/><circle cx="525" cy="192" r="6"/><circle cx="580" cy="192" r="6"/><circle cx="635" cy="192" r="6"/></g>
+<g stroke="var(--why)" stroke-width="1.5" marker-end="url(#arr)"><line x1="525" y1="185" x2="525" y2="168"/><line x1="635" y1="185" x2="635" y2="168"/></g>
+<g font-size="13" fill="var(--fg)" text-anchor="end"><text x="422" y="35">E<tspan baseline-shift="sub" font-size="70%">C</tspan></text><text x="422" y="160">E<tspan baseline-shift="sub" font-size="70%">A</tspan></text><text x="422" y="185">E<tspan baseline-shift="sub" font-size="70%">V</tspan></text></g>
+<text x="560" y="255" text-anchor="middle" font-size="12" fill="var(--fg-dim)">E<tspan baseline-shift="sub" font-size="70%">A</tspan> − E<tspan baseline-shift="sub" font-size="70%">V</tspan> ≈ 0,01 eV · iones A⁻ fijos</text>
+</svg>
+<figcaption>Los niveles de impurezas están a solo ∼0,01 eV de una banda: a temperatura ambiente prácticamente todas las impurezas están ionizadas.</figcaption>
+</figure>
+
+<div class="box why"><span class="label">Por qué el dopaje cambia σ en órdenes de magnitud</span>
+<p>En el Si puro a 300 K, $n_i \approx 1{,}45\times10^{16}$ m⁻³, mientras que un sólido tiene ∼$10^{28}$ átomos/m³. Si sustituyes <b>solo uno de cada millón</b> de átomos por P, añades ∼$10^{22}$ electrones/m³: <b>un millón de veces</b> más que los intrínsecos. Y cada donador se ioniza casi seguro porque solo cuesta ∼0,01 eV (frente a 1,1 eV para romper un enlace). Por eso unas trazas de impurezas dominan por completo la conducción.</p>
+</div>
+
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>Un semiconductor tipo n <b>no está cargado negativamente</b>. Es <b>neutro</b>: cada electrón libre tiene su ion $\text{D}^+$ fijo. “n” se refiere al signo de los portadores <b>mayoritarios</b>, no a la carga neta.</p>
+</div>
+
+<h3>8.3 Ley de acción de masas</h3>
+<div class="box formula"><span class="label">Fórmula (7.15)–(7.16)</span>
+$$n\,p = \text{cte}(T) = n_i^2$$
+<p class="legend">Válida para <b>cualquier</b> dopaje, a $T$ fija y en equilibrio. Solo depende de $T$ y del material (masas efectivas, $E_g$). La constante se identifica con el caso sin impurezas: $n = p = n_i$.</p>
+</div>
+<div class="box why"><span class="label">Por qué n·p no depende del dopaje</span>
+<div class="steps">
+<div class="step">La generación térmica de pares a través de la BP, $G$, depende solo de $T$ (y del material).</div>
+<div class="step">La recombinación es $R = \alpha_r\,np$.</div>
+<div class="step">Equilibrio: $G = R \Rightarrow np = G(T)/\alpha_r$ = constante a $T$ fija.</div>
+<div class="step">Si dopas con donadores y $n$ sube, cada hueco se encuentra con muchos más electrones → <b>se recombina antes</b> → $p$ baja hasta que $\alpha_r np$ vuelve a valer $G$. (Esta es la respuesta al problema 7.5.)</div>
+</div>
+</div>
+
+<h3>8.4 Neutralidad de carga y cálculo exacto de n y p</h3>
+<p>Dos tipos de carga: <b>móviles</b> ($n$ electrones, $p$ huecos) y <b>fijas</b> (iones $N_D^+$ y $N_A^-$). El material era neutro y ni generar pares ni dopar crea carga neta:</p>
+<div class="box formula"><span class="label">Neutralidad (7.17)–(7.18)</span>
+$$n + N_A^- = p + N_D^+ \quad\xrightarrow{\text{ionización total (≈300 K)}}\quad n + N_A = p + N_D$$
+<p class="legend">Negativas a la izquierda (electrones + aceptores ionizados), positivas a la derecha (huecos + donadores ionizados). Todo en m⁻³.</p>
+</div>
+<div class="box why"><span class="label">Deducción de n y p (dos ecuaciones, dos incógnitas)</span>
+<div class="steps">
+<div class="step">De la acción de masas: $p = n_i^2/n$.</div>
+<div class="step">Sustituye en la neutralidad: $n + N_A = \dfrac{n_i^2}{n} + N_D \Rightarrow n^2 - (N_D - N_A)\,n - n_i^2 = 0$.</div>
+<div class="step">Raíz positiva (la negativa no tiene sentido físico):</div>
+</div>
+$$n = \frac{N_D-N_A}{2} + \sqrt{\left(\frac{N_D-N_A}{2}\right)^2 + n_i^2},\qquad p = \frac{n_i^2}{n}$$
+</div>
+
+<h3>8.5 Aproximaciones (las que usarás casi siempre)</h3>
+<table>
+<tr><th>Caso</th><th>Condición</th><th>Mayoritarios</th><th>Minoritarios</th></tr>
+<tr><td>Tipo n ($N_A = 0$)</td><td>$N_D \gg n_i$</td><td>$n \approx N_D$</td><td>$p \approx n_i^2/N_D$</td></tr>
+<tr><td>Tipo p ($N_D = 0$)</td><td>$N_A \gg n_i$</td><td>$p \approx N_A$</td><td>$n \approx n_i^2/N_A$</td></tr>
+<tr><td>Compensado</td><td>$|N_D - N_A| \gg n_i$</td><td>$n\approx N_D - N_A$ (si $N_D&gt;N_A$)</td><td>$p \approx n_i^2/n$</td></tr>
+</table>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Los aceptores “se comen” electrones de los donadores (compensación): lo que cuenta es la <b>diferencia</b> $N_D - N_A$. Y el minoritario siempre sale de la balanza $np = n_i^2$: si el mayoritario sube $10^6$ veces, el minoritario baja $10^6$ veces.</p>
+</div>
+
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 7.1 de los apuntes</span>
+<p>Calcula la concentración de electrones y huecos en una muestra de Si dopada con $10^{19}$ átomos/m³ de Al.</p>
+<details><summary>Plan</summary>
+<p>Al es grupo III → aceptor: $N_A = 10^{19}$, $N_D = 0$. Comprobar $N_A \gg n_i$ → aproximación tipo p: mayoritarios = $N_A$, minoritarios por acción de masas.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$N_A = 10^{19}$ m⁻³ $\gg n_i$ ✔ → $p \approx N_A = 10^{19}$ m⁻³.</div>
+<div class="step">Con el dato que usan los apuntes en este ejemplo, $n_i = 1{,}42\times10^{15}$ m⁻³: $\ n \approx \dfrac{n_i^2}{N_A} = \dfrac{(1{,}42\times10^{15})^2}{10^{19}} \approx 2\times10^{11}$ m⁻³.</div>
+<div class="step"><b>Ojo</b>: con $n_i = 1{,}45\times10^{16}$ m⁻³ (el valor del problema 7.7, que es el habitual del Si a 300 K) sale $n \approx 2{,}1\times10^{13}$ m⁻³. En ambos casos la conclusión es idéntica: $p/n \sim 10^{6}$, los electrones son minoritarios despreciables. En el examen usa el $n_i$ que te den.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema resuelto · Problema 7.9 de los apuntes</span>
+<p>Ge tipo n con $N_D = 10^{15}$ cm⁻³. Calcula $n$ y $p$ a 500 K sabiendo que $n_i = C\,T^{3/2}e^{-E_g/2kT}$, con $C = 1{,}91\times10^{21}$ m⁻³K⁻³ᐟ², $E_g = 0{,}67$ eV.</p>
+<details><summary>Plan</summary>
+<p>Primero $n_i(500\text{ K})$. Luego <b>comprobar</b> si $N_D \gg n_i$. Si no se cumple, no vale la aproximación: hay que usar la fórmula exacta (7.19).</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">Unidades: $N_D = 10^{15}$ cm⁻³ $= 10^{21}$ m⁻³.</div>
+<div class="step">$kT = 8{,}62\times10^{-5}\cdot500 = 0{,}0431$ eV → $\dfrac{E_g}{2kT} = \dfrac{0{,}67}{0{,}0862} = 7{,}77$ → $e^{-7{,}77} = 4{,}2\times10^{-4}$.</div>
+<div class="step">$T^{3/2} = 500^{1{,}5} = 1{,}118\times10^{4}$ → $n_i = 1{,}91\times10^{21}\cdot1{,}118\times10^{4}\cdot4{,}2\times10^{-4} \approx 9{,}0\times10^{21}$ m⁻³.</div>
+<div class="step">¡$n_i$ es <b>9 veces mayor</b> que $N_D$! No vale $n\approx N_D$. Fórmula exacta: $n = \dfrac{10^{21}}{2} + \sqrt{(5\times10^{20})^2 + (9{,}0\times10^{21})^2} \approx 5\times10^{20} + 9{,}0\times10^{21} \approx 9{,}5\times10^{21}$ m⁻³.</div>
+<div class="step">$p = n - N_D \approx 8{,}5\times10^{21}$ m⁻³ (o bien $n_i^2/n$). Los apuntes dan $9{,}34\times10^{21}$ y $8{,}34\times10^{21}$; la pequeña diferencia es redondeo de constantes. <b>Lo importante</b>: $n\approx p$ → a 500 K el Ge “dopado” se comporta casi como <b>intrínseco</b>.</div>
+</div>
+</details>
+</div>
+
+<div class="sim"><span class="label">Simulación · dopaje de silicio</span>
+<svg id="simDopSvg" viewBox="0 0 640 270" role="img" aria-label="Barras log de concentraciones"></svg>
+<div class="controls">
+<label for="dopND">N<sub>D</sub> (donadores)</label><input type="range" id="dopND" min="12" max="24" step="0.1" value="21"><output id="dopNDOut"></output>
+<label for="dopNA">N<sub>A</sub> (aceptores)</label><input type="range" id="dopNA" min="12" max="24" step="0.1" value="12"><output id="dopNAOut"></output>
+<label for="dopT">Temperatura T</label><input type="range" id="dopT" min="250" max="700" step="5" value="300"><output id="dopTOut"></output>
+</div>
+<div class="readout" id="dopReadout"></div>
+</div>
+<p class="dim">Calcula $n$ con la fórmula exacta (7.19) y $p = n_i^2/n$, con ionización total. Prueba: (1) sube $N_D$ y mira cómo baja $p$; (2) iguala $N_A$ y $N_D$ (compensación); (3) sube $T$ a 700 K con $N_D = 10^{21}$: el material se vuelve intrínseco.</p>
+
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>Antes de usar $n\approx N_D$, <b>comprueba</b> $N_D \gg n_i$ (a alta $T$ puede fallar, como en el 7.9).</li>
+<li>Los minoritarios <b>no son cero</b>: $p = n_i^2/N_D$. Los necesitarás en la unión p-n.</li>
+<li>Cuidado con cm⁻³ vs m⁻³: $1\ \text{cm}^{-3} = 10^{6}\ \text{m}^{-3}$.</li>
+<li>Para clasificar una impureza por su nivel: cerca de la BC → donadora; cerca de la BV → aceptora (problema 7.4).</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-transporte">
+<h2>9 · Corrientes de arrastre y difusión</h2>
+<p>Los portadores pueden moverse por <b>dos causas distintas</b>: un <b>campo eléctrico</b> (arrastre) o una <b>diferencia de concentración</b> (difusión). Trabajamos en 1D (eje $x$) y usamos $q = 1{,}602\times10^{-19}$ C para la carga elemental (para no confundirla con el número $e$).</p>
+
+<h3>9.1 Arrastre (deriva)</h3>
+<div class="box formula"><span class="label">Fórmulas (7.25)–(7.26)</span>
+$$J_{p,\text{arr}} = q\mu_p\,p\,E \qquad J_{n,\text{arr}} = q\mu_n\,n\,E \qquad \sigma = q\,(n\mu_n + p\mu_p)$$
+<p class="legend">$\mu_n$, $\mu_p$: movilidades [m²/(V·s)]; $n$, $p$ [m⁻³]; $E$ [V/m]; $J$ [A/m²]. Velocidad de arrastre: $v = \mu E$.</p>
+</div>
+<div class="box why"><span class="label">Por qué las dos corrientes de arrastre van en el mismo sentido</span>
+<p>Los huecos (+) se mueven <b>a favor</b> de $E$ → corriente a favor de $E$. Los electrones (−) se mueven <b>en contra</b> de $E$; pero carga negativa moviéndose hacia la izquierda = corriente hacia la derecha. <b>Las dos corrientes se suman</b>: por eso $\sigma$ es la suma de las dos contribuciones.</p>
+</div>
+
+<h3>9.2 Difusión</h3>
+<p>Una gota de tinta en agua, perfume en una habitación, un gas que se expande: las partículas se agitan al azar y tras cada choque cualquier dirección es igual de probable. Resultado neto: <b>flujo de donde hay más a donde hay menos</b>, hasta homogeneizar.</p>
+<div class="box formula"><span class="label">Ley de difusión (7.27)</span>
+$$\Phi(x) = -D\,\frac{d\eta}{dx}$$
+<p class="legend">$\Phi$: flujo de partículas [partículas/(m²·s)]; $\eta$: concentración [m⁻³]; $D$: coeficiente de difusión [m²/s]. El <b>signo menos</b>: el flujo va hacia donde la concentración <b>disminuye</b>.</p>
+</div>
+<div class="box why"><span class="label">Por qué hay flujo neto sin ninguna fuerza</span>
+<p>Mira una frontera imaginaria. A la izquierda hay 100 partículas, a la derecha 10. Cada una tiene la misma probabilidad de cruzar hacia el otro lado, así que cruzan ∼10 veces más de izquierda a derecha que al revés. <b>Nadie empuja</b>: es pura estadística. La causa de la difusión es la <b>concentración no uniforme</b>, $d\eta/dx\neq0$.</p>
+</div>
+
+<h3>9.3 Corriente de difusión de portadores cargados</h3>
+<p>Multiplicamos el flujo por la carga de cada portador ($+q$ huecos, $-q$ electrones):</p>
+<div class="box formula"><span class="label">Fórmulas (7.28)–(7.29)</span>
+$$J_{p,\text{dif}} = (+q)\left(-D_p\frac{dp}{dx}\right) = -qD_p\frac{dp}{dx} \qquad J_{n,\text{dif}} = (-q)\left(-D_n\frac{dn}{dx}\right) = +qD_n\frac{dn}{dx}$$
+<p class="legend">$D_n$, $D_p$: coeficientes de difusión de e⁻ y h⁺ [m²/s]. Si $n$ y $p$ disminuyen hacia la derecha, <b>ambos se mueven hacia la derecha</b>, pero sus corrientes tienen <b>sentidos opuestos</b>.</p>
+</div>
+
+<table>
+<tr><th>Proceso</th><th>Portador</th><th>Movimiento</th><th>Corriente</th></tr>
+<tr><td rowspan="2">Arrastre ($E$ hacia →)</td><td class="pos">h⁺</td><td>→</td><td>→</td></tr>
+<tr><td class="neg">e⁻</td><td>←</td><td>→</td></tr>
+<tr><td rowspan="2">Difusión ($n$, $p$ decrecen hacia →)</td><td class="pos">h⁺</td><td>→</td><td>→</td></tr>
+<tr><td class="neg">e⁻</td><td>→</td><td>←</td></tr>
+</table>
+
+<h3>9.4 Corriente total y relación de Einstein</h3>
+<div class="box formula"><span class="label">Fórmulas (7.30)–(7.33)</span>
+$$J_p = q\mu_p\,p\,E - qD_p\frac{dp}{dx} \qquad J_n = q\mu_n\,n\,E + qD_n\frac{dn}{dx} \qquad J_{\text{total}} = J_n + J_p$$
+$$\frac{D_n}{\mu_n} = \frac{D_p}{\mu_p} = \frac{kT}{q}$$
+<p class="legend">Relación de Einstein: $k = 1{,}381\times10^{-23}$ J/K $= 8{,}62\times10^{-5}$ eV/K. A 300 K, $kT/q \approx 0{,}0259$ V (el “voltaje térmico”).</p>
+</div>
+<div class="box why"><span class="label">Por qué D y μ están ligados</span>
+<p>Las dos cosas dependen del <b>mismo</b> movimiento: el zigzag térmico interrumpido por choques. Si un portador choca poco (gran $\mu$), también se dispersa rápido por difusión (gran $D$). El factor $kT/q$ mide la “energía térmica por unidad de carga”: más caliente → más agitación → más difusión para la misma movilidad.</p>
+</div>
+<div class="box why"><span class="label">Por qué los minoritarios importan (idea clave para el diodo)</span>
+<p>El <b>arrastre</b> es proporcional a la <b>concentración</b> → los minoritarios apenas contribuyen. Pero la <b>difusión</b> es proporcional al <b>gradiente</b>: aunque haya pocos minoritarios, su concentración puede cambiar bruscamente en poco espacio. Por eso <b>los minoritarios pueden contribuir mucho a la corriente total por difusión</b>.</p>
+</div>
+
+<h3>9.5 Campo eléctrico interno en un semiconductor no homogéneo</h3>
+<figure class="diagram">
+<svg viewBox="0 0 720 210" role="img" aria-label="Semiconductor p dopado de forma no uniforme">
+<rect x="60" y="30" width="600" height="120" rx="6" fill="none" stroke="var(--fg-dim)"/>
+<g fill="none" stroke="var(--pos)" stroke-width="2"><circle cx="82" cy="60" r="6"/><circle cx="102" cy="78" r="6"/><circle cx="82" cy="96" r="6"/><circle cx="102" cy="114" r="6"/><circle cx="82" cy="132" r="6"/><circle cx="152" cy="62" r="6"/><circle cx="172" cy="85" r="6"/><circle cx="152" cy="107" r="6"/><circle cx="172" cy="130" r="6"/><circle cx="222" cy="62" r="6"/><circle cx="242" cy="85" r="6"/><circle cx="222" cy="107" r="6"/><circle cx="242" cy="130" r="6"/><circle cx="292" cy="66" r="6"/><circle cx="312" cy="96" r="6"/><circle cx="292" cy="126" r="6"/><circle cx="362" cy="66" r="6"/><circle cx="382" cy="96" r="6"/><circle cx="362" cy="126" r="6"/><circle cx="432" cy="74" r="6"/><circle cx="452" cy="119" r="6"/><circle cx="502" cy="74" r="6"/><circle cx="522" cy="119" r="6"/><circle cx="572" cy="96" r="6"/><circle cx="632" cy="96" r="6"/></g>
+<line x1="250" y1="172" x2="470" y2="172" stroke="var(--intuition)" stroke-width="2.5" marker-end="url(#arr)"/>
+<text x="480" y="177" font-size="13" fill="var(--intuition)">J<tspan baseline-shift="sub" font-size="70%">p,dif</tspan> (difusión de h⁺)</text>
+<line x1="470" y1="196" x2="250" y2="196" stroke="var(--field)" stroke-width="2.5" marker-end="url(#arr)"/>
+<text x="60" y="201" font-size="13" fill="var(--field)">Eᵢ (campo interno)</text>
+<text x="360" y="20" text-anchor="middle" font-size="13" fill="var(--fg-dim)">p(x) alto a la izquierda, bajo a la derecha · en equilibrio J<tspan baseline-shift="sub" font-size="70%">p</tspan> = 0</text>
+</svg>
+<figcaption>Los huecos tienden a difundirse a la derecha, dejando atrás iones aceptores negativos fijos. Esa separación de carga crea un campo Eᵢ que los empuja de vuelta: en equilibrio difusión y arrastre se anulan.</figcaption>
+</figure>
+<p>En <b>equilibrio</b> y sin campo externo, la corriente de cada tipo de portador es <b>nula</b>: $J_n = J_p = 0$ (si no, una corriente atravesando una resistencia disiparía energía salida de la nada).</p>
+<div class="box why"><span class="label">Por qué aparece el campo y cuánto vale</span>
+<div class="steps">
+<div class="step">Hay gradiente de $p$ → corriente de difusión de huecos $\neq 0$.</div>
+<div class="step">Pero los iones de impureza <b>no se mueven</b>. Al irse los huecos queda carga neta $\rho(x)$ → campo $E_i$ que se opone a la difusión. Dos tendencias: la atracción de los iones (quiere que los portadores sigan a las impurezas) vs. la difusión (quiere homogeneizar). Se llega a un punto intermedio.</div>
+<div class="step">Imponiendo $J_p = q\mu_p p E_i - qD_p\,dp/dx = 0$ y usando Einstein:</div>
+</div>
+$$E_i = \frac{D_p}{\mu_p}\frac{1}{p}\frac{dp}{dx} = \frac{kT}{q}\frac{d}{dx}\ln p(x)$$
+</div>
+<div class="box formula"><span class="label">Diferencia de potencial (7.36) y relaciones de Boltzmann</span>
+$$V_{21} = V_2 - V_1 = -\frac{kT}{q}\ln\frac{p_2}{p_1} \qquad\Longleftrightarrow\qquad \frac{p_2}{p_1} = e^{-qV_{21}/kT},\qquad \frac{n_2}{n_1} = e^{+qV_{21}/kT}$$
+<p class="legend">$V_{21}$ en V; $p_1$, $p_2$ concentraciones en los puntos 1 y 2. Solo depende del <b>cociente</b> de concentraciones, no de la distancia ni de la forma del perfil. Multiplicando las dos relaciones: $n_1p_1 = n_2p_2$, es decir, la <b>ley de acción de masas vale punto a punto</b>: $n(x)\,p(x) = n_i^2$ (7.39).</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p><b>Razónalo físicamente</b>: los huecos (+) “ruedan cuesta abajo” en potencial, así que hay <b>menos huecos donde el potencial es mayor</b> (signo −); los electrones al revés (signo +). Comprueba con la unión p-n: el lado n tiene mayor potencial y pocos huecos. ✔</p>
+<p class="dim">Errata de los apuntes: en (7.37) falta el signo menos, $p_2/p_1 = e^{-qV_{21}/kT}$; (7.38) para electrones sí lleva $+$. Con el mismo signo en ambas no saldría $n_1p_1 = n_2p_2$.</p>
+</div>
+
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 7.2 de los apuntes</span>
+<p>Una muestra de Si se dopa con donadores según $N_d(x) = N_0\,e^{-ax}$. (a) Expresión del campo interno si $N_d \gg n_i$. (b) Valor si $a = 1\ \mu\text{m}^{-1}$ (a 300 K).</p>
+<details><summary>Plan</summary>
+<p>Equilibrio → $J_n = 0$. Despejar $E$ igual que para huecos, pero con el signo de los electrones. Tipo n con $N_d\gg n_i$ → $n(x)\approx N_d(x)$; el logaritmo de una exponencial es lineal → campo uniforme.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$J_n = q\mu_n nE + qD_n\,dn/dx = 0 \Rightarrow E_i = -\dfrac{kT}{q}\dfrac{d}{dx}\ln n(x)$.</div>
+<div class="step">$\ln n \approx \ln N_0 - ax \Rightarrow \dfrac{d}{dx}\ln n = -a \Rightarrow E_i = \dfrac{kT}{q}\,a$ (constante, apunta hacia $+x$).</div>
+<div class="step">Comprobación física: los electrones se difunden hacia $+x$ y dejan iones $\text{D}^+$ a la izquierda → el campo va de + (izquierda) a − (derecha): hacia $+x$. ✔</div>
+<div class="step">(b) $E_i = 0{,}0259\ \text{V}\times10^{6}\ \text{m}^{-1} = 2{,}59\times10^{4}$ V/m. (Los apuntes escriben 259 V/m: es un error aritmético, $0{,}0259\times10^6 = 25\,900$.)</div>
+</div>
+</details>
+</div>
+<div class="box check"><span class="label">Comprueba · Problema 7.12</span>
+<details><summary>InP dopado con aceptores $N_A(z) = N_A(0)e^{-bz}$, $N_A\gg n_i$, $b = (2\ \mu\text{m})^{-1}$. ¿Campo interno?</summary>
+<p>$p\approx N_A(z)$ → $E = \dfrac{kT}{q}\dfrac{d}{dz}\ln p = -\dfrac{kT}{q}b$. A 300 K: $|E| = 0{,}0259/(2\times10^{-6}) \approx 1{,}3\times10^{4}$ V/m, apuntando hacia $-z$ (hacia la superficie): los huecos se difunden hacia dentro y dejan iones $\text{A}^-$ cerca de la superficie, así que el campo va de dentro (+) hacia la superficie (−).</p>
+</details>
+</div>
+</section>
+
+<section id="sec-union">
+<h2>10 · La unión p-n en equilibrio</h2>
+<p>Casi todos los dispositivos semiconductores contienen al menos una <b>unión p-n</b>: diodo rectificador, diodo Zener, diodo túnel, transistor bipolar, fotodiodo, LDR, célula fotovoltaica, LED, láser de inyección… Sirve para <b>rectificar, amplificar y conmutar</b>. Su característica I–V es radicalmente distinta de la de un trozo de semiconductor homogéneo (que es una simple resistencia).</p>
+<p><b>Modelo</b>: <b>unión abrupta</b>. Un cristal de sección $S$ dopado uniformemente con aceptores ($N_A$) a un lado y con donadores ($N_D$) al otro, cambiando de golpe en $x=0$.</p>
+
+<div class="chain"><span>Contacto p | n</span><span>Difusión: h⁺ p→n, e⁻ n→p</span><span>Quedan iones fijos: A⁻ | D⁺</span><span>Campo interno n→p</span><span>El campo frena la difusión</span><span>Equilibrio: |J<sub>arr</sub>| = |J<sub>dif</sub>|</span></div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 345" role="img" aria-label="Unión p-n: portadores, densidad de carga y campo">
+<rect x="60" y="25" width="300" height="70" fill="var(--pos)" fill-opacity="0.10" stroke="var(--fg-dim)"/>
+<rect x="360" y="25" width="300" height="70" fill="var(--neg)" fill-opacity="0.10" stroke="var(--fg-dim)"/>
+<rect x="320" y="25" width="100" height="70" fill="var(--bg)" stroke="var(--field)" stroke-dasharray="5 3"/>
+<g fill="none" stroke="var(--pos)" stroke-width="2"><circle cx="95" cy="45" r="6"/><circle cx="140" cy="72" r="6"/><circle cx="185" cy="45" r="6"/><circle cx="230" cy="75" r="6"/><circle cx="270" cy="48" r="6"/><circle cx="300" cy="78" r="6"/><circle cx="110" cy="80" r="6"/></g>
+<g fill="var(--neg)"><circle cx="445" cy="45" r="6"/><circle cx="490" cy="72" r="6"/><circle cx="535" cy="45" r="6"/><circle cx="580" cy="75" r="6"/><circle cx="625" cy="48" r="6"/><circle cx="470" cy="85" r="6"/><circle cx="640" cy="82" r="6"/></g>
+<g font-size="16" font-weight="700" fill="var(--neg)" text-anchor="middle"><text x="340" y="45">−</text><text x="340" y="65">−</text><text x="340" y="85">−</text></g>
+<g font-size="16" font-weight="700" fill="var(--pos)" text-anchor="middle"><text x="375" y="45">+</text><text x="375" y="65">+</text><text x="375" y="85">+</text><text x="402" y="45">+</text><text x="402" y="65">+</text><text x="402" y="85">+</text></g>
+<g font-size="14" fill="var(--fg)" text-anchor="middle"><text x="190" y="18">p (N<tspan baseline-shift="sub" font-size="70%">A</tspan>): huecos mayoritarios</text><text x="540" y="18">n (N<tspan baseline-shift="sub" font-size="70%">D</tspan>): electrones mayoritarios</text></g>
+<line x1="415" y1="108" x2="328" y2="108" stroke="var(--field)" stroke-width="2.5" marker-end="url(#arr)"/>
+<text x="430" y="113" font-size="13" fill="var(--field)">E (de n hacia p)</text>
+<line x1="60" y1="165" x2="660" y2="165" stroke="var(--fg-dim)"/>
+<rect x="320" y="165" width="40" height="45" fill="var(--neg)" fill-opacity="0.55"/>
+<rect x="360" y="135" width="60" height="30" fill="var(--pos)" fill-opacity="0.55"/>
+<text x="40" y="150" font-size="13" fill="var(--fg)">ρ(x)</text>
+<text x="250" y="200" font-size="12" fill="var(--neg)">−qN<tspan baseline-shift="sub" font-size="70%">A</tspan></text><text x="430" y="150" font-size="12" fill="var(--pos)">+qN<tspan baseline-shift="sub" font-size="70%">D</tspan></text>
+<line x1="60" y1="240" x2="660" y2="240" stroke="var(--fg-dim)"/>
+<path d="M320 240 L360 300 L420 240 Z" fill="var(--field)" fill-opacity="0.3" stroke="var(--field)" stroke-width="2"/>
+<text x="40" y="232" font-size="13" fill="var(--fg)">E(x)</text>
+<text x="430" y="280" font-size="12" fill="var(--field)">E &lt; 0 solo en la zona de carga espacial</text><text x="430" y="296" font-size="12" fill="var(--field)">|E| máximo en x = 0</text>
+<g font-size="12" fill="var(--fg-dim)" text-anchor="middle"><text x="320" y="330">−xₚ₀</text><text x="360" y="330">0</text><text x="420" y="330">xₙ₀</text></g>
+<g stroke="var(--fg-dim)" stroke-dasharray="2 3"><line x1="320" y1="95" x2="320" y2="320"/><line x1="360" y1="95" x2="360" y2="320"/><line x1="420" y1="95" x2="420" y2="320"/></g>
+</svg>
+<figcaption>Arriba: zonas neutras con portadores y zona de carga espacial (solo iones fijos). Centro: densidad de carga (áreas iguales: $N_A x_{p0} = N_D x_{n0}$). Abajo: campo eléctrico, nulo fuera de la zona de carga espacial.</figcaption>
+</figure>
+
+<h3>10.1 Potencial de contacto</h3>
+<ul>
+<li>Al contactar, los huecos (abundantes en p) se difunden hacia n, y los electrones (abundantes en n) hacia p.</li>
+<li>Cada portador que se va deja atrás su <b>ion fijo</b>: aparecen $\text{A}^-$ en el lado p y $\text{D}^+$ en el lado n junto a la unión → <b>región de carga espacial</b> (o de transición).</li>
+<li>Esas cargas crean un <b>campo interno</b> (de + a −, es decir, de n hacia p) que <b>frena</b> la difusión. Se para cuando, para cada portador, $|J_{\text{arrastre}}| = |J_{\text{difusión}}|$.</li>
+<li>El campo está <b>localizado en la zona de carga espacial</b>: fuera, el material es neutro.</li>
+<li>Asociado al campo hay un salto de potencial: $V_n$ en la zona neutra n, $V_p$ en la p. <b>Potencial de contacto</b>: $V_0 = V_n - V_p &gt; 0$.</li>
+</ul>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 290" role="img" aria-label="Potencial y bandas en la unión p-n">
+<path d="M60 80 H320 Q 355 80 370 55 Q 385 30 420 30 H660" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+<text x="70" y="72" font-size="13" fill="var(--fg)">Vₚ</text><text x="630" y="22" font-size="13" fill="var(--fg)">Vₙ</text>
+<line x1="600" y1="78" x2="600" y2="34" stroke="var(--field)" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<line x1="420" y1="80" x2="610" y2="80" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<text x="608" y="60" font-size="13" fill="var(--field)">V₀</text>
+<text x="20" y="50" font-size="13" fill="var(--fg)">V(x)</text>
+<path d="M60 140 H320 C360 140, 380 175, 420 175 H660" fill="none" stroke="var(--fg)" stroke-width="2.5"/>
+<path d="M60 200 H320 C360 200, 380 235, 420 235 H660" fill="none" stroke="var(--fg)" stroke-width="2.5"/>
+<path d="M60 192 H660" fill="none" stroke="var(--intuition)" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="420" y1="140" x2="610" y2="140" stroke="var(--fg-dim)" stroke-dasharray="3 3"/>
+<line x1="600" y1="142" x2="600" y2="173" stroke="var(--field)" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+<text x="608" y="162" font-size="13" fill="var(--field)">qV₀</text>
+<g font-size="13" fill="var(--fg)"><text x="20" y="145">E<tspan baseline-shift="sub" font-size="70%">C</tspan></text><text x="20" y="205">E<tspan baseline-shift="sub" font-size="70%">V</tspan></text><text x="670" y="196" fill="var(--intuition)">E<tspan baseline-shift="sub" font-size="70%">F</tspan></text></g>
+<text x="360" y="275" font-size="13" text-anchor="middle" fill="var(--fg-dim)">Energía del electrón: las bandas del lado p quedan qV₀ por encima (E<tspan baseline-shift="sub" font-size="70%">Cp</tspan> − E<tspan baseline-shift="sub" font-size="70%">Cn</tspan> = qV₀)</text>
+</svg>
+<figcaption>El potencial sube de p a n; la energía de un electrón ($-qV$) baja de p a n. Por eso las bandas “se doblan”: el nivel de Fermi se iguala en toda la muestra en equilibrio.</figcaption>
+</figure>
+
+<div class="box formula"><span class="label">Potencial de contacto (7.40)–(7.42)</span>
+$$V_0 = \frac{kT}{q}\ln\frac{p_{p0}}{p_{n0}} \approx \frac{kT}{q}\ln\frac{N_A N_D}{n_i^2} \qquad\qquad E_{Cp}-E_{Cn} = E_{Vp}-E_{Vn} = qV_0$$
+<p class="legend">$p_{p0}\approx N_A$: huecos en la zona neutra p; $p_{n0}\approx n_i^2/N_D$: huecos (minoritarios) en la zona neutra n; subíndice 0 = equilibrio. $V_0$ en V (típico Si: 0,6–0,9 V).</p>
+</div>
+<div class="box why"><span class="label">Por qué esta fórmula</span>
+<p>Es directamente la relación (7.36) entre dos puntos de un semiconductor no homogéneo: punto 1 = zona neutra p, punto 2 = zona neutra n. El salto de potencial solo depende del <b>cociente de concentraciones</b> de huecos a ambos lados. Más dopaje → cociente mayor → barrera mayor (pero solo logarítmicamente). Mayor $E_g$ → $n_i$ menor → $V_0$ mayor.</p>
+</div>
+<div class="box trap"><span class="label">Trampa de examen</span>
+<p>“Si conecto un voltímetro a un diodo en reposo, mide $V_0$.” <b>No</b>: el campo que crea $V_0$ existe solo dentro de la muestra y no se extiende por fuera; el voltímetro marca 0. La unión no es una pila: en equilibrio no da energía.</p>
+</div>
+
+<h3>10.2 Región de carga espacial</h3>
+<p>Dentro de la zona de transición los portadores que entran son barridos enseguida por el campo: en cada instante hay <b>poquísimos</b>. Aproximación: <b>no hay portadores libres</b>; la carga es solo la de los iones fijos.</p>
+<div class="box formula"><span class="label">Fórmulas (7.43)–(7.46)</span>
+$$Q^{(+)} = qN_D S x_{n0},\quad Q^{(-)} = -qN_A S x_{p0}\ \ \Rightarrow\ \ N_D\,x_{n0} = N_A\,x_{p0}$$
+$$w = x_{n0} + x_{p0} = \left[\frac{2\varepsilon V_0}{q}\left(\frac{1}{N_A}+\frac{1}{N_D}\right)\right]^{1/2}$$
+<p class="legend">$x_{p0}$, $x_{n0}$: penetración en cada lado [m]; $w$: anchura total [m]; $\varepsilon$: permitividad del semiconductor (Si: $\approx12\varepsilon_0$, $\varepsilon_0 = 8{,}85\times10^{-12}$ F/m); $N_A$, $N_D$ en m⁻³.</p>
+</div>
+<div class="box why"><span class="label">Por qué</span>
+<ul>
+<li><b>Áreas iguales</b>: la muestra era neutra, así que la carga negativa descubierta en p iguala a la positiva en n. El lado <b>más dopado</b> tiene más carga por unidad de longitud → necesita <b>menos anchura</b>. La zona se extiende sobre todo hacia el lado <b>menos dopado</b>.</li>
+<li><b>$w\propto\sqrt{V_0/N}$</b> (de la ecuación de Poisson): el campo crece linealmente con la carga acumulada, $E_{\max}\propto N\,x$; el potencial es el área bajo el campo, $V\sim E_{\max}\,w\propto N\,w^2$. Despejando, $w\propto\sqrt{V/N}$.</li>
+</ul>
+</div>
+<table>
+<tr><th>Corriente en equilibrio</th><th>Movimiento</th><th>Corriente</th></tr>
+<tr><td>Difusión h⁺ (p→n)</td><td>→</td><td>→</td></tr>
+<tr><td>Arrastre h⁺ (n→p, por el campo)</td><td>←</td><td>←</td></tr>
+<tr><td>Difusión e⁻ (n→p)</td><td>←</td><td>→</td></tr>
+<tr><td>Arrastre e⁻ (p→n, por el campo)</td><td>→</td><td>←</td></tr>
+</table>
+<p>Las difusiones dan corriente p→n; los arrastres, n→p. En equilibrio se cancelan <b>para cada portador</b>: corriente neta nula.</p>
+
+<div class="box example"><span class="label">Problema resuelto · Ejemplo 7.3 de los apuntes</span>
+<p>Unión abrupta de Si con $N_A = 4\times10^{18}$ cm⁻³, $N_D = 10^{16}$ cm⁻³, $\varepsilon = 12\varepsilon_0$, a 300 K. Calcula (a) $V_0$; (b) la anchura de la zona de carga espacial en cada lado; (c) el campo interno medio.</p>
+<details><summary>Plan</summary>
+<p>Pasar a m⁻³. (a) Fórmula (7.41) con $n_i$ del Si. (b) $w$ con (7.46) y repartir con $N_Dx_{n0} = N_Ax_{p0}$. (c) Suponer campo uniforme: $V_0 = E_0 w$.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$N_A = 4\times10^{24}$ m⁻³, $N_D = 10^{22}$ m⁻³, $n_i\approx1{,}5\times10^{16}$ m⁻³ → $n_i^2 \approx 2{,}25\times10^{32}$.</div>
+<div class="step">(a) $V_0 = 0{,}0259\,\ln\dfrac{4\times10^{46}}{2{,}25\times10^{32}} = 0{,}0259\,\ln(1{,}78\times10^{14}) = 0{,}0259\times32{,}8 \approx 0{,}85$ V.</div>
+<div class="step">(b) $\dfrac{2\varepsilon V_0}{q} = \dfrac{2\cdot12\cdot8{,}85\times10^{-12}\cdot0{,}85}{1{,}6\times10^{-19}} = 1{,}13\times10^{9}$; $\ \dfrac1{N_A}+\dfrac1{N_D} = 2{,}5\times10^{-25}+10^{-22} \approx 1{,}0025\times10^{-22}$ m³.</div>
+<div class="step">$w = \sqrt{1{,}13\times10^{9}\cdot1{,}0025\times10^{-22}} = \sqrt{1{,}13\times10^{-13}} \approx 3{,}36\times10^{-7}$ m $\approx 0{,}34\ \mu$m (los apuntes: 0,334 µm).</div>
+<div class="step">Reparto: $x_{n0} = w\dfrac{N_A}{N_A+N_D} \approx 0{,}335\ \mu$m; $\ x_{p0} = w\dfrac{N_D}{N_A+N_D} \approx 8{,}4\times10^{-10}$ m $\approx 8$ Å. ¡Casi toda la zona está en el lado n, el menos dopado!</div>
+<div class="step">(c) $E_0 = V_0/w = 0{,}85/(3{,}34\times10^{-7}) \approx 2{,}5\times10^{6}$ V/m. Un campo enorme en una zona diminuta.</div>
+</div>
+</details>
+</div>
+</section>
+
+<section id="sec-polarizada">
+<h2>11 · La unión p-n polarizada</h2>
+<p><b>Polarización directa</b>: el lado <b>p</b> a potencial <b>positivo</b> respecto al n ($V = V_f &gt; 0$). <b>Inversa</b>: p negativo respecto a n ($V = -V_r$).</p>
+<p><b>Hipótesis</b>: estado estacionario; <b>todo el voltaje aplicado cae en la zona de carga espacial</b>; en las zonas neutras la caída de tensión y el campo son despreciables.</p>
+<div class="box why"><span class="label">Por qué todo el voltaje cae en la unión</span>
+<p>Es un circuito en serie: zona neutra p + zona de carga espacial + zona neutra n. La zona de carga espacial está <b>vaciada de portadores</b> → conductividad bajísima → resistencia <b>enorme</b> comparada con las zonas neutras. En una serie, la tensión cae casi entera en la resistencia mayor.</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 260" role="img" aria-label="Bandas en equilibrio, polarización directa e inversa">
+<g font-size="13" font-weight="700" text-anchor="middle" fill="var(--fg)"><text x="130" y="30">Equilibrio (V = 0)</text><text x="360" y="30">Directa (V = V<tspan baseline-shift="sub" font-size="70%">f</tspan>)</text><text x="590" y="30">Inversa (V = −V<tspan baseline-shift="sub" font-size="70%">r</tspan>)</text></g>
+<g fill="none" stroke="var(--fg)" stroke-width="2.2">
+<path d="M20 60 H110 C130 60,130 94,150 94 H240"/><path d="M20 110 H110 C130 110,130 144,150 144 H240"/>
+<path d="M250 60 H348 C360 60,360 74,372 74 H470"/><path d="M250 110 H348 C360 110,360 124,372 124 H470"/>
+<path d="M480 60 H555 C590 60,590 134,625 134 H700"/><path d="M480 110 H555 C590 110,590 184,625 184 H700"/>
+</g>
+<g fill="none" stroke="var(--intuition)" stroke-width="1.5" stroke-dasharray="5 4">
+<path d="M20 102 H240"/><path d="M250 102 H360"/><path d="M360 82 H470"/><path d="M480 102 H590"/><path d="M590 142 H700"/>
+</g>
+<g stroke="var(--fg-dim)" stroke-dasharray="3 3"><line x1="150" y1="60" x2="235" y2="60"/><line x1="372" y1="60" x2="465" y2="60"/><line x1="625" y1="60" x2="700" y2="60"/></g>
+<g stroke="var(--field)" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"><line x1="225" y1="62" x2="225" y2="92"/><line x1="455" y1="62" x2="455" y2="72"/><line x1="690" y1="62" x2="690" y2="132"/></g>
+<g font-size="12" fill="var(--field)" text-anchor="middle"><text x="130" y="200">barrera qV₀</text><text x="360" y="200">barrera q(V₀ − V<tspan baseline-shift="sub" font-size="70%">f</tspan>) ↓</text><text x="590" y="215">barrera q(V₀ + V<tspan baseline-shift="sub" font-size="70%">r</tspan>) ↑</text></g>
+<g font-size="12" fill="var(--fg-dim)" text-anchor="middle"><text x="130" y="220">w</text><text x="360" y="220">w ↓ · E ↓ · difusión ↑↑</text><text x="590" y="235">w ↑ · E ↑ · difusión ≈ 0</text></g>
+<g font-size="11" fill="var(--intuition)"><text x="24" y="98">E<tspan baseline-shift="sub" font-size="70%">F</tspan></text><text x="400" y="78">E<tspan baseline-shift="sub" font-size="70%">Fn</tspan></text><text x="254" y="98">E<tspan baseline-shift="sub" font-size="70%">Fp</tspan></text><text x="640" y="155">E<tspan baseline-shift="sub" font-size="70%">Fn</tspan></text><text x="484" y="98">E<tspan baseline-shift="sub" font-size="70%">Fp</tspan></text></g>
+</svg>
+<figcaption>Bandas ($E_C$ arriba, $E_V$ abajo) del electrón. En directa la barrera baja y los niveles de Fermi se separan $qV_f$; en inversa la barrera sube.</figcaption>
+</figure>
+
+<table>
+<tr><th>Magnitud</th><th>Directa ($V=V_f$)</th><th>Inversa ($V=-V_r$)</th></tr>
+<tr><td>Altura de la barrera</td><td class="hl">$V_0 - V_f$ ↓</td><td>$V_0 + V_r$ ↑</td></tr>
+<tr><td>Campo en la zona de transición</td><td>disminuye</td><td>aumenta</td></tr>
+<tr><td>Anchura $w$</td><td>disminuye</td><td>aumenta</td></tr>
+<tr><td>Separación de bandas</td><td>$q(V_0 - V_f)$</td><td>$q(V_0 + V_r)$</td></tr>
+<tr><td>Niveles de Fermi</td><td colspan="2">$E_{Fn} - E_{Fp} = qV$ (7.47): el voltaje aplicado separa los niveles de Fermi de ambos lados</td></tr>
+<tr><td>Corriente de difusión (p→n)</td><td class="hl">crece exponencialmente</td><td>se hace despreciable</td></tr>
+<tr><td>Corriente de arrastre/generación (n→p)</td><td colspan="2">prácticamente <b>no cambia</b></td></tr>
+<tr><td>Corriente total</td><td class="hl">grande, p→n</td><td>pequeña, n→p ($\approx -I_0$)</td></tr>
+</table>
+
+<div class="box why"><span class="label">Por qué cambian así barrera, campo y anchura</span>
+<ul>
+<li><b>Barrera</b>: el campo interno hace $V_n &gt; V_p$. Poner p a $+V_f$ <b>se opone</b> a ese desnivel → barrera $V_0 - V_f$. En inversa, lo <b>refuerza</b> → $V_0 + V_r$.</li>
+<li><b>Anchura</b>: el campo lo crean los iones descubiertos, cuya densidad ($N_A$, $N_D$) <b>no puede cambiar</b>. Para tener más campo (inversa) hay que descubrir más iones → $w$ crece; para menos campo (directa) → $w$ decrece.</li>
+</ul>
+</div>
+<div class="box why"><span class="label">Por qué la difusión es muy sensible y el arrastre no</span>
+<ul>
+<li><b>Difusión</b> (mayoritarios que saltan la barrera): solo pasan los que tienen energía para superar $q(V_0 - V)$. Bajar la barrera aumenta exponencialmente cuántos lo logran. Esta corriente se mantiene en el tiempo gracias a la batería.</li>
+<li><b>Arrastre</b> (minoritarios barridos por el campo): todo minoritario que llega al borde de la zona es arrastrado, sea el campo grande o pequeño. El factor limitante es <b>cuántos minoritarios llegan</b>, y eso lo fija la <b>generación térmica</b> de pares, que no depende de $V$. Por eso se llama <b>corriente de generación</b>.</li>
+</ul>
+</div>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Una <b>presa</b> entre dos lagos. La difusión es el agua que salta por encima del muro: si bajas el muro (directa), el caudal se dispara; si lo subes (inversa), cesa del todo. El arrastre es un <b>goteo</b> de minoritarios que caen cuesta abajo por el otro lado: su caudal solo depende de cuántas gotas aparecen, no de la altura del muro. La difusión puede crecer sin límite, pero como mucho puede bajar hasta cero: <b>asimetría</b> → rectificación.</p>
+</div>
+
+<figure class="diagram">
+<svg viewBox="0 0 720 240" role="img" aria-label="Curva I-V de una resistencia y de un diodo">
+<g stroke="var(--fg-dim)" stroke-width="1.5" marker-end="url(#arr)"><line x1="60" y1="130" x2="320" y2="130"/><line x1="190" y1="220" x2="190" y2="25"/><line x1="420" y1="160" x2="690" y2="160"/><line x1="550" y1="220" x2="550" y2="25"/></g>
+<line x1="90" y1="200" x2="290" y2="60" stroke="var(--accent)" stroke-width="3"/>
+<path d="M430 166 H540 C 565 166, 585 162, 605 130 S 630 45, 636 28" fill="none" stroke="var(--intuition)" stroke-width="3"/>
+<g font-size="13" fill="var(--fg)"><text x="315" y="150">V</text><text x="198" y="35">I</text><text x="685" y="180">V</text><text x="558" y="35">I</text></g>
+<text x="190" y="235" font-size="13" text-anchor="middle" fill="var(--accent)">(a) semiconductor homogéneo: recíproco (Ohm)</text>
+<text x="555" y="235" font-size="13" text-anchor="middle" fill="var(--intuition)">(b) unión p-n: no recíproco</text>
+<text x="440" y="185" font-size="12" fill="var(--fg-dim)">inversa: I ≈ −I₀</text>
+<text x="600" y="80" font-size="12" fill="var(--fg-dim)">directa</text>
+</svg>
+<figcaption>Un trozo de semiconductor dopado conduce igual en ambos sentidos. La unión p-n conduce mucho en directa y casi nada en inversa.</figcaption>
+</figure>
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>Directa = <b>p al +</b>. Si lo inviertes, todo lo demás sale al revés.</li>
+<li>En inversa la corriente <b>no es cero</b>: queda la pequeña corriente de generación $-I_0$ (de n a p).</li>
+<li>La corriente de arrastre en la unión <b>no</b> crece con el campo: está limitada por la generación de minoritarios.</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-diodo">
+<h2>12 · Ecuación del diodo</h2>
+<div class="box why"><span class="label">Deducción (razonamiento de los apuntes)</span>
+<div class="steps">
+<div class="step"><b>Equilibrio</b>: de (7.40), $\dfrac{p_{p0}}{p_{n0}} = e^{qV_0/kT}$ (7.48). Es la relación de Boltzmann a través de la barrera.</div>
+<div class="step"><b>Con tensión $V$</b> la barrera pasa a $V_0 - V$. Suponemos que la misma relación vale en los bordes de la zona de transición: $\dfrac{p_p(-x_{p0})}{p_n(x_{n0})} = e^{q(V_0-V)/kT}$ (7.49).</div>
+<div class="step"><b>Inyección débil</b>: los mayoritarios apenas cambian, $p_p(-x_{p0})\approx p_{p0}$. Dividiendo por (7.48): $\ p_n(x_{n0}) = p_{n0}\,e^{qV/kT}$ (7.50). En directa, los minoritarios en el borde <b>se multiplican exponencialmente</b>; en inversa casi desaparecen.</div>
+<div class="step">La probabilidad de cruzar crece en el factor $e^{qV/kT}$, así que la corriente de difusión también: $I_{\text{dif}} = I_{0,\text{dif}}\,e^{qV/kT}$ (7.51).</div>
+<div class="step">La corriente de generación no depende de $V$. En $V=0$ la total es nula: $I_{0,\text{dif}} - |I_{\text{gen}}| = 0 \Rightarrow I_{0,\text{dif}} = |I_{\text{gen}}| \equiv I_0$ (7.52)–(7.53).</div>
+<div class="step">Total: $I = I_{\text{dif}} - |I_{\text{gen}}| = I_0e^{qV/kT} - I_0$ (7.54)–(7.55).</div>
+</div>
+</div>
+<div class="box formula"><span class="label">Ecuación del diodo (7.55)</span>
+$$I = I_0\left(e^{qV/kT} - 1\right)$$
+<p class="legend">$I_0$: corriente de saturación inversa [A] (= corriente de generación); $V$: tensión aplicada [V], positiva en directa (p al +); $kT/q\approx0{,}0259$ V a 300 K.</p>
+</div>
+<table>
+<tr><th>Régimen</th><th>Aproximación</th><th>Lectura física</th></tr>
+<tr><td>Directa, $V \gg kT/q$ (unas décimas de V)</td><td>$I \approx I_0 e^{qV/kT}$</td><td>Cada ≈ 60 mV más ($kT\ln10/q$) multiplica $I$ por 10.</td></tr>
+<tr><td>$V = 0$</td><td>$I = 0$</td><td>Difusión y generación se cancelan.</td></tr>
+<tr><td>Inversa, $|V| \gg kT/q$</td><td>$I \approx -I_0$</td><td>Solo queda la generación: <b>satura</b>, no depende de $V$.</td></tr>
+</table>
+<div class="box why"><span class="label">Por qué I₀ depende tanto del material y de T</span>
+<p>$I_0$ es la corriente de minoritarios generados térmicamente, y los minoritarios van como $n_i^2/N$. Como $n_i^2\propto e^{-E_g/kT}$: <b>mayor $E_g$ → $I_0$ mucho menor</b> (el Si es mejor que el Ge para hacer diodos, problema 7.16), y <b>al calentar, $I_0$ se dispara</b>.</p>
+</div>
+
+<div class="sim"><span class="label">Simulación · diodo p-n de Si (N<sub>A</sub> = 10²³ m⁻³, N<sub>D</sub> = 10²² m⁻³)</span>
+<svg id="simDiodeSvg" viewBox="0 0 640 330" role="img" aria-label="Unión, bandas y curva I-V del diodo"></svg>
+<div class="controls">
+<label for="diV">Tensión V</label><input type="range" id="diV" min="-1" max="0.75" step="0.01" value="0"><output id="diVOut"></output>
+<label for="diT">Temperatura T</label><input type="range" id="diT" min="250" max="400" step="5" value="300"><output id="diTOut"></output>
+</div>
+<div class="readout" id="diReadout"></div>
+</div>
+<p class="dim">Izquierda: zona de carga espacial (a escala relativa, $w\propto\sqrt{V_0-V}$) y bandas con la barrera $q(V_0-V)$. Derecha: $I = I_0(e^{qV/kT}-1)$ con $I_0(300\text{ K}) = 10^{-12}$ A y $I_0\propto n_i^2(T)$. Prueba a calentar con $V$ fija en directa.</p>
+
+<div class="box example"><span class="label">Problema resuelto · Problema 7.17 de los apuntes</span>
+<p>Una unión p-n tiene $I_0 = 5\times10^{-9}$ A. Con polarización directa de 0,45 V: (a) corriente a 27 °C; (b) corriente a 47 °C suponiendo que $V$ e $I_0$ no cambian con $T$.</p>
+<details><summary>Plan</summary>
+<p>Ecuación del diodo. Lo único que cambia de (a) a (b) es $kT/q$ en el exponente. Temperaturas en kelvin.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(a) $T = 300{,}15$ K → $kT/q = 8{,}617\times10^{-5}\cdot300{,}15 = 0{,}02586$ V → $qV/kT = 0{,}45/0{,}02586 = 17{,}40$.</div>
+<div class="step">$e^{17{,}40} \approx 3{,}6\times10^{7}$ → $I = 5\times10^{-9}(3{,}6\times10^{7} - 1) \approx 0{,}18$ A.</div>
+<div class="step">(b) $T = 320{,}15$ K → $kT/q = 0{,}02759$ V → $qV/kT = 16{,}31$ → $e^{16{,}31}\approx1{,}21\times10^{7}$ → $I \approx 0{,}061$ A.</div>
+<div class="step">Interpretación: con $I_0$ fijo, calentar <b>reduce</b> el exponente. (En un diodo real $I_0$ crece muchísimo con $T$ y domina, así que la corriente sube; el enunciado lo excluye a propósito.)</div>
+</div>
+</details>
+</div>
+
+<div class="box trap"><span class="label">Trampas de examen</span>
+<ul>
+<li>No olvides el “−1”: es lo que hace $I(0)=0$ y $I\to -I_0$ en inversa.</li>
+<li>$T$ en kelvin dentro de $kT$; si $k$ está en eV/K, $V$ va en voltios y $qV/kT = V/(kT/q)$.</li>
+<li>En inversa no apliques $I\approx I_0e^{qV/kT}$: ahí la exponencial es ≈ 0 e $I\approx -I_0$.</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-problemas">
+<h2>13 · Problemas de los apuntes (7.14)</h2>
+<p>Los apuntes cierran con una lista de problemas propuestos. Aquí tienes resueltos los que se pueden hacer con lo visto en este tema (los ejemplos 7.1–7.3 y los problemas 7.9, 7.12 y 7.17 ya están en sus secciones).</p>
+
+<div class="box example"><span class="label">Problema resuelto · 7.1 y 7.2 (generación óptica)</span>
+<p><b>7.1</b> $E_g(\text{Si}) = 1{,}1$ eV y $E_g(\text{Ge}) = 0{,}7$ eV. Frecuencia mínima de la radiación capaz de producir conductividad. <b>7.2</b> Un detector de Ge ($E_g = 0{,}67$ eV) recibe un fotón γ de 1,5 MeV: (a) número máximo de pares e/h; (b) si la resolución es ±4×10³ pares, ¿resolución en energía?</p>
+<details><summary>Plan</summary>
+<p>Producir conductividad = crear pares: el fotón debe tener $h\nu \ge E_g$. Para el detector, cada par cuesta como mínimo $E_g$: $N_{\max} = E/E_g$.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">Si: $\nu_{\min} = \dfrac{E_g}{h} = \dfrac{1{,}1\cdot1{,}602\times10^{-19}\ \text{J}}{6{,}626\times10^{-34}\ \text{J·s}} = 2{,}66\times10^{14}$ Hz (infrarrojo cercano).</div>
+<div class="step">Ge: $\nu_{\min} = \dfrac{0{,}7\cdot1{,}602\times10^{-19}}{6{,}626\times10^{-34}} = 1{,}69\times10^{14}$ Hz. Menor $E_g$ → basta luz de menor frecuencia.</div>
+<div class="step">7.2(a): $N = \dfrac{1{,}5\times10^{6}\ \text{eV}}{0{,}67\ \text{eV}} = 2{,}24\times10^{6}$ pares.</div>
+<div class="step">7.2(b): $\Delta E = 4\times10^{3}\cdot0{,}67\ \text{eV} = 2{,}68\times10^{3}$ eV.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema resuelto · 7.7 (resistencia de silicio tipo n)</span>
+<p>Barra de Si tipo n: longitud 2 mm, sección $2{,}5\times10^{-5}$ m², $N_D = 5\times10^{13}$ cm⁻³, $\mu_n = 1500$ cm²/(V·s), $\mu_p = 475$ cm²/(V·s), $n_i = 1{,}45\times10^{16}$ m⁻³. Halla su resistencia a 300 K y demuestra que los huecos no contribuyen.</p>
+<details><summary>Plan</summary>
+<p>Todo a SI. Comprobar $N_D\gg n_i$ → $n\approx N_D$, $p = n_i^2/N_D$. Calcular $\sigma_n$ y $\sigma_p$ por separado para compararlas. $R = L/(\sigma S)$.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$N_D = 5\times10^{19}$ m⁻³, $\mu_n = 0{,}15$ m²/(V·s), $\mu_p = 0{,}0475$ m²/(V·s). $N_D/n_i\approx3500$ ✔ → $n\approx5\times10^{19}$ m⁻³.</div>
+<div class="step">$p = \dfrac{(1{,}45\times10^{16})^2}{5\times10^{19}} = 4{,}2\times10^{12}$ m⁻³.</div>
+<div class="step">$\sigma_n = q n\mu_n = 1{,}6\times10^{-19}\cdot5\times10^{19}\cdot0{,}15 = 1{,}2\ (\Omega\,\text{m})^{-1}$; $\ \sigma_p = 1{,}6\times10^{-19}\cdot4{,}2\times10^{12}\cdot0{,}0475 = 3{,}2\times10^{-8}\ (\Omega\,\text{m})^{-1}$. Cociente ∼$10^{-8}$: huecos despreciables ✔.</div>
+<div class="step">$R = \dfrac{L}{\sigma S} = \dfrac{2\times10^{-3}}{1{,}2\cdot2{,}5\times10^{-5}} \approx 67\ \Omega$ (apuntes: ≈ 66 Ω).</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema resuelto · 7.8 (barra de germanio intrínseco)</span>
+<p>Barra de Ge de 10 cm y 2 cm² con 10 V entre extremos. $n_i = 2{,}36\times10^{19}$ m⁻³, $\mu_n = 0{,}39$ y $\mu_p = 0{,}182$ m²/(V·s). Halla (a) $\rho$; (b) $R$; (c) velocidades de arrastre; (d) corriente.</p>
+<details><summary>Plan</summary>
+<p>Intrínseco → $n = p = n_i$ → $\sigma = qn_i(\mu_n+\mu_p)$. Campo uniforme $E = V/L$; $v = \mu E$.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">$\sigma = 1{,}602\times10^{-19}\cdot2{,}36\times10^{19}\cdot(0{,}39+0{,}182) = 3{,}78\cdot0{,}572 = 2{,}16\ (\Omega\,\text{m})^{-1}$ → $\rho = 1/\sigma = 0{,}462\ \Omega\,$m.</div>
+<div class="step">$R = \rho L/S = 0{,}462\cdot0{,}1/(2\times10^{-4}) = 231\ \Omega$.</div>
+<div class="step">$E = 10/0{,}1 = 100$ V/m → $v_n = 0{,}39\cdot100 = 39$ m/s; $v_p = 0{,}182\cdot100 = 18$ m/s. (¡Mucho menores que $v_T\sim10^5$ m/s!)</div>
+<div class="step">$I = V/R = 10/231 \approx 43$ mA.</div>
+</div>
+</details>
+</div>
+
+<div class="box example"><span class="label">Problema resuelto · 7.15 (diodo)</span>
+<p>Por una unión p-n a 300 K circulan 0,01 µA con polarización inversa de 10 V. Calcula la corriente en directa para (a) 0,1 V, (b) 0,3 V, (c) 0,5 V.</p>
+<details><summary>Plan</summary>
+<p>Con 10 V en inversa ($|V|\gg kT/q$) el diodo está <b>saturado</b>: $I = -I_0$ → $I_0 = 0{,}01\ \mu$A $= 10^{-8}$ A. Luego ecuación del diodo con $kT/q = 0{,}02585$ V.</p>
+</details>
+<details><summary>Solución paso a paso</summary>
+<div class="steps">
+<div class="step">(a) $0{,}1/0{,}02585 = 3{,}87$ → $I = 10^{-8}(e^{3{,}87}-1) = 10^{-8}\cdot46{,}9 \approx 0{,}47\ \mu$A.</div>
+<div class="step">(b) $0{,}3/0{,}02585 = 11{,}6$ → $I = 10^{-8}\cdot1{,}10\times10^{5} \approx 1{,}1$ mA.</div>
+<div class="step">(c) $0{,}5/0{,}02585 = 19{,}3$ → $I = 10^{-8}\cdot2{,}5\times10^{8} \approx 2{,}5$ A.</div>
+<div class="step">Moraleja: +0,2 V multiplican la corriente por ∼2000–2300. Es la exponencial del diodo.</div>
+</div>
+</details>
+</div>
+
+<div class="box check"><span class="label">Comprueba · problemas conceptuales y cortos</span>
+<details><summary>7.3 ¿Por qué el diamante es transparente? ¿Por qué el Si es transparente al IR ($10^{12}$–$10^{14}$ Hz) y no al visible?</summary>
+<p>La luz visible tiene fotones de 1,8–3,1 eV &lt; 6 eV del diamante: no pueden crear pares, no se absorben → transparente. En el Si: $h\nu$ del IR va de $4\times10^{-3}$ a $0{,}41$ eV &lt; 1,1 eV → no se absorbe; el visible (1,8–3,1 eV) &gt; 1,1 eV → sí crea pares → se absorbe (opaco).</p>
+</details>
+<details><summary>7.4 GaAs ($E_g = 1{,}43$ eV): niveles de impurezas a 0,05 eV (Al) y 1,38 eV (P) medidos desde la BV. ¿Quién es donador y quién aceptor?</summary>
+<p>Al: 0,05 eV sobre la BV → cerca de la BV → <b>aceptor</b>. P: 1,38 eV sobre la BV = 0,05 eV bajo la BC → cerca de la BC → <b>donador</b>.</p>
+</details>
+<details><summary>7.5 ¿Por qué al añadir donadores disminuyen tanto los huecos?</summary>
+<p>La generación térmica de pares $G$ solo depende de $T$; la recombinación es $R = \alpha_r np$. Con muchos más electrones, cada hueco encuentra pareja enseguida y se recombina: $p$ baja hasta que $\alpha_r np = G$ de nuevo, es decir, $np = n_i^2$.</p>
+</details>
+<details><summary>7.6 ¿Cuánto tarda un electrón en recorrer 1 µm en Si con 100 V/cm? ¿Y con 10⁵ V/cm? (usa $\mu_n = 0{,}15$ m²/(V·s))</summary>
+<p>$E = 10^4$ V/m → $v = \mu_nE = 1500$ m/s → $t = 10^{-6}/1500 \approx 0{,}67$ ns. Con $10^7$ V/m el modelo lineal daría $v = 1{,}5\times10^{6}$ m/s, ¡mayor que $v_T\sim10^5$ m/s! El modelo de arrastre supone $v_a\ll v_T$, así que ahí <b>deja de valer</b>: la velocidad no puede crecer indefinidamente con el campo.</p>
+</details>
+<details><summary>7.11 Si con dos niveles donadores $N_{D1} = 10^{16}$ y $N_{D2} = 2\times10^{16}$ cm⁻³, totalmente ionizados. ¿$n$? ¿Y si se añaden $0{,}9\times10^{16}$ cm⁻³ aceptores?</summary>
+<p>Neutralidad: $n + N_A = p + N_{D1} + N_{D2}$. Sin aceptores: $n\approx3\times10^{16}$ cm⁻³. Con aceptores (compensación): $n\approx(3-0{,}9)\times10^{16} = 2{,}1\times10^{16}$ cm⁻³.</p>
+</details>
+<details><summary>7.13 Unión de Si con $N_A = 10^{17}$ y $N_D = 10^{16}$ cm⁻³ a 300 K: $V_0$, $w$ y campo medio (ε = 12ε₀).</summary>
+<p>$V_0 = 0{,}0259\ln\dfrac{10^{23}\cdot10^{22}}{(1{,}45\times10^{16})^2} = 0{,}0259\cdot29{,}2 \approx 0{,}76$ V. $w = \sqrt{\dfrac{2\cdot12\varepsilon_0\cdot0{,}76}{q}(10^{-23}+10^{-22})} \approx 0{,}33\ \mu$m ($x_{n0}\approx0{,}30$, $x_{p0}\approx0{,}03\ \mu$m). $E\approx V_0/w\approx2{,}3\times10^{6}$ V/m. (El apartado de niveles de Fermi requiere fórmulas que no están en este tema.)</p>
+</details>
+<details><summary>7.14 ¿Cómo sería $V_0$ con los mismos dopajes en Ge y en GaAs?</summary>
+<p>$V_0 = \frac{kT}{q}\ln(N_AN_D/n_i^2)$. Ge ($E_g$ menor) → $n_i$ mayor → $V_0$ <b>menor</b>. GaAs ($E_g = 1{,}43$ eV) → $n_i$ menor → $V_0$ <b>mayor</b> que en Si.</p>
+</details>
+<details><summary>7.16 Si la corriente de saturación debe ser mínima, ¿qué material conviene?</summary>
+<p>$I_0$ viene de los minoritarios generados térmicamente ∝ $n_i^2 \propto e^{-E_g/kT}$. Interesa el de <b>mayor $E_g$</b>: el Si (1,1 eV) mejor que el Ge (0,67 eV).</p>
+</details>
+<p class="dim">7.10(b) (efecto Hall) y 7.18 (corriente de saturación a partir de $D_p$ y $\tau_p$) necesitan fórmulas que no aparecen en este tema.</p>
+</div>
+</section>
+
+<section id="sec-mates">
+<h2>14 · Herramientas matemáticas (Apéndice A)</h2>
+<p>El PDF incluye el apéndice de análisis vectorial. De él, en este tema solo necesitas:</p>
+<table>
+<tr><th>Herramienta</th><th>Dónde aparece</th></tr>
+<tr><td><b>Derivada</b> $df/dx$ = pendiente de la tangente (en 1D es el gradiente)</td><td>Difusión: $\Phi = -D\,d\eta/dx$; corriente de difusión</td></tr>
+<tr><td><b>Diferencial</b>: $d(\ln p) = dp/p$</td><td>Campo interno: $E_i = \frac{kT}{q}\frac{d}{dx}\ln p$</td></tr>
+<tr><td><b>Teorema fundamental del cálculo</b>: $\int_1^2 \frac{df}{dx}dx = f(2)-f(1)$</td><td>Integrar $\ln p$ entre dos puntos → $V_{21}$ solo depende de $p_2/p_1$</td></tr>
+<tr><td><b>Integral de camino</b> del campo: $V_1 - V_2 = \int_1^2 \vec E\cdot d\vec l$</td><td>Potencial de contacto; campo uniforme $V_0 = E_0 w$</td></tr>
+<tr><td><b>Gradiente</b> $\nabla f$ y producto escalar</td><td>Versión 3D de lo anterior: el flujo de difusión va según $-\nabla\eta$</td></tr>
+</table>
+<div class="box intuition"><span class="label">Intuición</span>
+<p>Como el campo es una derivada del logaritmo, el potencial es la <b>diferencia de logaritmos</b>: solo importan los valores en los extremos, nunca el camino ni la forma del perfil. Eso es exactamente lo que dicen los apuntes sobre $V_{21}$.</p>
+</div>
+</section>
+
+<section id="sec-estrategia">
+<h2>15 · Estrategia de examen</h2>
+<p>El tema es <b>muy cualitativo</b>: espera preguntas de “explica por qué” más un par de cálculos cortos. Plantillas de razonamiento:</p>
+
+<div class="box tldr"><span class="label">Plantillas</span>
+<ol>
+<li><b>“¿Por qué σ(T) baja en metales y sube en semiconductores?”</b> → Escribe $\sigma = nq\mu$. Metal: $n$ fijo (∼10²⁸), $\mu$ ↓ por más choques. Semi: $n\propto e^{-E_g/2kT}$ crece muchísimo y gana a la bajada de $\mu$.</li>
+<li><b>“Explica con bandas conductor / semiconductor / aislante.”</b> → Banda llena no conduce → mira la última banda con electrones. Medio llena: conductor. Llena: aislante a 0 K; a $T&gt;0$ el tamaño de $E_g$ decide (∼1 eV semic., ∼6 eV aislante). Añade: el campo no produce saltos entre bandas.</li>
+<li><b>“¿Qué es un hueco?”</b> → BV casi llena; $J_{\text{resto}} = -J_i$; $m^*&lt;0$ arriba de la banda → se comporta como carga $+e$ y masa positiva. Pseudopartícula.</li>
+<li><b>“Calcula n y p.”</b> → (1) unidades a m⁻³; (2) ¿grupo V (donador) o III (aceptor)?; (3) ¿$N\gg n_i$? sí → aproximación; no → fórmula exacta; (4) minoritario con $np = n_i^2$.</li>
+<li><b>“Resistencia / conductividad de una barra.”</b> → $\sigma = q(n\mu_n + p\mu_p)$, $R = L/(\sigma S)$, $v = \mu E$, $E = V/L$.</li>
+<li><b>“Describe la formación de la unión p-n.”</b> → Cadena: difusión → iones fijos → zona de carga espacial → campo n→p → frena difusión → equilibrio $|J_{\text{arr}}| = |J_{\text{dif}}|$; $V_0 = \frac{kT}{q}\ln\frac{N_AN_D}{n_i^2}$; dibuja ρ, E, V y bandas.</li>
+<li><b>“¿Qué pasa al polarizar?”</b> → Tabla: barrera $V_0\mp V$, campo, $w$, difusión exponencial, generación constante → asimetría.</li>
+<li><b>“Corriente del diodo.”</b> → Inversa grande da $I_0$; luego $I = I_0(e^{qV/kT}-1)$ con $T$ en K.</li>
+<li><b>“Luz y semiconductores.”</b> → absorbe (crea pares) solo si $h\nu\ge E_g$; si no, transparente.</li>
+</ol>
+</div>
+<div class="box trap"><span class="label">Checklist anti-fallos</span>
+<ul>
+<li>cm⁻³ → m⁻³: multiplica por $10^6$. cm²/(V·s) → m²/(V·s): divide por $10^4$.</li>
+<li>$kT/q = 0{,}0259$ V a 300 K (≈ 0,0259 eV para $kT$).</li>
+<li>eV → J: × $1{,}602\times10^{-19}$.</li>
+<li>Comprueba siempre la hipótesis $N\gg n_i$ antes de aproximar.</li>
+<li>Tipo n es <b>neutro</b>. El hueco no es una partícula real. El campo no hace saltar electrones entre bandas.</li>
+<li>Directa = p al positivo. En inversa queda $-I_0$, no cero.</li>
+</ul>
+</div>
+</section>
+
+<section id="sec-formulario">
+<h2>16 · Formulario y conceptos</h2>
+<table>
+<tr><th>Concepto</th><th>Fórmula</th><th>Clave</th></tr>
+<tr><td>σ(T) metal</td><td>$\sigma = \dfrac{\sigma_0}{1+\alpha(T-T_0)}$</td><td>$d\sigma/dT&lt;0$</td></tr>
+<tr><td>σ(T) semiconductor</td><td>$\sigma = \sigma_0e^{-\alpha/T}$</td><td>$\alpha\approx E_g/2k$</td></tr>
+<tr><td>Drude</td><td>$v_a = -\dfrac{eE}{m_e}\tau,\ \ \sigma = \dfrac{ne^2\tau}{m_e}$</td><td>$v_a\ll v_T\sim10^5$ m/s</td></tr>
+<tr><td>Banda llena</td><td>$J_{\text{llena}} = 0$</td><td>sin estados libres no hay conducción</td></tr>
+<tr><td>Masa efectiva</td><td>$a = F_{\text{ext}}/m^*$</td><td>$m^*&gt;0$ abajo, $&lt;0$ arriba de la banda</td></tr>
+<tr><td>Huecos</td><td>$J_{\text{resto}} = -J_i = e\,a_i\tau_i,\ \ a_i = eE/|m_i^*|$</td><td>carga $+e$, masa $|m^*|$</td></tr>
+<tr><td>Corriente total</td><td>$J = J_n + J_p$</td><td>dos portadores</td></tr>
+<tr><td>Generación óptica</td><td>$h\nu\ge E_g$</td><td>si no, transparente</td></tr>
+<tr><td>Recombinación</td><td>$R = \alpha_r np$</td><td>equilibrio $G = R$</td></tr>
+<tr><td>Intrínseco</td><td>$n = p = n_i = CT^{3/2}e^{-E_g/2kT}$</td><td>$R_i = G_i$</td></tr>
+<tr><td>Acción de masas</td><td>$np = n_i^2$</td><td>cualquier dopaje, también punto a punto</td></tr>
+<tr><td>Neutralidad</td><td>$n + N_A^- = p + N_D^+$</td><td>ionización total: sin superíndices</td></tr>
+<tr><td>n exacto</td><td>$n = \frac{N_D-N_A}{2}+\sqrt{\left(\frac{N_D-N_A}{2}\right)^2+n_i^2}$</td><td>$p = n_i^2/n$</td></tr>
+<tr><td>Tipo n / tipo p</td><td>$n\approx N_D,\ p\approx n_i^2/N_D$ · $p\approx N_A,\ n\approx n_i^2/N_A$</td><td>si $N\gg n_i$</td></tr>
+<tr><td>Arrastre</td><td>$J_{\text{arr}} = q\mu pE + q\mu nE$, $\ \sigma = q(n\mu_n+p\mu_p)$</td><td>ambas a favor de $E$</td></tr>
+<tr><td>Difusión</td><td>$\Phi = -D\frac{d\eta}{dx}$, $J_{p} = -qD_p\frac{dp}{dx}$, $J_{n} = +qD_n\frac{dn}{dx}$</td><td>de más a menos concentración</td></tr>
+<tr><td>Einstein</td><td>$D/\mu = kT/q$</td><td>0,0259 V a 300 K</td></tr>
+<tr><td>Campo interno</td><td>$E_i = \frac{kT}{q}\frac{d}{dx}\ln p = -\frac{kT}{q}\frac{d}{dx}\ln n$</td><td>equilibrio: $J_n = J_p = 0$</td></tr>
+<tr><td>Potencial no homogéneo</td><td>$V_{21} = -\frac{kT}{q}\ln\frac{p_2}{p_1} = \frac{kT}{q}\ln\frac{n_2}{n_1}$</td><td>solo depende del cociente</td></tr>
+<tr><td>Potencial de contacto</td><td>$V_0 = \frac{kT}{q}\ln\frac{p_{p0}}{p_{n0}}\approx\frac{kT}{q}\ln\frac{N_AN_D}{n_i^2}$</td><td>$E_{Cp}-E_{Cn} = qV_0$</td></tr>
+<tr><td>Zona de carga espacial</td><td>$N_Dx_{n0} = N_Ax_{p0}$, $\ w = \left[\frac{2\varepsilon V_0}{q}\left(\frac1{N_A}+\frac1{N_D}\right)\right]^{1/2}$</td><td>más ancha en el lado menos dopado</td></tr>
+<tr><td>Polarización</td><td>barrera $V_0-V$; $E_{Fn}-E_{Fp} = qV$</td><td>directa: $w$↓; inversa: $w$↑</td></tr>
+<tr><td>Minoritarios en el borde</td><td>$p_n(x_{n0}) = p_{n0}e^{qV/kT}$</td><td>inyección débil</td></tr>
+<tr><td>Diodo</td><td>$I = I_0(e^{qV/kT}-1)$</td><td>$I_0 = |I_{\text{gen}}|$</td></tr>
+</table>
+</section>
+
+<section id="sec-test">
+<h2>17 · Autoevaluación</h2>
+<div class="box check"><span class="label">Comprueba</span>
+<details><summary>1. Un metal y un semiconductor se calientan 50 K. ¿Qué le pasa a σ en cada uno y por qué?</summary>
+<p>Metal: baja algo (más vibraciones de la red → $\tau$ menor; $n$ no cambia). Semiconductor: sube mucho, porque $n_i\propto e^{-E_g/2kT}$ crece en órdenes de magnitud y eso domina sobre la pequeña bajada de la movilidad.</p>
+</details>
+<details><summary>2. ¿Por qué un nivel atómico se convierte en una banda al formar el cristal y por qué las bandas externas son más anchas?</summary>
+<p>Al acercar átomos idénticos se rompe la degeneración: un nivel de N átomos se convierte en N niveles distintos, casi continuos para $N\sim10^{28}$. Los electrones externos se solapan con los vecinos y su energía cambia mucho (banda ancha); los internos casi no notan al vecino (banda estrecha).</p>
+</details>
+<details><summary>3. ¿Por qué una banda completamente llena no conduce?</summary>
+<p>Para responder al campo un electrón debe ganar energía pasando a un estado vacío cercano. En una banda llena no hay ninguno: el campo no puede cambiar la distribución y la corriente neta es nula.</p>
+</details>
+<details><summary>4. ¿Qué diferencia hay entre un semiconductor y un aislante?</summary>
+<p>Solo la anchura de la banda prohibida (∼1 eV frente a varios eV). Ambos tienen la BV llena a 0 K y $d\sigma/dT&gt;0$; la diferencia es el valor de $\sigma$ a temperatura ambiente.</p>
+</details>
+<details><summary>5. ¿Por qué un hueco se comporta como carga positiva?</summary>
+<p>La corriente de una BV a la que le falta el electrón $i$ es $-J_i$. Ese electrón estaba arriba de la banda, donde $m^*&lt;0$, así que se acelera a favor de $E$: equivale a una partícula de carga $+e$ y masa positiva.</p>
+</details>
+<details><summary>6. Dopas Si con $10^{22}$ m⁻³ de P. ¿Qué tipo es, quién es mayoritario y cuánto vale $p$ (con $n_i = 1{,}45\times10^{16}$ m⁻³)?</summary>
+<p>P es grupo V → donador → tipo n. $n\approx10^{22}$ m⁻³ (mayoritarios); $p = n_i^2/n = 2{,}1\times10^{32}/10^{22}\approx2\times10^{10}$ m⁻³ (minoritarios).</p>
+</details>
+<details><summary>7. ¿Por qué el producto $np$ no cambia al dopar?</summary>
+<p>En equilibrio $G = R = \alpha_r np$ y $G$ (generación térmica a través del gap) depende solo de $T$. Por tanto $np = G/\alpha_r = n_i^2$, sea cual sea el dopaje.</p>
+</details>
+<details><summary>8. En un semiconductor dopado de forma no uniforme y en equilibrio, ¿hay corriente? ¿Hay campo?</summary>
+<p>Corriente neta nula (para cada portador). Pero sí hay campo interno: la difusión separa carga respecto de los iones fijos y el campo resultante produce un arrastre que anula exactamente la difusión.</p>
+</details>
+<details><summary>9. ¿Por qué la zona de carga espacial es más ancha en el lado menos dopado?</summary>
+<p>Las cargas descubiertas a ambos lados deben ser iguales: $N_Dx_{n0} = N_Ax_{p0}$. Con menos iones por unidad de volumen hay que descubrir una región más larga.</p>
+</details>
+<details><summary>10. En inversa, ¿por qué la corriente satura en $-I_0$ y no crece con el voltaje?</summary>
+<p>La difusión se anula (la barrera es enorme) y solo queda el arrastre de minoritarios. Ese arrastre está limitado por cuántos minoritarios genera la temperatura, no por el campo: todo minoritario que llega es barrido igual.</p>
+</details>
+<details><summary>11. ¿Por qué un diodo de Si tiene menos corriente inversa que uno de Ge?</summary>
+<p>$I_0\propto n_i^2\propto e^{-E_g/kT}$; el Si tiene mayor $E_g$ (1,1 frente a 0,67 eV), así que genera muchos menos minoritarios.</p>
+</details>
+<details><summary>12. ¿Por qué el Si es opaco a la luz visible pero transparente al infrarrojo lejano?</summary>
+<p>Los fotones visibles (1,8–3,1 eV) superan $E_g = 1{,}1$ eV y crean pares (se absorben). Los de IR de baja frecuencia tienen menos energía que $E_g$ y atraviesan el material sin absorberse.</p>
+</details>
+</div>
+</section>
+</main>
+<script>
+(function () {
+  const k = 8.617e-5, q = 1.602e-19, eps0 = 8.854e-12;
+  const NS = "http://www.w3.org/2000/svg";
+  const SUP = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹", "-": "⁻" };
+  const sup = (n) => String(n).split("").map((c) => SUP[c] || c).join("");
+  const dec = (x, d) => x.toFixed(d).replace(".", ",");
+  function sci(x, d) {
+    if (d === undefined) d = 2;
+    if (!isFinite(x)) return "∞";
+    if (x === 0) return "0";
+    const sign = x < 0 ? "−" : "";
+    x = Math.abs(x);
+    let e = Math.floor(Math.log10(x));
+    let m = x / Math.pow(10, e);
+    if (Number(m.toFixed(d)) >= 10) { m /= 10; e += 1; }
+    if (e === 0) return sign + dec(m, d);
+    return sign + dec(m, d) + "×10" + sup(e);
+  }
+  function el(tag, attrs, parent, text) {
+    const e = document.createElementNS(NS, tag);
+    for (const a in attrs) e.setAttribute(a, attrs[a]);
+    if (text !== undefined) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function lbl(attrs, parent, parts) {
+    const t = el("text", attrs, parent, parts[0]);
+    if (parts.length > 1) el("tspan", { "baseline-shift": "sub", "font-size": "70%" }, t, parts[1]);
+    if (parts.length > 2) el("tspan", {}, t, parts[2]);
+    return t;
+  }
+  function clear(svg) { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+  const MAT = {
+    Si: { Eg: 1.1, ni300: 1.45e16, mun: 0.15, mup: 0.0475 },
+    Ge: { Eg: 0.67, ni300: 2.36e19, mun: 0.39, mup: 0.182 }
+  };
+  const Cof = (m) => m.ni300 / (Math.pow(300, 1.5) * Math.exp(-m.Eg / (2 * k * 300)));
+  const C_SI = Cof(MAT.Si), C_GE = Cof(MAT.Ge);
+  const niC = (C, Eg, T) => C * Math.pow(T, 1.5) * Math.exp(-Eg / (2 * k * T));
+  const niSi = (T) => niC(C_SI, MAT.Si.Eg, T);
+  const niGe = (T) => niC(C_GE, MAT.Ge.Eg, T);
+
+  function initNi() {
+    const svg = document.getElementById("simNiSvg");
+    const sT = document.getElementById("niT"), sE = document.getElementById("niEg");
+    const oT = document.getElementById("niTOut"), oE = document.getElementById("niEgOut");
+    const out = document.getElementById("niReadout");
+    if (!svg) return;
+    const x0 = 70, x1 = 610, y0 = 20, y1 = 280, Tmin = 150, Tmax = 700, Lmax = 29;
+    const X = (T) => x0 + (T - Tmin) / (Tmax - Tmin) * (x1 - x0);
+    const Y = (L) => y1 - L / Lmax * (y1 - y0);
+    function curve(f, color, label) {
+      const pts = [];
+      for (let T = Tmin; T <= Tmax; T += 5) {
+        const L = Math.log10(f(T));
+        if (L >= 0) pts.push(X(T).toFixed(1) + "," + Y(Math.min(L, Lmax)).toFixed(1));
+      }
+      if (pts.length > 1) {
+        el("polyline", { points: pts.join(" "), fill: "none", stroke: color, "stroke-width": 2.5 }, svg);
+        const last = pts[pts.length - 1].split(",");
+        el("text", { x: Number(last[0]) + 4, y: Number(last[1]) + 4, "font-size": 12, fill: color }, svg, label);
+      }
+    }
+    function draw() {
+      const T = Number(sT.value), Eg = Number(sE.value);
+      oT.textContent = T + " K";
+      oE.textContent = dec(Eg, 2) + " eV";
+      clear(svg);
+      for (let L = 0; L <= 28; L += 4) {
+        el("line", { x1: x0, y1: Y(L), x2: x1, y2: Y(L), stroke: "var(--line)" }, svg);
+        el("text", { x: x0 - 6, y: Y(L) + 4, "font-size": 11, "text-anchor": "end", fill: "var(--fg-dim)" }, svg, "10" + sup(L));
+      }
+      for (let t = 200; t <= 700; t += 100) {
+        el("line", { x1: X(t), y1: y1, x2: X(t), y2: y1 + 5, stroke: "var(--fg-dim)" }, svg);
+        el("text", { x: X(t), y: y1 + 18, "font-size": 11, "text-anchor": "middle", fill: "var(--fg-dim)" }, svg, String(t));
+      }
+      el("line", { x1: x0, y1: y1, x2: x1, y2: y1, stroke: "var(--fg-dim)" }, svg);
+      el("line", { x1: x0, y1: y0, x2: x0, y2: y1, stroke: "var(--fg-dim)" }, svg);
+      el("text", { x: x1, y: y1 + 34, "font-size": 12, "text-anchor": "end", fill: "var(--fg)" }, svg, "T (K)");
+      el("text", { x: x0 + 6, y: y0 + 10, "font-size": 12, fill: "var(--fg)" }, svg, "portadores (m⁻³)");
+      el("line", { x1: x0, y1: Y(28), x2: x1, y2: Y(28), stroke: "var(--pos)", "stroke-dasharray": "6 4" }, svg);
+      el("text", { x: x1 - 4, y: Y(28) - 5, "font-size": 11, "text-anchor": "end", fill: "var(--pos)" }, svg, "metal: n ∼ 10²⁸, casi constante");
+      curve(niGe, "var(--intuition)", "Ge");
+      curve(niSi, "var(--accent)", "Si");
+      curve((t) => niC(C_SI, Eg, t), "var(--why)", "X");
+      el("line", { x1: X(T), y1: y0, x2: X(T), y2: y1, stroke: "var(--field)", "stroke-dasharray": "4 3" }, svg);
+      [[niSi(T), "var(--accent)"], [niGe(T), "var(--intuition)"], [niC(C_SI, Eg, T), "var(--why)"]].forEach(([v, c]) => {
+        const L = Math.log10(v);
+        if (L >= 0 && L <= Lmax) el("circle", { cx: X(T), cy: Y(L), r: 5, fill: c }, svg);
+      });
+      const nS = niSi(T), nG = niGe(T), nX = niC(C_SI, Eg, T);
+      const sS = q * nS * (MAT.Si.mun + MAT.Si.mup), sG = q * nG * (MAT.Ge.mun + MAT.Ge.mup);
+      out.innerHTML =
+        "T = " + T + " K · kT = " + dec(k * T, 4) + " eV · Eg/2kT (Si) = " + dec(MAT.Si.Eg / (2 * k * T), 1) + "<br>" +
+        "nᵢ(Si) = " + sci(nS) + " m⁻³ · σᵢ(Si) ≈ " + sci(sS) + " (Ω·m)⁻¹<br>" +
+        "nᵢ(Ge) = " + sci(nG) + " m⁻³ · σᵢ(Ge) ≈ " + sci(sG) + " (Ω·m)⁻¹<br>" +
+        "nᵢ(X, Eg = " + dec(Eg, 2) + " eV) = " + sci(nX) + " m⁻³<br>" +
+        "nᵢ(Si) a " + T + " K / nᵢ(Si) a 300 K = " + sci(nS / niSi(300));
+    }
+    sT.addEventListener("input", draw);
+    sE.addEventListener("input", draw);
+    draw();
+  }
+
+  function initDop() {
+    const svg = document.getElementById("simDopSvg");
+    if (!svg) return;
+    const sD = document.getElementById("dopND"), sA = document.getElementById("dopNA"), sT = document.getElementById("dopT");
+    const oD = document.getElementById("dopNDOut"), oA = document.getElementById("dopNAOut"), oT = document.getElementById("dopTOut");
+    const out = document.getElementById("dopReadout");
+    const xa = 160, xb = 620, Lmin = 6, Lmax = 25;
+    const X = (L) => xa + (Math.max(Lmin, Math.min(Lmax, L)) - Lmin) / (Lmax - Lmin) * (xb - xa);
+    function draw() {
+      const ND = Math.pow(10, Number(sD.value)), NA = Math.pow(10, Number(sA.value)), T = Number(sT.value);
+      oD.textContent = sci(ND, 1);
+      oA.textContent = sci(NA, 1);
+      oT.textContent = T + " K";
+      const ni = niSi(T);
+      const d = (ND - NA) / 2, r = Math.sqrt(d * d + ni * ni);
+      let n, p;
+      if (d >= 0) { n = d + r; p = ni * ni / n; } else { p = -d + r; n = ni * ni / p; }
+      clear(svg);
+      for (let L = 6; L <= 24; L += 2) {
+        el("line", { x1: X(L), y1: 15, x2: X(L), y2: 230, stroke: "var(--line)" }, svg);
+        el("text", { x: X(L), y: 248, "font-size": 11, "text-anchor": "middle", fill: "var(--fg-dim)" }, svg, "10" + sup(L));
+      }
+      el("text", { x: xb, y: 265, "font-size": 11, "text-anchor": "end", fill: "var(--fg-dim)" }, svg, "concentración (m⁻³), escala logarítmica");
+      const rows = [
+        [["N", "D", " donadores"], ND, "var(--intuition)"],
+        [["N", "A", " aceptores"], NA, "var(--why)"],
+        [["nᵢ intrínseca"], ni, "var(--fg-dim)"],
+        [["n electrones"], n, "var(--neg)"],
+        [["p huecos"], p, "var(--pos)"]
+      ];
+      rows.forEach(([lab, v, c], i) => {
+        const y = 22 + i * 42;
+        const L = Math.log10(v);
+        lbl({ x: xa - 10, y: y + 17, "font-size": 13, "text-anchor": "end", fill: c }, svg, lab);
+        el("rect", { x: xa, y: y, width: Math.max(1, X(L) - xa), height: 24, rx: 4, fill: c, "fill-opacity": 0.7 }, svg);
+        const tx = X(L) + 6 > xb - 70 ? X(L) - 6 : X(L) + 6;
+        el("text", { x: tx, y: y + 17, "font-size": 12, "text-anchor": X(L) + 6 > xb - 70 ? "end" : "start", fill: "var(--fg)" }, svg, sci(v, 1));
+      });
+      const sig = q * (n * MAT.Si.mun + p * MAT.Si.mup), sigi = q * ni * (MAT.Si.mun + MAT.Si.mup);
+      let tipo = "≈ intrínseco (n ≈ p)";
+      if (n > 10 * p) tipo = "tipo n · mayoritarios: e⁻ · minoritarios: h⁺";
+      else if (p > 10 * n) tipo = "tipo p · mayoritarios: h⁺ · minoritarios: e⁻";
+      out.innerHTML =
+        "Tipo: " + tipo + "<br>" +
+        "n = " + sci(n) + " m⁻³ · p = " + sci(p) + " m⁻³ · n·p = " + sci(n * p) + " = nᵢ² = " + sci(ni * ni) + "<br>" +
+        "σ = q(nμₙ + pμₚ) = " + sci(sig) + " (Ω·m)⁻¹ · σ/σᵢ = " + sci(sig / sigi) + " · ρ = " + sci(1 / sig) + " Ω·m";
+    }
+    [sD, sA, sT].forEach((s) => s.addEventListener("input", draw));
+    draw();
+  }
+
+  function initDiode() {
+    const svg = document.getElementById("simDiodeSvg");
+    if (!svg) return;
+    const sV = document.getElementById("diV"), sT = document.getElementById("diT");
+    const oV = document.getElementById("diVOut"), oT = document.getElementById("diTOut");
+    const out = document.getElementById("diReadout");
+    const NA = 1e23, ND = 1e22, eps = 12 * eps0, I0ref = 1e-12, Eg = MAT.Si.Eg;
+    const pxm = 2e8, pxeV = 60, xj = 155;
+    const ax0 = 340, ax1 = 625, ay0 = 25, ay1 = 300, Vmin = -1, Vmax = 0.8, Imin = -2, Imax = 20;
+    const PX = (V) => ax0 + (V - Vmin) / (Vmax - Vmin) * (ax1 - ax0);
+    const PY = (I) => ay1 - (I - Imin) / (Imax - Imin) * (ay1 - ay0);
+    function draw() {
+      const V = Number(sV.value), T = Number(sT.value);
+      oV.textContent = dec(V, 2) + " V";
+      oT.textContent = T + " K";
+      const vt = k * T, ni = niSi(T);
+      const V0 = vt * Math.log(NA * ND / (ni * ni));
+      const b = Math.max(V0 - V, 0.03);
+      const w = Math.sqrt(2 * eps * b / q * (1 / NA + 1 / ND));
+      const xn = w * NA / (NA + ND), xp = w * ND / (NA + ND);
+      const I0 = I0ref * Math.pow(ni / niSi(300), 2);
+      const I = I0 * (Math.exp(V / vt) - 1);
+      clear(svg);
+      const xL = xj - xp * pxm, xR = xj + xn * pxm;
+      el("rect", { x: 20, y: 20, width: xj - 20, height: 50, fill: "var(--pos)", "fill-opacity": 0.12, stroke: "var(--fg-dim)" }, svg);
+      el("rect", { x: xj, y: 20, width: 295 - xj, height: 50, fill: "var(--neg)", "fill-opacity": 0.12, stroke: "var(--fg-dim)" }, svg);
+      el("rect", { x: xL, y: 20, width: Math.max(1, xR - xL), height: 50, fill: "var(--bg)", stroke: "var(--field)", "stroke-dasharray": "4 3" }, svg);
+      el("text", { x: 50, y: 50, "font-size": 15, fill: "var(--pos)" }, svg, "p");
+      el("text", { x: 270, y: 50, "font-size": 15, fill: "var(--neg)" }, svg, "n");
+      el("text", { x: (xL + xR) / 2, y: 86, "font-size": 12, "text-anchor": "middle", fill: "var(--field)" }, svg, "w = " + dec(w * 1e6, 3) + " µm");
+      const ECp = 110, ECn = ECp + pxeV * b, gap = pxeV * Eg;
+      const delta = Math.max(4, (gap - pxeV * V0) / 2);
+      const mid = (xL + xR) / 2;
+      const band = (y1, y2) => "M20 " + y1 + " H" + xL.toFixed(1) + " C" + mid.toFixed(1) + " " + y1 + "," + mid.toFixed(1) + " " + y2.toFixed(1) + "," + xR.toFixed(1) + " " + y2.toFixed(1) + " H295";
+      el("path", { d: band(ECp, ECn), fill: "none", stroke: "var(--fg)", "stroke-width": 2.2 }, svg);
+      el("path", { d: band(ECp + gap, ECn + gap), fill: "none", stroke: "var(--fg)", "stroke-width": 2.2 }, svg);
+      const EFp = ECp + gap - delta, EFn = ECn + delta;
+      el("line", { x1: 20, y1: EFp, x2: xj, y2: EFp, stroke: "var(--intuition)", "stroke-dasharray": "5 4" }, svg);
+      el("line", { x1: xj, y1: EFn, x2: 295, y2: EFn, stroke: "var(--intuition)", "stroke-dasharray": "5 4" }, svg);
+      lbl({ x: 22, y: ECp - 6, "font-size": 11, fill: "var(--fg-dim)" }, svg, ["E", "C"]);
+      lbl({ x: 22, y: ECp + gap + 16, "font-size": 11, fill: "var(--fg-dim)" }, svg, ["E", "V"]);
+      lbl({ x: 22, y: EFp - 4, "font-size": 11, fill: "var(--intuition)" }, svg, ["E", "Fp"]);
+      lbl({ x: 260, y: EFn - 4, "font-size": 11, fill: "var(--intuition)" }, svg, ["E", "Fn"]);
+      el("line", { x1: xR, y1: ECp, x2: 300, y2: ECp, stroke: "var(--fg-dim)", "stroke-dasharray": "3 3" }, svg);
+      el("line", { x1: 300, y1: ECp + 2, x2: 300, y2: ECn - 2, stroke: "var(--field)", "stroke-width": 1.5 }, svg);
+      el("text", { x: 295, y: ECp - 8, "font-size": 11, fill: "var(--field)", "text-anchor": "end" }, svg, "barrera q(V₀−V) = " + dec(b, 2) + " eV");
+
+      el("line", { x1: ax0, y1: PY(0), x2: ax1, y2: PY(0), stroke: "var(--fg-dim)" }, svg);
+      el("line", { x1: PX(0), y1: ay0, x2: PX(0), y2: ay1, stroke: "var(--fg-dim)" }, svg);
+      [-1, -0.5, 0.5].forEach((v) => {
+        el("line", { x1: PX(v), y1: PY(0) - 3, x2: PX(v), y2: PY(0) + 3, stroke: "var(--fg-dim)" }, svg);
+        el("text", { x: PX(v), y: PY(0) + 16, "font-size": 10, "text-anchor": "middle", fill: "var(--fg-dim)" }, svg, dec(v, 1));
+      });
+      [10, 20].forEach((i) => {
+        el("line", { x1: PX(0) - 3, y1: PY(i), x2: PX(0) + 3, y2: PY(i), stroke: "var(--fg-dim)" }, svg);
+        el("text", { x: PX(0) - 6, y: PY(i) + 4, "font-size": 10, "text-anchor": "end", fill: "var(--fg-dim)" }, svg, i + " mA");
+      });
+      el("text", { x: ax1, y: PY(0) - 6, "font-size": 11, "text-anchor": "end", fill: "var(--fg)" }, svg, "V (V)");
+      el("text", { x: PX(0) + 6, y: ay0 + 8, "font-size": 11, fill: "var(--fg)" }, svg, "I");
+      const pts = [];
+      for (let v = Vmin; v <= Vmax + 1e-9; v += 0.005) {
+        const iv = I0 * (Math.exp(v / vt) - 1) * 1e3;
+        if (iv > Imax) break;
+        pts.push(PX(v).toFixed(1) + "," + PY(iv).toFixed(1));
+      }
+      el("polyline", { points: pts.join(" "), fill: "none", stroke: "var(--intuition)", "stroke-width": 2.5 }, svg);
+      const ImA = I * 1e3;
+      if (ImA <= Imax) el("circle", { cx: PX(V), cy: PY(ImA), r: 6, fill: "var(--field)" }, svg);
+      else el("text", { x: PX(V), y: ay0 + 8, "font-size": 11, "text-anchor": "middle", fill: "var(--field)" }, svg, "↑ fuera de escala");
+      el("text", { x: ax0 + 4, y: PY(0) + 32, "font-size": 10, fill: "var(--fg-dim)" }, svg, "inversa: I ≈ −I₀ (invisible a esta escala)");
+
+      let reg = "equilibrio: difusión = generación, I = 0";
+      if (V > 0.02) reg = "directa: barrera más baja, la difusión crece como e^(qV/kT)";
+      if (V < -0.02) reg = "inversa: barrera más alta, solo queda la corriente de generación ≈ −I₀";
+      if (V > V0 - 0.05) reg += " · ¡V se acerca a V₀: el modelo de inyección débil deja de valer!";
+      out.innerHTML =
+        "V₀ = " + dec(V0, 3) + " V · barrera q(V₀−V) = " + dec(V0 - V, 3) + " eV · w = " + dec(w * 1e6, 3) + " µm (xₙ = " + dec(xn * 1e6, 3) + ", xₚ = " + dec(xp * 1e6, 4) + " µm)<br>" +
+        "I<sub>dif</sub> = I₀e^(qV/kT) = " + sci(I0 * Math.exp(V / vt)) + " A · I<sub>gen</sub> = I₀ = " + sci(I0) + " A<br>" +
+        "I = " + sci(I) + " A · " + reg;
+    }
+    sV.addEventListener("input", draw);
+    sT.addEventListener("input", draw);
+    draw();
+  }
+
+  initNi();
+  initDop();
+  initDiode();
+})();
+</script>
+</body>
+</html>
